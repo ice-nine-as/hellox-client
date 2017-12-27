@@ -1,0 +1,7 @@
+code-examples/
+dist/
+node_modules/
+.awcache
+*-design-doc.*
+.DS_Store
+*.swp
