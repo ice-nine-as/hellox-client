@@ -6,8 +6,8 @@
   "types": "src/index.d.ts",
   "scripts": {
     "clean": "gulp clean",
-    "start-dev": "npm run clean && cross-env NODE_ENV=development node server/index.js",
-    "start-prod": "npm run clean && cross-env NODE_ENV=production node server/index.js",
+    "start-dev": "gulp clean && cross-env NODE_ENV=development node server/index.js",
+    "start-prod": "gulp clean && cross-env NODE_ENV=production node server/index.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-watch": "jest --watch",
