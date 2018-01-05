@@ -26,7 +26,7 @@ to start a hot-reloading development server which will automatically reflect the
 
 `npm run start-prod`
 
-to run a production version of the app.
+to run a production version of the app. Both of these servers will be running locally on port `3000`. To view them, navigate your browser to `localhost:3000`.
 
 ## Branch structure
 
