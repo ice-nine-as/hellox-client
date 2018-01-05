@@ -6,20 +6,23 @@ module.exports = {
   name: 'client',
   target: 'web',
   devtool: 'source-map',
-  entry: [ path.resolve(__dirname, '../src/index.js'), ],
+  entry: [ path.resolve(__dirname, '../src/index.tsx'), ],
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, '../buildClient'),
+    path: path.resolve(__dirname, '../dist/client/'),
     publicPath: '/static/',
   },
 
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          'awesome-typescript-loader',
+        ],
       },
 
       {
@@ -49,6 +52,8 @@ module.exports = {
       '.js',
       '.jsx',
       '.less',
+      '.ts',
+      '.tsx',
     ],
   },
 

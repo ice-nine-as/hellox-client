@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "allowJs":                          true,
+    "downlevelIteration":               true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx":                              "preserve",
+    "lib": [
+      "esnext",
+      "webworker"
+    ],
+
+    "module":                           "esnext",
+    "moduleResolution":                 "node",
+    "noEmitOnError":                    true,
+    "noFallthroughCasesInSwitch":       true,
+    "noUnusedLocals":                   true,
+    "noUnusedParameters":               true,
+    "preserveConstEnums":               true,
+    "removeComments":                   true,
+    "sourceMap":                        false,
+    "strict":                           true,
+    "target":                           "esnext"
+  },
+
+  "exclude": [
+    "node_modules"
+  ],
+
+  "include": [ "src/**/*" ]
+}

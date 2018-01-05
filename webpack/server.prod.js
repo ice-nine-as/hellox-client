@@ -8,7 +8,10 @@ module.exports = {
   name: 'server',
   target: 'node',
   devtool: 'source-map',
-  entry: [ entry, ],
+  entry: [
+    entry,
+  ],
+
   output: {
     path: output,
     filename: '[name].js',
@@ -18,9 +21,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          'awesome-typescript-loader',
+        ],
       },
 
       {
@@ -35,9 +41,7 @@ module.exports = {
             },
           },
 
-          {
-            loader: 'less-loader',
-          },
+          'less-loader',
         ],
       },
     ],
@@ -49,6 +53,8 @@ module.exports = {
       '.js',
       '.jsx',
       '.less',
+      '.ts',
+      '.tsx',
     ],
   },
 

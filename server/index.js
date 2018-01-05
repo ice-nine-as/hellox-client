@@ -18,7 +18,7 @@ const app = express();
 
 let isBuilt = false;
 
-const done = () => {
+function done() {
   return !isBuilt && (() => {
     const listen = app.listen(3000, () => {
       isBuilt = true;
@@ -28,7 +28,7 @@ const done = () => {
     
     return listen;
   })();
-};
+}
 
 if (dev) {
   const compiler = webpack([ clientConfigDev, serverConfigDev, ]);
@@ -48,7 +48,7 @@ if (dev) {
 } else {
   webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
     const clientStats = stats.toJson().children[0]
-    const serverRender = require('../dist/server/main.js').default
+    const serverRender = require('../dist/server/main.js').render;
 
     app.use(publicPath, express.static(outputPath));
     app.use(serverRender({ clientStats, }));

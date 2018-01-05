@@ -24,9 +24,11 @@ externals['react-dom/server'] = 'commonjs react-dom/server';
 module.exports = {
   name: 'server',
   target: 'node',
-  // devtool: 'source-map',
-  devtool: 'eval',
-  entry: [ entry, ],
+  devtool: 'source-map',
+  entry: [
+    entry,
+  ],
+
   externals,
   output: {
     path: output,
@@ -37,9 +39,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          'awesome-typescript-loader',
+        ],
       },
 
       {
@@ -54,9 +59,7 @@ module.exports = {
             },
           },
 
-          {
-            loader: 'less-loader',
-          },
+          'less-loader',
         ],
       },
     ],
@@ -68,6 +71,8 @@ module.exports = {
       '.js',
       '.jsx',
       '.less',
+      '.ts',
+      '.tsx',
     ],
   },
 
