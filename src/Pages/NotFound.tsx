@@ -4,7 +4,7 @@ import {
 
 import * as React from 'react';
 // @ts-ignore
-//import styles from '../styles/NotFound';
+//import styles from '../Styles/NotFound';
 
 export class NotFound extends React.Component<TPageProps> {
   render() {
