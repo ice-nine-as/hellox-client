@@ -5,34 +5,49 @@ import {
   Loading,
 } from '../Pages/Loading';
 import {
+  defaultPageIdentifier,
   PageIdentifiers,
-} from '../Pages/PageIdentifiers';
+} from '../Enums/PageIdentifiers';
+import {
+  default as universal,
+} from 'react-universal-component';
 import {
   ServerError,
 } from '../Pages/ServerError';
 
 import * as React from 'react';
-import universal  from 'react-universal-component';
 
 export const strings = {
   PAGE_INVALID:
     'The props argument, destructured into the page variable, did not ' +
-    'contain a page value that met the isTypeIdentifier type guard.',
+    'contain a page value that met the isPageIdentifier type guard.',
 };
 
 export function importer({ page }: { page: PageIdentifiers }) {
-  if (!isPageIdentifier(page)) {
-    throw new Error(strings.PAGE_INVALID);
+  if (page.toString() !== '' && !isPageIdentifier(page)) {
+    try {
+      return import('../Pages/NotFound');
+    } catch (e) {
+      throw new Error(`${strings.PAGE_INVALID}\n\n${e.toString()}`);
+    }
   }
 
-  const filepath = ((page[0] || '').toUpperCase() + page.slice(1)) || 'Home';
-  return import(`../Pages/${filepath}.tsx`);
+  let imported;
+  try {
+    imported = import(`../Pages/${page || defaultPageIdentifier}`);
+  } catch (e) {
+    /* Doesn't ever seem to run, even with errors? Will investigate later. */
+    imported = import('../Pages/NotFound');
+  }
+
+  return imported;
 }
 
 export const Universal = universal(importer, {
   error:    () => <ServerError page="serverError" />,
   loading:  () => <Loading     page="loading"     />,
-  minDelay: 1200,
+  minDelay: 500,
+  timeout:  5000,
 });
 
 export default Universal;

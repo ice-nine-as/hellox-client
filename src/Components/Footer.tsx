@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export class Footer extends React.Component {
+export class Footer extends React.PureComponent<{}> {
   render() {
     return (
       <div id="footer">

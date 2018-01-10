@@ -10,9 +10,9 @@ const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 
-const publicPath = clientConfigDev.output.publicPath;
-const outputPath = clientConfigDev.output.path;
-const dev = process.env.NODE_ENV === 'development';
+const publicPath                 = clientConfigDev.output.publicPath;
+const outputPath                 = clientConfigDev.output.path;
+const dev                        = process.env.NODE_ENV === 'development';
 
 const app = express();
 
@@ -22,10 +22,10 @@ function done() {
   return !isBuilt && (() => {
     const listen = app.listen(3000, () => {
       isBuilt = true;
-      listen.keepAliveTimeout = 15;
-      console.log('BUILD COMPLETE -- Listening @ http://localhost:3000'.magenta);
+      listen.keepAliveTimeout = 5;
+      console.log('BUILD COMPLETE -- Listening @ http://localhost:3000.');
     });
-    
+
     return listen;
   })();
 }
@@ -42,16 +42,18 @@ if (dev) {
 
   app.use(webpackDevMiddleware(compiler, options));
   app.use(webpackHotMiddleware(clientCompiler));
-  app.use(webpackHotServerMiddleware(compiler));
+  app.use(webpackHotServerMiddleware(compiler, {
+    serverRendererOptions: { outputPath, },
+  }));
 
   compiler.plugin('done', done);
 } else {
-  webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
+  webpack([ clientConfigProd, serverConfigProd, ]).run((err, stats) => {
     const clientStats = stats.toJson().children[0]
-    const serverRender = require('../dist/server/main.js').render;
+    const render = require('../dist/server/main.js').x50Render;
 
     app.use(publicPath, express.static(outputPath));
-    app.use(serverRender({ clientStats, }));
+    app.use(render({ clientStats, }));
 
     done();
   });

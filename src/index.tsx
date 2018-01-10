@@ -1,29 +1,45 @@
-// @ts-ignore
-import AppContainer from 'react-hot-loader/lib/AppContainer';
-import createHistory from 'history/createBrowserHistory';
+import {
+  configureClientStore,
+} from './Modules/configureClientStore';
+import {
+  createBrowserHistory,
+} from 'history';
 import {
   hydrate,
 } from 'react-dom';
+import {
+  ComponentClass,
+} from 'react';
+import {
+  Store,
+} from 'redux';
+import {
+  TAppProps,
+} from './TypeAliases/TAppProps';
 
-const history = createHistory();
+import * as React from 'react';
 
-const render = (App: any) => {
-  return hydrate(
-    <AppContainer>
-      <App history={history} />
-    </AppContainer>,
+// @ts-ignore
+import styles from './Styles/Components/App';
 
+const history = createBrowserHistory();
+const { store, } = configureClientStore(
+  history,
+  // @ts-ignore
+  window.REDUX_STATE);
+
+const render = (Component: ComponentClass<{ store: Store<TAppProps> }>) => {
+  return hydrate(<Component store={store} />,
     // @ts-ignore
-    document.getElementById('root')
-  );
+    document.querySelector('#root'));
 };
+
+render(require('./Components/ProviderContainer').ProviderContainer);
 
 // @ts-ignore
 if (process.env.NODE_ENV === 'development' && module.hot) {
   // @ts-ignore
-  module.hot.accept('./Components/App', () => {
-    import('./Components/App').then((imported) => {
-      render(imported.App);
-    });
+  module.hot.accept('./Components/ProviderContainer', () => {
+    render(require('./Components/ProviderContainer').ProviderContainer);
   });
 }

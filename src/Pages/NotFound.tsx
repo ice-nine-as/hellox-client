@@ -3,15 +3,23 @@ import {
 } from '../TypeAliases/TPageProps';
 
 import * as React from 'react';
-// @ts-ignore
-//import styles from '../Styles/NotFound';
 
-export class NotFound extends React.Component<TPageProps> {
+// @ts-ignore
+import styles from '../Styles/Pages/NotFound';
+
+export class NotFound extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div>
-        <span>Sorry, you've been misdirected somehow!</span>
-        <a href="/">Get me back to the home page!</a>
+      <div className={styles.NotFound}>
+        <p className={`${styles.NotFoundParagraphFirst} ${styles.NotFoundParagraph}`}>
+          Sorry, you've been misdirected somehow!
+        </p>
+        
+        <p className={`${styles.NotFoundParagraphSecond} ${styles.NotFoundParagraph}`}>
+          <a href="/" className={`${styles.NotFoundLink}`}>
+            Get me back to the home page!
+          </a>
+        </p>
       </div>
     );
   }

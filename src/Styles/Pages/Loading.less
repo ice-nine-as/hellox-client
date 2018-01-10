@@ -1,0 +1,23 @@
+.LoadingMessage {
+  font-weight: bolder;
+}
+
+.LoadingIcon {
+  display: inline-block;
+  font-size: 500%;
+  animation-name: loadingIconSpin;
+  animation-duration: 1.05s;
+  animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation-iteration-count: infinite;
+  transform-origin: 45% 45%;
+}
+
+@keyframes loadingIconSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

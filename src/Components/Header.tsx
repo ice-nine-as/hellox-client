@@ -1,10 +1,22 @@
+import {
+  getDefaultNavLinks,
+} from '../Modules/getDefaultNavLinks';
+import {
+  NavBar,
+} from './NavBar';
+
 import * as React from 'react';
 
-export class Header extends React.Component {
+// @ts-ignore
+import styles from '../Styles/Components/Header.less';
+
+export class Header extends React.PureComponent<{}> {
   render() {
     return (
-      <div id="header">
-        Test Header component.
+      <div className={styles.Header}>
+        <NavBar>
+          {getDefaultNavLinks()}
+        </NavBar>
       </div>
     );
   }
