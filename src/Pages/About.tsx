@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/About';
+import styles from '../Styles/Pages/About.less';
 
 export class About extends React.PureComponent<TPageProps> {
   render() {

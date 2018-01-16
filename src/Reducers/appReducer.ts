@@ -4,31 +4,23 @@ import {
 import {
   isAppAction,
 } from '../TypeGuards/isAppAction';
+import {
+  TReducer,
+} from '../TypeAliases/TReducer';
 
 export const strings = {
-  PREVIOUSSTATE_INVALID:
+  PREVIOUS_STATE_INVALID:
     'The previousState argument passed to the appReducer function was not ' +
     'a boolean.',
 
-  ACTION_VALUE_INVALID:
-    'The value property of the action argument passed to the appReducer ' +
-    'function was not a boolean.',
 };
 
-export function appReducer(previousState: boolean = false, action: IAppAction): boolean {
+export const appReducer: TReducer<boolean> = (previousState: boolean = false, action: IAppAction): boolean => {
   if (typeof previousState !== 'boolean') {
-    throw new Error(strings.PREVIOUSSTATE_INVALID);
+    throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isAppAction(action)) {
-    if (typeof action.value !== 'boolean') {
-      throw new Error(strings.ACTION_VALUE_INVALID);
-    }
-   
-    return action.value;
-  }
-
-  return previousState;
+  return isAppAction(action) ? action.value : previousState;
 }
 
 export default appReducer;

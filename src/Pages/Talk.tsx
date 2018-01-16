@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Talk';
+import styles from '../Styles/Pages/Talk.less';
 
 export class Talk extends React.PureComponent<TPageProps> {
   render() {

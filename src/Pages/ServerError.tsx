@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/ServerError';
+import styles from '../Styles/Pages/ServerError.less';
 
 export class ServerError extends React.PureComponent<TPageProps> {
   render() {

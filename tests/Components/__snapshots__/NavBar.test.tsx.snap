@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderIcon component integration tests. Clones the computed className property into any JSX.Element objects passed as children. 1`] = `
+Array [
+  <a
+    className="undefined"
+    id="foo"
+  />,
+  <a
+    className="undefined"
+    id="bar"
+  />,
+]
+`;
+
+exports[`HeaderIcon component integration tests. Clones the computed className property into any JSX.Element objects passed as children.: [object Object] 1`] = `
+Array [
+  <a
+    className="undefined"
+    id="foo"
+  />,
+  <a
+    className="undefined"
+    id="bar"
+  />,
+]
+`;

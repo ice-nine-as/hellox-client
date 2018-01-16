@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles//Pages/Home';
+import styles from '../Styles//Pages/Home.less';
 
 export class Home extends React.PureComponent<TPageProps> {
   render() {

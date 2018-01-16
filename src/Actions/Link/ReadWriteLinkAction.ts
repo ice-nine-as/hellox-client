@@ -8,6 +8,7 @@ import {
 export const ReadWriteLinkAction: ILinkAction = Object.freeze({
   type: PageIdentifiers.ReadWrite,
   payload: {},
+  value: null,
 });
 
 export default ReadWriteLinkAction;

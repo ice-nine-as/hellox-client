@@ -13,7 +13,7 @@ import styles from '../Styles/Components/Header.less';
 export class Header extends React.PureComponent<{}> {
   render() {
     return (
-      <div className={styles.Header}>
+      <div className={(styles || {}).Header}>
         <NavBar>
           {getDefaultNavLinks()}
         </NavBar>

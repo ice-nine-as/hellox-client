@@ -31,17 +31,22 @@ import {
 
 import * as React from 'react';
 
+// @ts-ignore
+import styles from '../Styles/Components/HeaderIcon.less';
+// @ts-ignore
+import styles from '../Styles/Components/NavBarItem.less';
+
 let key = -1;
 function getNewKey() {
   return key += 1;
 }
 
-export function getDefaultNavLinks(): Array<JSX.Element> {
-  return [
+export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
+  return Object.freeze([
     <NavLink
       to={makeLinkAction(HomeLinkAction)}
       exact={true}
-      className="HeaderIconLink"
+      className={(styles || {}).HeaderIconLink}
       activeClassName="unused"
       key={getNewKey()}
     >
@@ -90,7 +95,7 @@ export function getDefaultNavLinks(): Array<JSX.Element> {
     >
       Ask
     </NavLink>,
-  ];
+  ]);
 }
 
 export default getDefaultNavLinks;

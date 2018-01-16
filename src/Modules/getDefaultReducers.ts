@@ -6,11 +6,9 @@ import {
 } from '../TypeAliases/TReducersMap';
 
 export function getDefaultReducers(): TReducersMap<any> {
-  const reducers = {
+  return {
     ...getDefaultAppReducers(),
   };
-
-  return reducers;
 }
 
 export default getDefaultReducers;

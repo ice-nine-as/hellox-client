@@ -1,15 +1,21 @@
 {
+  "awesomeTypescriptLoaderOptions": {
+    "forceIsolatedModules":             true,
+    "useBabel":                         true,
+    "useCache":                         true
+  },
+
   "compilerOptions": {
     "allowJs":                          false,
     "downlevelIteration":               true,
     "forceConsistentCasingInFileNames": true,
-    "jsx":                              "preserve",
+    "jsx":                              "react",
     "lib": [
       "esnext",
       "webworker"
     ],
 
-    "module":                           "esnext",
+    "module":                           "commonjs",
     "moduleResolution":                 "node",
     "noEmitOnError":                    true,
     "noFallthroughCasesInSwitch":       true,
@@ -29,5 +35,5 @@
     "node_modules"
   ],
 
-  "include": [ "src/**/*" ]
+  "include": [ "src/index.tsx" ]
 }

@@ -8,7 +8,7 @@ export function isLinkAction(maybe: any): maybe is ILinkAction {
     maybe &&
     isPageIdentifier(maybe.type) &&
     typeof maybe.payload === 'object' &&
-    maybe.payload;
+    Boolean(maybe.payload);
 }
 
 export default isLinkAction;

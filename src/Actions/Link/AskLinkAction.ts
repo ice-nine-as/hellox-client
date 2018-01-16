@@ -8,6 +8,7 @@ import {
 export const AskLinkAction: ILinkAction = Object.freeze({
   type: PageIdentifiers.Ask,
   payload: {},
+  value: null,
 });
 
 export default AskLinkAction;

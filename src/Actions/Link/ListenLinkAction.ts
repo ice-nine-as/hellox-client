@@ -8,6 +8,7 @@ import {
 export const ListenLinkAction: ILinkAction = Object.freeze({
   type: PageIdentifiers.Listen,
   payload: {},
+  value: null,
 });
 
 export default ListenLinkAction;

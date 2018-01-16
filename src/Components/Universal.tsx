@@ -23,19 +23,21 @@ export const strings = {
     'contain a page value that met the isPageIdentifier type guard.',
 };
 
-export function importer({ page }: { page: PageIdentifiers }) {
-  if (page.toString() !== '' && !isPageIdentifier(page)) {
+export const importer = ({ page }: { page: PageIdentifiers }): Promise<any> => {
+  const indexRegex = /^\/?$/
+  if (!indexRegex.test(page) && !isPageIdentifier(page)) {
     try {
       return import('../Pages/NotFound');
-    } catch (e) {
+    } /* istanbul ignore next */ catch (e) {
       throw new Error(`${strings.PAGE_INVALID}\n\n${e.toString()}`);
     }
   }
 
   let imported;
   try {
-    imported = import(`../Pages/${page || defaultPageIdentifier}`);
-  } catch (e) {
+    const pathStr = indexRegex.test(page) ? defaultPageIdentifier : page;
+    imported = import(`../Pages/${pathStr}`);
+  } /* istanbul ignore next */ catch (e) {
     /* Doesn't ever seem to run, even with errors? Will investigate later. */
     imported = import('../Pages/NotFound');
   }
@@ -43,9 +45,12 @@ export function importer({ page }: { page: PageIdentifiers }) {
   return imported;
 }
 
+export const errorFactory   = () => <ServerError page="serverError" />;
+export const loadingFactory = () => <Loading     page="loading"     />;
+
 export const Universal = universal(importer, {
-  error:    () => <ServerError page="serverError" />,
-  loading:  () => <Loading     page="loading"     />,
+  error:    errorFactory,
+  loading:  loadingFactory,
   minDelay: 500,
   timeout:  5000,
 });

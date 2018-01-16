@@ -1,8 +1,9 @@
-const { resolve, } = require('path');
-const webpack      = require('webpack');
+const HardSourcePlugin = require('hard-source-webpack-plugin');
+const { resolve, }     = require('path');
+const webpack          = require('webpack');
 
-const entry        = resolve(__dirname, '../server/render');
-const output       = resolve(__dirname, '../dist/server');
+const entry            = resolve(__dirname, '../server/render');
+const output           = resolve(__dirname, '../dist/server');
 
 module.exports = {
   name: 'server',
@@ -25,8 +26,7 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
-          'babel-loader',
-          'awesome-typescript-loader',
+          'awesome-typescript-loader?module=esnext',
         ],
       },
 
@@ -81,5 +81,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
+
+    new HardSourcePlugin(),
   ],
 };

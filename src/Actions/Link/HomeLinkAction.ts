@@ -8,6 +8,7 @@ import {
 export const HomeLinkAction: ILinkAction = Object.freeze({
   type: PageIdentifiers.Home,
   payload: {},
+  value: null,
 });
 
 export default HomeLinkAction;

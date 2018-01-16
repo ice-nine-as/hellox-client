@@ -8,6 +8,7 @@ import {
 export interface ILinkAction extends Readonly<LinkAction> {
   readonly type:    PageIdentifiers;
   readonly payload: object;
+  readonly value:   null;
 }
 
 export default ILinkAction;

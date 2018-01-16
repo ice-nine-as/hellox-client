@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/ReadWrite';
+import styles from '../Styles/Pages/ReadWrite.less';
 
 export class ReadWrite extends React.PureComponent<TPageProps> {
   render() {

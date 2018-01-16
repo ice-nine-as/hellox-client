@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Listen';
+import styles from '../Styles/Pages/Listen.less';
 
 export class Listen extends React.PureComponent<TPageProps> {
   render() {

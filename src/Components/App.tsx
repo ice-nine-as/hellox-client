@@ -27,21 +27,18 @@ import {
   TAppProps,
 } from '../TypeAliases/TAppProps';
 import {
+  TAfterChangeDestructure,
+} from '../TypeAliases/TAfterChangeDestructure';
+import {
   Universal,
 } from '../Components/Universal';
 
 import * as React from 'react';
+
 // @ts-ignore
 import styles from '../Styles/Components/App.less';
 
-
-type TAfterChangeDestructure = {
-  isSync:   boolean,
-  isServer: boolean,
-  isMount:  boolean,
-};
-
-class AppConstructor extends React.PureComponent<TAppProps> {
+export class AppConstructor extends React.PureComponent<TAppProps> {
   constructor(props: TAppProps) {
     super(props);
 
@@ -100,7 +97,7 @@ class AppConstructor extends React.PureComponent<TAppProps> {
   }
 }
 
-const mapStateToProps = ({
+export const mapStateToProps = ({
   done,
   error,
   loading,
@@ -114,7 +111,7 @@ const mapStateToProps = ({
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<{}>) => {
+export const mapDispatchToProps = (dispatch: Dispatch<{}>) => {
   return {
     setDone: (value: boolean) => {
       return dispatch(Object.assign({}, DoneAppAction, { value, }));

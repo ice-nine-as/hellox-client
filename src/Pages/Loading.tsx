@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Loading';
+import styles from '../Styles/Pages/Loading.less';
 
 export class Loading extends React.PureComponent<TPageProps> {
   render() {

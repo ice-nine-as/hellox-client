@@ -1,3 +1,4 @@
+const HardSourcePlugin = require('hard-source-webpack-plugin');
 const { readdirSync, } = require('fs');
 const { resolve, }     = require('path');
 const webpack          = require('webpack');
@@ -42,8 +43,7 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
-          'babel-loader',
-          'awesome-typescript-loader',
+          'awesome-typescript-loader?module=esnext',
         ],
       },
 
@@ -99,5 +99,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
+
+    new HardSourcePlugin(),
   ],
 };

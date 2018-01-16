@@ -5,12 +5,23 @@ import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
 
-export function getDefaultAppReducers(): TReducersMap<boolean> {
-  return {
-    done:    appReducer,
-    error:   appReducer,
-    loading: appReducer,
-  };
+export const getDefaultAppReducers = (): TReducersMap<boolean> => {
+  return Object.freeze(Object.create({}, {
+    done: {
+      configurable: false,
+      get: () => appReducer,
+    },
+
+    error: {
+      configurable: false,
+      get: () => appReducer,
+    },
+
+    loading: {
+      configurable: false,
+      get: () => appReducer,
+    },
+  }));
 }
 
 export default getDefaultAppReducers;

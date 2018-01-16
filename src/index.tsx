@@ -1,45 +1,64 @@
 import {
+  App,
+} from './Components/App';
+import {
   configureClientStore,
 } from './Modules/configureClientStore';
 import {
   createBrowserHistory,
 } from 'history';
 import {
+  resolve,
+} from 'path';
+import {
   hydrate,
 } from 'react-dom';
-import {
-  ComponentClass,
-} from 'react';
-import {
-  Store,
-} from 'redux';
-import {
-  TAppProps,
-} from './TypeAliases/TAppProps';
 
 import * as React from 'react';
 
 // @ts-ignore
 import styles from './Styles/Components/App';
 
-const history = createBrowserHistory();
-const { store, } = configureClientStore(
-  history,
-  // @ts-ignore
-  window.REDUX_STATE);
-
-const render = (Component: ComponentClass<{ store: Store<TAppProps> }>) => {
-  return hydrate(<Component store={store} />,
+export const render = (component: JSX.Element) => {
+  return hydrate(component,
     // @ts-ignore
     document.querySelector('#root'));
 };
 
-render(require('./Components/ProviderContainer').ProviderContainer);
+export const providerContainerFilepath = resolve(
+  __dirname,
+  'Components/ProviderContainer');
 
-// @ts-ignore
-if (process.env.NODE_ENV === 'development' && module.hot) {
+export const init = () => {
+  const history = createBrowserHistory();
+  const { store, } = configureClientStore(
+    history,
+    // @ts-ignore
+    window.REDUX_STATE);
+
+  const ProviderContainer = require('./Components/ProviderContainer')
+    .ProviderContainer;
+  render(<ProviderContainer store={store}>
+          <App />
+        </ProviderContainer>);
+
+  /* istanbul ignore next */
   // @ts-ignore
-  module.hot.accept('./Components/ProviderContainer', () => {
-    render(require('./Components/ProviderContainer').ProviderContainer);
-  });
+  if (process.env.NODE_ENV === 'development' && module.hot) {
+    // @ts-ignore
+    module.hot.accept('./Components/ProviderContainer', () => {
+      const ProviderContainer = require('./Components/ProviderContainer')
+        .ProviderContainer;
+
+      render(<ProviderContainer store={store}>
+              <App />
+            </ProviderContainer>);
+    });
+  }
 }
+
+if (process.env.NODE_ENV !== 'test') {
+  init();
+}
+
+export default init;

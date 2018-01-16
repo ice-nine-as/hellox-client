@@ -1,4 +1,7 @@
 import {
+  App,
+} from '../src/Components/App';
+import {
   configureServerStore,
 } from './configureServerStore';
 import {
@@ -16,16 +19,16 @@ import {
   Stats,
 } from 'webpack';
 
-// @ts-ignore
-import AmbientStyle from '../src/Styles/AmbientStyle';
-
 import * as React          from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks         from 'webpack-flush-chunks';
 
+// @ts-ignore
+import AmbientStyle from '../src/Styles/AmbientStyle';
+
 export const strings = {
-  CONFIGURESERVERSTORE_FAILED:
+  CONFIGURE_SERVER_STORE_FAILED:
     'An exception was encountered while configuring the Redux store on the ' +
     'server.',
 };
@@ -41,7 +44,7 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
     try {
       store = await configureServerStore(req, res);
     } catch (e) {
-      console.log(strings.CONFIGURESERVERSTORE_FAILED, '\n\nThe error was:', e);
+      console.log(strings.CONFIGURE_SERVER_STORE_FAILED, '\n\nThe error was:', e);
       throw e;
     }
 
@@ -56,7 +59,12 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
     const varDef            = 'window.REDUX_STATE = ';
     const closeTag          = '</script>';
     const reduxScript       = openTag + varDef + stateStr + closeTag;
-    const providerContainer = <ProviderContainer store={store} />;
+    const providerContainer = (
+                                <ProviderContainer store={store}>
+                                  <App />
+                                </ProviderContainer>
+                              );
+
     const appStr            = ReactDOMServer.renderToString(providerContainer);
     const chunkNames        = flushChunkNames();
     const {
