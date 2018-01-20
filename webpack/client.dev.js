@@ -1,24 +1,25 @@
+const AutoDllPlugin    = require('autodll-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-const path             = require('path');
+const { resolve, }     = require('path');
 const webpack          = require('webpack');
 const WriteFilePlugin  = require('write-file-webpack-plugin'); // here so you can see what chunks are built
 
 module.exports = {
   name: 'client',
   target: 'web',
-  // devtool: 'source-map',
-  devtool: 'eval',
+  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=false&quiet=false&noInfo=false',
     'react-hot-loader/patch',
-    path.resolve(__dirname, '../src/index.tsx'),
+    'babel-polyfill',
+    resolve(__dirname, '../src/index.tsx'),
   ],
 
   output: {
-    filename: '[name].js',
+    filename:      '[name].js',
     chunkFilename: '[name].js',
-    path: path.resolve(__dirname, '../dist/client'),
-    publicPath: '/static/',
+    path:           resolve(__dirname, '../dist/client'),
+    publicPath:     '/static/',
   },
 
   module: {
@@ -27,13 +28,19 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
-          'babel-loader',
-          'awesome-typescript-loader',
+          'awesome-typescript-loader?module=esnext',
         ],
       },
 
       {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: 'babel-loader',
+      },
+
+      {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: ExtractCssChunks.extract({
           use: [
             {
@@ -44,9 +51,7 @@ module.exports = {
               }
             },
 
-            {
-              loader: 'less-loader',
-            },
+            'less-loader',
           ],
         }),
       },
@@ -78,6 +83,23 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
+      },
+    }),
+
+    new AutoDllPlugin({
+      context: resolve(__dirname, '..'),
+      filename: '[name].js',
+      entry: {
+        vendor: [
+          'react',
+          'react-dom',
+          'react-redux',
+          'redux',
+          'history/createBrowserHistory',
+          'redux-first-router',
+          'redux-first-router-link',
+          'babel-polyfill',
+        ],
       },
     }),
   ],

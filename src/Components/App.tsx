@@ -1,4 +1,10 @@
 import {
+  DoneAppAction,
+} from '../Actions/App/DoneAppAction';
+import {
+  ErrorAppAction,
+} from '../Actions/App/ErrorAppAction';
+import {
   Footer,
 } from '../Components/Footer';
 import {
@@ -8,75 +14,54 @@ import {
   isPageIdentifier,
 } from '../TypeGuards/isPageIdentifier';
 import {
-  PageIdentifiers,
-} from '../Pages/PageIdentifiers';
+  LoadingAppAction,
+} from '../Actions/App/LoadingAppAction';
 import {
-  Universal,
-} from '../Components/Universal';
+  PageIdentifiers,
+} from '../Enums/PageIdentifiers';
+import {
+  connect,
+  Dispatch,
+} from 'react-redux';
 import {
   TAppProps,
 } from '../TypeAliases/TAppProps';
 import {
-  TAppState,
-} from '../TypeAliases/TAppState';
+  TAfterChangeDestructure,
+} from '../TypeAliases/TAfterChangeDestructure';
+import {
+  Universal,
+} from '../Components/Universal';
 
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/App';
+import styles from '../Styles/Components/App.less';
 
-type TAfterChangeDestructure = {
-  isSync:   boolean,
-  isServer: boolean,
-  isMount:  boolean,
-};
-
-
-export class App extends React.Component<TAppProps, TAppState> {
+export class AppConstructor extends React.PureComponent<TAppProps> {
   constructor(props: TAppProps) {
     super(props);
 
-    const { history, } = props;
-
-    const pathname = history.location.pathname.slice(1);
-    const realPath = isPageIdentifier(pathname) ?
-      pathname :
-      PageIdentifiers.NotFound;
-
-    this.state = {
-      page:    realPath,
-      loading: false,
-      done:    false,
-      error:   false,
-    };
-
-    history.listen(({ pathname, }: { pathname: string, }) => {
-      const trimmed = pathname.slice(1);
-      if (isPageIdentifier(trimmed)) {
-        this.setState({ page: trimmed, });
-      } else {
-        this.setState({ page: PageIdentifiers.NotFound, });
-      }
-    });
-    
     this.beforeChange = this.beforeChange.bind(this);
     this.afterChange  = this.afterChange.bind(this);
     this.handleError  = this.handleError.bind(this);
   }
 
   render() {
-    const {
-      page,
-    } = this.state;
+    let {
+      location: {
+        type: page,
+      },
+    } = this.props;
 
-    debugger;
+    page = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
 
     return (
       <div className={styles.App}>
         <Header />
 
         <Universal
-          page={page}
+          page={page as PageIdentifiers}
           onBefore={this.beforeChange}
           onAfter={this.afterChange}
           onError={this.handleError}
@@ -89,35 +74,59 @@ export class App extends React.Component<TAppProps, TAppState> {
 
   beforeChange({ isSync }: { isSync: boolean }) {
     if (!isSync) {
-      this.setState({
-        loading: true,
-        error:   false,
-      });
+      this.props.setError(false);
+      this.props.setLoading(true);
     }
   }
 
   afterChange({ isSync, isServer, isMount }: TAfterChangeDestructure) {
     if (!isSync) {
-      this.setState({
-        loading: false,
-        error:   false,
-      });
+      this.props.setError(false);
+      this.props.setLoading(false);
     } else if (!isServer && !isMount) {
-      this.setState({
-        done:  true,
-        error: false,
-      });
+      this.props.setDone(true);
+      this.props.setError(false);
     }
   }
 
   handleError(error: Error) {
     console.log(error);
 
-    this.setState({
-      error:   true,
-      loading: false,
-    });
+    this.props.setError(true);
+    this.props.setLoading(false);
   }
 }
+
+export const mapStateToProps = ({
+  done,
+  error,
+  loading,
+  location,
+}: TAppProps) => {
+  return {
+    done,
+    error,
+    loading,
+    location,
+  };
+};
+
+export const mapDispatchToProps = (dispatch: Dispatch<{}>) => {
+  return {
+    setDone: (value: boolean) => {
+      return dispatch(Object.assign({}, DoneAppAction, { value, }));
+    },
+
+    setError: (value: boolean) => {
+      return dispatch(Object.assign({}, ErrorAppAction, { value, }));
+    },
+
+    setLoading: (value: boolean) => {
+      return dispatch(Object.assign({}, LoadingAppAction, { value }));
+    },
+  };
+};
+
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppConstructor);
 
 export default App;

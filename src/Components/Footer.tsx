@@ -1,9 +1,12 @@
 import * as React from 'react';
 
-export class Footer extends React.Component {
+// @ts-ignore
+import styles from '../Styles/Components/Footer.less';
+
+export class Footer extends React.PureComponent<{}> {
   render() {
     return (
-      <div id="footer">
+      <div className={(styles || {}).Footer}>
         Copyright {new Date().getFullYear()} Ice 9 AS.
       </div>
     );

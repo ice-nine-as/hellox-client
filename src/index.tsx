@@ -1,29 +1,64 @@
-// @ts-ignore
-import AppContainer from 'react-hot-loader/lib/AppContainer';
-import createHistory from 'history/createBrowserHistory';
+import {
+  App,
+} from './Components/App';
+import {
+  configureClientStore,
+} from './Modules/configureClientStore';
+import {
+  createBrowserHistory,
+} from 'history';
+import {
+  resolve,
+} from 'path';
 import {
   hydrate,
 } from 'react-dom';
 
-const history = createHistory();
-
-const render = (App: any) => {
-  return hydrate(
-    <AppContainer>
-      <App history={history} />
-    </AppContainer>,
-
-    // @ts-ignore
-    document.getElementById('root')
-  );
-};
+import * as React from 'react';
 
 // @ts-ignore
-if (process.env.NODE_ENV === 'development' && module.hot) {
+import styles from './Styles/Components/App';
+
+export const render = (component: JSX.Element) => {
+  return hydrate(component,
+    // @ts-ignore
+    document.querySelector('#root'));
+};
+
+export const providerContainerFilepath = resolve(
+  __dirname,
+  'Components/ProviderContainer');
+
+export const init = () => {
+  const history = createBrowserHistory();
+  const { store, } = configureClientStore(
+    history,
+    // @ts-ignore
+    window.REDUX_STATE);
+
+  const ProviderContainer = require('./Components/ProviderContainer')
+    .ProviderContainer;
+  render(<ProviderContainer store={store}>
+          <App />
+        </ProviderContainer>);
+
+  /* istanbul ignore next */
   // @ts-ignore
-  module.hot.accept('./Components/App', () => {
-    import('./Components/App').then((imported) => {
-      render(imported.App);
+  if (process.env.NODE_ENV === 'development' && module.hot) {
+    // @ts-ignore
+    module.hot.accept('./Components/ProviderContainer', () => {
+      const ProviderContainer = require('./Components/ProviderContainer')
+        .ProviderContainer;
+
+      render(<ProviderContainer store={store}>
+              <App />
+            </ProviderContainer>);
     });
-  });
+  }
 }
+
+if (process.env.NODE_ENV !== 'test') {
+  init();
+}
+
+export default init;
