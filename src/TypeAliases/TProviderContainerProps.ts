@@ -2,11 +2,11 @@ import {
   Store,
 } from 'redux';
 import {
-  TAppProps,
-} from './TAppProps';
+  TAppOwnProps,
+} from './TAppOwnProps';
 
 export type TProviderContainerProps = {
-  readonly store: Store<TAppProps>;
+  readonly store: Store<TAppOwnProps>;
 }
 
 export default TProviderContainerProps;

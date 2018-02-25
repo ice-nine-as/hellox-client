@@ -10,17 +10,18 @@ import {
 import {
   applyMiddleware,
   combineReducers,
-  compose,
   createStore,
-  StoreEnhancerStoreCreator,
 } from 'redux';
+import {
+  composeWithDevTools,
+} from 'redux-devtools-extension';
 import {
   connectRoutes,
   RoutesMap,
 } from 'redux-first-router';
 import {
-  TAppProps,
-} from '../TypeAliases/TAppProps';
+  TAppOwnProps,
+} from '../TypeAliases/TAppOwnProps';
 import {
   TClientStoreReturn,
 } from '../TypeAliases/TClientStoreReturn';
@@ -29,7 +30,7 @@ import thunkMiddleware from 'redux-thunk';
 
 export function configureClientStore(
   history:        History,
-  preloadedState: TAppProps = {} as TAppProps,
+  preloadedState: TAppOwnProps = {} as TAppOwnProps,
   routesMap:      RoutesMap = getDefaultRoutesMap()): TClientStoreReturn
 {
   const {
@@ -39,15 +40,15 @@ export function configureClientStore(
     thunk,
   } = connectRoutes(history, routesMap);
 
-  const rootReducer = combineReducers<TAppProps>({
+  const rootReducer = combineReducers<TAppOwnProps>({
     ...getDefaultReducers(),
     location: locationReducer,
   });
 
   const middlewares = applyMiddleware(thunkMiddleware, middleware);
-  const enhancers   = compose<StoreEnhancerStoreCreator<TAppProps>>(enhancer, middlewares);
+  const enhancers   = composeWithDevTools(enhancer, middlewares);
 
-  const store = createStore<TAppProps>(
+  const store = createStore<TAppOwnProps>(
     rootReducer,
     preloadedState,
     enhancers);

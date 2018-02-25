@@ -1,7 +1,9 @@
 import {
   ILinkAction,
 } from '../Actions/Link/ILinkAction';
-import { isPageIdentifier } from './isPageIdentifier';
+import {
+  isPageIdentifier,
+} from './isPageIdentifier';
 
 export function isLinkAction(maybe: any): maybe is ILinkAction {
   return typeof maybe === 'object' &&

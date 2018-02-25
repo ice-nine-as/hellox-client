@@ -5,17 +5,20 @@ import {
   AskLinkAction,
 } from '../Actions/Link/AskLinkAction';
 import {
-  HeaderIcon,
-} from '../Components/HeaderIcon';
-import {
-  headerIconPath,
-} from '../Properties/headerIconPath';
-import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
 import {
+  ConnectedLanguageButton,
+} from '../Components/LanguageButton';
+import {
+  Languages,
+} from '../Enums/Languages';
+import {
   ListenLinkAction,
 } from '../Actions/Link/ListenLinkAction';
+import {
+  Logo,
+} from '../Components/Logo';
 import {
   makeLinkAction,
 } from '../Modules/makeLinkAction';
@@ -23,8 +26,8 @@ import {
   NavLink,
 } from 'redux-first-router-link';
 import {
-  ReadWriteLinkAction,
-} from '../Actions/Link/ReadWriteLinkAction';
+  WriteLinkAction,
+} from '../Actions/Link/WriteLinkAction';
 import {
   TalkLinkAction,
 } from '../Actions/Link/TalkLinkAction';
@@ -32,28 +35,34 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/HeaderIcon.less';
-// @ts-ignore
 import styles from '../Styles/Components/NavBarItem.less';
+const _styles = styles || {};
 
 let key = -1;
-function getNewKey() {
-  return key += 1;
-}
+const getNewKey = () => key += 1;
 
 export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
   return Object.freeze([
     <NavLink
       to={makeLinkAction(HomeLinkAction)}
       exact={true}
-      className={(styles || {}).HeaderIconLink}
+      className={`${_styles.NavLinkHeaderIconLink} NavBarItem`}
       activeClassName="unused"
       key={getNewKey()}
     >
-      <HeaderIcon url={headerIconPath} />
+      <div className={_styles.NavLinkLogoContainer}>
+        <span className={_styles.NavLinkLogoImageContainer}>
+          <Logo />
+        </span>
+        
+        <span className={`${_styles.NavLinkLogoText} NavLinkLogoText`}>
+          Hello X
+        </span>
+      </div>
     </NavLink>,
 
     <NavLink
+      className="NavBarItem"
       to={makeLinkAction(HomeLinkAction)}
       exact={true}
       key={getNewKey()}
@@ -62,13 +71,15 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
     </NavLink>,
 
     <NavLink
-      to={makeLinkAction(ReadWriteLinkAction)}
+      className="NavBarItem"
+      to={makeLinkAction(WriteLinkAction)}
       key={getNewKey()}
     >
-      Read/Write
+      Write
     </NavLink>,
 
     <NavLink
+      className="NavBarItem"
       to={makeLinkAction(ListenLinkAction)}
       key={getNewKey()}
     >
@@ -76,6 +87,7 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
     </NavLink>,
 
     <NavLink
+      className="NavBarItem"
       to={makeLinkAction(TalkLinkAction)}
       key={getNewKey()}
     >
@@ -83,6 +95,7 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
     </NavLink>,
 
     <NavLink
+      className="NavBarItem"
       to={makeLinkAction(AboutLinkAction)}
       key={getNewKey()}
     >
@@ -90,11 +103,30 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
     </NavLink>,
 
     <NavLink
+      className="NavBarItem"
       to={makeLinkAction(AskLinkAction)}
       key={getNewKey()}
     >
       Ask
     </NavLink>,
+
+    <div
+      className="NavBarItem LanguageButtonContainer"
+      key={getNewKey()}
+    >
+      {(Object as any).values(Languages).map((lang: Languages) => {
+        if (lang === Languages.Unknown) {
+          return null;
+        }
+
+        return (
+          <ConnectedLanguageButton
+            buttonLanguage={lang}
+            key={getNewKey()}
+          />
+        );
+      })}
+    </div>,
   ]);
 }
 

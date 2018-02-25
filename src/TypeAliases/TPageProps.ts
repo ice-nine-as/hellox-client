@@ -1,5 +1,5 @@
 export type TPageProps = {
-  page: string,
+  page: string;
 };
 
 export default TPageProps;

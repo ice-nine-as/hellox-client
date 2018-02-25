@@ -6,9 +6,9 @@ export enum PageIdentifiers {
   Login       = 'Login',
   Logout      = 'Logout',
   NotFound    = 'NotFound',
-  ReadWrite   = 'ReadWrite',
   ServerError = 'ServerError',
   Talk        = 'Talk',
+  Write       = 'Write',
 }
 
 export const defaultPageIdentifier: PageIdentifiers.Home = PageIdentifiers.Home;

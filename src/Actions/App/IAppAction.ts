@@ -7,7 +7,7 @@ import {
 
 export interface IAppAction extends IAction {
   readonly type:  AppActionTypes;
-  readonly value: boolean;
+  readonly value: any;
 }
 
 export default IAppAction;

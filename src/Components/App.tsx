@@ -17,29 +17,47 @@ import {
   LoadingAppAction,
 } from '../Actions/App/LoadingAppAction';
 import {
+  makeAppAction,
+} from '../Modules/makeAppAction';
+import {
+  makeViewportStateAction,
+} from '../Modules/makeViewportStateAction';
+import {
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
 import {
   connect,
-  Dispatch,
 } from 'react-redux';
 import {
-  TAppProps,
-} from '../TypeAliases/TAppProps';
+  Dispatch,
+} from 'redux';
+import {
+  TAppDispatchProps,
+} from '../TypeAliases/TAppDispatchProps';
+import {
+  TAppOwnProps,
+} from '../TypeAliases/TAppOwnProps';
 import {
   TAfterChangeDestructure,
 } from '../TypeAliases/TAfterChangeDestructure';
 import {
   Universal,
 } from '../Components/Universal';
+import {
+  ViewportStateAction,
+} from '../Actions/App/ViewportStateAction';
+
+import MediaQuery from 'react-responsive';
 
 import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/App.less';
+import { ViewportStates } from '../Enums/ViewportStates';
+const _styles = styles || {};
 
-export class AppConstructor extends React.PureComponent<TAppProps> {
-  constructor(props: TAppProps) {
+export class AppConstructor extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
+  constructor(props: TAppOwnProps & TAppDispatchProps) {
     super(props);
 
     this.beforeChange = this.beforeChange.bind(this);
@@ -57,7 +75,54 @@ export class AppConstructor extends React.PureComponent<TAppProps> {
     page = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
 
     return (
-      <div className={styles.App}>
+      <div className={_styles.App}>
+        <MediaQuery minDeviceWidth={1001}>
+          <MediaQuery maxWidth={1000}>
+            {
+              (matches) => {
+                if (matches) {
+                  const state = ViewportStates.Mobile;
+                  document.body.classList.add(state);
+                  document.body.classList.remove(ViewportStates.Monitor);
+                  setTimeout(() => this.props.setViewportState(state));
+                }
+
+                return null;
+              }
+            }
+          </MediaQuery>
+
+          <MediaQuery minWidth={1001}>
+            {
+              (matches) => {
+                if (matches) {
+                  const state = ViewportStates.Monitor;
+                  document.body.classList.add(state);
+                  document.body.classList.remove(ViewportStates.Mobile);
+                  setTimeout(() => this.props.setViewportState(state));
+                }
+
+                return null;
+              }
+            }
+          </MediaQuery>
+        </MediaQuery>
+
+        <MediaQuery maxDeviceWidth={1000}>
+          {
+            (matches) => {
+              if (matches) {
+                const state = ViewportStates.Mobile;
+                document.body.classList.add(state)
+                document.body.classList.remove(ViewportStates.Monitor);
+                setTimeout(() => this.props.setViewportState(state));
+              }
+
+              return null;
+            }
+          }
+        </MediaQuery>
+
         <Header />
 
         <Universal
@@ -102,27 +167,33 @@ export const mapStateToProps = ({
   error,
   loading,
   location,
-}: TAppProps) => {
+  viewportState,
+}: TAppOwnProps) => {
   return {
     done,
     error,
     loading,
     location,
+    viewportState,
   };
 };
 
-export const mapDispatchToProps = (dispatch: Dispatch<{}>) => {
+export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
   return {
     setDone: (value: boolean) => {
-      return dispatch(Object.assign({}, DoneAppAction, { value, }));
+      return dispatch(makeAppAction(DoneAppAction, value));
     },
 
     setError: (value: boolean) => {
-      return dispatch(Object.assign({}, ErrorAppAction, { value, }));
+      return dispatch(makeAppAction(ErrorAppAction, value));
     },
 
     setLoading: (value: boolean) => {
-      return dispatch(Object.assign({}, LoadingAppAction, { value }));
+      return dispatch(makeAppAction(LoadingAppAction, value));
+    },
+
+    setViewportState: (value: ViewportStates) => {
+      return dispatch(makeViewportStateAction(ViewportStateAction, value));
     },
   };
 };

@@ -8,10 +8,8 @@ import {
   isAppActionType,
 } from './isAppActionType';
 
-export function isAppAction(maybe: any): maybe is IAppAction {
-  return isAction(maybe) &&
-    isAppActionType(maybe.type) &&
-    typeof maybe.value === 'boolean';   
+export const isAppAction = (maybe: any): maybe is IAppAction => {
+  return isAction(maybe) && isAppActionType(maybe.type);   
 }
 
 export default isAppAction;

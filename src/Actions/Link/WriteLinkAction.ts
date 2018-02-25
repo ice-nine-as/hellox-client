@@ -5,10 +5,10 @@ import {
   PageIdentifiers,
 } from '../../Enums/PageIdentifiers';
 
-export const ReadWriteLinkAction: ILinkAction = Object.freeze({
-  type: PageIdentifiers.ReadWrite,
+export const WriteLinkAction: ILinkAction = Object.freeze({
+  type: PageIdentifiers.Write,
   payload: {},
   value: null,
 });
 
-export default ReadWriteLinkAction;
+export default WriteLinkAction;

@@ -1,18 +1,36 @@
 .NavBarItem {
   padding: 20px;
+  color: white;
   text-decoration: transparent;
-  transition: 0.5s background;
-}
-
-.NavBarItem:hover {
-  opacity: 0.95;
-  background: rgba(225, 225, 225, 0.5);
-}
-
-.NavBarItem.active {
-  background: rgba(200, 200, 200, 0.5);
+  transition: 0.5s background-color;
+  font-size: 50%;
 }
 
 .NavBarItem:visited {
   color: inherit;
+}
+
+.NavLinkHeaderIconLink {
+  position: relative;
+  display: inline-block;
+  margin-right: 200px;
+}
+
+.NavLinkLogoContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.NavLinkLogoImageContainer {
+  display: inline-block;
+  width: 50px;
+  vertical-align: middle;
+}
+
+.NavLinkLogoText {
+  position: absolute;
+  top: 45%;
+  width: 200%;
+  margin-left: 10px;
+  transform: translateY(-50%);
 }

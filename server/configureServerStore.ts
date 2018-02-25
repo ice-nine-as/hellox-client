@@ -9,14 +9,20 @@ import {
   getDefaultRoutesMap,
 } from '../src/Modules/getDefaultRoutesMap';
 import {
+  getRssFeed,
+} from '../src/Modules/getRssFeed';
+import {
+  //getStoryTemplate,
+} from '../src/Modules/getStoryTemplate';
+import {
   createMemoryHistory,
 } from 'history';
 import {
   NOT_FOUND,
 } from 'redux-first-router';
 import {
-  TAppProps,
-} from '../src/TypeAliases/TAppProps';
+  TAppOwnProps,
+} from '../src/TypeAliases/TAppOwnProps';
 
 export async function configureServerStore(
   req: Request,
@@ -31,18 +37,28 @@ export async function configureServerStore(
   const {
     store,
     thunk,
-  } = configureClientStore(_history, {} as TAppProps, routesMap);
+  } = configureClientStore(_history, {} as TAppOwnProps, routesMap);
 
   await thunk(store);
 
-  const { location, location: { pathname, }, } = store.getState();
+  await Promise.all([
+    store.dispatch(getRssFeed()),
+    //store.dispatch(getStoryTemplate()),
+  ]);
+
+  const {
+    location,
+    location: {
+      pathname,
+    },
+  } = store.getState();
 
   if (location.kind === 'redirect') {
     res.redirect(302, pathname);
     return null;
   }
 
-  const status = location.type === NOT_FOUND ? 404 : 200
+  const status = location.type === NOT_FOUND ? 404 : 200;
   res.status(status);
 
   return store;

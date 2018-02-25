@@ -32,13 +32,21 @@ module.exports = {
 
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude(path) {
+          return path.indexOf('x50-story-generator') === -1 &&
+            path.indexOf('node_modules') !== -1;
+        },
+
         use: 'babel-loader',
       },
 
       {
         test: /\.less$/,
-        exclude: /node_modules/,
+        exclude(path) {
+          return path.indexOf('x50-story-generator') === -1 &&
+            path.indexOf('node_modules') !== -1;
+        },
+
         use: [
           {
             loader: 'css-loader/locals',
