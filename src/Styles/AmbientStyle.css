@@ -1,13 +1,21 @@
 html, body, #root {
   position: relative;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
   border: 0;
+  /* TODO: remove after design is complete. */
+  background: gray;
 }
 
 #root {
-  padding: 1%;
   box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.monitor {
+  font-size: 50%;
 }

@@ -7,7 +7,6 @@ const WriteFilePlugin  = require('write-file-webpack-plugin'); // here so you ca
 module.exports = {
   name: 'client',
   target: 'web',
-  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=false&quiet=false&noInfo=false',
     'react-hot-loader/patch',
@@ -34,13 +33,21 @@ module.exports = {
 
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude(path) {
+          return path.indexOf('x50-story-generator') === -1 &&
+            path.indexOf('node_modules') !== -1;
+        },
+
         use: 'babel-loader',
       },
 
       {
         test: /\.less$/,
-        exclude: /node_modules/,
+        exclude(path) {
+          return path.indexOf('x50-story-generator') === -1 &&
+            path.indexOf('node_modules') !== -1;
+        },
+
         use: ExtractCssChunks.extract({
           use: [
             {
@@ -48,12 +55,18 @@ module.exports = {
               options: {
                 modules: true,
                 localIdentName: '[name]__[local]--[hash:base64:5]',
-              }
+              },
             },
 
             'less-loader',
           ],
         }),
+      },
+
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: 'css-loader',
       },
     ],
   },
@@ -70,21 +83,24 @@ module.exports = {
   },
 
   plugins: [
-    new WriteFilePlugin(),
+    new WriteFilePlugin(), /* Only needed for debug info. */
     new ExtractCssChunks(),
     new webpack.optimize.CommonsChunkPlugin({
       names: [ 'bootstrap', ], // needed to put webpack bootstrap code before chunks
       filename: '[name].js',
       minChunks: Infinity,
     }),
-
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
+
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+
+    new webpack.HashedModuleIdsPlugin(),
 
     new AutoDllPlugin({
       context: resolve(__dirname, '..'),

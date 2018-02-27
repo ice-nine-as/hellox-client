@@ -18,7 +18,6 @@ describe('getDefaultNavLinks unit tests.', () => {
 
   it('Calls makeLinkAction for each created element.', () => {
     const navLinks = getDefaultNavLinks();
-    console.log(navLinks.length);
     expect((makeLinkAction as Mock).mock.calls.length).toBe(navLinks.length);
   });
 

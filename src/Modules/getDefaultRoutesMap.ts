@@ -14,7 +14,7 @@ export function getDefaultRoutesMap(): RoutesMap {
   return ids.reduce<RoutesMap>((routesMap, id, index) => {
     routesMap[id] = {
       path: routes[index],
-      thunk: async () => {},
+      /* thunk: async () => {}, */
     };
 
     return routesMap;

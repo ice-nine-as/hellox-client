@@ -2,21 +2,25 @@ import {
   getDefaultNavLinks,
 } from '../Modules/getDefaultNavLinks';
 import {
-  NavBar,
+  ConnectedNavBar,
 } from './NavBar';
+import {
+  THeaderProps,
+} from '../TypeAliases/THeaderProps';
 
 import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/Header.less';
+const _styles = styles || {};
 
-export class Header extends React.PureComponent<{}> {
+export class Header extends React.PureComponent<THeaderProps> {
   render() {
     return (
-      <div className={(styles || {}).Header}>
-        <NavBar>
+      <div className={`${_styles.Header} Header`}>
+        <ConnectedNavBar>
           {getDefaultNavLinks()}
-        </NavBar>
+        </ConnectedNavBar>
       </div>
     );
   }

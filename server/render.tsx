@@ -22,10 +22,10 @@ import {
 import * as React          from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
-import flushChunks         from 'webpack-flush-chunks';
+import flushChunks from 'webpack-flush-chunks';
 
 // @ts-ignore
-import AmbientStyle from '../src/Styles/AmbientStyle';
+import AmbientStyle from '../src/Styles/AmbientStyle.css';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -40,16 +40,26 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
     // @ts-ignore
     next?: NextFunction)
   {
+    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)$/.test(req.url)) {
+      res.status(404);
+      res.end();
+      return;
+    }
+
     let store;
     try {
       store = await configureServerStore(req, res);
     } catch (e) {
-      console.log(strings.CONFIGURE_SERVER_STORE_FAILED, '\n\nThe error was:', e);
+      console.error(
+        strings.CONFIGURE_SERVER_STORE_FAILED,
+        '\n\nThe error was:\n',
+        e);
+
       throw e;
     }
 
     if (!store) {
-      /* no store means redirect was already served. */
+      /* No store means redirect was already served. */
       return;
     }
 
@@ -86,14 +96,14 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
 
     const responseStr =
       `<!DOCTYPE html>
-      <html>
+      <html lang="en">
         <head>
           <meta charset="utf-8">
           <title>X50</title>
           ${ambientStyleElement}
           ${styles}
         </head>
-        <body>
+        <body class="mobile">
           <script type="text/javascript" src="/static/vendor.js"></script>
           <div id="root">${appStr}</div>
           ${cssHash}

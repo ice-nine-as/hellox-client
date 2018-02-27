@@ -2,20 +2,20 @@ import {
   AboutLinkAction,
 } from '../Actions/Link/AboutLinkAction';
 import {
-  AskLinkAction,
-} from '../Actions/Link/AskLinkAction';
-import {
-  HeaderIcon,
-} from '../Components/HeaderIcon';
-import {
-  headerIconPath,
-} from '../Properties/headerIconPath';
+  FootnotesLinkAction,
+} from '../Actions/Link/FootnotesLinkAction';
 import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
 import {
-  ListenLinkAction,
-} from '../Actions/Link/ListenLinkAction';
+  ConnectedLanguageButton,
+} from '../Components/LanguageButton';
+import {
+  Languages,
+} from '../Enums/Languages';
+import {
+  Logo,
+} from '../Components/Logo';
 import {
   makeLinkAction,
 } from '../Modules/makeLinkAction';
@@ -23,66 +23,46 @@ import {
   NavLink,
 } from 'redux-first-router-link';
 import {
-  ReadWriteLinkAction,
-} from '../Actions/Link/ReadWriteLinkAction';
+  PodcastLinkAction,
+} from '../Actions/Link/PodcastLinkAction';
 import {
-  TalkLinkAction,
-} from '../Actions/Link/TalkLinkAction';
+  ReadDiscussLinkAction,
+} from '../Actions/Link/ReadDiscussLinkAction';
+import {
+  WriteLinkAction,
+} from '../Actions/Link/WriteLinkAction';
 
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/HeaderIcon.less';
-// @ts-ignore
 import styles from '../Styles/Components/NavBarItem.less';
+const _styles = styles || {};
 
 let key = -1;
-function getNewKey() {
-  return key += 1;
-}
+const getNewKey = () => key += 1;
 
 export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
   return Object.freeze([
     <NavLink
       to={makeLinkAction(HomeLinkAction)}
       exact={true}
-      className={(styles || {}).HeaderIconLink}
+      className={`${_styles.NavLinkHeaderIconLink} NavBarItem`}
       activeClassName="unused"
       key={getNewKey()}
     >
-      <HeaderIcon url={headerIconPath} />
+      <div className={_styles.NavLinkLogoContainer}>
+        <span className={_styles.NavLinkLogoImageContainer}>
+          <Logo />
+        </span>
+        
+        <span className={`${_styles.NavLinkLogoText} NavLinkLogoText`}>
+          Hello X
+        </span>
+      </div>
     </NavLink>,
 
     <NavLink
-      to={makeLinkAction(HomeLinkAction)}
-      exact={true}
-      key={getNewKey()}
-    >
-      Home
-    </NavLink>,
-
-    <NavLink
-      to={makeLinkAction(ReadWriteLinkAction)}
-      key={getNewKey()}
-    >
-      Read/Write
-    </NavLink>,
-
-    <NavLink
-      to={makeLinkAction(ListenLinkAction)}
-      key={getNewKey()}
-    >
-      Listen
-    </NavLink>,
-
-    <NavLink
-      to={makeLinkAction(TalkLinkAction)}
-      key={getNewKey()}
-    >
-      Talk
-    </NavLink>,
-
-    <NavLink
+      className="NavBarItem"
       to={makeLinkAction(AboutLinkAction)}
       key={getNewKey()}
     >
@@ -90,11 +70,50 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
     </NavLink>,
 
     <NavLink
-      to={makeLinkAction(AskLinkAction)}
+      className="NavBarItem"
+      to={makeLinkAction(PodcastLinkAction)}
       key={getNewKey()}
     >
-      Ask
+      Podcast
     </NavLink>,
+
+    <NavLink
+      className="NavBarItem"
+      to={makeLinkAction(WriteLinkAction)}
+      key={getNewKey()}
+    >
+      Write
+    </NavLink>,
+
+    <NavLink
+      className="NavBarItem"
+      to={makeLinkAction(ReadDiscussLinkAction)}
+      key={getNewKey()}
+    >
+      Read &amp; Discuss
+    </NavLink>,
+
+    <NavLink
+      className="NavBarItem"
+      to={makeLinkAction(FootnotesLinkAction)}
+      key={getNewKey()}
+    >
+      Footnotes
+    </NavLink>,
+
+    <span
+      className="NavBarItem LanguageButtonContainer"
+      key={getNewKey()}
+    >
+      {(Object as any).values(Languages).map((lang: Languages) => {
+        return (
+          <ConnectedLanguageButton
+            buttonLanguage={lang}
+            key={getNewKey()}
+          />
+        );
+      })}
+    </span>,
   ]);
 }
 

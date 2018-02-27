@@ -11,6 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "jsx":                              "react",
     "lib": [
+      "dom",
       "esnext",
       "webworker"
     ],
@@ -32,7 +33,7 @@
   },
 
   "exclude": [
-    "node_modules"
+    "node_modules/**/*"
   ],
 
   "include": [ "src/index.tsx" ]
