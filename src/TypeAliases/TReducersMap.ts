@@ -3,7 +3,7 @@ import {
 } from './TReducer';
 
 export type TReducersMap<T> = {
-  [key: string]: TReducer<T>;
+  readonly [key: string]: TReducer<T>;
 }
 
 export default TReducersMap;

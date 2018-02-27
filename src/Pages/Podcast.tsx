@@ -5,16 +5,16 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Listen.less';
+import styles from '../Styles/Pages/Podcast.less';
 
-export class Listen extends React.PureComponent<TPageProps> {
+export class Podcast extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={styles.Listen}>
+      <div className={styles.Podcast}>
         Listen.
       </div>
     );
   }
 }
 
-export default Listen;
+export default Podcast;

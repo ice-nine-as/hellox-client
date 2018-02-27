@@ -5,10 +5,10 @@ import {
   PageIdentifiers,
 } from '../../Enums/PageIdentifiers';
 
-export const AskLinkAction: ILinkAction = Object.freeze({
-  type: PageIdentifiers.Ask,
+export const ReadDiscussLinkAction: ILinkAction = Object.freeze({
+  type: PageIdentifiers.ReadDiscuss,
   payload: {},
   value: null,
 });
 
-export default AskLinkAction;
+export default ReadDiscussLinkAction;

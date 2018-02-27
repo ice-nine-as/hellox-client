@@ -22,6 +22,9 @@ import {
 import {
   TLanguageButtonOwnProps,
 } from '../TypeAliases/TLanguageButtonOwnProps';
+import {
+  TStoreProps,
+} from '../TypeAliases/TStoreProps';
 
 import * as React from 'react';
 
@@ -33,14 +36,25 @@ export class LanguageButton extends React.PureComponent<TLanguageButtonOwnProps 
   render() {
     return (
       <button
-        className={_styles.LanguageButton}
+        className={`${_styles.LanguageButton}${this.props.active ? ' ' + _styles.Active : ''}`}
         onClick={() => this.props.switchLanguage(this.props.buttonLanguage)}
       >
-        {this.props.buttonLanguage}
+        {this.props.buttonLanguage[0].toUpperCase() + this.props.buttonLanguage.slice(1)}
       </button>
     );
   }
 }
+
+export const mapStateToProps = ({
+  language,
+}: TStoreProps, {
+  buttonLanguage,
+}: {
+  buttonLanguage: Languages,
+}): TLanguageButtonOwnProps => ({
+  active: language === buttonLanguage,
+  buttonLanguage,
+});
 
 export const mapDispatchToProps = (dispatch: Dispatch<{}>): TLanguageButtonDispatchProps => ({
   switchLanguage(lang: Languages): IAppAction {
@@ -49,6 +63,6 @@ export const mapDispatchToProps = (dispatch: Dispatch<{}>): TLanguageButtonDispa
 });
 
 export const ConnectedLanguageButton =
-  connect(null, mapDispatchToProps)(LanguageButton);
+  connect(mapStateToProps, mapDispatchToProps)(LanguageButton);
 
 export default LanguageButton;

@@ -40,6 +40,12 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
     // @ts-ignore
     next?: NextFunction)
   {
+    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)$/.test(req.url)) {
+      res.status(404);
+      res.end();
+      return;
+    }
+
     let store;
     try {
       store = await configureServerStore(req, res);

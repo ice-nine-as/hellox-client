@@ -1,16 +1,12 @@
 import {
   LocationState,
 } from 'redux-first-router';
-import {
-  ViewportStates,
-} from '../Enums/ViewportStates';
 
 export type TAppOwnProps = {
-  location:      LocationState;
-  loading:       boolean;
-  done:          boolean;
-  error:         boolean;
-  viewportState: ViewportStates;
+  done:     boolean;
+  error:    boolean;
+  loading:  boolean;
+  location: LocationState;
 }
 
 export default TAppOwnProps;

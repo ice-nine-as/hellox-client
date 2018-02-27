@@ -1,14 +1,12 @@
 export enum RouteIdentifiers {
   About       = '/about/',
-  Ask         = '/ask/',
+  Footnotes   = '/footnotes/',
   Home        = '/',
-  Listen      = '/listen/',
-  Login       = '/login/',
-  Logout      = '/logout/',
   NotFound    = '/notFound/',
-  ReadWrite   = '/readWrite/',
+  Podcast     = '/podcast/',
+  ReadDiscuss = '/readDiscuss/',
   ServerError = '/serverError/',
-  Talk        = '/talk/'
+  Write       = '/write/',
 }
 
 export default RouteIdentifiers;

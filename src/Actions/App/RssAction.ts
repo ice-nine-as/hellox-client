@@ -6,9 +6,10 @@ import {
 } from './IRssAction';
 
 // @ts-ignore
-export const RssAction: Readonly<IRssAction> = Object.freeze({
-  type:  AppActionTypes.Rss,
-  value: null,
+export const RssAction: IRssAction = Object.freeze({
+  type:    AppActionTypes.Rss,
+  subtype: null,
+  value:   null,
 });
 
 export default RssAction;

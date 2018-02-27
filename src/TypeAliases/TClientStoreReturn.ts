@@ -6,12 +6,12 @@ import {
   RouteThunk,
 } from 'redux-first-router';
 import {
-  TAppOwnProps,
-} from './TAppOwnProps';
+  TStoreProps,
+} from './TStoreProps';
 
 export type TClientStoreReturn = {
-  store: Store<TAppOwnProps>;
-  thunk: (store: Store<TAppOwnProps>) => Promise<Nullable<RouteThunk>>;
+  store: Store<TStoreProps>;
+  thunk: (store: Store<TStoreProps>) => Promise<Nullable<RouteThunk>>;
 };
 
 export default TClientStoreReturn;

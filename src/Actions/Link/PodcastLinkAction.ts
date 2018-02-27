@@ -5,10 +5,10 @@ import {
   PageIdentifiers,
 } from '../../Enums/PageIdentifiers';
 
-export const LogoutLinkAction: ILinkAction = Object.freeze({
-  type: PageIdentifiers.Logout,
+export const PodcastLinkAction: ILinkAction = Object.freeze({
+  type: PageIdentifiers.Podcast,
   payload: {},
   value: null,
 });
 
-export default LogoutLinkAction;
+export default PodcastLinkAction;

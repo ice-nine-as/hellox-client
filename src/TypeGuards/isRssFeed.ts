@@ -35,21 +35,11 @@ export const isRssFeed = (maybe: any): maybe is IRssFeed => {
     return false;
   }
 
-  if (typeof maybe.id !== 'string') {
-    console.log(strings.ID_INVALID);
-    return false;
-  } 
-  
   if (typeof maybe.title !== 'string' || maybe.title.length === 0) {
     console.log(strings.TITLE_INVALID);
     return false;
   }
     
-  if (typeof maybe.description !== 'string') {
-    console.log(strings.DESCRIPTION_INVALID);
-    return false;
-  }
-
   if (!Array.isArray(maybe.items)) {
     console.log(strings.ITEMS_INVALID);
     return false;

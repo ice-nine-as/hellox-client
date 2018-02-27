@@ -46,6 +46,9 @@ import {
 import {
   ViewportStateAction,
 } from '../Actions/App/ViewportStateAction';
+import {
+  ViewportStates,
+} from '../Enums/ViewportStates';
 
 import MediaQuery from 'react-responsive';
 
@@ -53,7 +56,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/App.less';
-import { ViewportStates } from '../Enums/ViewportStates';
 const _styles = styles || {};
 
 export class AppConstructor extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
@@ -167,14 +169,12 @@ export const mapStateToProps = ({
   error,
   loading,
   location,
-  viewportState,
 }: TAppOwnProps) => {
   return {
     done,
     error,
     loading,
     location,
-    viewportState,
   };
 };
 

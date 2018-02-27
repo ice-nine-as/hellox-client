@@ -2,8 +2,8 @@ import {
   AboutLinkAction,
 } from '../Actions/Link/AboutLinkAction';
 import {
-  AskLinkAction,
-} from '../Actions/Link/AskLinkAction';
+  FootnotesLinkAction,
+} from '../Actions/Link/FootnotesLinkAction';
 import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
@@ -14,9 +14,6 @@ import {
   Languages,
 } from '../Enums/Languages';
 import {
-  ListenLinkAction,
-} from '../Actions/Link/ListenLinkAction';
-import {
   Logo,
 } from '../Components/Logo';
 import {
@@ -26,11 +23,14 @@ import {
   NavLink,
 } from 'redux-first-router-link';
 import {
+  PodcastLinkAction,
+} from '../Actions/Link/PodcastLinkAction';
+import {
+  ReadDiscussLinkAction,
+} from '../Actions/Link/ReadDiscussLinkAction';
+import {
   WriteLinkAction,
 } from '../Actions/Link/WriteLinkAction';
-import {
-  TalkLinkAction,
-} from '../Actions/Link/TalkLinkAction';
 
 import * as React from 'react';
 
@@ -63,11 +63,18 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
 
     <NavLink
       className="NavBarItem"
-      to={makeLinkAction(HomeLinkAction)}
-      exact={true}
+      to={makeLinkAction(AboutLinkAction)}
       key={getNewKey()}
     >
-      Home
+      About
+    </NavLink>,
+
+    <NavLink
+      className="NavBarItem"
+      to={makeLinkAction(PodcastLinkAction)}
+      key={getNewKey()}
+    >
+      Podcast
     </NavLink>,
 
     <NavLink
@@ -80,45 +87,25 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
 
     <NavLink
       className="NavBarItem"
-      to={makeLinkAction(ListenLinkAction)}
+      to={makeLinkAction(ReadDiscussLinkAction)}
       key={getNewKey()}
     >
-      Listen
+      Read &amp; Discuss
     </NavLink>,
 
     <NavLink
       className="NavBarItem"
-      to={makeLinkAction(TalkLinkAction)}
+      to={makeLinkAction(FootnotesLinkAction)}
       key={getNewKey()}
     >
-      Talk
+      Footnotes
     </NavLink>,
 
-    <NavLink
-      className="NavBarItem"
-      to={makeLinkAction(AboutLinkAction)}
-      key={getNewKey()}
-    >
-      About
-    </NavLink>,
-
-    <NavLink
-      className="NavBarItem"
-      to={makeLinkAction(AskLinkAction)}
-      key={getNewKey()}
-    >
-      Ask
-    </NavLink>,
-
-    <div
+    <span
       className="NavBarItem LanguageButtonContainer"
       key={getNewKey()}
     >
       {(Object as any).values(Languages).map((lang: Languages) => {
-        if (lang === Languages.Unknown) {
-          return null;
-        }
-
         return (
           <ConnectedLanguageButton
             buttonLanguage={lang}
@@ -126,7 +113,7 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
           />
         );
       })}
-    </div>,
+    </span>,
   ]);
 }
 

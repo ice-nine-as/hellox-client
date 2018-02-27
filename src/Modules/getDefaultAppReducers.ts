@@ -14,8 +14,8 @@ import {
   loadingReducer,
 } from '../Reducers/loadingReducer';
 import {
-  rssReducer,
-} from '../Reducers/rssReducer';
+  feedsReducer,
+} from '../Reducers/Feed/feedReducer';
 import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
@@ -23,14 +23,14 @@ import {
   viewportStateReducer,
 } from '../Reducers/viewportStateReducer';
 
-export const getDefaultAppReducers = (): TReducersMap<any> => {
+export const getDefaultAppReducers = (): Readonly<TReducersMap<any>> => {
   return Object.freeze({
     done:          doneReducer,
     error:         errorReducer,
     hamburgerOpen: hamburgerOpenReducer,
     language:      languageReducer,
     loading:       loadingReducer,
-    rss:           rssReducer,
+    feeds:         feedsReducer,
     viewportState: viewportStateReducer,
   });
 }

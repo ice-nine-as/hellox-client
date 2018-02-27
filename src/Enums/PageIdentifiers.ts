@@ -1,16 +1,14 @@
 export enum PageIdentifiers {
   About       = 'About',
-  Ask         = 'Ask',
+  Footnotes   = 'Footnotes',
   Home        = 'Home',
-  Listen      = 'Listen',
-  Login       = 'Login',
-  Logout      = 'Logout',
   NotFound    = 'NotFound',
+  Podcast     = 'Podcast',
+  ReadDiscuss = 'ReadDiscuss',
   ServerError = 'ServerError',
-  Talk        = 'Talk',
   Write       = 'Write',
 }
 
-export const defaultPageIdentifier: PageIdentifiers.Home = PageIdentifiers.Home;
+export const defaultPageIdentifier = PageIdentifiers.Home;
 
 export default PageIdentifiers;

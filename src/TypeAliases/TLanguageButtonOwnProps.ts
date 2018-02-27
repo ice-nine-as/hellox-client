@@ -3,6 +3,7 @@ import {
 } from '../Enums/Languages';
 
 export type TLanguageButtonOwnProps = {
+  active: boolean;
   buttonLanguage: Languages;
 };
 

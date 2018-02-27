@@ -20,17 +20,17 @@ import {
   RoutesMap,
 } from 'redux-first-router';
 import {
-  TAppOwnProps,
-} from '../TypeAliases/TAppOwnProps';
-import {
   TClientStoreReturn,
 } from '../TypeAliases/TClientStoreReturn';
+import {
+  TStoreProps,
+} from '../TypeAliases/TStoreProps';
 
 import thunkMiddleware from 'redux-thunk';
 
 export function configureClientStore(
   history:        History,
-  preloadedState: TAppOwnProps = {} as TAppOwnProps,
+  preloadedState: Partial<TStoreProps> = {},
   routesMap:      RoutesMap = getDefaultRoutesMap()): TClientStoreReturn
 {
   const {
@@ -40,7 +40,7 @@ export function configureClientStore(
     thunk,
   } = connectRoutes(history, routesMap);
 
-  const rootReducer = combineReducers<TAppOwnProps>({
+  const rootReducer = combineReducers<TStoreProps>({
     ...getDefaultReducers(),
     location: locationReducer,
   });
@@ -48,9 +48,9 @@ export function configureClientStore(
   const middlewares = applyMiddleware(thunkMiddleware, middleware);
   const enhancers   = composeWithDevTools(enhancer, middlewares);
 
-  const store = createStore<TAppOwnProps>(
+  const store = createStore<TStoreProps>(
     rootReducer,
-    preloadedState,
+    preloadedState as TStoreProps,
     enhancers);
 
   return {

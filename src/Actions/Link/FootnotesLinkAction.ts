@@ -5,10 +5,10 @@ import {
   PageIdentifiers,
 } from '../../Enums/PageIdentifiers';
 
-export const ListenLinkAction: ILinkAction = Object.freeze({
-  type: PageIdentifiers.Listen,
+export const FootnotesLinkAction: ILinkAction = Object.freeze({
+  type: PageIdentifiers.Footnotes,
   payload: {},
   value: null,
 });
 
-export default ListenLinkAction;
+export default FootnotesLinkAction;

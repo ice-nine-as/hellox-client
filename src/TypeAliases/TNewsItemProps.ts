@@ -4,7 +4,6 @@ import {
 
 export type TNewsItemProps = {
   html:     string;
-  language: string;
   link:     string;
   pubDate:  Date;
   title:    string;
