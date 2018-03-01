@@ -5,38 +5,38 @@ import {
   isLinkAction,
 } from '../../../src/TypeGuards/isLinkAction';
 import {
-  LogoutLinkAction,
-} from '../../../src/Actions/Link/LogoutLinkAction';
-import {
   PageIdentifiers,
 } from '../../../src/Enums/PageIdentifiers';
+import {
+  WriteLinkAction,
+} from '../../../src/Actions/Link/WriteLinkAction';
 
-describe('LogoutLinkAction unit tests.', () => {
+describe('WriteLinkAction unit tests.', () => {
   it('Has the correct type.', () => {
-    expect(LogoutLinkAction.type).toBe(PageIdentifiers.Logout);
+    expect(WriteLinkAction.type).toBe(PageIdentifiers.Write);
   });
 
   it('Defaults to a value of null.', () => {
-    expect(LogoutLinkAction.value).toBe(null);
+    expect(WriteLinkAction.value).toBe(null);
   });
 
   it('Disallows changing of the type.', () => {
-    const func = () => (<any>LogoutLinkAction.type) = 'foo';
+    const func = () => (<any>WriteLinkAction.type) = 'foo';
     expect(func).toThrow();
   });
 
   it('Disallows changing of the value.', () => {
-    const func = () => (<any>LogoutLinkAction.value) = 'foo';
+    const func = () => (<any>WriteLinkAction.value) = 'foo';
     expect(func).toThrow();
   });
 });
 
-describe('LogoutLinkAction integration tests.', () => {
+describe('ReadWriteLinkAction integration tests.', () => {
   it('Meets the isAction type guard.', () => {
-    expect(isAction(LogoutLinkAction)).toBe(true);
+    expect(isAction(WriteLinkAction)).toBe(true);
   });
 
   it('Meets the isLinkAction type guard.', () => {
-    expect(isLinkAction(LogoutLinkAction)).toBe(true);
+    expect(isLinkAction(WriteLinkAction)).toBe(true);
   });
-})
+});

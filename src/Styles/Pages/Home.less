@@ -1,120 +1,243 @@
+@import "../KeyColors.less";
+
 .Home {
   position: relative; 
   display: block;
-  color: white;
-  top: -125px;
+  color: @white;
+
+  .Section {
+    position: relative;
+    font-weight: 100;
+    padding: 20px;
+
+    &.First {
+      height: 1020px;
+      top: -110px;
+      padding-top: 110px;
+      margin-bottom: -160px;
+      overflow-x: hidden;
+        
+      .LogoContainer {
+        position: relative;
+        display: inline-block;
+        width: 175px;
+        height: 201px;
+
+        :global(.monitor) & {
+          width: 250px;
+          height: 289px;
+        }
+      }
+      
+      .Header {
+        position: relative;
+        font-size: 18pt;
+        margin-top: 30px;
+        margin-bottom: 25px;
+        
+        :global(.monitor) & {
+          font-size: 48pt;
+        }
+      }
+
+      .AllLinksContainer {
+        display: flex;
+        justify-content: center;
+
+        .LinkBox {
+          display: block;
+
+          :global(.monitor) & {
+            position: relative;
+            display: inline-block;
+            margin-left: 65px;
+            margin-right: 65px;
+          }
+
+          @mobile-margin-top: 350px;
+          @mobile-margin-bottom: 100px;
+
+          &.Write {
+            float: left;
+            width: 45%;
+            margin-top: @mobile-margin-top;
+            margin-bottom: @mobile-margin-bottom;
+
+            :global(.monitor) & {
+              float: none;
+              width: inherit;
+              margin-left: 20px;
+              margin-top: 0;
+            }
+          }
+
+          &.Podcast {
+            position: absolute;
+            left: 0;
+            width: 100%;
+
+            :global(.monitor) & {
+              position: relative;
+              width: inherit;
+              left: inherit;
+              margin-left: 0;
+            }
+          }
+
+          &.Read {
+            float: right;
+            width: 45%;
+            margin-top: @mobile-margin-top;
+            margin-bottom: @mobile-margin-bottom;
+
+            :global(.monitor) & {
+              float: none;
+              width: inherit;
+              margin-top: 0;
+            }
+          }
+
+          .LinkTitle {
+            position: relative;
+            display: block;
+            font-size: 24pt;
+            
+            :global(.monitor) & {
+              font-size: 34pt;
+            }
+          
+            &.Podcast {
+              color: inherit;
+            }
+            
+            &.Write {
+              color: inherit;
+            }
+            
+            &.ReadDiscuss {
+              color: inherit;
+            }
+          }
+          
+          .LinkSubtitle {
+            position: relative;
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 18pt;
+            
+            :global(.monitor) & {
+              font-size: 24pt;
+            }
+            
+            &.Podcast {
+              color: inherit;
+            }
+            
+            &.MorePodcasts {
+              color: inherit;
+            }
+            
+            &.Write {
+              color: inherit;
+            }
+            
+            &.ReadDiscuss {
+              color: inherit;
+            }
+          }
+          
+          .LinkContainer {
+            display: inline-block;
+          }
+  
+          .Link {
+            position: relative;
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+      }
+    }
+
+    &.Second {
+      background: @red;
+      padding-left: 25px;
+      padding-right: 25px;
+
+      .ExplainerParagraph {
+        position: relative;
+        max-width: 675px;
+        margin-left: auto;
+        margin-right: auto;
+        color: @purple;
+        font-size: 18pt;
+
+        :global(.monitor) & {
+          font-size: 24pt;
+        }
+      }
+
+      .LinkContainer {
+        display: flex;
+        justify-content: space-around;
+        width: 171px;
+        height: 42px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid @white;
+
+        .Link {
+          &.About {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: @white;
+            text-decoration: none;
+
+            .LinkText {
+              display: inline-block;
+              margin-top: auto;
+              margin-bottom: auto;
+            }
+          }
+        }
+      }
+
+      .QuoteContainer {
+        position: relative;
+        margin-top: 50px;
+
+        .QuoteIconContainer {
+          position: relative;
+          width: 49px;
+          height: 34px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .Quote {
+          display: inline-block;
+          margin-top: 30px;
+          margin-bottom: 60px;
+          font-size: 24pt;
+        }
+      }
+    }
+
+    &.Third {
+      color: @dark-purple;
+    }
+  }
 }
 
-.HomeSection {
-  padding: 20px;
-}
-
-.HomeFirstSection {
-  padding-top: 125px;
-  padding-bottom: 115px;
-  background-image: url('https://s3.amazonaws.com/x50/HelloX_Landing_textures01_redigert_test.png');
-  background-size: cover;
-}
-
-.HomeIconContainer {
-  position: relative;
-  display: inline-block;
-  justify-content: space-around;
-  width: 50%;
-  margin-top: 50px;
-}
-
-:global(.monitor) .HomeIconContainer {
-  width: 25%;
-}
-
-.HomeHeader {
-  font-size: 240%;
-  font-weight: 100;
-  margin-top: 0.5em;
-  margin-bottom: 0;
-}
-
-.HomeParagraph {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.HomeExplainerTitle {
-  display: inline-block;
-  margin-top: 200px;
-  font-size: 120%;
-  font-weight: 700;
-}
-
-.HomePodcastExplainerTitle {
-  display: inherit;
-}
-
-.HomePodcastExplainer {
-  display: block;
-}
-
-.HomeStoryGeneratorExplainerTitle {
-  display: inherit;
-}
-
-.HomeStoryGeneratorExplainer {
-  display: inherit;
-}
-
-.HomeStoryGeneratorThemeContainer {
-  display: block;
-}
-
-.HomeStoryGeneratorTheme {
-  display: block;
-  margin-top: 15px;
-}
-
-.HomeStoryGeneratorLinkContainer {
-  display: inline-block;
-  width: 35%;
-}
-
-.HomeWhatIsHelloXSection {
-  display: inline-block;
-  width: 100%;
-  background: rgb(200, 0, 0);
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-top: 140px;
-  padding-bottom: 140px;
-  box-sizing: border-box;
-}
-
-.HomeWhatIsHelloX {
-  border: 3px solid white;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 70px;
-  padding-right: 70px;
-  font-size: 85%;
-  font-weight: 100;
-}
-
-.HomeNewsSection {
-  position: relative;
-  padding-top: 100px;
-  padding-bottom: 125px;
-  background: rgb(250, 250, 255);
-  color: black;
-  font-size: 125%;
-}
-
-.HomeLatestNewsTitle {
-  margin-top: 0;
-  padding-left: 30px;
-  text-align: left;
-  font-weight: 100;
-}
-
-.Home + :global(.Footer) {
-  position: relative;
-  top: -125px;
+@media (max-width: 465px) {
+  .Section.First .LinkBox.Read .LinkSubtitle {
+    line-height: 2.25;
+  }
 }

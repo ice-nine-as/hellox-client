@@ -1,6 +1,9 @@
 import {
-  IRssFeed,
-} from '../Interfaces/IRssFeed';
+  AboutLinkAction,
+} from '../Actions/Link/AboutLinkAction';
+import {
+  HomeBackgroundImage,
+} from '../Components/HomeBackgroundImage';
 import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
@@ -8,17 +11,41 @@ import {
   Logo,
 } from '../Components/Logo';
 import {
-  Podcast,
-} from '../Components/Podcast';
+  LogoStates,
+} from '../Enums/LogoStates';
+import {
+  makeLinkAction,
+} from '../Modules/makeLinkAction';
+import {
+  NavLink,
+} from 'redux-first-router-link';
+import {
+  PodcastLinkAction,
+} from '../Actions/Link/PodcastLinkAction';
+import {
+  PodcastIcon,
+} from '../Components/Icon/PodcastIcon';
+import {
+  QuoteIcon,
+} from '../Components/Icon/QuoteIcon';
 import {
   connect,
 } from 'react-redux';
 import {
-  StoryGeneratorLink,
-} from '../Components/StoryGeneratorLink';
+  ReadDiscussLinkAction,
+} from '../Actions/Link/ReadDiscussLinkAction';
+import {
+  ReadDiscussIcon,
+} from '../Components/Icon/ReadDiscussIcon';
 import {
   THomePageProps,
 } from '../TypeAliases/THomePageProps';
+import {
+  WriteLinkAction,
+} from '../Actions/Link/WriteLinkAction';
+import {
+  WriteIcon,
+} from '../Components/Icon/WriteIcon';
 
 import * as React from 'react';
 
@@ -29,58 +56,114 @@ const _styles = styles || {};
 export class Home extends React.PureComponent<THomePageProps> {
   render() {
     return (
-      <article className={_styles.Home}>
-        <section className={`${_styles.HomeFirstSection} ${_styles.HomeSection} `}>
-          <div className={_styles.HomeIconContainer}>
-            <Logo />
+      <article className={`${_styles.Home} Page`}>
+        <section className={`${_styles.Section} ${_styles.First}`}>
+          <HomeBackgroundImage />
+
+          <div className={_styles.LogoContainer}>
+            <Logo state={LogoStates.Normal} />
           </div>
 
-          <h1 className={_styles.HomeHeader}>
+          <h1 className={_styles.Header}>
             Imagine the lives of the future
           </h1>
 
-          <strong className={`${_styles.HomePodcastExplainerTitle} ${_styles.HomeExplainerTitle}`}>
-            PODCAST
-          </strong>
+          <div className={_styles.AllLinksContainer}>
+            <div className={`${_styles.LinkBox} ${_styles.Write}`}>
+              <h2 className={`${styles.LinkTitle} ${_styles.Write}`}>
+                WRITE
+              </h2>
 
-          <p className={`${_styles.HomePodcastExplainer} ${_styles.HomeParagraph}`}>
-            Explainer about podcasts. Large businesses require a lot of IT
-            infrastructure and a department.
-          </p>
+              <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
+                Add your vision
+              </h3>
 
-          <Podcast episode={1} />
+              <div className={_styles.LinkContainer}>
+                <NavLink
+                  className={`${_styles.Link} ${_styles.Write}`}
+                  to={makeLinkAction(WriteLinkAction)}
+                >
+                  <WriteIcon />
+                </NavLink>
+              </div>
+            </div>
 
-          <strong className={`${styles.HomeStoryGeneratorExplainerTitle} ${_styles.HomeExplainerTitle}`}>
-            WRITE
-          </strong>
+            <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
+              <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>
+                PODCAST
+              </h2>
 
-          <p className={`${_styles.HomeStoryGeneratorExplainer} ${_styles.HomeParagraph}`}>
-            Explainer about the story generator. Large businesses require a lot
-            of infrastructure and a department.
-          </p>
+              <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
+                #03 Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+              </h3>
 
-          <p className={`${_styles.HomeStoryGeneratorThemeContainer} ${_styles.HomeParagraph}`}>
-            Current theme
-            
-            <span className={_styles.HomeStoryGeneratorTheme}>
-              Is current theme still used here?
-            </span>
-          </p>
+              <div className={_styles.LinkContainer}>
+                <NavLink
+                  className={`${_styles.Link} ${_styles.Podcast}`}
+                  to={makeLinkAction(PodcastLinkAction)}
+                >
+                  <PodcastIcon />
+                </NavLink>
 
-          <div className={_styles.HomeStoryGeneratorLinkContainer}>
-            <StoryGeneratorLink />
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts}`}>
+                  More podcasts
+                </h3>
+              </div>
+            </div>
+
+            <div className={`${_styles.LinkBox} ${_styles.Read}`}>
+              <h2 className={`${styles.LinkTitle} ${_styles.Read}`}>
+                READ
+              </h2>
+
+              <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
+                Discuss
+              </h3>
+
+              <div className={_styles.LinkContainer}>
+                <NavLink
+                  className={`${_styles.Link} ${_styles.Write}`}
+                  to={makeLinkAction(ReadDiscussLinkAction)}
+                >
+                  <ReadDiscussIcon />
+                </NavLink>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className={`${_styles.HomeWhatIsHelloXSection} ${_styles.HomeSection}`}>
-          <span className={_styles.HomeWhatIsHelloX}>
-            WHAT IS HELLO X
-          </span>
+        <section className={`${_styles.Section} ${_styles.Second}`}>
+          <p className={_styles.ExplainerParagraph}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+            enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea.
+          </p>
+
+          <div className={`${_styles.LinkContainer} ${_styles.About}`}>
+            <NavLink
+              className={`${_styles.Link} ${_styles.About}`}
+              to={makeLinkAction(AboutLinkAction)}
+            >
+              <span className={_styles.LinkText}>GO TO ABOUT</span>
+            </NavLink>
+          </div>
+
+          <div className={_styles.QuoteContainer}>
+            <div className={_styles.QuoteIconContainer}>
+              <QuoteIcon />
+            </div>
+
+            <span className={_styles.Quote}>
+              What is the loop of Creation? How is there something from
+              nothing?
+            </span>
+          </div>
         </section>
 
-        <section className={`${_styles.HomeNewsSection} ${_styles.HomeSection}`}>
-          <h2 className={_styles.HomeLatestNewsTitle}>
-            Latest news
+        <section className={`${_styles.Section} ${_styles.Third}`}>
+          <h2 className={_styles.LatestNewsTitle}>
+            What's up?
           </h2>
 
           <ConnectedLatestNews />
@@ -92,13 +175,8 @@ export class Home extends React.PureComponent<THomePageProps> {
 
 export const mapStateToProps = ({
   page,
-  rss,
-}: {
-  page: string,
-  rss: IRssFeed,
-}) => ({
+}: THomePageProps) => ({
   page,
-  rss,
 });
 
 export const ConnectedHome = connect(mapStateToProps)(Home);

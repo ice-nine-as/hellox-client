@@ -18,7 +18,8 @@ describe('getDefaultNavLinks unit tests.', () => {
 
   it('Calls makeLinkAction for each created element.', () => {
     const navLinks = getDefaultNavLinks();
-    expect((makeLinkAction as Mock).mock.calls.length).toBe(navLinks.length);
+    /* The last item is the language button container, which aren't page links. */ 
+    expect((makeLinkAction as Mock).mock.calls.length).toBe(navLinks.length - 1);
   });
 
   it('Cannot be added to.', () => {

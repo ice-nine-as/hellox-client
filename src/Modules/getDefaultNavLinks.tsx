@@ -17,6 +17,9 @@ import {
   Logo,
 } from '../Components/Logo';
 import {
+  LogoStates,
+} from '../Enums/LogoStates';
+import {
   makeLinkAction,
 } from '../Modules/makeLinkAction';
 import {
@@ -52,11 +55,7 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
     >
       <div className={_styles.NavLinkLogoContainer}>
         <span className={_styles.NavLinkLogoImageContainer}>
-          <Logo />
-        </span>
-        
-        <span className={`${_styles.NavLinkLogoText} NavLinkLogoText`}>
-          Hello X
+          <Logo state={LogoStates.Small} />
         </span>
       </div>
     </NavLink>,

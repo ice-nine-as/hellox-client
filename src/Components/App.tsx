@@ -58,7 +58,7 @@ import * as React from 'react';
 import styles from '../Styles/Components/App.less';
 const _styles = styles || {};
 
-export class AppConstructor extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
+export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
   constructor(props: TAppOwnProps & TAppDispatchProps) {
     super(props);
 
@@ -198,6 +198,6 @@ export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
   };
 };
 
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppConstructor);
+export const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default App;

@@ -7,6 +7,9 @@ import {
 import {
   RouteIdentifiers,
 } from '../../src/Enums/RouteIdentifiers';
+import {
+  TRouteProps,
+} from '../../src/TypeAliases/TRouteProps';
 
 describe('getDefaultRoutesMap unit tests.', () => {
   it('Returns a RoutesMap with PageIdentifiers keys as keys.', () => {
@@ -17,7 +20,8 @@ describe('getDefaultRoutesMap unit tests.', () => {
   it('Returns a RoutesMap with RouteIdentifiers values as path properties.', () => {
     const routesMap = getDefaultRoutesMap();
     const routesMapValues = Object.keys(routesMap).map((route) => {
-      return routesMap[route].path;
+      /* No string routes are used. */
+      return (routesMap[route] as TRouteProps).path;
     });
 
     const routeIdentifierValues = Object.keys(RouteIdentifiers).map((route) => {
@@ -27,6 +31,7 @@ describe('getDefaultRoutesMap unit tests.', () => {
     expect(routesMapValues).toEqual(routeIdentifierValues);
   });
 
+  /* Not using thunks currently.
   it('Includes a thunk in each route object.', () => {
     const routesMap = getDefaultRoutesMap();
     const routesMapThunkCount = Object.keys(routesMap).map((route) => {
@@ -36,5 +41,5 @@ describe('getDefaultRoutesMap unit tests.', () => {
     });
 
     expect(Object.keys(routesMap).length).toBe(routesMapThunkCount)
-  });
+  });*/
 });

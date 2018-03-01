@@ -1,14 +1,12 @@
 export enum PageTitles {
   About       = 'About',
-  Ask         = 'Ask',
+  Footnotes   = 'Footnotes',
   Home        = 'Home',
-  Listen      = 'Listen',
-  Login       = 'Login',
-  Logout      = 'Logout',
   NotFound    = 'Not Found (404)',
-  ReadWrite   = 'Read/Write',
+  Podcast     = 'Podcast',
+  ReadDiscuss = 'Read/Discuss',
   ServerError = 'Server Error (500)',
-  Talk        = 'Talk',
+  Write       = 'Write',
 }
 
 export default PageTitles;

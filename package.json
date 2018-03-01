@@ -93,6 +93,7 @@
     "negotiator": "^0.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-lazy-load": "^3.0.13",
     "react-redux": "^5.0.7",
     "react-responsive": "^4.0.4",
     "react-universal-component": "^2.8.2",

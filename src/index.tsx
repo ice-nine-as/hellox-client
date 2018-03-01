@@ -1,5 +1,5 @@
 import {
-  App,
+  ConnectedApp,
 } from './Components/App';
 import {
   configureClientStore,
@@ -39,7 +39,7 @@ export const init = () => {
   const ProviderContainer = require('./Components/ProviderContainer')
     .ProviderContainer;
   render(<ProviderContainer store={store}>
-          <App />
+          <ConnectedApp />
         </ProviderContainer>);
 
   /* istanbul ignore next */
@@ -51,7 +51,7 @@ export const init = () => {
         .ProviderContainer;
 
       render(<ProviderContainer store={store}>
-              <App />
+              <ConnectedApp />
             </ProviderContainer>);
     });
   }

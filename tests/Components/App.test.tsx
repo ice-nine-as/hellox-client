@@ -20,12 +20,7 @@ import {
 } from '../../src/Components/Universal';
 
 import {
-  TAppProps
-} from '../../src/TypeAliases/TAppProps';
-
-import {
   App,
-  AppConstructor,
 } from '../../src/Components/App';
 
 import {
@@ -47,7 +42,7 @@ describe('AppConstructor unit tests.', () => {
     } as any;
 
     const renderer = createRenderer();
-    renderer.render(<AppConstructor {...props} />);
+    renderer.render(<App {...props} />);
 
     expect((React as any).PureComponent.mock.calls).toEqual([
       props,
