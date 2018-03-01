@@ -8,35 +8,35 @@ import {
   PageIdentifiers,
 } from '../../../src/Enums/PageIdentifiers';
 import {
-  TalkLinkAction,
-} from '../../../src/Actions/Link/TalkLinkAction';
+  ReadDiscussLinkAction,
+} from '../../../src/Actions/Link/ReadDiscussLinkAction';
 
-describe('TalkLinkAction unit tests.', () => {
+describe('ReadDiscussLinkAction unit tests.', () => {
   it('Has the correct type.', () => {
-    expect(TalkLinkAction.type).toBe(PageIdentifiers.Talk);
+    expect(ReadDiscussLinkAction.type).toBe(PageIdentifiers.ReadDiscuss);
   });
 
   it('Defaults to a value of null.', () => {
-    expect(TalkLinkAction.value).toBe(null);
+    expect(ReadDiscussLinkAction.value).toBe(null);
   });
 
   it('Disallows changing of the type.', () => {
-    const func = () => (<any>TalkLinkAction.type) = 'foo';
+    const func = () => (<any>ReadDiscussLinkAction.type) = 'foo';
     expect(func).toThrow();
   });
 
   it('Disallows changing of the value.', () => {
-    const func = () => (<any>TalkLinkAction.value) = 'foo';
+    const func = () => (<any>ReadDiscussLinkAction.value) = 'foo';
     expect(func).toThrow();
   });
 });
 
-describe('ReadWriteLinkAction integration tests.', () => {
+describe('ReadDiscussLinkAction integration tests.', () => {
   it('Meets the isAction type guard.', () => {
-    expect(isAction(TalkLinkAction)).toBe(true);
+    expect(isAction(ReadDiscussLinkAction)).toBe(true);
   });
 
   it('Meets the isLinkAction type guard.', () => {
-    expect(isLinkAction(TalkLinkAction)).toBe(true);
+    expect(isLinkAction(ReadDiscussLinkAction)).toBe(true);
   });
-});
+})

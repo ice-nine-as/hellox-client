@@ -7,15 +7,9 @@ html, body, #root {
   padding: 0;
   margin: 0;
   border: 0;
-  /* TODO: remove after design is complete. */
-  background: gray;
 }
 
 #root {
   box-sizing: border-box;
   overflow-y: scroll;
-}
-
-.monitor {
-  font-size: 50%;
 }

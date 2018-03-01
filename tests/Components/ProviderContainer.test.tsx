@@ -15,7 +15,9 @@ import {
 
 import * as React from 'react';
 import { Store } from 'redux';
-import { TAppProps } from '../../src/TypeAliases/TAppProps';
+import {
+  TStoreProps,
+} from '../../src/TypeAliases/TStoreProps';
 
 import {
   ProviderContainer,
@@ -26,7 +28,7 @@ type Mock = jest.Mock;
 describe('NavBar component unit tests.', () => {
   it('Renders shallowly.', () => {
     const renderer = createShallowRenderer();
-    const func = () => renderer.render(<ProviderContainer store={{} as Store<TAppProps>} />);
+    const func = () => renderer.render(<ProviderContainer store={{} as Store<TStoreProps>} />);
     expect(func).not.toThrow();
   });
 
@@ -46,7 +48,7 @@ describe('NavBar component unit tests.', () => {
 describe('ProviderContainer component integration tests.', () => {
   it('Renders deeply.', () => {
     const func = () => {
-      const renderer = createDeepRenderer(<ProviderContainer store={{} as Store<TAppProps>} />);
+      const renderer = createDeepRenderer(<ProviderContainer store={{} as Store<TStoreProps>} />);
       return renderer.toJSON();
     };
 
@@ -54,7 +56,7 @@ describe('ProviderContainer component integration tests.', () => {
   });
 
   it('Renders Provider -> AppContainer -> props.children.', () => {
-    const renderer = createDeepRenderer(<ProviderContainer store={{} as Store<TAppProps>} />);
+    const renderer = createDeepRenderer(<ProviderContainer store={{} as Store<TStoreProps>} />);
 
     const component = renderer.toTree();
     expect(component.rendered.props.children).toMatchObject([

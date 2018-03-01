@@ -1,5 +1,5 @@
 import {
-  App,
+  ConnectedApp,
 } from '../src/Components/App';
 import {
   configureServerStore,
@@ -33,15 +33,19 @@ export const strings = {
     'server.',
 };
 
-export function x50Render({ clientStats }: { clientStats: Stats }) {
-  return async function x50Response(
+export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
+  const x50Response = async (
     req:   Request,
     res:   Response,
     // @ts-ignore
-    next?: NextFunction)
+    next?: NextFunction) =>
   {
-    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)$/.test(req.url)) {
+    /* Do not render the 404 page for failed code and image lookups. Doing so
+     * wastes huge amount of time and process. */
+    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)|__webpack_hmr$/.test(req.url)) {
       res.status(404);
+      
+      /* Make sure to end the connection, otherwise it hangs permanently. */
       res.end();
       return;
     }
@@ -55,6 +59,7 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
         '\n\nThe error was:\n',
         e);
 
+      res.end();
       throw e;
     }
 
@@ -71,7 +76,7 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
     const reduxScript       = openTag + varDef + stateStr + closeTag;
     const providerContainer = (
                                 <ProviderContainer store={store}>
-                                  <App />
+                                  <ConnectedApp />
                                 </ProviderContainer>
                               );
 
@@ -99,6 +104,7 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
       <html lang="en">
         <head>
           <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>X50</title>
           ${ambientStyleElement}
           ${styles}
@@ -114,6 +120,8 @@ export function x50Render({ clientStats }: { clientStats: Stats }) {
 
     res.send(responseStr);
   };
+
+  return x50Response;
 }
 
 export default x50Render;

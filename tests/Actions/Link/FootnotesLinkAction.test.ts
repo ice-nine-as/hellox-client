@@ -1,6 +1,6 @@
 import {
-  AskLinkAction,
-} from '../../../src/Actions/Link/AskLinkAction';
+  FootnotesLinkAction,
+} from '../../../src/Actions/Link/FootnotesLinkAction';
 import {
   isAction,
 } from '../../../src/TypeGuards/isAction';
@@ -11,32 +11,32 @@ import {
   PageIdentifiers,
 } from '../../../src/Enums/PageIdentifiers';
 
-describe('AskLinkAction unit tests.', () => {
+describe('FootnotesLinkAction unit tests.', () => {
   it('Has the correct type.', () => {
-    expect(AskLinkAction.type).toBe(PageIdentifiers.Ask);
+    expect(FootnotesLinkAction.type).toBe(PageIdentifiers.Footnotes);
   });
 
   it('Defaults to a value of null.', () => {
-    expect(AskLinkAction.value).toBe(null);
+    expect(FootnotesLinkAction.value).toBe(null);
   });
 
   it('Disallows changing of the type.', () => {
-    const func = () => (<any>AskLinkAction.type) = 'foo';
+    const func = () => (<any>FootnotesLinkAction.type) = 'foo';
     expect(func).toThrow();
   });
 
   it('Disallows changing of the value.', () => {
-    const func = () => (<any>AskLinkAction.value) = 'foo';
+    const func = () => (<any>FootnotesLinkAction.value) = 'foo';
     expect(func).toThrow();
   });
 });
 
-describe('AskLinkAction integration tests.', () => {
+describe('FootnotesLinkAction integration tests.', () => {
   it('Meets the isAction type guard.', () => {
-    expect(isAction(AskLinkAction)).toBe(true);
+    expect(isAction(FootnotesLinkAction)).toBe(true);
   });
 
   it('Meets the isLinkAction type guard.', () => {
-    expect(isLinkAction(AskLinkAction)).toBe(true);
+    expect(isLinkAction(FootnotesLinkAction)).toBe(true);
   });
-})
+});

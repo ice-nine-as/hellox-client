@@ -5,17 +5,15 @@ import {
 
 jest.mock('../../src/Components/NavBar');
 import {
-  NavBar,
+  ConnectedNavBar,
 } from '../../src/Components/NavBar';
 
 import {
   create as createDeepRenderer,
 } from 'react-test-renderer';
-
 import {
   createRenderer as createShallowRenderer,
 } from 'react-test-renderer/shallow';
-
 import {
   Header,
 } from '../../src/Components/Header';
@@ -70,7 +68,7 @@ describe('Header component integration tests.', () => {
     const component = renderer.toTree();
 
     expect(component.rendered.props.children).toMatchObject({
-      type: NavBar,
+      type: ConnectedNavBar,
     });
   });
 

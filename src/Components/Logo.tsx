@@ -1,6 +1,9 @@
 import {
-  logoImagePath,
-} from '../Properties/logoImagePath';
+  ImageUrls,
+} from '../Enums/ImageUrls';
+import {
+  LogoStates,
+} from '../Enums/LogoStates';
 import {
   TLogoProps,
 } from '../TypeAliases/TLogoProps';
@@ -15,8 +18,11 @@ export class Logo extends React.PureComponent<TLogoProps> {
   render() {
     return (
       <img
-        className={_styles.Logo}
-        src={logoImagePath} />
+        className={`${_styles.Logo} ${this.props.state}`}
+        src={this.props.state === LogoStates.Normal ?
+              ImageUrls.MainLogo :
+              ImageUrls.SmallLogo}
+      />
     );
   }
 }
