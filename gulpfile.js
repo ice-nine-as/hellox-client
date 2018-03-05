@@ -1,11 +1,28 @@
-const  {
+const {
+  exec,
+} = require('child_process');
+const {
   copyFile,
+  mkdir,
 } = require('fs');
 const gulp = require('gulp');
-const { mkdir } = require('fs');
-const { promisify } = require('util');
-const { resolve } = require('path');
+const {
+  resolve,
+} = require('path');
 const rimraf = require('rimraf');
+const {
+  promisify,
+} = require('util');
+
+gulp.task('build-docker', async () => {
+  await promisify(exec)('docker build -t icenineas/hellox-client ' + __dirname);
+});
+
+gulp.task('run-docker', async () => {
+  await promisify(exec)('docker run -d -p 443:3000 ' +
+                        '-v /etc/letsencrypt/live/:/etc/hellox-client ' +
+                        'icenineas/hellox-client');
+});
 
 gulp.task('clean', async () => {
   const _rimraf = promisify(rimraf);

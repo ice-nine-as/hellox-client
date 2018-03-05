@@ -1,11 +1,14 @@
+
 require('colors');
 
 const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
 const compression                = require('compression');
 const express                    = require('express');
+const { readFileSync }           = require('fs');
 const { resolve, }               = require('path');
 const serveFavicon               = require('serve-favicon');
+const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
 const serverConfigProd           = require('../webpack/server.prod');
 const webpack                    = require('webpack');
@@ -23,15 +26,29 @@ app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
 let isBuilt = false;
 
+const getSslOptions = () => ({
+  cert: readFileSync(resolve(__dirname, '..', '..', 'private', 'fullchain.pem')),
+  key:  readFileSync(resolve(__dirname, '..', '..', 'private', 'privkey.pem')),
+});
+
+const PORT = 3000;console.log(process.env);
+
 function done() {
   return !isBuilt && (() => {
-    const listen = app.listen(3000, () => {
+    const server = /^true$/i.test(process.env.H2) ?
+      spdy.createServer(getSslOptions(), app) :
+      app;
+    
+    server.keepAliveTimeout = 5;
+    
+    return server.listen(PORT, (error) => {
+      if (error) {
+        throw error;
+      }
+
       isBuilt = true;
-      listen.keepAliveTimeout = 5;
       console.log('BUILD COMPLETE -- Listening @ http://localhost:3000.');
     });
-
-    return listen;
   })();
 }
 

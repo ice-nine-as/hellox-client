@@ -47,6 +47,7 @@ export class HomeBackgroundImage extends React.PureComponent {
         />
 
         <img
+          alt="A background image with wabi-sabi hexagons containing images of the ocean and seabirds."
           sizes="(max-width: 4800px) 40vw, 1920px"
           srcSet={`
             ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_480.jpg 480w,
@@ -67,7 +68,6 @@ export class HomeBackgroundImage extends React.PureComponent {
             ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1919.jpg 1919w,
             ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1920.jpg 1920w`}
           src={`${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1920.jpg`}
-          alt=""
         />
       </picture>
     );

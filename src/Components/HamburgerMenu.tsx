@@ -42,7 +42,10 @@ export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & 
             className={_styles.HamburgerMenuIcon}
             onClick={() => this.props.toggleHamburgerMenu(this.props.hamburgerOpen)}
           >
-            <img src={ImageUrls.HamburgerMenuIcon}/>
+            <img
+              alt="Hamburger menu button."
+              src={ImageUrls.HamburgerMenuIcon}
+            />
           </button>
 
           <div

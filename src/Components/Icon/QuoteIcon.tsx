@@ -19,6 +19,7 @@ export class QuoteIcon extends React.PureComponent<TQuoteIconProps> {
     return (
       <Icon>
         <img
+          alt="A stylized quotation mark."
           className={_styles.QuoteIcon}
           src={ImageUrls.QuoteIcon}
         />

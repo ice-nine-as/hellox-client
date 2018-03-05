@@ -73,6 +73,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         return;
       }
     } else if (req.url === '/manifest.json') {
+      /* Needed for Progressive Web App support. */
       res.sendFile(resolve(__dirname, '..', 'client', 'manifest.json'));
       console.log(`Sending manifest.`);
       return;
@@ -133,12 +134,12 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     const responseStr =
       `<!DOCTYPE html>
       <html lang="en">
-        <head class="mobile">
+        <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="theme-color" content="rgb(234, 80, 80)">
           <link rel="manifest" href="/manifest.json">
-          <title>X50</title>
+          <title>Hello X</title>
           ${ambientStyleElement}
           ${css}
         </head>

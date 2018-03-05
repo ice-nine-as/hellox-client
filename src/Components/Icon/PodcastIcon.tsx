@@ -19,6 +19,7 @@ export class PodcastIcon extends React.PureComponent<TPodcastIconProps> {
     return (
       <Icon>
         <img
+          alt="A drawing of a play button triangle."
           className={_styles.PodcastIcon}
           src={ImageUrls.PodcastIcon} />
       </Icon>

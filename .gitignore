@@ -1,5 +1,6 @@
 dist/
 node_modules/
+private/
 .awcache/
 .DS_Store
 .vagrant/
