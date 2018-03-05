@@ -24,6 +24,12 @@ const app = express();
 app.use(compression());
 app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
+const serviceWorkerHeaderMiddleware = app.use((req, res, next) => {
+  /* Give the service worker root scope. */
+  res.setHeader('Service-Worker-Allowed', '/');
+  next();
+});
+
 let isBuilt = false;
 
 const getSpdyOptions = () => ({
