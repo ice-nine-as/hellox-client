@@ -14,9 +14,9 @@ import {
 import * as React from 'react';
 
 /* Registers service worker. */
-import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+import { install, } from 'offline-plugin/runtime';
 if (process.env.NODE_ENV === 'production') {
-  OfflinePluginRuntime.install();
+  install();
 }
 
 export const render = (component: JSX.Element) => {

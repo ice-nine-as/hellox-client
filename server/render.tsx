@@ -75,7 +75,9 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     } else if (req.url === '/manifest.json') {
       /* Needed for Progressive Web App support. */
       res.sendFile(resolve(__dirname, '..', 'client', 'manifest.json'));
-      console.log(`Sending manifest.`);
+      return;
+    } else if (req.url === '/sw.js') {
+      res.sendFile(resolve(__dirname, '..', 'client', 'sw.js'));
       return;
     }
 

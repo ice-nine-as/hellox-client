@@ -21,7 +21,6 @@ const outputPath  = clientConfigDev.output.path;
 const dev         = process.env.NODE_ENV === 'development';
 
 const app = express();
-app.use(enforce.HTTPS());
 app.use(compression());
 app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
@@ -56,11 +55,13 @@ function done() {
     server.keepAliveTimeout = 5;
 
     if (isHttp2) {
-      server.listen(SECONDARY_PORT, (error) => {
+      const second = express();
+      second.use(enforce.HTTPS());
+      second.listen(SECONDARY_PORT, (error) => {
         if (error) {
           throw error;
         }
-        
+
         console.log(
           `HTTP->HTTPS redirector enabled @ http://localhost:${SECONDARY_PORT}.`
           .magenta);

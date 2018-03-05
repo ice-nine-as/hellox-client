@@ -132,8 +132,12 @@ module.exports = {
 
     new OfflinePlugin({
       caches: 'all',
-      excludes: [ 'http://cms.hellox.me/*', ],
+      excludes: [ 'https://cms.hellox.me/*', ],
       externals: [ '/', ],
+      publicPath: '/',
+      ServiceWorker: {
+        navigateFallbackURL: '/',
+      },
     }),
   ],
 };
