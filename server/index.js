@@ -62,12 +62,12 @@ function done() {
         }
         
         console.log(
-          `Http 1.1 enabled @ http://localhost:${SECONDARY_PORT}.`
+          `HTTP->HTTPS redirector enabled @ http://localhost:${SECONDARY_PORT}.`
           .magenta);
       });
     }
     
-    server.listen(PORT, (error) => {
+    server.listen(PRIMARY_PORT, (error) => {
       if (error) {
         throw error;
       }
