@@ -133,7 +133,11 @@ module.exports = {
     new OfflinePlugin({
       caches: 'all',
       excludes: [ 'https://cms.hellox.me/*', ],
-      externals: [ '/', ],
+      externals: [
+        '/',
+        '/static/modernizr.js',
+      ],
+
       ServiceWorker: {
         scope: '/',
         navigateFallbackURL: '/',
