@@ -1,4 +1,3 @@
-
 require('colors');
 
 const clientConfigDev            = require('../webpack/client.dev');
@@ -28,20 +27,44 @@ app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
 let isBuilt = false;
 
-const getSslOptions = () => ({
+const getSpdyOptions = () => ({
   cert: readFileSync(resolve(__dirname, '..', 'private', 'live', 'hellox.me', 'fullchain.pem')),
   key:  readFileSync(resolve(__dirname, '..', 'private', 'live', 'hellox.me', 'privkey.pem')),
+  spdy: {
+    protocols: [
+      'h2',
+      'spdy/3.1',
+      'spdy/3',
+      'spdy/2',
+      'http/1.1',
+      'http/1.0',
+    ],
+  },
 });
 
 const PORT = 3000;
 
+const isHttp2 = /^true$/i.test(process.env.H2);
+
 function done() {
   return !isBuilt && (() => {
-    const server = /^true$/i.test(process.env.H2) ?
-      spdy.createServer(getSslOptions(), app) :
+    const server = isHttp2 ?
+      spdy.createServer(getSpdyOptions(), app) :
       app;
     
     server.keepAliveTimeout = 5;
+
+    /*if (isHttp2) {
+      server.listen(SECONDARY_PORT, (error) => {
+        if (error) {
+          throw error;
+        }
+        
+        console.log(
+          `Http 1.1 enabled.`
+          .magenta);
+      });
+    }*/
     
     return server.listen(PORT, (error) => {
       if (error) {
@@ -49,7 +72,9 @@ function done() {
       }
 
       isBuilt = true;
-      console.log('BUILD COMPLETE -- Listening @ http://localhost:3000.');
+      console.log(
+        `BUILD COMPLETE -- Listening @ http://localhost:${PORT}.`
+        .magenta);
     });
   })();
 }
