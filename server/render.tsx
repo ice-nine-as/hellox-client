@@ -10,6 +10,12 @@ import {
   Response,
 } from 'express';
 import {
+  externalLibs,
+} from '../src/Properties/externalLibs';
+import {
+  resolve,
+} from 'path';
+import {
   ProviderContainer,
 } from '../src/Components/ProviderContainer';
 import {
@@ -43,10 +49,32 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     /* Do not render the 404 page for failed code and image lookups. Doing so
      * wastes huge amount of time and process. */
     if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)|__webpack_hmr$/.test(req.url)) {
-      res.status(404);
-      
-      /* Make sure to end the connection, otherwise it hangs permanently. */
-      res.end();
+      /* Check and see if the request is for one of the whitelisted external
+       * libs not bundled by webpack. As of 03.2018 this is just modernizr. */
+      const fileName = (() => {
+        const split = req.url.split('/').filter((aa) => aa);
+        return split[split.length - 1];
+      })();
+
+      const isExternalLib = externalLibs.some((lib) => {
+        return fileName.indexOf(lib) !== -1;
+      });
+
+      if (isExternalLib) {
+        const path = resolve(__dirname, '..', 'client', fileName);
+        console.log(`Sending external lib ${fileName} from ${path}.`);
+        res.sendFile(path);
+        return;
+      } else {
+        console.error(`Object at ${req.url} not found.`);
+        res.status(404);
+        res.end();
+        /* Make sure to end the connection, otherwise it hangs permanently. */
+        return;
+      }
+    } else if (req.url === '/manifest.json') {
+      res.sendFile(resolve(__dirname, '..', 'client', 'manifest.json'));
+      console.log(`Sending manifest.`);
       return;
     }
 
@@ -83,12 +111,15 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     const appStr            = ReactDOMServer.renderToString(providerContainer);
     const chunkNames        = flushChunkNames();
     const {
-      js,
-      styles,
+      css,
       cssHash,
+      js,
       scripts,
       stylesheets,
-    } = flushChunks(clientStats, { chunkNames, });
+    } = flushChunks(clientStats, {
+      chunkNames,
+      outputPath: resolve(__dirname, '..', 'client'),
+    });
 
     const ambientStyleElement =
       `<style id="ambientStyle">${AmbientStyle}</style>`;
@@ -102,15 +133,23 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     const responseStr =
       `<!DOCTYPE html>
       <html lang="en">
-        <head>
+        <head class="mobile">
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="theme-color" content="rgb(234, 80, 80)">
+          <link rel="manifest" href="/manifest.json">
           <title>X50</title>
           ${ambientStyleElement}
-          ${styles}
+          ${css}
         </head>
-        <body class="mobile">
-          <script type="text/javascript" src="/static/vendor.js"></script>
+        <body>
+          <script type="text/javascript" src="/static/modernizr.js"></script>
+          <script type="text/javascript">
+            if (Modernizr.mq('(min-device-width: 1001px) and (min-width: 1001px)')) {
+              document.body.parentElement.className = 'monitor';
+            }
+          </script>
+          <script defer type="text/javascript" src="/static/vendor.js"></script>
           <div id="root">${appStr}</div>
           ${cssHash}
           ${reduxScript}

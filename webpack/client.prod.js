@@ -1,12 +1,12 @@
 const AutoDllPlugin    = require('autodll-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const { resolve, }     = require('path');
+const OfflinePlugin    = require('offline-plugin');
 const webpack          = require('webpack');
 
 module.exports = {
   name: 'client',
   target: 'web',
-  devtool: 'source-map',
   entry: [
     'babel-polyfill',
     resolve(__dirname, '../src/index.tsx'),
@@ -128,6 +128,12 @@ module.exports = {
           'babel-polyfill',
         ],
       },
+    }),
+
+    new OfflinePlugin({
+      caches: 'all',
+      excludes: [ 'http://cms.hellox.me/*', ],
+      externals: [ '/', ],
     }),
   ],
 };

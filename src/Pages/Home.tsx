@@ -48,6 +48,7 @@ import {
 } from '../Components/Icon/WriteIcon';
 
 import * as React from 'react';
+const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import styles from '../Styles/Pages/Home.less';
@@ -166,7 +167,9 @@ export class Home extends React.PureComponent<THomePageProps> {
             What's up?
           </h2>
 
-          <ConnectedLatestNews />
+          <LazyLoad verticalOffset={300}>
+            <ConnectedLatestNews />
+          </LazyLoad>
         </section>
       </article>
     );

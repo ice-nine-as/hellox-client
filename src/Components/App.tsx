@@ -68,13 +68,13 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
   }
 
   render() {
-    let {
+    const {
       location: {
         type: page,
       },
     } = this.props;
 
-    page = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
+    const realPage = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
 
     return (
       <div className={_styles.App}>
@@ -83,9 +83,10 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
             {
               (matches) => {
                 if (matches) {
+                  const htmlElem = document.body.parentElement!;
                   const state = ViewportStates.Mobile;
-                  document.body.classList.add(state);
-                  document.body.classList.remove(ViewportStates.Monitor);
+                  htmlElem.classList.add(state);
+                  htmlElem.classList.remove(ViewportStates.Monitor);
                   setTimeout(() => this.props.setViewportState(state));
                 }
 
@@ -98,9 +99,10 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
             {
               (matches) => {
                 if (matches) {
+                  const htmlElem = document.body.parentElement!;                  
                   const state = ViewportStates.Monitor;
-                  document.body.classList.add(state);
-                  document.body.classList.remove(ViewportStates.Mobile);
+                  htmlElem.classList.add(state);
+                  htmlElem.classList.remove(ViewportStates.Mobile);
                   setTimeout(() => this.props.setViewportState(state));
                 }
 
@@ -114,9 +116,10 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
           {
             (matches) => {
               if (matches) {
+                const htmlElem = document.body.parentElement!;                
                 const state = ViewportStates.Mobile;
-                document.body.classList.add(state)
-                document.body.classList.remove(ViewportStates.Monitor);
+                htmlElem.classList.add(state)
+                htmlElem.classList.remove(ViewportStates.Monitor);
                 setTimeout(() => this.props.setViewportState(state));
               }
 
@@ -128,7 +131,7 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
         <Header />
 
         <Universal
-          page={page as PageIdentifiers}
+          page={realPage}
           onBefore={this.beforeChange}
           onAfter={this.afterChange}
           onError={this.handleError}
