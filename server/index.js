@@ -5,6 +5,7 @@ const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
 const compression                = require('compression');
 const express                    = require('express');
+const enforce                    = require('express-sslify');
 const { readFileSync }           = require('fs');
 const { resolve, }               = require('path');
 const serveFavicon               = require('serve-favicon');
@@ -21,23 +22,9 @@ const outputPath  = clientConfigDev.output.path;
 const dev         = process.env.NODE_ENV === 'development';
 
 const app = express();
+app.use(enforce.HTTPS());
 app.use(compression());
 app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
-
-const httpsMiddleware = (req, res, next) => {
-  if (!res.secure &&
-      process.env.NODE_ENV === 'production' &&
-      /^true$/i.test(process.env.H2))
-  {
-    /* Redirect from HTTP to HTTPS. */
-    res.redirect(301, `https://${req.headers.host}${req.url}`);
-    res.end();
-  } else {
-    next();
-  }
-};
-
-app.use(httpsMiddleware);
 
 let isBuilt = false;
 
