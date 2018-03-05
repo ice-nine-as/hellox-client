@@ -24,6 +24,21 @@ const app = express();
 app.use(compression());
 app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
+const httpsMiddleware = (req, res, next) => {
+  if (!res.secure &&
+      process.env.NODE_ENV === 'production' &&
+      /^true$/i.test(process.env.H2))
+  {
+    /* Redirect from HTTP to HTTPS. */
+    res.redirect(301, `https://${req.headers.host}${req.url}`);
+    res.end();
+  } else {
+    next();
+  }
+};
+
+app.use(httpsMiddleware);
+
 let isBuilt = false;
 
 const getSslOptions = () => ({
