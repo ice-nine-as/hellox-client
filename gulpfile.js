@@ -1,3 +1,6 @@
+const  {
+  copyFile,
+} = require('fs');
 const gulp = require('gulp');
 const { mkdir } = require('fs');
 const { promisify } = require('util');
@@ -11,4 +14,17 @@ gulp.task('clean', async () => {
   await _mkdir(resolve(__dirname, 'dist/'));
   await _mkdir(resolve(__dirname, 'dist/client/'));
   await _mkdir(resolve(__dirname, 'dist/server/'));
+});
+
+gulp.task('copy-manifest', async () => {
+  await promisify(copyFile)(
+    resolve(__dirname, 'manifest.json'),
+    resolve(__dirname, 'dist', 'client', 'manifest.json')
+  );
+});
+
+gulp.task('copy-modernizr', async () => {
+  await promisify(copyFile)(
+    resolve(__dirname, 'modernizr-custom.js'),
+    resolve(__dirname, 'dist', 'client', 'modernizr.js'));
 });

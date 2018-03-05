@@ -8,7 +8,11 @@ const output           = resolve(__dirname, '../dist/server');
 module.exports = {
   name: 'server',
   target: 'node',
-  devtool: 'source-map',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
+
   entry: [
     'babel-polyfill',
     entry,

@@ -24,6 +24,11 @@ externals['react-dom/server'] = 'commonjs react-dom/server';
 module.exports = {
   name: 'server',
   target: 'node',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
+
   devtool: 'source-map',
   entry: [
     'babel-polyfill',

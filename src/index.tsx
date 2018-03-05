@@ -8,26 +8,22 @@ import {
   createBrowserHistory,
 } from 'history';
 import {
-  resolve,
-} from 'path';
-import {
   hydrate,
 } from 'react-dom';
 
 import * as React from 'react';
 
-// @ts-ignore
-import styles from './Styles/Components/App';
+/* Registers service worker. */
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+if (process.env.NODE_ENV === 'production') {
+  OfflinePluginRuntime.install();
+}
 
 export const render = (component: JSX.Element) => {
   return hydrate(component,
     // @ts-ignore
     document.querySelector('#root'));
 };
-
-export const providerContainerFilepath = resolve(
-  __dirname,
-  'Components/ProviderContainer');
 
 export const init = () => {
   const history = createBrowserHistory();
