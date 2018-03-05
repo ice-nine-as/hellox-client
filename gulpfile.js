@@ -20,7 +20,7 @@ gulp.task('build-docker', async () => {
 
 gulp.task('run-docker', async () => {
   await promisify(exec)('docker run -d -p 443:3000 ' +
-                        '-v /etc/letsencrypt/live/:/etc/hellox-client/private/ ' +
+                        '-v /etc/letsencrypt/live/hellox.me/:/etc/hellox-client/private/ ' +
                         'icenineas/hellox-client');
 });
 
