@@ -4,11 +4,11 @@ EXPOSE 3000
 
 # Skips node_modules/ through .dockerignore, given that transferring modules to
 # the container is actually significantly slower than downloading them.
-COPY . /etc/X50-client/
+COPY . /etc/hellox-client/
 
-WORKDIR /etc/X50-client/
+WORKDIR /etc/hellox-client/
 
 RUN \
   npm install
 
-CMD [ "npm", "run", "start-prod" ]
+CMD [ "npm", "run", "start-h2" ]

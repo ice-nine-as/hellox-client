@@ -18,6 +18,7 @@ export class Logo extends React.PureComponent<TLogoProps> {
   render() {
     return (
       <img
+        alt={`The main site logo. It reads "hello X."`}
         className={`${_styles.Logo} ${this.props.state}`}
         src={this.props.state === LogoStates.Normal ?
               ImageUrls.MainLogo :

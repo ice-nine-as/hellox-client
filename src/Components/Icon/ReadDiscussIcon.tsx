@@ -19,6 +19,7 @@ export class ReadDiscussIcon extends React.PureComponent<TReadDiscussIconProps> 
     return (
       <Icon>
         <img
+          alt="A drawing of chat bubbles."
           className={_styles.ReadDiscussIcon}
           src={ImageUrls.ReadDiscussIcon} />
       </Icon>

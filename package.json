@@ -1,13 +1,14 @@
 {
-  "name": "x50",
+  "name": "hellox-client",
   "version": "0.1.0",
-  "description": "The backend and frontend for the X50 multimedia project.",
+  "description": "The backend and frontend for the Hello X multimedia project.",
   "main": "dist/es6.node/index.js",
   "types": "src/index.d.ts",
   "scripts": {
     "clean": "gulp clean",
     "start-dev": "gulp clean && gulp copy-manifest copy-modernizr && cross-env NODE_ENV=development node server/index.js",
-    "start-prod": "gulp clean && gulp copy-manifest copy-modernizr && cross-env NODE_ENV=production  node server/index.js",
+    "start-prod": "gulp clean && gulp copy-manifest copy-modernizr && cross-env NODE_ENV=production node server/index.js",
+    "start-h2": "gulp clean && gulp copy-manifest copy-modernizr && cross-env NODE_ENV=production H2=true node server/index.js",    
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-watch": "jest --watch",
@@ -35,6 +36,7 @@
     "@types/redux-first-router-link": "^1.4.3",
     "@types/remote-redux-devtools": "^0.5.2",
     "@types/sanitize-html": "^1.14.0",
+    "@types/spdy": "^3.4.4",
     "@types/wallabyjs": "0.0.6",
     "@types/webpack": "^3.8.8",
     "@types/webpack-hot-middleware": "^2.16.2",
@@ -104,6 +106,7 @@
     "redux-first-router-link": "^1.4.2",
     "redux-thunk": "^2.2.0",
     "sanitize-html": "^1.18.2",
+    "spdy": "^3.4.7",
     "x50-story-generator": "git+https://github.com/ice-nine-as/X50-story-generator.git"
   },
   "jest": {

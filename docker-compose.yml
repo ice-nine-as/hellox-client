@@ -1,0 +1,13 @@
+version: "3"
+services:
+  hellox:
+    image: index.docker.io/icenineas/hellox-client
+    ports:
+      - "443:3000"
+    volumes:
+      - /etc/letsencrypt/live/:/etc/hellox-client/private/
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json

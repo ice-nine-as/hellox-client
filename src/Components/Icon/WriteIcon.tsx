@@ -19,6 +19,7 @@ export class WriteIcon extends React.PureComponent<TWriteIconProps> {
     return (
       <Icon>
         <img
+          alt="A stylized drawing of a pencil."
           className={_styles.WriteIcon}
           src={ImageUrls.WriteIcon}
         />
