@@ -42,7 +42,8 @@ const getSpdyOptions = () => ({
   },
 });
 
-const PORT = 3000;
+const PRIMARY_PORT   = 3000;
+const SECONDARY_PORT = 3001;
 
 const isHttp2 = /^true$/i.test(process.env.H2);
 
@@ -54,28 +55,30 @@ function done() {
     
     server.keepAliveTimeout = 5;
 
-    /*if (isHttp2) {
+    if (isHttp2) {
       server.listen(SECONDARY_PORT, (error) => {
         if (error) {
           throw error;
         }
         
         console.log(
-          `Http 1.1 enabled.`
+          `Http 1.1 enabled @ http://localhost:${SECONDARY_PORT}.`
           .magenta);
       });
-    }*/
+    }
     
-    return server.listen(PORT, (error) => {
+    server.listen(PORT, (error) => {
       if (error) {
         throw error;
       }
 
       isBuilt = true;
       console.log(
-        `BUILD COMPLETE -- Listening @ http://localhost:${PORT}.`
+        `BUILD COMPLETE -- Listening @ http://localhost:${PRIMARY_PORT}.`
         .magenta);
     });
+
+    return server;
   })();
 }
 
