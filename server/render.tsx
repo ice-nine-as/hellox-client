@@ -49,15 +49,11 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     /* Do not render the 404 page for failed code and image lookups, or for
      * codefiles of which we already know the location. Doing so wastes huge 
      * amounts of time and process. */
-    if (req.url === '/sw.js') {
-      /* Needed for Progressive Web App support and caching. */
-      res.sendFile(resolve(__dirname, '..', 'client', 'sw.js'));
-      return;
-    } else if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)|__webpack_hmr$/.test(req.url)) {
+    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)|__webpack_hmr$/.test(req.url)) {
       /* Check and see if the request is for one of the whitelisted external
        * libs not bundled by webpack. As of 03.2018 this is just modernizr. */
       const fileName = (() => {
-        const split = req.url.split('/').filter((aa) => aa);
+        const split = req.url.split('/').filter((aa) => aa.length > 0);
         return split[split.length - 1];
       })();
 

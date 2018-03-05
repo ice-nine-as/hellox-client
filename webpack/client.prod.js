@@ -134,8 +134,8 @@ module.exports = {
       caches: 'all',
       excludes: [ 'https://cms.hellox.me/*', ],
       externals: [ '/', ],
-      publicPath: '/',
       ServiceWorker: {
+        scope: '/',
         navigateFallbackURL: '/',
       },
     }),
