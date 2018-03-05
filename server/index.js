@@ -27,8 +27,8 @@ app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 let isBuilt = false;
 
 const getSslOptions = () => ({
-  cert: readFileSync(resolve(__dirname, '..', 'private', 'fullchain.pem')),
-  key:  readFileSync(resolve(__dirname, '..', 'private', 'privkey.pem')),
+  cert: readFileSync(resolve(__dirname, '..', 'private', 'live', 'hellox.me', 'fullchain.pem')),
+  key:  readFileSync(resolve(__dirname, '..', 'private', 'live', 'hellox.me', 'privkey.pem')),
 });
 
 const PORT = 3000;

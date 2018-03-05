@@ -14,13 +14,13 @@ const {
   promisify,
 } = require('util');
 
-gulp.task('build-docker', async () => {
+gulp.task('docker-build', async () => {
   await promisify(exec)('docker build -t icenineas/hellox-client ' + __dirname);
 });
 
-gulp.task('run-docker', async () => {
+gulp.task('docker-run', async () => {
   await promisify(exec)('docker run -d -p 443:3000 ' +
-                        '-v /etc/letsencrypt/live/hellox.me/:/etc/hellox-client/private/ ' +
+                        '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
                         'icenineas/hellox-client');
 });
 
