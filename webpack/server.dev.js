@@ -112,6 +112,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
+        H2: process.env.H2,
       },
     }),
 
