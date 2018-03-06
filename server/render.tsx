@@ -93,32 +93,31 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js')),
         readFileProm(resolve(__dirname, '..', 'client', 'vendor.js')),
       ]);
-
+      
+      
       const spdyRes = res as any as ServerResponse;
-
-      const modernizrStream = spdyRes.push('/static/modernizr.js', {
+      
+      const options = {
         response: {
           'content-type': 'application/javascript',
-        }
-      });
+        },
+      };
+
+      const modernizrStream = spdyRes.push('/static/modernizr.js', options);
 
       modernizrStream.on('error', (err) => {
         if (err) {
-          throw err;
+          console.error(err);
         }
       });
 
       modernizrStream.end(files[0]);
 
-      const vendorStream = spdyRes.push('/static/vendor.js', {
-        response: {
-          'content-type': 'application/javascript',
-        },
-      });
+      const vendorStream = spdyRes.push('/static/vendor.js', options);
 
       vendorStream.on('error', (err) => {
         if (err) {
-          throw err;
+          console.error(err);
         }
       });
 
