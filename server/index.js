@@ -1,16 +1,19 @@
-require('colors');
-
 const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
 const compression                = require('compression');
 const express                    = require('express');
 const enforce                    = require('express-sslify');
+const gulp                       = require('gulp');
 const { readFileSync }           = require('fs');
-const { resolve, }               = require('path');
+const {
+  dirname,
+  resolve,
+} = require('path');
 const serveFavicon               = require('serve-favicon');
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
 const serverConfigProd           = require('../webpack/server.prod');
+const uglify                     = require('gulp-uglify');
 const webpack                    = require('webpack');
 const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
@@ -19,6 +22,7 @@ const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 const publicPath = clientConfigDev.output.publicPath;
 const outputPath  = clientConfigDev.output.path;
 const dev         = process.env.NODE_ENV === 'development';
+
 
 const app = express();
 app.use(compression());
@@ -54,6 +58,14 @@ const isHttp2 = /^true$/i.test(process.env.H2);
 
 function done() {
   return !isBuilt && (() => {
+    if (!dev) {
+      /* Minify the vendor file. */
+      const path = resolve(__dirname, '..', 'dist', 'client', 'vendor.js');
+      gulp.src(path, { base: dirname(path), })
+        .pipe(uglify())
+        .pipe(gulp.dest(dirname(path)));
+    }
+
     const server = isHttp2 ?
       spdy.createServer(getSpdyOptions(), app) :
       app;
@@ -61,8 +73,6 @@ function done() {
     server.keepAliveTimeout = 5;
 
     if (isHttp2) {
-      stream.end('console')
-
       const second = express();
       second.use(enforce.HTTPS());
       second.listen(SECONDARY_PORT, (error) => {
@@ -71,8 +81,7 @@ function done() {
         }
 
         console.log(
-          `HTTP->HTTPS redirector enabled @ http://localhost:${SECONDARY_PORT}.`
-          .magenta);
+          `HTTP->HTTPS redirector enabled @ http://localhost:${SECONDARY_PORT}.`);
       });
     }
     
@@ -83,8 +92,7 @@ function done() {
 
       isBuilt = true;
       console.log(
-        `BUILD COMPLETE -- Listening @ http://localhost:${PRIMARY_PORT}.`
-        .magenta);
+        `BUILD COMPLETE -- Listening @ http://localhost:${PRIMARY_PORT}.`);
     });
 
     return server;

@@ -13,9 +13,6 @@ const {
 } = require('path');
 const rimraf = require('rimraf');
 const {
-  minify,
-} = require('uglify-js');
-const {
   promisify,
 } = require('util');
 
@@ -52,16 +49,4 @@ gulp.task('docker-run', async () => {
                         '-p 443:3000 ' +
                         '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
                         'icenineas/hellox-client');
-});
-
-
-gulp.task('minify-vendor', async () => {
-  const path = resolve(__dirname, 'dist', 'client', 'vendor.js');
-  const text = (await promisify(readFile)(path)).toString();
-  const {
-    code,
-    error,
-  } = minify(text);
-
-  await promisify(writeFile)(path, code);
 });
