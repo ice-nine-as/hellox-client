@@ -105,7 +105,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
       const modernizrStream = spdyRes.push('/static/modernizr.js', options);
 
-      modernizrStream.on('error', (err) => {
+      modernizrStream.on('error', (err: Error | undefined) => {
         if (err) {
           console.error(err);
         }
@@ -115,7 +115,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
       const vendorStream = spdyRes.push('/static/vendor.js', options);
 
-      vendorStream.on('error', (err) => {
+      vendorStream.on('error', (err: Error | undefined) => {
         if (err) {
           console.error(err);
         }
