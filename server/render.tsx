@@ -13,6 +13,9 @@ import {
   externalLibs,
 } from '../src/Properties/externalLibs';
 import {
+  isHttp2,
+} from '../src/Modules/isHttp2';
+import {
   resolve,
 } from 'path';
 import {
@@ -21,6 +24,9 @@ import {
 import {
   flushChunkNames,
 } from 'react-universal-component/server';
+import {
+  ServerResponse,
+} from 'spdy';
 import {
   Stats,
 } from 'webpack';
@@ -77,6 +83,23 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       /* Needed for Progressive Web App support. */
       res.sendFile(resolve(__dirname, '..', 'client', 'manifest.json'));
       return;
+    }
+
+    if (isHttp2()) {
+      const spdyRes = res as any as ServerResponse;
+      const vendorStream = spdyRes.push('/static/vendor.js', {
+        response: {
+          'content-type': 'application/javascript',
+        },
+      });
+
+      vendorStream.on('error', (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+
+      vendorStream.end('console.log("hello from push stream!");');
     }
 
     let store;
