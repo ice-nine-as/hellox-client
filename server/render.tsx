@@ -86,7 +86,23 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     }
 
     if (isHttp2()) {
+      console.log('Is HTTP2. Pushing vendor and modernizr now.');
       const spdyRes = res as any as ServerResponse;
+
+      const modernizrStream = spdyRes.push('/static/modernizr.js', {
+        response: {
+          'content-type': 'application/javascript',
+        }
+      });
+
+      modernizrStream.on('error', (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+
+      modernizrStream.end('console.log("hello from push stream!");');
+
       const vendorStream = spdyRes.push('/static/vendor.js', {
         response: {
           'content-type': 'application/javascript',
