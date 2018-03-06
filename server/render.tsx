@@ -38,6 +38,8 @@ import flushChunks from 'webpack-flush-chunks';
 
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
+import { promisify } from 'util';
+import { readFile } from 'fs';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -86,7 +88,12 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     }
 
     if (isHttp2()) {
-      console.log('Is HTTP2. Pushing vendor and modernizr now.');
+      const readFileProm = promisify(readFile);
+      const files = await Promise.all([
+        readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js')),
+        readFileProm(resolve(__dirname, '..', 'client', 'vendor.js')),
+      ]);
+
       const spdyRes = res as any as ServerResponse;
 
       const modernizrStream = spdyRes.push('/static/modernizr.js', {
@@ -101,8 +108,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         }
       });
 
-      modernizrStream.sendFile(resolve(__dirname, '..', 'client', 'modernizr.js'));
-      modernizrStream.end();
+      modernizrStream.end(files[0]);
 
       const vendorStream = spdyRes.push('/static/vendor.js', {
         response: {
@@ -116,8 +122,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         }
       });
 
-      vendorStream.sendFile(resolve(__dirname, '..', 'client', 'vendor.js'));
-      vendorStream.end();
+      vendorStream.end(files[1]);
     }
 
     let store;
