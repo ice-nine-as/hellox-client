@@ -101,7 +101,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         }
       });
 
-      modernizrStream.end('console.log("hello from push stream!");');
+      modernizrStream.sendFile(resolve(__dirname, '..', 'client', 'modernizr.js'));
+      modernizrStream.end();
 
       const vendorStream = spdyRes.push('/static/vendor.js', {
         response: {
@@ -115,7 +116,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         }
       });
 
-      vendorStream.end('console.log("hello from push stream!");');
+      vendorStream.sendFile(resolve(__dirname, '..', 'client', 'vendor.js'));
+      vendorStream.end();
     }
 
     let store;
