@@ -57,10 +57,12 @@ function done() {
     const server = isHttp2 ?
       spdy.createServer(getSpdyOptions(), app) :
       app;
-    
+
     server.keepAliveTimeout = 5;
 
     if (isHttp2) {
+      stream.end('console')
+
       const second = express();
       second.use(enforce.HTTPS());
       second.listen(SECONDARY_PORT, (error) => {

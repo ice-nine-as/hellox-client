@@ -102,6 +102,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js')),
         readFileProm(resolve(__dirname, '..', 'client', 'vendor.js')),
       ])).map((file) => {
+        // @ts-ignore
         return gzipProm(file);
       }));
 

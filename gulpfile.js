@@ -4,6 +4,8 @@ const {
 const {
   copyFile,
   mkdir,
+  readFile,
+  writeFile,
 } = require('fs');
 const gulp = require('gulp');
 const {
@@ -11,21 +13,11 @@ const {
 } = require('path');
 const rimraf = require('rimraf');
 const {
+  minify,
+} = require('uglify-js');
+const {
   promisify,
 } = require('util');
-
-gulp.task('docker-build', async () => {
-  await promisify(exec)('docker build -t icenineas/hellox-client ' + __dirname);
-});
-
-gulp.task('docker-run', async () => {
-  await promisify(exec)('docker run ' +
-                        '-d ' +
-                        '-p 80:3001 ' +
-                        '-p 443:3000 ' +
-                        '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
-                        'icenineas/hellox-client');
-});
 
 gulp.task('clean', async () => {
   const _rimraf = promisify(rimraf);
@@ -47,4 +39,29 @@ gulp.task('copy-modernizr', async () => {
   await promisify(copyFile)(
     resolve(__dirname, 'modernizr-custom.js'),
     resolve(__dirname, 'dist', 'client', 'modernizr.js'));
+});
+
+gulp.task('docker-build', async () => {
+  await promisify(exec)('docker build -t icenineas/hellox-client ' + __dirname);
+});
+
+gulp.task('docker-run', async () => {
+  await promisify(exec)('docker run ' +
+                        '-d ' +
+                        '-p 80:3001 ' +
+                        '-p 443:3000 ' +
+                        '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
+                        'icenineas/hellox-client');
+});
+
+
+gulp.task('minify-vendor', async () => {
+  const path = resolve(__dirname, 'dist', 'client', 'vendor.js');
+  const text = (await promisify(readFile)(path)).toString();
+  const {
+    code,
+    error,
+  } = minify(text);
+
+  await promisify(writeFile)(path, code);
 });
