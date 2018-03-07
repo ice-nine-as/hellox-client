@@ -36,9 +36,6 @@ import {
 import {
   Stats,
 } from 'webpack';
-import {
-  gzip,
-} from 'zlib';
 
 import * as React          from 'react';
 import * as ReactDOMServer from 'react-dom/server';
@@ -49,7 +46,6 @@ import flushChunks from 'webpack-flush-chunks';
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
 
 const readFileProm = promisify(readFile);
-const gzipProm     = promisify(gzip)
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -98,16 +94,13 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     }
 
     if (isHttp2()) {
-      const files = await Promise.all((await Promise.all([
+      const files = await Promise.all([
         readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js')),
         readFileProm(resolve(__dirname, '..', 'client', 'vendor.js')),
-      ])).map((file) => {
-        // @ts-ignore
-        return gzipProm(file);
-      }));
+      ]);
 
       const spdyRes = res as any as ServerResponse;
-      
+
       const options = {
         request: {
           accept: '*/*'
@@ -120,8 +113,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       };
 
       const modernizrStream = spdyRes.push('/static/modernizr.js', options);
-      modernizrStream
-
       modernizrStream.on('error', (err: Error | undefined) => {
         if (err) {
           console.error(err);

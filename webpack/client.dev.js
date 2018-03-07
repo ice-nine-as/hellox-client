@@ -83,6 +83,12 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+      },
+    }),
+
     new WriteFilePlugin(), /* Only needed for debug info. */
     new ExtractCssChunks(),
     new webpack.optimize.CommonsChunkPlugin({
@@ -91,11 +97,6 @@ module.exports = {
       minChunks: Infinity,
     }),
     
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
-    }),
 
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
