@@ -96,35 +96,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       return;
     }
 
-    if (isHttp2()) {
-      const files = await Promise.all([
-        readFileProm(resolve(__dirname, '..', 'client', 'vendor.js.gz')),
-      ]);
-
-      const spdyRes = res as any as ServerResponse;
-
-      const options = {
-        request: {
-          accept: '*/*'
-        },
-
-        response: {
-          'content-type':     'application/javascript',
-          'content-encoding': 'gzip',
-        },
-      };
-
-      const vendorStream = spdyRes.push('/static/vendor.js', options);
-
-      vendorStream.on('error', (err: Error | undefined) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-
-      vendorStream.end(files[0]);
-    }
-
     let store;
     try {
       store = await configureServerStore(req, res);
@@ -167,6 +138,41 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       chunkNames,
       outputPath: resolve(__dirname, '..', 'client'),
     });
+
+    console.log(stylesheets);
+
+    if (isHttp2()) {
+      const files = await Promise.all([
+        readFileProm(resolve(__dirname, '..', 'client', 'vendor.js.gz')),
+        ...scripts.map((fileName) => {
+          const path = resolve(__dirname, '..', 'client', `${fileName}.gz`);
+          return readFileProm(path);
+        }),
+      ]);
+
+      const spdyRes = res as any as ServerResponse;
+
+      const options = {
+        request: {
+          accept: '*/*'
+        },
+
+        response: {
+          'content-type':     'application/javascript',
+          'content-encoding': 'gzip',
+        },
+      };
+
+      const vendorStream = spdyRes.push('/static/vendor.js', options);
+
+      vendorStream.on('error', (err: Error | undefined) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+
+      vendorStream.end(files[0]);
+    }
 
     const ambientStyleElement =
       `<style id="ambientStyle">${AmbientStyle}</style>`;
