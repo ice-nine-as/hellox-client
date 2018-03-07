@@ -98,7 +98,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
     if (isHttp2()) {
       const files = await Promise.all([
-        readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js')),
         readFileProm(resolve(__dirname, '..', 'client', 'vendor.js.gz')),
       ]);
 
@@ -114,16 +113,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           'content-encoding': 'gzip',
         },
       };
-
-      const modernizrStream = spdyRes.push('/static/modernizr.js', options);
-      modernizrStream.on('error', (err: Error | undefined) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-
-      modernizrStream.end(files[0]);
-
       const vendorStream = spdyRes.push('/static/vendor.js', options);
 
       vendorStream.on('error', (err: Error | undefined) => {
@@ -132,7 +121,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         }
       });
 
-      vendorStream.end(files[1]);
+      vendorStream.end(files[0]);
     }
 
     let store;
