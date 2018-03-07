@@ -187,6 +187,9 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       `SCRIPTS SERVED              : ${scripts.join(', ')}\n`,
       `STYLESHEETS SERVED          : ${stylesheets.join(', ')}`);
 
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Content-Encoding', 'gzip');
+
     const responseStr =
       `<!DOCTYPE html>
       <html lang="en">
@@ -218,10 +221,11 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         </body>
       </html>`;
 
-    //const zipped = await promisify(gzip)(responseStr);
-    //res.send(zipped);
+    // @ts-ignore
+    const zipped = await promisify(gzip)(responseStr);
+    res.send(zipped);
 
-    res.send(responseStr);
+    //res.send(responseStr);
   };
 
   return x50Response;
