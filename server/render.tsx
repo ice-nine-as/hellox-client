@@ -95,8 +95,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
     if (isHttp2()) {
       const files = await Promise.all([
-        readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js')),
-        readFileProm(resolve(__dirname, '..', 'client', 'vendor.js')),
+        readFileProm(resolve(__dirname, '..', 'client', 'modernizr.js.gz')),
+        readFileProm(resolve(__dirname, '..', 'client', 'vendor.js.gz')),
       ]);
 
       const spdyRes = res as any as ServerResponse;
