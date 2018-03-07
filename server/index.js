@@ -1,6 +1,5 @@
 const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
-const compression                = require('compression');
 const express                    = require('express');
 const enforce                    = require('express-sslify');
 const gulp                       = require('gulp');
@@ -25,7 +24,6 @@ const dev         = process.env.NODE_ENV === 'development';
 
 
 const app = express();
-app.use(compression());
 app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
 const serviceWorkerHeaderMiddleware = app.use((req, res, next) => {
