@@ -91,6 +91,7 @@
   },
   "dependencies": {
     "express-sslify": "^1.2.0",
+    "express-static-gzip": "^0.3.2",
     "gulp-uglify": "^3.0.0",
     "html-entities": "^1.2.1",
     "htmlparser2": "^3.9.2",

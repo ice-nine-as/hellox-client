@@ -2,6 +2,7 @@ const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
 const express                    = require('express');
 const enforce                    = require('express-sslify');
+const expressStaticGzip          = require('express-static-gzip');
 const gulp                       = require('gulp');
 const { readFileSync }           = require('fs');
 const {
@@ -111,7 +112,7 @@ if (dev) {
     const clientStats = stats.toJson().children[0];
     const render = require('../dist/server/main.js').x50Render;
 
-    app.use(publicPath, express.static(outputPath));
+    app.use(publicPath, expressStaticGzip(outputPath));
     app.use(render({ clientStats, }));
     
     done();

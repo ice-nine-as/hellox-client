@@ -23,7 +23,7 @@ export const strings = {
     'contain a page value that met the isPageIdentifier type guard.',
 };
 
-export const importer = ({ page }: { page: PageIdentifiers }): Promise<any> => {
+export const importer = ({ page, }: { page: PageIdentifiers, }): Promise<any> => {
   const indexRegex = /^\/?$/
   if (!indexRegex.test(page) && !isPageIdentifier(page)) {
     try {

@@ -113,6 +113,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           'content-encoding': 'gzip',
         },
       };
+
       const vendorStream = spdyRes.push('/static/vendor.js', options);
 
       vendorStream.on('error', (err: Error | undefined) => {
