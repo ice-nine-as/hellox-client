@@ -48,12 +48,30 @@ import flushChunks from 'webpack-flush-chunks';
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
 
-const readFileProm = promisify(readFile);
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
-    'An exception was encountered while configuring the Redux store on the ' +
-    'server.',
+  'An exception was encountered while configuring the Redux store on the ' +
+  'server.',
+};
+
+const readFileProm = promisify(readFile);
+
+const handlePushError = (err: Error | undefined) => {
+  if (err) {
+    console.error(err);
+  }
+};
+
+const nodeSpdyOptions = {
+  request: {
+    accept: '*/*'
+  },
+
+  response: {
+    'content-type':     'application/javascript',
+    'content-encoding': 'gzip',
+  },
 };
 
 export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
@@ -139,8 +157,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       outputPath: resolve(__dirname, '..', 'client'),
     });
 
-    console.log(stylesheets);
-
     if (isHttp2()) {
       const files = await Promise.all([
         readFileProm(resolve(__dirname, '..', 'client', 'vendor.js.gz')),
@@ -152,26 +168,16 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
       const spdyRes = res as any as ServerResponse;
 
-      const options = {
-        request: {
-          accept: '*/*'
-        },
-
-        response: {
-          'content-type':     'application/javascript',
-          'content-encoding': 'gzip',
-        },
-      };
-
-      const vendorStream = spdyRes.push('/static/vendor.js', options);
-
-      vendorStream.on('error', (err: Error | undefined) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-
+      const vendorStream = spdyRes.push('/static/vendor.js', nodeSpdyOptions);
+      vendorStream.on('error', handlePushError);
       vendorStream.end(files[0]);
+
+      for (let ii = 1; ii < files.length; ii += 1) {
+        const fileName = scripts[ii - 1];
+        const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyOptions);
+        stream.on('error', handlePushError);
+        stream.end(files[ii]);
+      }
     }
 
     const ambientStyleElement =
