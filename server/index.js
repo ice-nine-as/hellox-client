@@ -56,14 +56,6 @@ const isHttp2 = /^true$/i.test(process.env.H2);
 
 function done() {
   return !isBuilt && (() => {
-    if (!dev) {
-      /* Minify the vendor file. */
-      const path = resolve(__dirname, '..', 'dist', 'client', 'vendor.js');
-      gulp.src(path, { base: dirname(path), })
-        .pipe(uglify())
-        .pipe(gulp.dest(dirname(path)));
-    }
-
     const server = isHttp2 ?
       spdy.createServer(getSpdyOptions(), app) :
       app;
