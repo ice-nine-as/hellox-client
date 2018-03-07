@@ -218,8 +218,10 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         </body>
       </html>`;
 
-    const zipped = await promisify(gzip)(responseStr);
-    res.send(zipped);
+    //const zipped = await promisify(gzip)(responseStr);
+    //res.send(zipped);
+
+    res.send(responseStr);
   };
 
   return x50Response;
