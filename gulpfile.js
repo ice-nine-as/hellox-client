@@ -19,10 +19,12 @@ const {
 gulp.task('clean', async () => {
   const _rimraf = promisify(rimraf);
   const _mkdir = promisify(mkdir);
-  await _rimraf(resolve(__dirname, 'dist/'));
-  await _mkdir(resolve(__dirname, 'dist/'));
-  await _mkdir(resolve(__dirname, 'dist/client/'));
-  await _mkdir(resolve(__dirname, 'dist/server/'));
+  await _rimraf(resolve(__dirname, 'dist'));
+  await _mkdir(resolve(__dirname, 'dist'));
+  await Promise.all([
+    _mkdir(resolve(__dirname, 'dist', 'client')),
+    _mkdir(resolve(__dirname, 'dist', 'server')),
+  ]);
 });
 
 gulp.task('copy-manifest', async () => {
@@ -33,9 +35,18 @@ gulp.task('copy-manifest', async () => {
 });
 
 gulp.task('copy-modernizr', async () => {
-  await promisify(copyFile)(
-    resolve(__dirname, 'modernizr-custom.js'),
-    resolve(__dirname, 'dist', 'client', 'modernizr.js'));
+  const copyFileProm = promisify(copyFile);
+  await Promise.all([
+    copyFileProm(
+      resolve(__dirname, 'modernizr-custom.js'),
+      resolve(__dirname, 'dist', 'client', 'modernizr.js')
+    ),
+
+    copyFileProm(
+      resolve(__dirname, 'modernizr-custom.js.gz'),
+      resolve(__dirname, 'dist', 'client', 'modernizr.js.gz')
+    ),
+  ]);
 });
 
 gulp.task('docker-build', async () => {
