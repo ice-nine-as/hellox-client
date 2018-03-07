@@ -1,16 +1,19 @@
-require('colors');
-
 const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
-const compression                = require('compression');
 const express                    = require('express');
 const enforce                    = require('express-sslify');
+const expressStaticGzip          = require('express-static-gzip');
+const gulp                       = require('gulp');
 const { readFileSync }           = require('fs');
-const { resolve, }               = require('path');
+const {
+  dirname,
+  resolve,
+} = require('path');
 const serveFavicon               = require('serve-favicon');
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
 const serverConfigProd           = require('../webpack/server.prod');
+const uglify                     = require('gulp-uglify');
 const webpack                    = require('webpack');
 const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
@@ -20,8 +23,8 @@ const publicPath = clientConfigDev.output.publicPath;
 const outputPath  = clientConfigDev.output.path;
 const dev         = process.env.NODE_ENV === 'development';
 
+
 const app = express();
-app.use(compression());
 app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
 
 const serviceWorkerHeaderMiddleware = app.use((req, res, next) => {
@@ -57,7 +60,7 @@ function done() {
     const server = isHttp2 ?
       spdy.createServer(getSpdyOptions(), app) :
       app;
-    
+
     server.keepAliveTimeout = 5;
 
     if (isHttp2) {
@@ -69,8 +72,7 @@ function done() {
         }
 
         console.log(
-          `HTTP->HTTPS redirector enabled @ http://localhost:${SECONDARY_PORT}.`
-          .magenta);
+          `HTTP->HTTPS redirector enabled @ http://localhost:${SECONDARY_PORT}.`);
       });
     }
     
@@ -81,8 +83,7 @@ function done() {
 
       isBuilt = true;
       console.log(
-        `BUILD COMPLETE -- Listening @ http://localhost:${PRIMARY_PORT}.`
-        .magenta);
+        `BUILD COMPLETE -- Listening @ http://localhost:${PRIMARY_PORT}.`);
     });
 
     return server;
@@ -111,7 +112,7 @@ if (dev) {
     const clientStats = stats.toJson().children[0];
     const render = require('../dist/server/main.js').x50Render;
 
-    app.use(publicPath, express.static(outputPath));
+    app.use(publicPath, expressStaticGzip(outputPath));
     app.use(render({ clientStats, }));
     
     done();
