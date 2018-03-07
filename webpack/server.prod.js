@@ -2,8 +2,8 @@ const HardSourcePlugin = require('hard-source-webpack-plugin');
 const { resolve, }     = require('path');
 const webpack          = require('webpack');
 
-const entry            = resolve(__dirname, '../server/render');
-const output           = resolve(__dirname, '../dist/server');
+const entry  = resolve(__dirname, '../server/render');
+const output = resolve(__dirname, '../dist/server');
 
 module.exports = {
   name: 'server',
@@ -94,7 +94,5 @@ module.exports = {
         H2: process.env.H2,
       },
     }),
-
-    new HardSourcePlugin(),
   ],
 };
