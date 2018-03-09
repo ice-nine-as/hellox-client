@@ -52,6 +52,7 @@ const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import styles from '../Styles/Pages/Home.less';
+import { FeedDetailLevels } from '../Enums/FeedDetailLevels';
 const _styles = styles || {};
 
 export class Home extends React.PureComponent<THomePageProps> {
@@ -167,8 +168,8 @@ export class Home extends React.PureComponent<THomePageProps> {
             What's up?
           </h2>
 
-          <LazyLoad verticalOffset={300}>
-            <ConnectedLatestNews />
+          <LazyLoad verticalOffset={400}>
+            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
           </LazyLoad>
         </section>
       </article>
