@@ -4,7 +4,7 @@ const express                    = require('express');
 const enforce                    = require('express-sslify');
 const expressStaticGzip          = require('express-static-gzip');
 const gulp                       = require('gulp');
-const { readFileSync }           = require('fs');
+const { readFileSync, }          = require('fs');
 const {
   dirname,
   resolve,
@@ -19,25 +19,44 @@ const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 
-const publicPath = clientConfigDev.output.publicPath;
-const outputPath  = clientConfigDev.output.path;
-const dev         = process.env.NODE_ENV === 'development';
+const dev = process.env.NODE_ENV === 'development';
+console.log(`Is dev: ${dev}`);
 
+const publicPath  = clientConfigDev.output.publicPath;
+const outputPath  = clientConfigDev.output.path;
+const projectPath = resolve(__dirname, '..');
+const imagesPath  = resolve(projectPath, 'images');
+const fontsPath   = resolve(projectPath, 'fonts');
 
 const app = express();
-app.use(serveFavicon(resolve(__dirname, '..', 'public', 'favicon-96x96.png')));
+app.use(serveFavicon(resolve(imagesPath, 'favicon-96x96.png')));
+app.use('/fonts', express.static(resolve(fontsPath)));
 
-const serviceWorkerHeaderMiddleware = app.use((req, res, next) => {
+const headerMiddleware = app.use((req, res, next) => {
   /* Give the service worker root scope. */
   res.setHeader('Service-Worker-Allowed', '/');
+
+  /* Deny HTTP entirely. */
+  res.setHeader('Strict-Transport-Security',
+                'max-age=31536000 ; includeSubDomains');
+
+  /* Deny all iframes/iframing of the site. */
+  res.setHeader('X-Frame-Options', 'deny');
+
+  /* Block all detected XSS attacks entirely. */
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+
+  /* Execute the next middleware. */
   next();
 });
 
 let isBuilt = false;
 
+const letsEncryptDir = resolve(projectPath, 'private', 'live', 'hellox.me');
+
 const getSpdyOptions = () => ({
-  cert: readFileSync(resolve(__dirname, '..', 'private', 'live', 'hellox.me', 'fullchain.pem')),
-  key:  readFileSync(resolve(__dirname, '..', 'private', 'live', 'hellox.me', 'privkey.pem')),
+  cert: readFileSync(resolve(letsEncryptDir, 'fullchain.pem')),
+  key:  readFileSync(resolve(letsEncryptDir, 'privkey.pem')),
   spdy: {
     protocols: [
       'h2',
@@ -90,8 +109,9 @@ function done() {
   })();
 }
 
+const compiler = webpack([ clientConfigDev, serverConfigDev, ]);
+
 if (dev) {
-  const compiler = webpack([ clientConfigDev, serverConfigDev, ]);
   const clientCompiler = compiler.compilers[0];
   const options = {
     publicPath,
@@ -108,13 +128,13 @@ if (dev) {
 
   compiler.plugin('done', done);
 } else {
-  webpack([ clientConfigProd, serverConfigProd, ]).run((err, stats) => {
+  compiler.run((err, stats) => {
     const clientStats = stats.toJson().children[0];
     const render = require('../dist/server/main.js').x50Render;
 
     app.use(publicPath, expressStaticGzip(outputPath));
     app.use(render({ clientStats, }));
-    
+
     done();
   });
 }

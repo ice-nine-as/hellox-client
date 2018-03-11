@@ -10,9 +10,6 @@ import {
   Response,
 } from 'express';
 import {
-  externalLibs,
-} from '../src/Properties/externalLibs';
-import {
   readFile,
 } from 'fs';
 import {
@@ -48,18 +45,17 @@ import flushChunks from 'webpack-flush-chunks';
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
 
-
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
-  'An exception was encountered while configuring the Redux store on the ' +
-  'server.',
+    'An exception was encountered while configuring the Redux store on the ' +
+    'server.',
 };
 
 const readFileProm = promisify(readFile);
 
 const handlePushError = (err: Error | undefined) => {
   if (err) {
-    console.error(err);
+    console.trace(err);
   }
 };
 
@@ -69,10 +65,29 @@ const nodeSpdyOptions = {
   },
 
   response: {
-    'content-type':     'application/javascript',
     'content-encoding': 'gzip',
   },
 };
+
+const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
+  response: { 
+    'content-type': 'application/javascript',
+  }
+});
+
+const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
+  response: {
+    'content-type': 'text/css',
+  },
+});
+
+const serverDirPath = resolve(__dirname, '..', '..', 'server');
+
+const viewportSnifferPath = resolve(serverDirPath, 'viewportSniffer.js');  
+let viewportSnifferElement: string | null = null;
+
+const fontLoaderPath = resolve(serverDirPath, 'fontLoader.js');
+let fontLoaderElement: string | null = null;
 
 export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
   const x50Response = async (
@@ -81,36 +96,14 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     // @ts-ignore
     next?: NextFunction) =>
   {
-    /* Do not render the 404 page for failed code and image lookups, or for
-     * codefiles of which we already know the location. Doing so wastes huge 
-     * amounts of time and process. */
-    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg)|__webpack_hmr$/.test(req.url)) {
-      /* Check and see if the request is for one of the whitelisted external
-       * libs not bundled by webpack. As of 03.2018 this is just modernizr. */
-      const fileName = (() => {
-        const split = req.url.split('/').filter((aa) => aa.length > 0);
-        return split[split.length - 1];
-      })();
-
-      const isExternalLib = externalLibs.some((lib) => {
-        return fileName.indexOf(lib) !== -1;
-      });
-
-      if (isExternalLib) {
-        const path = resolve(__dirname, '..', 'client', fileName);
-        console.log(`Sending external lib ${fileName} from ${path}.`);
-        res.sendFile(path);
-        return;
-      } else {
-        console.error(`Object at ${req.url} not found.`);
-        res.status(404);
-        res.end();
-        /* Make sure to end the connection, otherwise it hangs permanently. */
-        return;
-      }
-    } else if (req.url === '/manifest.json') {
-      /* Needed for Progressive Web App support. */
-      res.sendFile(resolve(__dirname, '..', 'client', 'manifest.json'));
+    /* Do not render the 404 page for failed code, image, and font lookups, or
+     * for codefiles of which we already know the location. Doing so wastes
+     * huge amounts of time and process. */
+    if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg|woff2)|__webpack_hmr$/.test(req.url)) {
+      console.error(`Object at ${req.url} not found.`);
+      res.status(404);
+      res.end();
+      /* Make sure to end the connection, otherwise it hangs permanently. */
       return;
     }
 
@@ -123,6 +116,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         '\n\nThe error was:\n',
         e);
 
+      res.status(500);
       res.end();
       throw e;
     }
@@ -157,27 +151,40 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       outputPath: resolve(__dirname, '..', 'client'),
     });
 
+    const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
+
     if (isHttp2()) {
-      const files = await Promise.all([
-        readFileProm(resolve(__dirname, '..', 'client', 'vendor.js.gz')),
+      const spdyRes = res as any as ServerResponse;
+
+      const scriptFiles = await Promise.all([
+        readFileProm(getClientFilepath('vendor.js.gz')),
         ...scripts.map((fileName) => {
-          const path = resolve(__dirname, '..', 'client', `${fileName}.gz`);
+          const path = getClientFilepath(getClientFilepath(`${fileName}.gz`));
           return readFileProm(path);
         }),
       ]);
 
-      const spdyRes = res as any as ServerResponse;
-
-      const vendorStream = spdyRes.push('/static/vendor.js', nodeSpdyOptions);
+      const vendorStream = spdyRes.push('/static/vendor.js', nodeSpdyJsOptions);
       vendorStream.on('error', handlePushError);
-      vendorStream.end(files[0]);
+      vendorStream.end(scriptFiles[0]);
 
-      for (let ii = 1; ii < files.length; ii += 1) {
+      for (let ii = 1; ii < scriptFiles.length; ii += 1) {
         const fileName = scripts[ii - 1];
-        const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyOptions);
+        const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyJsOptions);
         stream.on('error', handlePushError);
-        stream.end(files[ii]);
+        stream.end(scriptFiles[ii]);
       }
+
+      const styleFiles = await Promise.all(stylesheets.map((path) => {
+        return readFileProm(getClientFilepath(`${path}.gz`));
+      }));
+
+      styleFiles.forEach((file, index) => {
+        const fileName = stylesheets[index];
+        const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyCssOptions);
+        stream.on('error', handlePushError);
+        stream.end(file);
+      });
     }
 
     const ambientStyleElement =
@@ -192,6 +199,20 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Content-Encoding', 'gzip');
 
+    if (!viewportSnifferElement) {
+      viewportSnifferElement =
+        `<script id="viewportSniffer">
+          ${await readFileProm(viewportSnifferPath)}
+        </script>`
+    }
+
+    if (!fontLoaderElement) {
+      fontLoaderElement =
+        `<script id="fontLoader">
+          ${await readFileProm(fontLoaderPath)}
+        </script>`;
+    }
+
     const responseStr =
       `<!DOCTYPE html>
       <html lang="en">
@@ -199,22 +220,14 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="theme-color" content="rgb(234, 80, 80)">
-          <link rel="manifest" href="/manifest.json">
+          <link rel="manifest" href="/static/manifest.json">
           <title>Hello X</title>
           ${ambientStyleElement}
           ${css}
         </head>
         <body>
-          <script type="text/javascript">
-            /*! modernizr 3.5.0 (Custom Build) | MIT *
-            * https://modernizr.com/download/?-mq !*/
-            !function(e,n,t){function o(e,n){return typeof e===n}function a(){var e,n,t,a,i,s,r;for(var d in l)if(l.hasOwnProperty(d)){if(e=[],n=l[d],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(a=o(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],r=s.split("."),1===r.length?Modernizr[r[0]]=a:(!Modernizr[r[0]]||Modernizr[r[0]]instanceof Boolean||(Modernizr[r[0]]=new Boolean(Modernizr[r[0]])),Modernizr[r[0]][r[1]]=a),f.push((a?"":"no-")+r.join("-"))}}function i(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):c?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function s(){var e=n.body;return e||(e=i(c?"svg":"body"),e.fake=!0),e}function r(e,t,o,a){var r,l,d,f,c="modernizr",p=i("div"),h=s();if(parseInt(o,10))for(;o--;)d=i("div"),d.id=a?a[o]:c+(o+1),p.appendChild(d);return r=i("style"),r.type="text/css",r.id="s"+c,(h.fake?h:p).appendChild(r),h.appendChild(p),r.styleSheet?r.styleSheet.cssText=e:r.appendChild(n.createTextNode(e)),p.id=c,h.fake&&(h.style.background="",h.style.overflow="hidden",f=u.style.overflow,u.style.overflow="hidden",u.appendChild(h)),l=t(p,e),h.fake?(h.parentNode.removeChild(h),u.style.overflow=f,u.offsetHeight):p.parentNode.removeChild(p),!!l}var l=[],d={_version:"3.5.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){l.push({name:e,fn:n,options:t})},addAsyncTest:function(e){l.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=d,Modernizr=new Modernizr;var f=[],u=n.documentElement,c="svg"===u.nodeName.toLowerCase(),p=function(){var n=e.matchMedia||e.msMatchMedia;return n?function(e){var t=n(e);return t&&t.matches||!1}:function(n){var t=!1;return r("@media "+n+" { #modernizr { position: absolute; } }",function(n){t="absolute"==(e.getComputedStyle?e.getComputedStyle(n,null):n.currentStyle).position}),t}}();d.mq=p,a(),delete d.addTest,delete d.addAsyncTest;for(var h=0;h<Modernizr._q.length;h++)Modernizr._q[h]();e.Modernizr=Modernizr}(window,document);            
-
-            /* Hello X logic */
-            if (Modernizr.mq('(min-device-width: 1001px) and (min-width: 1001px)')) {
-              document.body.parentElement.className = 'monitor';
-            }
-          </script>
+          ${viewportSnifferElement}
+          ${fontLoaderElement}
           <script defer type="text/javascript" src="/static/vendor.js"></script>
           <div id="root">${appStr}</div>
           ${cssHash}

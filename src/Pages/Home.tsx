@@ -168,7 +168,7 @@ export class Home extends React.PureComponent<THomePageProps> {
             What's up?
           </h2>
 
-          <LazyLoad verticalOffset={400}>
+          <LazyLoad verticalOffset={500}>
             <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
           </LazyLoad>
         </section>

@@ -1,4 +1,7 @@
 import {
+  FeedDetailLevels,
+} from '../Enums/FeedDetailLevels';
+import {
   getRssFeedThunk,
 } from '../Actions/Creators/getRssFeedThunk';
 import {
@@ -36,13 +39,12 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/LatestNews.less';
-import { FeedDetailLevels } from '../Enums/FeedDetailLevels';
 const _styles = styles || {};
 
 let key = -1;
 
 export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsDispatchProps> {
-  constructor(props, context) {
+  constructor(props: TLatestNewsOwnProps & TLatestNewsDispatchProps, context: object) {
     super(props, context);
 
     this.getFeedKey = this.getFeedKey.bind(this);
@@ -118,7 +120,6 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
   render() {
     const {
       feeds,
-      detailLevel,
     } = this.props;
 
     const feedKey = this.getFeedKey(); 
@@ -144,9 +145,7 @@ export const mapStateToProps = ({
   language,
   feeds,
 }: TStoreProps,
-ownProps: {
-  detailLevel: FeedDetailLevels,
-}) => ({
+ownProps: object) => ({
   language,
   feeds,
   ...ownProps,
