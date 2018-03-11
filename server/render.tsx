@@ -63,21 +63,19 @@ const nodeSpdyOptions = {
   request: {
     accept: '*/*'
   },
-
-  response: {
-    'content-encoding': 'gzip',
-  },
 };
 
 const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
   response: { 
     'content-type': 'application/javascript',
+    'content-encoding': 'gzip',
   }
 });
 
 const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
   response: {
     'content-type': 'text/css',
+    'content-encoding': 'gzip',
   },
 });
 
