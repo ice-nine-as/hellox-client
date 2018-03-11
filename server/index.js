@@ -109,9 +109,9 @@ function done() {
   })();
 }
 
-const compiler = webpack([ clientConfigDev, serverConfigDev, ]);
 
 if (dev) {
+  const compiler = webpack([ clientConfigDev, serverConfigDev, ]);
   const clientCompiler = compiler.compilers[0];
   const options = {
     publicPath,
@@ -128,7 +128,7 @@ if (dev) {
 
   compiler.plugin('done', done);
 } else {
-  compiler.run((err, stats) => {
+  webpack([ clientConfigProd, serverConfigProd, ]).run((err, stats) => {
     const clientStats = stats.toJson().children[0];
     const render = require('../dist/server/main.js').x50Render;
 
