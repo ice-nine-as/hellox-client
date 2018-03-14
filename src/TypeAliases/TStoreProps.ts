@@ -7,19 +7,15 @@ import {
 import {
   TFeedsMap,
 } from './TFeedsMap';
-import {
-  ViewportStates,
-} from '../Enums/ViewportStates';
 
 export type TStoreProps = {
-  done:          boolean,
-  error:         boolean,
-  hamburgerOpen: boolean,
-  language:      Languages,
-  loading:       boolean,
+  done:          boolean;
+  error:         boolean;
+  hamburgerOpen: boolean;
+  language:      Languages;
+  loading:       boolean;
   location:      LocationState;
-  feeds:         TFeedsMap,
-  viewportState: ViewportStates,
+  feeds:         TFeedsMap;
 };
 
 export default TStoreProps;

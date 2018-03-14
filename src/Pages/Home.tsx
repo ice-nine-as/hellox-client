@@ -2,6 +2,12 @@ import {
   AboutLinkAction,
 } from '../Actions/Link/AboutLinkAction';
 import {
+  FeedDetailLevels,
+} from '../Enums/FeedDetailLevels';
+import {
+  forumUrl,
+} from '../Properties/forumUrl';
+import {
   HomeBackgroundImage,
 } from '../Components/HomeBackgroundImage';
 import {
@@ -31,9 +37,6 @@ import {
 import {
   connect,
 } from 'react-redux';
-import {
-  ReadDiscussLinkAction,
-} from '../Actions/Link/ReadDiscussLinkAction';
 import {
   ReadDiscussIcon,
 } from '../Components/Icon/ReadDiscussIcon';
@@ -70,66 +73,66 @@ export class Home extends React.PureComponent<THomePageProps> {
           </h1>
 
           <div className={_styles.AllLinksContainer}>
-            <div className={`${_styles.LinkBox} ${_styles.Write}`}>
-              <h2 className={`${styles.LinkTitle} ${_styles.Write}`}>
-                WRITE
-              </h2>
+            <NavLink
+              className={`${_styles.Link} ${_styles.Write}`}
+              to={makeLinkAction(WriteLinkAction)}
+            >
+              <div className={`${_styles.LinkBox} ${_styles.Write}`}>
+                <h2 className={`${styles.LinkTitle} ${_styles.Write}`}>
+                  WRITE
+                </h2>
 
-              <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
-                Add your vision
-              </h3>
-
-              <div className={_styles.LinkContainer}>
-                <NavLink
-                  className={`${_styles.Link} ${_styles.Write}`}
-                  to={makeLinkAction(WriteLinkAction)}
-                >
-                  <WriteIcon />
-                </NavLink>
-              </div>
-            </div>
-
-            <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
-              <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>
-                PODCAST
-              </h2>
-
-              <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
-                #03 Add your vision {/* TODO: scrape from wherever podcast data lives. */}
-              </h3>
-
-              <div className={_styles.LinkContainer}>
-                <NavLink
-                  className={`${_styles.Link} ${_styles.Podcast}`}
-                  to={makeLinkAction(PodcastLinkAction)}
-                >
-                  <PodcastIcon />
-                </NavLink>
-
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts}`}>
-                  More podcasts
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
+                  Add your vision
                 </h3>
+
+                <div className={_styles.LinkContainer}>
+                  <WriteIcon />
+                </div>
               </div>
-            </div>
+            </NavLink>
 
-            <div className={`${_styles.LinkBox} ${_styles.Read}`}>
-              <h2 className={`${styles.LinkTitle} ${_styles.Read}`}>
-                READ
-              </h2>
+            <NavLink
+              className={`${_styles.Link} ${_styles.Podcast}`}
+              to={makeLinkAction(PodcastLinkAction)}
+            >
+              <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
+                <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>
+                  PODCAST
+                </h2>
 
-              <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
-                Discuss
-              </h3>
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
+                  #03 Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+                </h3>
 
-              <div className={_styles.LinkContainer}>
-                <NavLink
-                  className={`${_styles.Link} ${_styles.Write}`}
-                  to={makeLinkAction(ReadDiscussLinkAction)}
-                >
+                <div className={_styles.LinkContainer}>
+                  <PodcastIcon />
+
+                  <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts}`}>
+                    More podcasts
+                  </h3>
+                </div>
+              </div>
+            </NavLink>
+
+            <a
+              className={`${_styles.Link} ${_styles.Read}`}
+              href={forumUrl}
+            >
+              <div className={`${_styles.LinkBox} ${_styles.Read}`}>
+                <h2 className={`${styles.LinkTitle} ${_styles.Read}`}>
+                  READ
+                </h2>
+
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Read}`}>
+                  Discuss
+                </h3>
+
+                <div className={_styles.LinkContainer}>
                   <ReadDiscussIcon />
-                </NavLink>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </section>
 
@@ -155,10 +158,10 @@ export class Home extends React.PureComponent<THomePageProps> {
               <QuoteIcon />
             </div>
 
-            <span className={_styles.Quote}>
+            <em className={_styles.Quote}>
               What is the loop of Creation? How is there something from
               nothing?
-            </span>
+            </em>
           </div>
         </section>
 
@@ -167,8 +170,8 @@ export class Home extends React.PureComponent<THomePageProps> {
             What's up?
           </h2>
 
-          <LazyLoad verticalOffset={300}>
-            <ConnectedLatestNews />
+          <LazyLoad verticalOffset={500}>
+            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
           </LazyLoad>
         </section>
       </article>

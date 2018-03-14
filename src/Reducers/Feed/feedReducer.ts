@@ -1,6 +1,12 @@
 import {
+  FeedKeys,
+} from '../../Enums/FeedKeys';
+import {
   newsFullEnFeedReducer,
 } from './newsFullEnFeedReducer';
+import {
+  newsTeasersEnFeedReducer,
+} from './newsTeasersEnFeedReducer';
 import {
   newsTitlesEnFeedReducer,
 } from './newsTitlesEnFeedReducer';
@@ -8,11 +14,17 @@ import {
   newsFullNoFeedReducer,
 } from './newsFullNoFeedReducer';
 import {
+  newsTeasersNoFeedReducer,
+} from './newsTeasersNoFeedReducer';
+import {
   newsTitlesNoFeedReducer,
 } from './newsTitlesNoFeedReducer';
 import {
   newsFullRuFeedReducer,
 } from './newsFullRuFeedReducer';
+import {
+  newsTeasersRuFeedReducer,
+} from './newsTeasersRuFeedReducer';
 import {
   newsTitlesRuFeedReducer,
 } from './newsTitlesRuFeedReducer';
@@ -39,15 +51,18 @@ import {
  * Redux's AnyAction type. */
 // @ts-ignore
 export const feedsReducer: TReducer<TFeedsMap> = combineReducers({
-  newsFullEnFeed:      newsFullEnFeedReducer,
-  newsTitlesEnFeed:    newsTitlesEnFeedReducer,
-  newsFullNoFeed:      newsFullNoFeedReducer,
-  newsTitlesNoFeed:    newsTitlesNoFeedReducer,
-  newsFullRuFeed:      newsFullRuFeedReducer,
-  newsTitlesRuFeed:    newsTitlesRuFeedReducer,
-  storyTemplateEnFeed: storyTemplateEnFeedReducer,
-  storyTemplateNoFeed: storyTemplateNoFeedReducer,
-  storyTemplateRuFeed: storyTemplateRuFeedReducer,
+  [FeedKeys.NewsFullEn]:      newsFullEnFeedReducer,
+  [FeedKeys.NewsFullNo]:      newsFullNoFeedReducer,
+  [FeedKeys.NewsFullRu]:      newsFullRuFeedReducer,
+  [FeedKeys.NewsTeasersEn]:   newsTeasersEnFeedReducer,
+  [FeedKeys.NewsTeasersNo]:   newsTeasersNoFeedReducer,
+  [FeedKeys.NewsTeasersRu]:   newsTeasersRuFeedReducer,
+  [FeedKeys.NewsTitlesEn]:    newsTitlesEnFeedReducer,
+  [FeedKeys.NewsTitlesNo]:    newsTitlesNoFeedReducer,
+  [FeedKeys.NewsTitlesRu]:    newsTitlesRuFeedReducer,
+  [FeedKeys.StoryTemplateEn]: storyTemplateEnFeedReducer,
+  [FeedKeys.StoryTemplateNo]: storyTemplateNoFeedReducer,
+  [FeedKeys.StoryTemplateRu]: storyTemplateRuFeedReducer,
 });
 
 export default feedsReducer;

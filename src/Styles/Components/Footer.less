@@ -1,5 +1,76 @@
+@import "../KeyColors.less";
+
 .Footer {
+  position: relative;
   left: 0;
   width: 100%;
-  background: whitesmoke;
+  color: white;
+  font-family: 'Roboto Condensed';
+  font-size: 18pt;
+
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: @red;
+      transition: 0.2s color;
+    }
+  }
+
+  .VerticalHalf {
+    position: relative;
+
+    &.First {
+      background: @semi-light-purple;
+      padding-bottom: 50px;
+
+      .HorizontalHalf {
+        position: relative;
+        display: inline-block;
+        width: 49%;
+        height: 100%;
+
+        &.Contact {
+          padding-right: 1%;
+          text-align: right;
+        }
+
+        .ContactHeader {
+          display: block;
+        }
+
+        .ContactPara {
+          margin: 0;
+
+          &.Names {
+            display: block;
+          }
+
+          &.Email {
+            display: block;
+          }
+
+          &.Phone {
+            display: block;
+          }
+        }
+
+        .IconsContainer {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        &.SiteMap {
+          padding-left: 1%;
+          text-align: left;
+          vertical-align: top;
+        }
+      }
+    }
+
+    &.Second {
+      background: @light-purple;
+    }
+  }
 }

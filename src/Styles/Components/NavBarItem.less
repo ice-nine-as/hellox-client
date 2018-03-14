@@ -1,14 +1,21 @@
+@import "../KeyColors.less";
+
 .NavBarItem {
   font-size: 14pt;
   padding: 20px;
   color: white;
-  text-decoration: transparent;
-  transition: 0.5s background-color;
+  text-decoration: none;
+  
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover, &:active, &:global(.active) {
+    color: @red;
+    transition: color 0.2s;
+  }
 }
 
-.NavBarItem:visited {
-  color: inherit;
-}
 
 .NavLinkHeaderIconLink {
   position: relative;

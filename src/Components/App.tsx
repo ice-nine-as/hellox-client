@@ -20,9 +20,6 @@ import {
   makeAppAction,
 } from '../Modules/makeAppAction';
 import {
-  makeViewportStateAction,
-} from '../Modules/makeViewportStateAction';
-import {
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
 import {
@@ -43,14 +40,6 @@ import {
 import {
   Universal,
 } from '../Components/Universal';
-import {
-  ViewportStateAction,
-} from '../Actions/App/ViewportStateAction';
-import {
-  ViewportStates,
-} from '../Enums/ViewportStates';
-
-import MediaQuery from 'react-responsive';
 
 import * as React from 'react';
 
@@ -78,56 +67,6 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
 
     return (
       <div className={_styles.App}>
-        <MediaQuery minDeviceWidth={1001}>
-          <MediaQuery maxWidth={1000}>
-            {
-              (matches) => {
-                if (matches) {
-                  const htmlElem = document.body.parentElement!;
-                  const state = ViewportStates.Mobile;
-                  htmlElem.classList.add(state);
-                  htmlElem.classList.remove(ViewportStates.Monitor);
-                  setTimeout(() => this.props.setViewportState(state));
-                }
-
-                return null;
-              }
-            }
-          </MediaQuery>
-
-          <MediaQuery minWidth={1001}>
-            {
-              (matches) => {
-                if (matches) {
-                  const htmlElem = document.body.parentElement!;                  
-                  const state = ViewportStates.Monitor;
-                  htmlElem.classList.add(state);
-                  htmlElem.classList.remove(ViewportStates.Mobile);
-                  setTimeout(() => this.props.setViewportState(state));
-                }
-
-                return null;
-              }
-            }
-          </MediaQuery>
-        </MediaQuery>
-
-        <MediaQuery maxDeviceWidth={1000}>
-          {
-            (matches) => {
-              if (matches) {
-                const htmlElem = document.body.parentElement!;                
-                const state = ViewportStates.Mobile;
-                htmlElem.classList.add(state)
-                htmlElem.classList.remove(ViewportStates.Monitor);
-                setTimeout(() => this.props.setViewportState(state));
-              }
-
-              return null;
-            }
-          }
-        </MediaQuery>
-
         <Header />
 
         <Universal
@@ -193,10 +132,6 @@ export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
 
     setLoading: (value: boolean) => {
       return dispatch(makeAppAction(LoadingAppAction, value));
-    },
-
-    setViewportState: (value: ViewportStates) => {
-      return dispatch(makeViewportStateAction(ViewportStateAction, value));
     },
   };
 };

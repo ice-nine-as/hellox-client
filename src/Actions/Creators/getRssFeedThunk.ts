@@ -27,14 +27,13 @@ import {
 } from './TRssFeedGetter';
 
 import * as htmlparser from 'htmlparser2';
-
-const fetch = require('isomorphic-fetch');
-
 declare module 'htmlparser2' {
   export class FeedHandler {
     constructor(callback: (err: any, feed: IRssFeed) => void, options?: object);
   }
 }
+
+const fetch = require('isomorphic-fetch');
 
 export const strings = {
   SUBTYPE_INVALID:

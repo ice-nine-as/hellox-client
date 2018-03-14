@@ -87,13 +87,13 @@ export async function configureServerStore(
     }
   } else if (type === PageIdentifiers.Write) {
     /* Pre-load same-language story generator prompt. */
-    if (language === Languages.Norwegian) {
+    /*if (language === Languages.Norwegian) {
       await store.dispatch(getRssFeedThunk(RssActionSubtypes.StoryTemplateNo));
     } else if (language === Languages.Russian) {
       await store.dispatch(getRssFeedThunk(RssActionSubtypes.StoryTemplateRu));
     } else {
       await store.dispatch(getRssFeedThunk(RssActionSubtypes.StoryTemplateEn));
-    }
+    }*/
   }
 
   if (location.kind === 'redirect') {

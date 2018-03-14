@@ -1,4 +1,10 @@
 import {
+  FeedDetailLevels,
+} from '../Enums/FeedDetailLevels';
+import {
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
   getRssFeedThunk,
 } from '../Actions/Creators/getRssFeedThunk';
 import {
@@ -8,11 +14,11 @@ import {
   Languages,
 } from '../Enums/Languages';
 import {
-  NewsItem,
-} from './NewsItem';
+  NewsItemFull,
+} from './NewsItemFull';
 import {
-  NewsItemStates,
-} from '../Enums/NewsItemStates';
+  NewsItemPreview,
+} from './NewsItemPreview';
 import {
   connect,
 } from 'react-redux';
@@ -41,20 +47,18 @@ const _styles = styles || {};
 let key = -1;
 
 export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsDispatchProps> {
+  constructor(props: TLatestNewsOwnProps & TLatestNewsDispatchProps, context: object) {
+    super(props, context);
+
+    this.getFeedKey = this.getFeedKey.bind(this);
+    this.makeNewsItem = this.makeNewsItem.bind(this);
+  }
+
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
-
   doLoad() {
-    /* Does not use title feeds at present. */
-    let feedKey: keyof TFeedsMap;
-    if (this.props.language === Languages.Norwegian) {
-      feedKey = 'newsFullNoFeed';
-    } else if (this.props.language === Languages.Russian) {
-      feedKey = 'newsFullRuFeed';
-    } else {
-      feedKey = 'newsFullEnFeed';
-    }
-
+    /* Loads the relevant feed based on language and detail level. */ 
+    const feedKey = this.getFeedKey();
     const feed = this.props.feeds[feedKey];
     if (!feed) {
       console.log(`Loading ${feedKey} on client.`);
@@ -62,23 +66,20 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     }
   }
 
-  makeNewsItems(item: IRssPost) {
+  makeNewsItem(item: IRssPost) {
     const {
       description: html,
-      link,
-      pubDate,
-      title,
     } = item;
 
-    return (
-      <NewsItem
+    return this.props.detailLevel === FeedDetailLevels.Full ?
+      <NewsItemFull
         html={html}
         key={key += 1}
-        link={link}
-        pubDate={pubDate}
-        title={title}
-        state={NewsItemStates.Preview} />
-    );
+      /> :
+      <NewsItemPreview
+        html={html}
+        key={key += 1}
+      />;
   }
 
   componentDidMount() {
@@ -89,29 +90,50 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     this.doLoad();
   }
 
-  render() {
-    const {
-      feeds,
-    } = this.props;
-
-    const feed = (() => {
+  getFeedKey() {
+    if (this.props.detailLevel === FeedDetailLevels.Teaser) {
       if (this.props.language === Languages.Norwegian) {
-        return feeds.newsFullNoFeed;
+        return FeedKeys.NewsTeasersNo;
       } else if (this.props.language === Languages.Russian) {
-        return feeds.newsFullRuFeed;
+        return FeedKeys.NewsTeasersRu;
       } else {
-        return feeds.newsFullEnFeed;
+        return FeedKeys.NewsTeasersEn;
       }
-    })();
+    } else if (this.props.detailLevel === FeedDetailLevels.Titles) {
+      if (this.props.language === Languages.Norwegian) {
+        return FeedKeys.NewsTitlesNo;
+      } else if (this.props.language === Languages.Russian) {
+        return FeedKeys.NewsTitlesRu;
+      } else {
+        return FeedKeys.NewsTitlesEn;
+      }
+    } else {
+      if (this.props.language === Languages.Norwegian) {
+        return FeedKeys.NewsFullNo;
+      } else if (this.props.language === Languages.Russian) {
+        return FeedKeys.NewsFullRu;
+      } else {
+        return FeedKeys.NewsFullEn;
+      }
+    }
+  }
 
-    const newsItems = feed ? feed.items.map(this.makeNewsItems) : [];
+  render() {
+    const { feeds, } = this.props;
+    const feedKey = this.getFeedKey(); 
+    const feed = feeds[feedKey];
 
     /* TODO: Add internationalization to no news items message. */
+    const newsItems = feed && feed.items && feed.items.length > 0 ?
+      feed.items.map(this.makeNewsItem) :
+      'Sorry, no news yet!';
+
     return (
       <div
         className={_styles.LatestNews}
-        key={key += 1}>
-        {newsItems.length > 0 ? newsItems : 'Sorry, no news yet!'}
+        key={key += 1}
+      >
+        {newsItems}
       </div>
     );
   }
@@ -120,28 +142,18 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
 export const mapStateToProps = ({
   language,
   feeds,
-}: TStoreProps) => ({
+}: TStoreProps,
+ownProps: object) => ({
   language,
   feeds,
+  ...ownProps,
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
   getNewsFeed(feedKey: keyof TFeedsMap) {
-    const subtype = (() => {
-      if (feedKey === 'newsTitlesEnFeed') {
-        return RssActionSubtypes.NewsTitlesEn;
-      } else if (feedKey === 'newsFullNoFeed') {
-        return RssActionSubtypes.NewsFullNo;
-      } else if (feedKey === 'newsTitlesNoFeed') {
-        return RssActionSubtypes.NewsTitlesNo;
-      } else if (feedKey === 'newsFullRuFeed') {
-        return RssActionSubtypes.NewsFullRu;
-      } else if (feedKey === 'newsTitlesRuFeed') {
-        return RssActionSubtypes.NewsTitlesRu;
-      } else {
-        return RssActionSubtypes.NewsFullEn;
-      }
-    })();
+    const subtype = feedKey in RssActionSubtypes ?
+      RssActionSubtypes[feedKey] :
+      RssActionSubtypes.NewsFullEn;
 
     return dispatch(getRssFeedThunk(subtype));
   }

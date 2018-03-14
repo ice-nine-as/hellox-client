@@ -1,4 +1,7 @@
 import {
+  FeedDetailLevels,
+} from '../Enums/FeedDetailLevels';
+import {
   Languages,
 } from '../Enums/Languages';
 import {
@@ -6,8 +9,9 @@ import {
 } from './TFeedsMap';
 
 export type TLatestNewsOwnProps = {
-  language: Languages;
-  feeds:    TFeedsMap; 
+  detailLevel: FeedDetailLevels;
+  language:    Languages;
+  feeds:       TFeedsMap;
 };
 
 export default TLatestNewsOwnProps;

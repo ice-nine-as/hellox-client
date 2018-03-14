@@ -8,7 +8,7 @@ const LazyLoad = require('react-lazy-load').default;
 export class Icon extends React.PureComponent<TIconProps> {
   render() {
     return (
-      <LazyLoad offsetVertical={this.props.offsetVertical || 250}>
+      <LazyLoad offsetVertical={this.props.offsetVertical || 300}>
         {this.props.children}
       </LazyLoad>
     );
