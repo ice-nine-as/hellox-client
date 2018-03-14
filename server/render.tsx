@@ -22,6 +22,9 @@ import {
   ProviderContainer,
 } from '../src/Components/ProviderContainer';
 import {
+  Store,
+} from 'react-redux';
+import {
   flushChunkNames,
 } from 'react-universal-component/server';
 import {
@@ -30,6 +33,9 @@ import {
 import {
   promisify,
 } from 'util';
+import {
+  TStoreProps,
+} from '../src/TypeAliases/TStoreProps';
 import {
   Stats,
 } from 'webpack';
@@ -41,6 +47,9 @@ import * as React          from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks from 'webpack-flush-chunks';
+
+import * as glob from 'glob';
+const globProm = promisify(glob);
 
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
@@ -79,7 +88,14 @@ const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
   },
 });
 
-const serverDirPath = resolve(__dirname, '..', '..', 'server');
+const nodeSpdyFontOptions = Object.assign({}, nodeSpdyOptions, {
+  resposne: {
+    'content-type': 'font/woff2',
+  },
+});
+
+const projectDirPath = resolve(__dirname, '..', '..');
+const serverDirPath = resolve(projectDirPath, 'server');
 
 const viewportSnifferPath = resolve(serverDirPath, 'viewportSniffer.js');  
 let viewportSnifferElement: string | null = null;
@@ -105,7 +121,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         return;
       }
 
-      let store;
+      let store: Store<TStoreProps> | null;
       try {
         store = await configureServerStore(req, res);
       } catch (e) {
@@ -151,6 +167,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       if (isHttp2()) {
         const spdyRes = res as any as ServerResponse;
 
+        /* Load and the vendor and built script chunks. */
         const scriptFiles = await Promise.all([
           readFileProm(getClientFilepath('vendor.js.gz')),
           ...scripts.map((fileName) => {
@@ -159,10 +176,12 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           }),
         ]);
 
+        /* Push the vendor file to the client. */
         const vendorStream = spdyRes.push('/static/vendor.js', nodeSpdyJsOptions);
         vendorStream.on('error', handlePushError);
         vendorStream.end(scriptFiles[0]);
 
+        /* Push the built script chunks to the client. */
         for (let ii = 1; ii < scriptFiles.length; ii += 1) {
           const fileName = scripts[ii - 1];
           const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyJsOptions);
@@ -170,13 +189,31 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           stream.end(scriptFiles[ii]);
         }
 
+        /* Load the built style chunks. */
         const styleFiles = await Promise.all(stylesheets.map((path) => {
           return readFileProm(getClientFilepath(`${path}.gz`));
         }));
 
+        /* Push the built style chunks to the client. */
         styleFiles.forEach((file, index) => {
           const fileName = stylesheets[index];
           const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyCssOptions);
+          stream.on('error', handlePushError);
+          stream.end(file);
+        });
+
+        /* Load the font files. Load WOFF2 only. If the browser doesn't have
+         * WOFF2, it probably doesn't have HTTP2. */
+        const fontGlob = resolve(projectDirPath, 'fonts') + '/*.woff2';
+        const fontFileNames = await globProm(fontGlob);
+        const fontFiles = await Promise.all(fontFileNames.map((fileName) => {
+          return readFileProm(fileName);
+        }));
+
+        /* Push the font files to the client. */
+        fontFiles.forEach((file, index) => {
+          const fileName = fontFileNames[index];
+          const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyFontOptions);
           stream.on('error', handlePushError);
           stream.end(file);
         });
@@ -210,7 +247,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
       const responseStr =
         `<!DOCTYPE html>
-        <html class="mobile" lang="en">
+        <html lang="${state.language || 'en'}">
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -235,8 +272,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       const zipped = await promisify(gzip)(responseStr);
       res.send(zipped);
 
-      /* We don't currently have any middleware after this, but it's called in
-       * case we ever add any. */
+      /* We don't currently (03.18) have any middleware after this, but it's
+       * called in case we ever add any. */
       next();
     } catch (e) {
       /* Catch all errors. Do not allow uncaught exceptions to cause server to
