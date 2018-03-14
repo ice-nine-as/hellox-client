@@ -119,8 +119,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         throw e;
       }
 
-      console.log('Configured store.');
-
       if (!store) {
         /* No store means redirect was already served. */
         return;
@@ -138,10 +136,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
                                   </ProviderContainer>
                                 );
 
-      console.log('Rendering.');
       const appStr            = ReactDOMServer.renderToString(providerContainer);
-      console.log('Done rendering');
-      console.log('Flushing chunks.');
       const chunkNames        = flushChunkNames();
       const {
         cssHash,
@@ -150,15 +145,12 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         styles,
         stylesheets,
       } = flushChunks(clientStats, { chunkNames, });
-      console.log('Chunks flushed.');
 
       const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
 
       if (isHttp2()) {
-        console.log('Pushing files.');
         const spdyRes = res as any as ServerResponse;
 
-        console.log('Getting script files.');
         const scriptFiles = await Promise.all([
           readFileProm(getClientFilepath('vendor.js.gz')),
           ...scripts.map((fileName) => {
@@ -166,8 +158,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
             return readFileProm(path);
           }),
         ]);
-
-        console.log('Got script files.');
 
         const vendorStream = spdyRes.push('/static/vendor.js', nodeSpdyJsOptions);
         vendorStream.on('error', handlePushError);
@@ -190,8 +180,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           stream.on('error', handlePushError);
           stream.end(file);
         });
-
-        console.log('Files pushed.');
       }
 
       const ambientStyleElement =
@@ -222,7 +210,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
       const responseStr =
         `<!DOCTYPE html>
-        <html lang="en">
+        <html class="mobile" lang="en">
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -247,10 +235,14 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       const zipped = await promisify(gzip)(responseStr);
       res.send(zipped);
 
+      /* We don't currently have any middleware after this, but it's called in
+       * case we ever add any. */
       next();
     } catch (e) {
       /* Catch all errors. Do not allow uncaught exceptions to cause server to
-       * hang. */
+       * hang. Without this, you will get invisible errors, the server will
+       * hang forever, and I'm not 100% sure why. My suspicion is that the way
+       * Babel transforms async functions into ES5 somehow eats errors. */
       console.error(e);
       res.status(500);
       res.end();
