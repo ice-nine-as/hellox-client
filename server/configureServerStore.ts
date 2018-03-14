@@ -44,7 +44,6 @@ export async function configureServerStore(
   routesMap = getDefaultRoutesMap(),
   history   = null)
 {
-  console.log('Configuring server store.', req.url);
   const _history = history || createMemoryHistory({
     initialEntries: [ req.path, ],
   });

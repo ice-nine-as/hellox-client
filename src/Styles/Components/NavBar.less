@@ -1,3 +1,8 @@
 .NavBar {
   display: block;
+
+  /* Do not display full NavBar on mobile. */
+  :global(.mobile) & > :global(.NavBarItem) {
+    display: none;
+  }
 }
