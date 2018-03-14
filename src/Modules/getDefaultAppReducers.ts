@@ -19,9 +19,6 @@ import {
 import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
-import {
-  viewportStateReducer,
-} from '../Reducers/viewportStateReducer';
 
 export const getDefaultAppReducers = (): Readonly<TReducersMap<any>> => {
   return Object.freeze({
@@ -31,7 +28,6 @@ export const getDefaultAppReducers = (): Readonly<TReducersMap<any>> => {
     language:      languageReducer,
     loading:       loadingReducer,
     feeds:         feedsReducer,
-    viewportState: viewportStateReducer,
   });
 }
 

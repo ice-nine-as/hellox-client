@@ -4,5 +4,8 @@
 
 /* Hello X logic */
 if (Modernizr.mq('(min-device-width: 1001px) and (min-width: 1001px)')) {
-  document.body.parentElement.className = 'monitor';
+  document.documentElement.className += 
+    document.documentElement.className ?
+      ' monitor' :
+      'monitor';
 }

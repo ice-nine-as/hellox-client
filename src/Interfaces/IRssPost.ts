@@ -3,7 +3,6 @@ export interface IRssPost {
   id:          string;
   link:        string;
   pubDate:     Date;
-  title:       string;
 }
 
 export default IRssPost;

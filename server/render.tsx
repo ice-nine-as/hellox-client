@@ -69,7 +69,7 @@ const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
   response: { 
     'content-type': 'application/javascript',
     'content-encoding': 'gzip',
-  }
+  },
 });
 
 const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
@@ -144,10 +144,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       js,
       scripts,
       stylesheets,
-    } = flushChunks(clientStats, {
-      chunkNames,
-      outputPath: resolve(__dirname, '..', 'client'),
-    });
+    } = flushChunks(clientStats, { chunkNames, });
 
     const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
 
@@ -221,11 +218,11 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
           <link rel="manifest" href="/static/manifest.json">
           <title>Hello X</title>
           ${ambientStyleElement}
+          ${fontLoaderElement}
           ${css}
         </head>
         <body>
           ${viewportSnifferElement}
-          ${fontLoaderElement}
           <script defer type="text/javascript" src="/static/vendor.js"></script>
           <div id="root">${appStr}</div>
           ${cssHash}

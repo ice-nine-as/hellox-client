@@ -2,14 +2,8 @@ import {
   ConnectedHamburgerMenu,
 } from './HamburgerMenu';
 import {
-  connect,
-} from 'react-redux';
-import {
   TNavBarProps,
 } from '../TypeAliases/TNavBarProps';
-import {
-  ViewportStates,
-} from '../Enums/ViewportStates';
 
 import * as React from 'react';
 
@@ -39,25 +33,10 @@ export class NavBar extends React.PureComponent<TNavBarProps> {
 
     return (
       <div className={_nbStyles.NavBar}>
-        {
-          this.props.viewportState === ViewportStates.Mobile ?
-            /* Default to hamburger menu. */
-            <ConnectedHamburgerMenu>{children}</ConnectedHamburgerMenu> :
-            children
-        }
+        <ConnectedHamburgerMenu>{children}</ConnectedHamburgerMenu>
+        {children}
       </div>
     );
   }
 }
-
-export const mapStateToProps = ({
-  viewportState,
-}: {
-  viewportState: ViewportStates,
-}): TNavBarProps => ({
-  viewportState,
-});
-
-export const ConnectedNavBar = connect(mapStateToProps)(NavBar);
-
 export default NavBar;

@@ -12,11 +12,15 @@
     padding: 20px;
 
     &.First {
-      height: 1020px;
+      height: 1000px;
       top: -110px;
       padding-top: 110px;
       margin-bottom: -160px;
-      overflow-x: hidden;
+      overflow: hidden;
+
+      :global(.monitor) & {
+        height: 950px;
+      }
         
       .LogoContainer {
         position: relative;
@@ -29,9 +33,11 @@
           height: 289px;
         }
       }
-      
+
       .Header {
         position: relative;
+        font-family: 'Roboto Condensed';
+        font-weight: 400;
         font-size: 18pt;
         margin-top: 30px;
         margin-bottom: 25px;
@@ -44,128 +50,147 @@
       .AllLinksContainer {
         display: flex;
         justify-content: center;
+      }
 
-        .LinkBox {
-          display: block;
+      .Link {
+        position: relative;
+        display: block;
+        color: white;
+        text-decoration: none;
+
+        &:hover, &:active {
+          color: @red;
+          transition: color 0.2s;
+        }
+
+        :global(.monitor) & {
+          display: inline-block;
+          margin-left: 65px;
+          margin-right: 65px;
+        }
+
+        @mobile-margin-top: 350px;
+        @mobile-margin-bottom: 100px;
+
+        &.Write {
+          float: left;
+          width: 45%;
+          margin-top: @mobile-margin-top;
+          margin-bottom: @mobile-margin-bottom;
+
+          :global(.monitor) & {
+            float: none;
+            width: inherit;
+            margin-left: 20px;
+            margin-top: 0;
+          }
+        }
+
+        &.Podcast {
+          position: absolute;
+          left: 0;
+          width: 60%;
+          margin-left: 20%;
+          margin-right: 20%;
 
           :global(.monitor) & {
             position: relative;
-            display: inline-block;
-            margin-left: 65px;
-            margin-right: 65px;
+            width: inherit;
+            left: inherit;
+            margin-left: -5px;
+            margin-right: 70px;
           }
+        }
 
-          @mobile-margin-top: 350px;
-          @mobile-margin-bottom: 100px;
+        &.Read {
+          float: right;
+          width: 45%;
+          margin-top: @mobile-margin-top;
+          margin-bottom: @mobile-margin-bottom;
 
-          &.Write {
-            float: left;
-            width: 45%;
-            margin-top: @mobile-margin-top;
-            margin-bottom: @mobile-margin-bottom;
-
-            :global(.monitor) & {
-              float: none;
-              width: inherit;
-              margin-left: 20px;
-              margin-top: 0;
-            }
+          :global(.monitor) & {
+            float: none;
+            width: inherit;
+            margin-top: 0;
+            margin-left: 40px;
           }
+        }
+      }
 
-          &.Podcast {
-            position: absolute;
-            left: 0;
-            width: 100%;
+      .LinkBox {
+        display: block;
+      }
 
-            :global(.monitor) & {
-              position: relative;
-              width: inherit;
-              left: inherit;
-              margin-left: 0;
-            }
-          }
+      .LinkTitle {
+        position: relative;
+        display: block;
+        font-size: 24pt;
+        
+        :global(.monitor) & {
+          font-size: 34pt;
+        }
+      
+        &.Podcast {
+          color: inherit;
+        }
+        
+        &.Write {
+          color: inherit;
+        }
+        
+        &.ReadDiscuss {
+          color: inherit;
+        }
+      }
+      
+      .LinkSubtitle {
+        position: relative;
+        display: block;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: auto;
+        margin-right: auto;
 
-          &.Read {
-            float: right;
-            width: 45%;
-            margin-top: @mobile-margin-top;
-            margin-bottom: @mobile-margin-bottom;
+        font-family: 'Roboto Condensed';
+        font-weight: 400;
+        font-size: 18pt;
+        
+        :global(.monitor) & {
+          font-size: 24pt;
+        }
+        
+        &.Podcast {
+          color: inherit;
+        }
+        
+        &.MorePodcasts {
+          color: inherit;
+        }
+        
+        &.Write {
+          color: inherit;
+        }
+        
+        &.ReadDiscuss {
+          color: inherit;
+        }
+      }
+      
+      .LinkContainer {
+        position: relative;
+        display: inline-block;
 
-            :global(.monitor) & {
-              float: none;
-              width: inherit;
-              margin-top: 0;
-            }
-          }
-
-          .LinkTitle {
-            position: relative;
-            display: block;
-            font-size: 24pt;
-            
-            :global(.monitor) & {
-              font-size: 34pt;
-            }
-          
-            &.Podcast {
-              color: inherit;
-            }
-            
-            &.Write {
-              color: inherit;
-            }
-            
-            &.ReadDiscuss {
-              color: inherit;
-            }
-          }
-          
-          .LinkSubtitle {
-            position: relative;
-            display: block;
-            padding-left: 10px;
-            padding-right: 10px;
-            font-size: 18pt;
-            
-            :global(.monitor) & {
-              font-size: 24pt;
-            }
-            
-            &.Podcast {
-              color: inherit;
-            }
-            
-            &.MorePodcasts {
-              color: inherit;
-            }
-            
-            &.Write {
-              color: inherit;
-            }
-            
-            &.ReadDiscuss {
-              color: inherit;
-            }
-          }
-          
-          .LinkContainer {
-            display: inline-block;
-          }
-  
-          .Link {
-            position: relative;
-            display: block;
-            width: 80px;
-            height: 80px;
-            margin-left: auto;
-            margin-right: auto;
-          }
+        & :global(.LazyLoad) {
+          width: 80px;
+          height: 80px;
+          margin-left: auto;
+          margin-right: auto;
         }
       }
     }
 
     &.Second {
-      background: @red;
+      background: @light-purple;
       padding-left: 25px;
       padding-right: 25px;
 
@@ -201,11 +226,19 @@
             color: @white;
             text-decoration: none;
 
-            .LinkText {
-              display: inline-block;
-              margin-top: auto;
-              margin-bottom: auto;
+            &:hover {
+              background: white;
+              color: @light-purple;
+              transition: 0.2s background, color;
             }
+          }
+
+          .LinkText {
+            display: inline-block;
+            margin-top: auto;
+            margin-bottom: auto;
+            font-family: 'Roboto Condensed';
+            font-weight: 400;
           }
         }
       }
@@ -238,8 +271,8 @@
   }
 }
 
-@media (max-width: 465px) {
-  .Section.First .LinkBox.Read .LinkSubtitle {
-    line-height: 2.25;
+@media (max-width: 424px) {
+  :global(.monitor) .Section.First .LinkBox.Read .LinkSubtitle {
+    line-height: 2.4;
   }
 }

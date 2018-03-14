@@ -13,9 +13,7 @@ export const isRssPost = (maybe: any): maybe is IRssPost => {
     typeof maybe.id === 'string' &&
     typeof maybe.link === 'string' &&
     maybe.link.length > 0 &&
-    isDate(maybe.pubDate) &&
-    typeof maybe.title === 'string' &&
-    maybe.title.length > 0;
+    isDate(maybe.pubDate);
 };
 
 export default isRssPost;

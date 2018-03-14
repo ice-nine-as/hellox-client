@@ -2,6 +2,9 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
   getRssFeedThunk,
 } from '../Actions/Creators/getRssFeedThunk';
 import {
@@ -11,11 +14,11 @@ import {
   Languages,
 } from '../Enums/Languages';
 import {
-  NewsItem,
-} from './NewsItem';
+  NewsItemFull,
+} from './NewsItemFull';
 import {
-  NewsItemStates,
-} from '../Enums/NewsItemStates';
+  NewsItemPreview,
+} from './NewsItemPreview';
 import {
   connect,
 } from 'react-redux';
@@ -48,6 +51,7 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     super(props, context);
 
     this.getFeedKey = this.getFeedKey.bind(this);
+    this.makeNewsItem = this.makeNewsItem.bind(this);
   }
 
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
@@ -65,20 +69,17 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
   makeNewsItem(item: IRssPost) {
     const {
       description: html,
-      link,
-      pubDate,
-      title,
     } = item;
 
-    return (
-      <NewsItem
+    return this.props.detailLevel === FeedDetailLevels.Full ?
+      <NewsItemFull
         html={html}
         key={key += 1}
-        link={link}
-        pubDate={pubDate}
-        title={title}
-        state={NewsItemStates.Preview} />
-    );
+      /> :
+      <NewsItemPreview
+        html={html}
+        key={key += 1}
+      />;
   }
 
   componentDidMount() {
@@ -92,41 +93,38 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
   getFeedKey() {
     if (this.props.detailLevel === FeedDetailLevels.Teaser) {
       if (this.props.language === Languages.Norwegian) {
-        return 'newsTeasersNoFeed';
+        return FeedKeys.NewsTeasersNo;
       } else if (this.props.language === Languages.Russian) {
-        return 'newsTeasersRuFeed';
+        return FeedKeys.NewsTeasersRu;
       } else {
-        return 'newsTeasersEnFeed';
+        return FeedKeys.NewsTeasersEn;
       }
     } else if (this.props.detailLevel === FeedDetailLevels.Titles) {
       if (this.props.language === Languages.Norwegian) {
-        return 'newsTitlesNoFeed';
+        return FeedKeys.NewsTitlesNo;
       } else if (this.props.language === Languages.Russian) {
-        return 'newsTitlesRuFeed';
+        return FeedKeys.NewsTitlesRu;
       } else {
-        return 'newsTitlesEnFeed';
+        return FeedKeys.NewsTitlesEn;
       }
     } else {
       if (this.props.language === Languages.Norwegian) {
-        return 'newsFullNoFeed';
+        return FeedKeys.NewsFullNo;
       } else if (this.props.language === Languages.Russian) {
-        return 'newsFullRuFeed';
+        return FeedKeys.NewsFullRu;
       } else {
-        return 'newsFullEnFeed';
+        return FeedKeys.NewsFullEn;
       }
     }
   }
 
   render() {
-    const {
-      feeds,
-    } = this.props;
-
+    const { feeds, } = this.props;
     const feedKey = this.getFeedKey(); 
     const feed = feeds[feedKey];
 
     /* TODO: Add internationalization to no news items message. */
-    const newsItems = feed ?
+    const newsItems = feed && feed.items && feed.items.length > 0 ?
       feed.items.map(this.makeNewsItem) :
       'Sorry, no news yet!';
 
@@ -153,27 +151,9 @@ ownProps: object) => ({
 
 export const mapDispatchToProps = (dispatch: Function) => ({
   getNewsFeed(feedKey: keyof TFeedsMap) {
-    const subtype = (() => {
-      if (feedKey === 'newsTeasersEnFeed') {
-        return RssActionSubtypes.NewsTeasersEn;
-      } else if (feedKey === 'newsTitlesEnFeed') {
-        return RssActionSubtypes.NewsTitlesEn;
-      } else if (feedKey === 'newsFullNoFeed') {
-        return RssActionSubtypes.NewsFullNo;
-      } else if (feedKey === 'newsTeasersNoFeed') {
-        return RssActionSubtypes.NewsTeasersNo;
-      } else if (feedKey === 'newsTitlesNoFeed') {
-        return RssActionSubtypes.NewsTitlesNo;
-      } else if (feedKey === 'newsFullRuFeed') {
-        return RssActionSubtypes.NewsFullRu;
-      } else if (feedKey === 'newsTeasersRuFeed') {
-        return RssActionSubtypes.NewsTeasersRu;
-      } else if (feedKey === 'newsTitlesRuFeed') {
-        return RssActionSubtypes.NewsTitlesRu;
-      } else {
-        return RssActionSubtypes.NewsFullEn;
-      }
-    })();
+    const subtype = feedKey in RssActionSubtypes ?
+      RssActionSubtypes[feedKey] :
+      RssActionSubtypes.NewsFullEn;
 
     return dispatch(getRssFeedThunk(subtype));
   }

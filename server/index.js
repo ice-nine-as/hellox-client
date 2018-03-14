@@ -20,7 +20,7 @@ const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 
 const dev = process.env.NODE_ENV === 'development';
-console.log(`Is dev: ${dev}`);
+console.log(`\nIs dev? ${dev}`);
 
 const publicPath  = clientConfigDev.output.publicPath;
 const outputPath  = clientConfigDev.output.path;

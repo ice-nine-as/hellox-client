@@ -1,4 +1,7 @@
 import {
+  FeedKeys,
+} from '../../Enums/FeedKeys';
+import {
   newsFullEnFeedReducer,
 } from './newsFullEnFeedReducer';
 import {
@@ -48,18 +51,18 @@ import {
  * Redux's AnyAction type. */
 // @ts-ignore
 export const feedsReducer: TReducer<TFeedsMap> = combineReducers({
-  newsFullEnFeed:      newsFullEnFeedReducer,
-  newsTeasersEnFeed:   newsTeasersEnFeedReducer,
-  newsTitlesEnFeed:    newsTitlesEnFeedReducer,
-  newsFullNoFeed:      newsFullNoFeedReducer,
-  newsTeasersNoFeed:   newsTeasersNoFeedReducer,
-  newsTitlesNoFeed:    newsTitlesNoFeedReducer,
-  newsFullRuFeed:      newsFullRuFeedReducer,
-  newsTeasersRuFeed:   newsTeasersRuFeedReducer,
-  newsTitlesRuFeed:    newsTitlesRuFeedReducer,
-  storyTemplateEnFeed: storyTemplateEnFeedReducer,
-  storyTemplateNoFeed: storyTemplateNoFeedReducer,
-  storyTemplateRuFeed: storyTemplateRuFeedReducer,
+  [FeedKeys.NewsFullEn]:      newsFullEnFeedReducer,
+  [FeedKeys.NewsFullNo]:      newsFullNoFeedReducer,
+  [FeedKeys.NewsFullRu]:      newsFullRuFeedReducer,
+  [FeedKeys.NewsTeasersEn]:   newsTeasersEnFeedReducer,
+  [FeedKeys.NewsTeasersNo]:   newsTeasersNoFeedReducer,
+  [FeedKeys.NewsTeasersRu]:   newsTeasersRuFeedReducer,
+  [FeedKeys.NewsTitlesEn]:    newsTitlesEnFeedReducer,
+  [FeedKeys.NewsTitlesNo]:    newsTitlesNoFeedReducer,
+  [FeedKeys.NewsTitlesRu]:    newsTitlesRuFeedReducer,
+  [FeedKeys.StoryTemplateEn]: storyTemplateEnFeedReducer,
+  [FeedKeys.StoryTemplateNo]: storyTemplateNoFeedReducer,
+  [FeedKeys.StoryTemplateRu]: storyTemplateRuFeedReducer,
 });
 
 export default feedsReducer;

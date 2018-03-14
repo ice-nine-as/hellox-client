@@ -29,9 +29,6 @@ import {
   PodcastLinkAction,
 } from '../Actions/Link/PodcastLinkAction';
 import {
-  ReadDiscussLinkAction,
-} from '../Actions/Link/ReadDiscussLinkAction';
-import {
   WriteLinkAction,
 } from '../Actions/Link/WriteLinkAction';
 
@@ -39,6 +36,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/NavBarItem.less';
+import { forumUrl } from '../Properties/forumUrl';
 const _styles = styles || {};
 
 let key = -1;
@@ -84,13 +82,13 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
       Write
     </NavLink>,
 
-    <NavLink
+    <a
       className="NavBarItem"
-      to={makeLinkAction(ReadDiscussLinkAction)}
+      href={forumUrl}
       key={getNewKey()}
     >
       Read &amp; Discuss
-    </NavLink>,
+    </a>,
 
     <NavLink
       className="NavBarItem"

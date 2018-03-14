@@ -2,7 +2,7 @@ import {
   getDefaultNavLinks,
 } from '../Modules/getDefaultNavLinks';
 import {
-  ConnectedNavBar,
+  NavBar,
 } from './NavBar';
 import {
   THeaderProps,
@@ -18,9 +18,9 @@ export class Header extends React.PureComponent<THeaderProps> {
   render() {
     return (
       <div className={`${_styles.Header} Header`}>
-        <ConnectedNavBar>
+        <NavBar>
           {getDefaultNavLinks()}
-        </ConnectedNavBar>
+        </NavBar>
       </div>
     );
   }
