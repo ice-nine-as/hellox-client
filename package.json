@@ -90,8 +90,10 @@
     "write-file-webpack-plugin": "^4.2.0"
   },
   "dependencies": {
+    "@types/glob": "^5.0.35",
     "express-sslify": "^1.2.0",
     "express-static-gzip": "^0.3.2",
+    "glob": "^7.1.2",
     "gulp-uglify": "^3.0.0",
     "html-entities": "^1.2.1",
     "htmlparser2": "^3.9.2",

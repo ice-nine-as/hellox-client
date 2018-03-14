@@ -6,10 +6,11 @@
 (function () {
   var mediaQueryFunction = function mediaQueryFunction() {
     if (Modernizr.mq('(min-device-width: 1001px) and (min-width: 1001px)')) {
-      document.documentElement.className += 
-        document.documentElement.className ?
-          ' monitor' :
-          'monitor';
+      document.documentElement.classList.add('monitor');
+      document.documentElement.classList.remove('mobile');
+    } else {
+      document.documentElement.classList.add('mobile');
+      document.documentElement.classList.remove('monitor');
     }
   }
 
