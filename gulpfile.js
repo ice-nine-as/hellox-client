@@ -17,7 +17,7 @@ const {
 } = require('util');
 
 const containerBuildName = 'icenineas/hellox-client';
-const containerRunName   = 'ice-nine-as/hellox-client';
+const containerRunName   = 'hellox-client';
 
 const clean = async () => {
   console.log('Cleaning build directories.');
