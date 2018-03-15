@@ -137,7 +137,7 @@ const dockerRun = async () => {
   console.log(`Running ${containerRunName} container.`);
   await promisify(exec)('docker run ' +
                         '-d ' +
-                        '--name ice-nine-as/hellox-client ' +
+                        `--name  ${containerRunName}` +
                         '-p 80:3001 ' +
                         '-p 443:3000 ' +
                         '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
