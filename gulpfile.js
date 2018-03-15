@@ -16,8 +16,8 @@ const {
   promisify,
 } = require('util');
 
-const containerBuildName = 'icenineas/hellox-client';
-const containerRunName   = 'hellox-client';
+const imageName     = 'icenineas/hellox-client';
+const containerName = 'hellox-client';
 
 const clean = async () => {
   console.log('Cleaning build directories.');
@@ -80,9 +80,9 @@ const copyModernizr = async () => {
 module.exports.copyModernizr = copyModernizr;
 
 const dockerBuild = async () => {
-  console.log(`Building ${containerBuildName} container.`);
+  console.log(`Building ${imageName} image.`);
   await promisify(exec)('docker build -t icenineas/hellox-client ' + __dirname);
-  console.log(`Built ${containerBuildName} container.`);
+  console.log(`Built ${imageName} container.`);
   console.log('dockerBuild task complete.');
 };
 
@@ -98,9 +98,9 @@ const dockerClean = async () => {
 module.exports.dockerClean = dockerClean;
 
 const dockerKill = async () => {
-  console.log(`Killing ${containerRunName} container.`);
-  await promisify(exec)(`docker kill ${containerRunName}`);
-  console.log(`Killed ${containerRunName} container.`);
+  console.log(`Killing ${containerName} container.`);
+  await promisify(exec)(`docker kill ${containerName}`);
+  console.log(`Killed ${containerName} container.`);
   console.log('dockerKill task complete.');
 };
 
@@ -110,13 +110,14 @@ const dockerRebuild = async () => {
   await dockerKill();
   await dockerClean();
   await dockerBuild();
+  await dockerRun();
   console.log('dockerRebuild task complete.');
 };
 
 module.exports.dockerRebuild = dockerRebuild;
 
 const dockerStart = async () => {
-  console.log(`Starting ${containerRunName} container.`);
+  console.log(`Starting ${containerName} container.`);
   await promisify(exec)(`docker start ${runContainerName}`);
   console.log(`Started ${runContainerName} container.`);
   console.log('dockerStart task complete.');
@@ -125,25 +126,25 @@ const dockerStart = async () => {
 module.exports.dockerStart = dockerStart;
 
 const dockerStop = async () => {
-  console.log(`Stopping ${containerRunName} container.`);
+  console.log(`Stopping ${containerName} container.`);
   await promisify(exec)(`docker stop ${runContainerName}`);
-  console.log(`Stopped ${containerRunName} container.`);
+  console.log(`Stopped ${containerName} container.`);
   console.log('dockerStop task complete.');
 };
 
 module.exports.dockerStop = dockerStop;
 
 const dockerRun = async () => {
-  console.log(`Running ${containerRunName} container.`);
+  console.log(`Running ${containerName} container.`);
   await promisify(exec)('docker run ' +
                         '-d ' +
-                        `--name  ${containerRunName}` +
+                        `--name  ${containerName} ` +
                         '-p 80:3001 ' +
                         '-p 443:3000 ' +
                         '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
                         'icenineas/hellox-client');
 
-  console.log(`Ran ${containerRunName} container.`);
+  console.log(`Ran ${containerName} container.`);
   console.log('dockerRun task complete.');
 };
 
