@@ -215,7 +215,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         fontFiles.forEach((file, index) => {
           const filePath = fontFilePaths[index];
           const fileName = filePath.split('/').filter((aa) => aa).slice(-1)[0];
-          const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyFontOptions);
+          const stream = spdyRes.push(`/fonts/${fileName}`, nodeSpdyFontOptions);
           stream.on('error', handlePushError);
           stream.end(file);
         });
