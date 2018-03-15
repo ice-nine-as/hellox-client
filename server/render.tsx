@@ -48,7 +48,8 @@ import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks from 'webpack-flush-chunks';
 
-import * as glob from 'glob';
+// @ts-ignore
+import glob from 'glob';
 const globProm = promisify(glob);
 
 // @ts-ignore
@@ -205,14 +206,15 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         /* Load the font files. Load WOFF2 only. If the browser doesn't have
          * WOFF2, it probably doesn't have HTTP2. */
         const fontGlob = resolve(projectDirPath, 'fonts') + '/*.woff2';
-        const fontFileNames = await globProm(fontGlob);
-        const fontFiles = await Promise.all(fontFileNames.map((fileName) => {
-          return readFileProm(fileName);
+        const fontFilePaths: Array<string> = await globProm(fontGlob);
+        const fontFiles = await Promise.all(fontFilePaths.map((filePath) => {
+          return readFileProm(filePath);
         }));
 
         /* Push the font files to the client. */
         fontFiles.forEach((file, index) => {
-          const fileName = fontFileNames[index];
+          const filePath = fontFilePaths[index];
+          const fileName = filePath.split('/').filter((aa) => aa).slice(-1)[0];
           const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyFontOptions);
           stream.on('error', handlePushError);
           stream.end(file);
