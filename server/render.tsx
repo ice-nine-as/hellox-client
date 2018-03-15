@@ -242,7 +242,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
       if (!fontLoaderElement) {
         fontLoaderElement =
-          `<script id="fontLoader">
+          `<script defer id="fontLoader">
             ${await readFileProm(fontLoaderPath)}
           </script>`;
       }
