@@ -256,12 +256,12 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
             <meta name="theme-color" content="rgb(234, 80, 80)">
             <link rel="manifest" href="/static/manifest.json">
             <title>Hello X</title>
+            ${viewportSnifferElement}
             ${ambientStyleElement}
-            ${fontLoaderElement}
             ${styles}
+            ${fontLoaderElement}
           </head>
           <body>
-            ${viewportSnifferElement}
             <script defer type="text/javascript" src="/static/vendor.js"></script>
             <div id="root">${appStr}</div>
             ${cssHash}
