@@ -29,7 +29,7 @@ import {
   PageTitles,
 } from '../Enums/PageTitles';
 import {
-  connect,
+  connect, MapStateToProps,
 } from 'react-redux';
 import {
   Dispatch,
@@ -51,6 +51,8 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/App.less';
+import { TStoreProps } from '../TypeAliases/TStoreProps';
+import { HamburgerOpenAction } from '../Actions/App/HamburgerOpenAction';
 const _styles = styles || {};
 
 export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
@@ -92,6 +94,9 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
       this.props.setError(false);
       this.props.setLoading(true);
     }
+
+    /* Close the hamburger menu before we navigate to a new page. */
+    this.props.setHamburgerStatus(false);
   }
 
   afterChange({ isSync, isServer, isMount, }: TAfterChangeDestructure) {
@@ -122,15 +127,17 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
   }
 }
 
-export const mapStateToProps = ({
+export const mapStateToProps: MapStateToProps<TAppOwnProps, {}, TStoreProps> = ({
   done,
   error,
+  hamburgerOpen,
   loading,
   location,
-}: TAppOwnProps) => {
+}) => {
   return {
     done,
     error,
+    hamburgerOpen,
     loading,
     location,
   };
@@ -144,6 +151,10 @@ export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
 
     setError(value: boolean) {
       return dispatch(makeAppAction(ErrorAppAction, value));
+    },
+
+    setHamburgerStatus(value: boolean) {
+      return dispatch(makeAppAction(HamburgerOpenAction, value));
     },
 
     setLoading(value: boolean) {

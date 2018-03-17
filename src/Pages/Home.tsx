@@ -98,11 +98,11 @@ export class Home extends React.PureComponent<THomePageProps> {
             >
               <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
                 <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>
-                  PODCAST
+                  PODCAST #{3 /* TODO: scrape from wherever podcast data lives.  */}
                 </h2>
 
                 <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
-                  #03 Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+                  Add your vision {/* TODO: scrape from wherever podcast data lives. */}
                 </h3>
 
                 <div className={_styles.LinkContainer}>
