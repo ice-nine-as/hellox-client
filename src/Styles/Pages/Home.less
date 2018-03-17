@@ -12,21 +12,21 @@
     padding: 20px;
 
     &.First {
-      height: 1000px;
+      height: 680px;
       top: -110px;
-      padding-top: 110px;
+      padding-top: 50px;
       margin-bottom: -160px;
       overflow: hidden;
 
       :global(.monitor) & {
-        height: 950px;
+        height: 850px;
+        padding-top: 110px;
       }
         
       .LogoContainer {
         position: relative;
         display: inline-block;
         width: 175px;
-        height: 201px;
 
         :global(.monitor) & {
           width: 250px;
@@ -39,10 +39,12 @@
         font-family: 'Roboto Condensed';
         font-weight: 400;
         font-size: 18pt;
-        margin-top: 30px;
-        margin-bottom: 25px;
-        
+        margin-top: 10px;
+        margin-bottom: 10px;
+
         :global(.monitor) & {
+          margin-top: 30px;
+          margin-bottom: 25px;
           font-size: 48pt;
         }
       }
@@ -69,7 +71,7 @@
           margin-right: 65px;
         }
 
-        @mobile-margin-top: 350px;
+        @mobile-margin-top: 210px;
         @mobile-margin-bottom: 100px;
 
         &.Write {
@@ -124,9 +126,12 @@
       .LinkTitle {
         position: relative;
         display: block;
-        font-size: 24pt;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 20pt;
         
         :global(.monitor) & {
+          margin-top: 30px;
           font-size: 34pt;
         }
       
@@ -150,12 +155,15 @@
         padding-right: 10px;
         margin-left: auto;
         margin-right: auto;
-
+        margin-top: 5px;
+        margin-bottom: 5px;
         font-family: 'Roboto Condensed';
         font-weight: 400;
-        font-size: 18pt;
+        font-size: 15pt;
         
         :global(.monitor) & {
+          margin-top: 30px;
+          margin-bottom: 30px;
           font-size: 24pt;
         }
         
@@ -265,14 +273,15 @@
     }
 
     &.Third {
+      padding-left: 0;
+      padding-right: 0;
       color: @dark-purple;
       background: white;
-    }
-  }
-}
 
-@media (max-width: 424px) {
-  :global(.monitor) .Section.First .LinkBox.Read .LinkSubtitle {
-    line-height: 2.4;
+      :global(.monitor) & {
+        padding-left:  20px;
+        padding-right: 20px;
+      }
+    }
   }
 }
