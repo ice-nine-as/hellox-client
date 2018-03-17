@@ -1,7 +1,14 @@
+@import '../KeyColors.less';
+
 .Header {
   position: relative;
-  height: 100px;
+  height: 80px;
   padding-top: 10px;
+  background: @purple;
   color: white;
   z-index: 1;
+
+  &:global(.Page-Home) {
+    background: transparent;
+  }
 }

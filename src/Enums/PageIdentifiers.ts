@@ -1,6 +1,7 @@
 export enum PageIdentifiers {
   About       = 'About',
-  Footnotes   = 'Footnotes',
+  Archives    = 'Archives',
+  Article     = 'Article',
   Home        = 'Home',
   NotFound    = 'NotFound',
   Podcast     = 'Podcast',

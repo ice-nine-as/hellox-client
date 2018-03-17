@@ -5,10 +5,13 @@ import {
   getDefaultAppReducers,
 } from '../Modules/getDefaultAppReducers';
 import {
+  IAction,
+} from '../Actions/IAction';
+import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
 
-export function getDefaultReducers(): TReducersMap<any> {
+export function getDefaultReducers(): TReducersMap<any, IAction> {
   return {
     ...getDefaultAppReducers(),
     /*...getDefaultStoryGeneratorReducers(),*/

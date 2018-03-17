@@ -19,6 +19,7 @@ import {
 import {
   TActionCreator,
 } from './TActionCreator';
+import { FeedKeys } from '../../Enums/FeedKeys';
 
 export const strings = {
   RSS_ACTION_INVALID:
@@ -35,10 +36,12 @@ export const strings = {
 
 };
 
-export const createRssAction: TActionCreator =
-  (rssAction: IRssAction,
-   value: IRssFeed | null,
-   subtype: RssActionSubtypes): IRssAction =>
+export const createRssAction: TActionCreator<IRssAction> = (
+  rssAction: Readonly<IRssAction>,
+  feedKey:   FeedKeys,
+  value:     IRssFeed | null,
+  subtype:   RssActionSubtypes = RssActionSubtypes.Compose
+): IRssAction =>
 {
   if (!isRssAction(rssAction)) {
     throw new Error(strings.RSS_ACTION_INVALID);
@@ -49,6 +52,7 @@ export const createRssAction: TActionCreator =
   }
 
   return Object.assign({}, rssAction, {
+    feedKey,
     subtype,
     value,
   });

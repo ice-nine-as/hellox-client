@@ -4,12 +4,16 @@ import {
 import {
   IRssAction,
 } from './IRssAction';
+import {
+  RssActionSubtypes,
+} from '../../Enums/RssActionSubtypes';
 
 // @ts-ignore
 export const RssAction: IRssAction = Object.freeze({
   type:    AppActionTypes.Rss,
-  subtype: null,
+  feedKey: null,
   value:   null,
+  subtype: RssActionSubtypes.Compose,
 });
 
 export default RssAction;

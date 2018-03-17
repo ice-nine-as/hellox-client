@@ -20,7 +20,7 @@ export const strings = {
     'not meet the isLanguage type guard.',
 };
 
-export const languageReducer: TReducer<Languages> =
+export const languageReducer: TReducer<Languages, ILanguageAction> =
   (previousState: Languages = Languages.English,
     action: ILanguageAction): Languages =>
 {

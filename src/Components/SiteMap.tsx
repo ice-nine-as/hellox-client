@@ -2,8 +2,8 @@ import {
   AboutLinkAction,
 } from '../Actions/Link/AboutLinkAction';
 import {
-  FootnotesLinkAction,
-} from '../Actions/Link/FootnotesLinkAction';
+  ArchivesLinkAction,
+} from '../Actions/Link/ArchivesLinkAction';
 import {
   forumUrl,
 } from '../Properties/forumUrl';
@@ -60,9 +60,9 @@ export class SiteMap extends React.PureComponent {
 
         <NavLink
           className={_styles.Link}
-          to={makeLinkAction(FootnotesLinkAction)}
+          to={makeLinkAction(ArchivesLinkAction)}
         >
-          FOOTNOTES
+          ARCHIVES
         </NavLink>
       </div>
     )

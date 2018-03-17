@@ -9,12 +9,16 @@ import styles from '../Styles/Components/NewsItemFull.less';
 const _styles = styles || {};
 
 export class NewsItemFull extends React.PureComponent<TNewsItemFullProps> {
+  getPreparedHtml(str: string): { __html: string, } {
+    return { __html: str, }
+  }
+
   render() {
     return (
-      <article
+      <div
         className={_styles.NewsItemFull}
-        dangerouslySetInnerHTML={{ __html: this.props.html, }}
-      ></article>
+        dangerouslySetInnerHTML={this.getPreparedHtml(this.props.item.description)}
+      ></div>
     );
   }
 }

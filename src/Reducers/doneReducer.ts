@@ -17,7 +17,7 @@ export const strings = {
     'a boolean.',
 };
 
-export const doneReducer: TReducer<boolean> =
+export const doneReducer: TReducer<boolean, IAppAction> =
   (previousState: boolean = false,
     action: IAppAction): boolean =>
 {

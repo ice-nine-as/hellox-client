@@ -2,14 +2,19 @@ import {
   IRssAction,
 } from '../App/IRssAction';
 import {
+  FeedKeys,
+} from '../../Enums/FeedKeys';
+import {
   Dispatch,
 } from 'redux';
 import {
-  RssActionSubtypes,
-} from '../../Enums/RssActionSubtypes';
+  IRssFeed,
+} from '../../Interfaces/IRssFeed';
 
 /* Used with redux-thunk. */
 export type TRssFeedGetter =
-  (subtype: RssActionSubtypes) => (dispatch: Dispatch<{}>) => Promise<IRssAction>;
+  (feedKey: FeedKeys, offset?: number | null, urlArg?: string | null, composeWith?: IRssFeed | null) =>
+    (dispatch: Dispatch<{}>) =>
+      Promise<IRssAction>;
 
 export default TRssFeedGetter;
