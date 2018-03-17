@@ -13,8 +13,11 @@ import {
   readFile,
 } from 'fs';
 import {
-  isHttp2,
-} from '../src/Modules/isHttp2';
+  PageIdentifiers,
+} from '../src/Enums/PageIdentifiers';
+import {
+  PageTitles,
+} from '../src/Enums/PageTitles';
 import {
   resolve,
 } from 'path';
@@ -52,10 +55,10 @@ import flushChunks from 'webpack-flush-chunks';
 import glob from 'glob';
 const globProm = promisify(glob);
 
+const isHttp2: () => boolean = require('./isHttp2');
+
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
-import { PageTitles } from '../src/Enums/PageTitles';
-import { PageIdentifiers } from '../src/Enums/PageIdentifiers';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:

@@ -1,3 +1,10 @@
+const dev = process.env.NODE_ENV === 'development';
+console.log(`\nIs dev? ${dev}`);
+
+const h2 = require('./isHttp2')();
+console.log(`Is HTTP2? ${h2}\n`);
+
+console.log('Loading dependencies.');
 const clientConfigDev            = require('../webpack/client.dev');
 const clientConfigProd           = require('../webpack/client.prod');
 const express                    = require('express');
@@ -18,9 +25,7 @@ const webpack                    = require('webpack');
 const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
-
-const dev = process.env.NODE_ENV === 'development';
-console.log(`\nIs dev? ${dev}`);
+console.log('Dependencies loaded.\n');
 
 const publicPath  = clientConfigDev.output.publicPath;
 const outputPath  = clientConfigDev.output.path;
@@ -29,12 +34,17 @@ const imagesPath  = resolve(projectPath, 'images');
 const fontsPath   = resolve(projectPath, 'fonts');
 
 const app = express();
-app.use(serveFavicon(resolve(imagesPath, 'favicon-96x96.png')));
-app.use('/fonts', express.static(resolve(fontsPath)));
 
 const headerMiddleware = app.use((req, res, next) => {
   /* Give the service worker root scope. */
   res.setHeader('Service-Worker-Allowed', '/');
+
+  if (req.path === '/sw.js') {
+    /* Only cache the service worker for 5 seconds. */
+    res.setHeader('cache-control', 'max-age=5');
+  } else if (/\.(js|css))/.test(req.path)) {
+    res.setHeader('cache-control', 'max-age=31536000');
+  }
 
   /* Deny HTTP entirely. */
   res.setHeader('Strict-Transport-Security',
@@ -49,6 +59,9 @@ const headerMiddleware = app.use((req, res, next) => {
   /* Execute the next middleware. */
   next();
 });
+
+app.use(serveFavicon(resolve(imagesPath, 'favicon-96x96.png')));
+app.use('/fonts', express.static(resolve(fontsPath)));
 
 let isBuilt = false;
 
@@ -72,17 +85,11 @@ const getSpdyOptions = () => ({
 const PRIMARY_PORT   = 3000;
 const SECONDARY_PORT = 3001;
 
-const isHttp2 = /^true$/i.test(process.env.H2);
-
 function done() {
   return !isBuilt && (() => {
-    const server = isHttp2 ?
-      spdy.createServer(getSpdyOptions(), app) :
-      app;
-
+    const server = h2 ? spdy.createServer(getSpdyOptions(), app) : app;
     server.keepAliveTimeout = 5;
-
-    if (isHttp2) {
+    if (h2) {
       const second = express();
       second.use(enforce.HTTPS());
       second.listen(SECONDARY_PORT, (error) => {
