@@ -2,8 +2,11 @@ import {
   AboutLinkAction,
 } from '../Actions/Link/AboutLinkAction';
 import {
-  FootnotesLinkAction,
-} from '../Actions/Link/FootnotesLinkAction';
+  ArchivesLinkAction,
+} from '../Actions/Link/ArchivesLinkAction';
+import {
+  forumUrl,
+} from '../Properties/forumUrl';
 import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
@@ -36,7 +39,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/NavBarItem.less';
-import { forumUrl } from '../Properties/forumUrl';
 const _styles = styles || {};
 
 let key = -1;
@@ -92,10 +94,10 @@ export function getDefaultNavLinks(): ReadonlyArray<JSX.Element> {
 
     <NavLink
       className="NavBarItem"
-      to={makeLinkAction(FootnotesLinkAction)}
+      to={makeLinkAction(ArchivesLinkAction)}
       key={getNewKey()}
     >
-      Footnotes
+      Archives
     </NavLink>,
 
     <span

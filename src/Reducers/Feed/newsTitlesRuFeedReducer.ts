@@ -1,4 +1,7 @@
 import {
+  FeedKeys,
+} from '../../Enums/FeedKeys';
+import {
   IRssAction,
 } from '../../Actions/App/IRssAction';
 import {
@@ -11,9 +14,6 @@ import {
   isRssFeed,
 } from '../../TypeGuards/isRssFeed';
 import {
-  RssActionSubtypes,
-} from '../../Enums/RssActionSubtypes';
-import {
   TReducer,
 } from '../../TypeAliases/TReducer';
 
@@ -23,7 +23,7 @@ export const strings = {
     'function was not null, nor did it meet the isRssFeed type guard.',
 };
 
-export const newsTitlesRuFeedReducer: TReducer<IRssFeed | null> = (
+export const newsTitlesRuFeedReducer: TReducer<IRssFeed | null, IRssAction> = (
   previousState: IRssFeed | null = null,
   action: IRssAction,
 ): IRssFeed | null => {
@@ -31,9 +31,7 @@ export const newsTitlesRuFeedReducer: TReducer<IRssFeed | null> = (
     throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isRssAction(action) &&
-      action.subtype === RssActionSubtypes.NewsTitlesRu)
-  {
+  if (isRssAction(action) && action.feedKey === FeedKeys.NewsTitlesRu) {
     return action.value;
   }
 

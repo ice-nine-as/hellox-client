@@ -6,7 +6,7 @@ import {
 } from './TFeedsMap';
 
 export type TLatestNewsDispatchProps = {
-  getNewsFeed(feedKey: keyof TFeedsMap): IRssAction;
+  getNewsFeed(feedKey: keyof TFeedsMap): Promise<IRssAction>;
 };
 
 export default TLatestNewsDispatchProps;

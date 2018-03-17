@@ -1,14 +1,16 @@
 const AutoDllPlugin     = require('autodll-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ExtractCssChunks  = require('extract-css-chunks-webpack-plugin');
+const glob              = require('glob');
 const { resolve, }      = require('path');
 const OfflinePlugin     = require('offline-plugin');
+const { promisify, }    = require('util');
 const webpack           = require('webpack');
 
 const uglifyOptions = {
   compress: {
     screw_ie8: true,
-    warnings: false,
+    warnings:  false,
   },
 
   mangle: {
@@ -17,11 +19,15 @@ const uglifyOptions = {
 
   output: {
     screw_ie8: true,
-    comments: false,
+    comments:  false,
   },
 
   sourceMap: true,
 };
+
+ /* Add all font files to cache. */
+const globStr = resolve(__dirname, '..', 'fonts') + '/*.woff2';
+const fontFiles = glob.sync(globStr).map((fontFile) => `/${fontFile}`);
 
 module.exports = {
   name: 'client',
@@ -146,13 +152,14 @@ module.exports = {
 
     new webpack.optimize.UglifyJsPlugin(uglifyOptions),
 
-    new OfflinePlugin({
+    new OfflinePlugin({  
+      publicPath: '/',
       caches: 'all',
+      events: true,
       excludes: [ 'https://cms.hellox.me/*', ],
       externals: [
         '/',
-        '/static/modernizr.js',
-      ],
+      ].concat(fontFiles),
 
       ServiceWorker: {
         scope: '/',

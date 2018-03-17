@@ -17,7 +17,7 @@ export const strings = {
     'not a boolean.',
 };
 
-export const loadingReducer: TReducer<boolean> =
+export const loadingReducer: TReducer<boolean, IAppAction> =
   (previousState: boolean = false,
     action: IAppAction): boolean =>
 {

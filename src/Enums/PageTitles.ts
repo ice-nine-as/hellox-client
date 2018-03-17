@@ -1,6 +1,7 @@
 export enum PageTitles {
   About       = 'About',
-  Footnotes   = 'Footnotes',
+  Article     = 'Article',
+  Archives    = 'Archives',
   Home        = 'Home',
   NotFound    = 'Not Found (404)',
   Podcast     = 'Podcast',

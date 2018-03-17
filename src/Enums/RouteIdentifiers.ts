@@ -1,6 +1,7 @@
 export enum RouteIdentifiers {
   About       = '/about/',
-  Footnotes   = '/footnotes/',
+  Archive     = '/archives/',
+  Article     = '/article/:id', 
   Home        = '/',
   NotFound    = '/notFound/',
   Podcast     = '/podcast/',

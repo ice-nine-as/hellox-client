@@ -1,18 +1,18 @@
 import {
-  FeedUrls,
-} from '../../Enums/FeedUrls';
+  composeFeeds,
+} from '../../Modules/composeFeeds';
 import {
-  AllHtmlEntities,
-} from 'html-entities';
+  downloadFeed,
+} from '../../Modules/downloadFeed';
 import {
   IRssAction,
 } from '../App/IRssAction';
 import {
-  IRssFeed,
-} from '../../Interfaces/IRssFeed';
+  isFeedKey,
+} from '../../TypeGuards/isFeedKey';
 import {
-  isRssActionSubtype,
-} from '../../TypeGuards/isRssActionSubtype';
+  isRssFeed,
+} from '../../TypeGuards/isRssFeed';
 import {
   createRssAction,
 } from './createRssAction';
@@ -26,65 +26,46 @@ import {
   TRssFeedGetter,
 } from './TRssFeedGetter';
 
-import * as htmlparser from 'htmlparser2';
-declare module 'htmlparser2' {
-  export class FeedHandler {
-    constructor(callback: (err: any, feed: IRssFeed) => void, options?: object);
-  }
-}
-
-const fetch = require('isomorphic-fetch');
-
 export const strings = {
-  SUBTYPE_INVALID:
-    'The subtype argument passed to getRssFeed did not meet the ' +
+  FEED_KEY_INVALID:
+    'The feedKey argument passed to getRssFeed did not meet the ' +
     'isRssActionSubtype type guard.',
 
   NO_SUBTYPE_URL:
-    'There was no key in the FeedUrls enum which matched the subtype ' +
-    'argument provided to getRssFeed.',
+    'There was no url argument provided, nor a key in the FeedUrls enum ' +
+    'which matched the subtype argument provided to getRssFeed.',
 };
 
-export const getRssFeedThunk: TRssFeedGetter = (subtype) => {
-  if (!isRssActionSubtype(subtype)) {
-    throw new Error(strings.SUBTYPE_INVALID);
+export const getRssFeedThunk: TRssFeedGetter = (feedKey, offset = 0, urlArg = null, composeWith = null) => {
+  if (!isFeedKey(feedKey)) {
+    throw new Error(strings.FEED_KEY_INVALID);
   }
 
   return async (dispatch: Dispatch<{}>): Promise<IRssAction> => {
     // We can dispatch both plain object actions and other thunks,
     // which lets us compose the asynchronous actions in a single flow.
+    
+    const argObj = {
+      feedKey,
+      offset,
+      urlArg,
+    };
 
-    const urlKeys   = Object.keys(FeedUrls);
-    const urlValues = (Object as any).values(FeedUrls);
-    const url       = urlValues[urlKeys.indexOf(subtype)];
-    if (!url) {
-      throw new Error(strings.NO_SUBTYPE_URL);
+    const feed = await downloadFeed(argObj);
+
+    const finalFeedObj = composeWith && isRssFeed(composeWith) ?
+      composeFeeds(composeWith, feed) :
+      {
+        feed,
+        offset,
+      };
+
+    if (finalFeedObj.offset! > 0) {
+      /* Dispatch offset action with offset and feedKey. */
     }
 
-    const res = await fetch(url, {
-      cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'omit',
-      method:      'GET', // *GET, PUT, DELETE, etc.
-    });
-
-    const resText = await res.text();
-
-    return new Promise<IRssAction>((resolve, reject) => {
-      const handler = new htmlparser.FeedHandler((err, feed) => {
-        if (err) {
-          reject(err);
-        }
-
-        feed.items.forEach((item) => {
-          item.description = new AllHtmlEntities().decode(item.description);
-        });
-
-        resolve(dispatch(createRssAction(RssAction, feed, subtype)));
-      });
-
-      const parser  = new htmlparser.Parser(handler, { xmlMode: true, });
-      parser.write(resText);
-      parser.end();
-    });
+    return dispatch(createRssAction(RssAction, feedKey, finalFeedObj.feed));
   };
-}
+};
+
+export default getRssFeedThunk;

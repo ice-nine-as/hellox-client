@@ -14,9 +14,32 @@ import {
 import * as React from 'react';
 
 /* Registers service worker. */
-import { install, } from 'offline-plugin/runtime';
+import {
+  applyUpdate,
+  install,
+} from 'offline-plugin/runtime';
 if (process.env.NODE_ENV === 'production') {
-  install();
+  install({
+    onUpdating: () => {
+      console.log('SW Event:', 'onUpdating');
+    },
+
+    onUpdateReady: () => {
+      console.log('SW Event:', 'onUpdateReady');
+      // Tells to new SW to take control immediately
+      applyUpdate();
+    },
+
+    onUpdated: () => {
+      console.log('SW Event:', 'onUpdated');
+      // Reload the webpage to load into the new version
+      window.location.reload();
+    },
+
+    onUpdateFailed: () => {
+      console.log('SW Event:', 'onUpdateFailed');
+    }
+  });
 }
 
 export const render = (component: JSX.Element) => {

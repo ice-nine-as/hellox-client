@@ -54,6 +54,8 @@ const globProm = promisify(glob);
 
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
+import { PageTitles } from '../src/Enums/PageTitles';
+import { PageIdentifiers } from '../src/Enums/PageIdentifiers';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -90,7 +92,7 @@ const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
 });
 
 const nodeSpdyFontOptions = Object.assign({}, nodeSpdyOptions, {
-  resposne: {
+  response: {
     'content-type': 'font/woff2',
   },
 });
@@ -104,17 +106,19 @@ let viewportSnifferElement: string | null = null;
 const fontLoaderPath = resolve(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
-export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
+export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
+{
   const x50Response = async (
     req:  Request,
     res:  Response,
     next: NextFunction) =>
   {
     try {
-      /* Do not render the 404 page for failed code, image, and font lookups, or
-      * for codefiles of which we already know the location. Doing so wastes
+      /* Do not render the 404 page for failed code, image, and font lookups,
+      * or for codefiles of which we already know the location. Doing so wastes
       * huge amounts of time and process. */
-      if (/(\.(js|css)(\.map)?$)|\.(jpg|png|svg|woff2)|__webpack_hmr$/.test(req.url)) {
+      const re = /(\.(js|css)(\.map)?$)|\.(jpg|png|svg|woff2)|__webpack_hmr$/; 
+      if (re.test(req.url)) {
         console.error(`Object at ${req.url} not found.`);
         res.status(404);
         res.end();
@@ -133,7 +137,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
 
         res.status(500);
         res.end();
-        throw e;
+        return;
       }
 
       if (!store) {
@@ -153,8 +157,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
                                   </ProviderContainer>
                                 );
 
-      const appStr            = ReactDOMServer.renderToString(providerContainer);
-      const chunkNames        = flushChunkNames();
+      const appStr     = ReactDOMServer.renderToString(providerContainer);
+      const chunkNames = flushChunkNames();
       const {
         cssHash,
         js,
@@ -166,6 +170,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
 
       if (isHttp2()) {
+        /* Double cast is because TS complains with the normal cast. The res
+         * variable is definitely a SPDY response if isHttp2 returns true. */
         const spdyRes = res as any as ServerResponse;
 
         /* Load and the vendor and built script chunks. */
@@ -255,7 +261,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="theme-color" content="rgb(234, 80, 80)">
             <link rel="manifest" href="/static/manifest.json">
-            <title>Hello X</title>
+            <title>Hello X - ${PageTitles[state.location.type as PageIdentifiers] || '?'}</title>
             ${viewportSnifferElement}
             ${ambientStyleElement}
             ${styles}

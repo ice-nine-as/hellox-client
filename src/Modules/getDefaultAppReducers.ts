@@ -8,6 +8,9 @@ import {
   hamburgerOpenReducer,
 } from '../Reducers/hamburgerOpenReducer';
 import {
+  IAction,
+} from '../Actions/IAction';
+import {
   languageReducer,
 } from '../Reducers/languageReducer';
 import {
@@ -20,7 +23,7 @@ import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
 
-export const getDefaultAppReducers = (): Readonly<TReducersMap<any>> => {
+export const getDefaultAppReducers = (): Readonly<TReducersMap<any, IAction>> => {
   return Object.freeze({
     done:          doneReducer,
     error:         errorReducer,

@@ -6,6 +6,9 @@ import {
   Response,
 } from 'express';
 import {
+  FeedKeys,
+} from '../src/Enums/FeedKeys';
+import {
   getDefaultRoutesMap,
 } from '../src/Modules/getDefaultRoutesMap';
 import {
@@ -29,9 +32,6 @@ import {
 import {
   NOT_FOUND,
 } from 'redux-first-router';
-import {
-  RssActionSubtypes,
-} from '../src/Enums/RssActionSubtypes';
 import {
   TStoreProps,
 } from '../src/TypeAliases/TStoreProps';
@@ -75,23 +75,23 @@ export async function configureServerStore(
     },
   } = store.getState();
 
-  if (type === PageIdentifiers.Footnotes) {
-    /* Pre-load same-language news feed for Footnotes page. */
+  if (type === PageIdentifiers.Archives) {
+    /* Pre-load same-language news feed for Archives page. */
     if (language === Languages.Norwegian) {
-      await store.dispatch(getRssFeedThunk(RssActionSubtypes.NewsFullNo));
+      await store.dispatch(getRssFeedThunk(FeedKeys.NewsFullNo));
     } else if (language === Languages.Russian) {
-      await store.dispatch(getRssFeedThunk(RssActionSubtypes.NewsFullRu));
+      await store.dispatch(getRssFeedThunk(FeedKeys.NewsFullRu));
     } else {
-      await store.dispatch(getRssFeedThunk(RssActionSubtypes.NewsFullEn));
+      await store.dispatch(getRssFeedThunk(FeedKeys.NewsFullEn));
     }
   } else if (type === PageIdentifiers.Write) {
     /* Pre-load same-language story generator prompt. */
     /*if (language === Languages.Norwegian) {
-      await store.dispatch(getRssFeedThunk(RssActionSubtypes.StoryTemplateNo));
+      await store.dispatch(getRssFeedThunk(FeedKeys.StoryTemplateNo));
     } else if (language === Languages.Russian) {
-      await store.dispatch(getRssFeedThunk(RssActionSubtypes.StoryTemplateRu));
+      await store.dispatch(getRssFeedThunk(FeedKeys.StoryTemplateRu));
     } else {
-      await store.dispatch(getRssFeedThunk(RssActionSubtypes.StoryTemplateEn));
+      await store.dispatch(getRssFeedThunk(FeedKeys.StoryTemplateEn));
     }*/
   }
 

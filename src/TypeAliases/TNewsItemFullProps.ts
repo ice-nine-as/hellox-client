@@ -1,5 +1,9 @@
+import {
+  IRssPost,
+} from '../Interfaces/IRssPost';
+
 export type TNewsItemFullProps = {
-  html: string;
+  item: IRssPost;
 };
 
 export default TNewsItemFullProps;

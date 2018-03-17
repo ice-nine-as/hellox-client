@@ -14,6 +14,9 @@ import {
   isPageIdentifier,
 } from '../TypeGuards/isPageIdentifier';
 import {
+  isNode,
+} from '../Modules/isNode';
+import {
   LoadingAppAction,
 } from '../Actions/App/LoadingAppAction';
 import {
@@ -22,6 +25,9 @@ import {
 import {
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
+import {
+  PageTitles,
+} from '../Enums/PageTitles';
 import {
   connect,
 } from 'react-redux';
@@ -67,7 +73,7 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
 
     return (
       <div className={_styles.App}>
-        <Header />
+        <Header page={realPage} />
 
         <Universal
           page={realPage}
@@ -76,7 +82,7 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
           onError={this.handleError}
         />
 
-        <Footer />
+        <Footer page={realPage} />
       </div>
     );
   }
@@ -88,21 +94,31 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
     }
   }
 
-  afterChange({ isSync, isServer, isMount }: TAfterChangeDestructure) {
+  afterChange({ isSync, isServer, isMount, }: TAfterChangeDestructure) {
     if (!isSync) {
       this.props.setError(false);
       this.props.setLoading(false);
     } else if (!isServer && !isMount) {
-      this.props.setDone(true);
       this.props.setError(false);
+      this.props.setDone(true);
+    }
+
+    if (!isNode()) {
+      /* Change the browser tab's title. */
+      document.title = `Hello X - ${PageTitles[this.props.location.type as PageIdentifiers] || '?'}`;
     }
   }
 
   handleError(error: Error) {
-    console.log(error);
+    console.error(error);
 
     this.props.setError(true);
     this.props.setLoading(false);
+
+    if (!isNode()) {
+      /* Change the browser tab's title. */
+      document.title = 'Hello X - Error';
+    }
   }
 }
 
@@ -122,15 +138,15 @@ export const mapStateToProps = ({
 
 export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
   return {
-    setDone: (value: boolean) => {
+    setDone(value: boolean) {
       return dispatch(makeAppAction(DoneAppAction, value));
     },
 
-    setError: (value: boolean) => {
+    setError(value: boolean) {
       return dispatch(makeAppAction(ErrorAppAction, value));
     },
 
-    setLoading: (value: boolean) => {
+    setLoading(value: boolean) {
       return dispatch(makeAppAction(LoadingAppAction, value));
     },
   };

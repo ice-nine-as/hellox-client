@@ -16,7 +16,6 @@ html, body, #root {
 
 #root {
   box-sizing: border-box;
-  overflow-y: scroll;
 }
 
 @font-face {
