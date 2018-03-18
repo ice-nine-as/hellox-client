@@ -35,6 +35,13 @@ const nodeSpdyOptions = {
   },
 };
 
+const nodeSpdyJsonOptions = Object.assign({}, nodeSpdyOptions, {
+  response: {
+    'content-type': 'application/json',
+    'content-encoding': 'gzip',
+  },
+});
+
 const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
   response: { 
     'content-type': 'application/javascript',
@@ -66,6 +73,16 @@ export const serverPush = async ({
   scripts:     Array<string>,
   stylesheets: Array<string>,
 }) => {
+  try {
+    const manifestPath = getClientFilepath('manifest.json');
+    const manifestFile = await readFileProm(manifestPath);
+
+    /* Push the vendor file to the client. Cannot execute if file loading fails. */
+    const manifestStream = res.push('/static/manifest.json', nodeSpdyJsonOptions);
+    manifestStream.on('error', handlePushError);
+    manifestStream.end(manifestFile);
+  } catch (e) {}
+
   /* Load and the vendor and built script chunks. */
   const scriptFiles = await (async () => {
     let values: Array<Buffer> = [];
