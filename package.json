@@ -104,7 +104,6 @@
     "react-dom": "^16.2.0",
     "react-lazy-load": "^3.0.13",
     "react-redux": "^5.0.7",
-    "react-responsive": "^4.0.5",
     "react-universal-component": "^2.8.4",
     "redux": "^3.7.2",
     "redux-first-router": "0.0.16-next",

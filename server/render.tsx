@@ -31,6 +31,9 @@ import {
   flushChunkNames,
 } from 'react-universal-component/server';
 import {
+  serverPush,
+} from './serverPush';
+import {
   ServerResponse,
 } from 'spdy';
 import {
@@ -51,10 +54,6 @@ import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks from 'webpack-flush-chunks';
 
-// @ts-ignore
-import glob from 'glob';
-const globProm = promisify(glob);
-
 const isHttp2: () => boolean = require('./isHttp2');
 
 // @ts-ignore
@@ -67,38 +66,6 @@ export const strings = {
 };
 
 const readFileProm = promisify(readFile);
-
-const handlePushError = (err: Error | undefined) => {
-  if (err) {
-    console.trace(err);
-  }
-};
-
-const nodeSpdyOptions = {
-  request: {
-    accept: '*/*'
-  },
-};
-
-const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
-  response: { 
-    'content-type': 'application/javascript',
-    'content-encoding': 'gzip',
-  },
-});
-
-const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
-  response: {
-    'content-type': 'text/css',
-    'content-encoding': 'gzip',
-  },
-});
-
-const nodeSpdyFontOptions = Object.assign({}, nodeSpdyOptions, {
-  response: {
-    'content-type': 'font/woff2',
-  },
-});
 
 const projectDirPath = resolve(__dirname, '..', '..');
 const serverDirPath = resolve(projectDirPath, 'server');
@@ -167,71 +134,27 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
         cssHash,
         js,
         scripts,
-        styles,
         stylesheets,
       } = flushChunks(clientStats, {
         chunkNames,
         outputPath: resolve(projectDirPath, 'dist', 'client'),
       });
 
-      const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
 
       if (isHttp2()) {
-        /* Double cast is because TS complains with the normal cast. The res
-         * variable is definitely a SPDY response if isHttp2 returns true. */
-        const spdyRes = res as any as ServerResponse;
-
-        /* Load and the vendor and built script chunks. */
-        const scriptFiles = await Promise.all([
-          readFileProm(getClientFilepath('vendor.js.gz')),
-          ...scripts.map((fileName) => {
-            const path = getClientFilepath(getClientFilepath(`${fileName}.gz`));
-            return readFileProm(path);
-          }),
-        ]);
-
-        /* Push the vendor file to the client. */
-        const vendorStream = spdyRes.push('/static/vendor.js', nodeSpdyJsOptions);
-        vendorStream.on('error', handlePushError);
-        vendorStream.end(scriptFiles[0]);
-
-        /* Push the built script chunks to the client. */
-        for (let ii = 1; ii < scriptFiles.length; ii += 1) {
-          const fileName = scripts[ii - 1];
-          const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyJsOptions);
-          stream.on('error', handlePushError);
-          stream.end(scriptFiles[ii]);
+        try {
+          serverPush({
+            /*req,*/
+            /* Double cast is because TS complains with the normal cast. The res
+             * variable is definitely a SPDY response if isHttp2 returns true. */
+            res: res as any as ServerResponse,
+            scripts,
+            stylesheets,
+          })
+        } catch (e) {
+          console.error('There was an error pushing files:');
+          console.error(e);
         }
-
-        /* Load the built style chunks. */
-        const styleFiles = await Promise.all(stylesheets.map((path) => {
-          return readFileProm(getClientFilepath(`${path}.gz`));
-        }));
-
-        /* Push the built style chunks to the client. */
-        styleFiles.forEach((file, index) => {
-          const fileName = stylesheets[index];
-          const stream = spdyRes.push(`/static/${fileName}`, nodeSpdyCssOptions);
-          stream.on('error', handlePushError);
-          stream.end(file);
-        });
-
-        /* Load the font files. Load WOFF2 only. If the browser doesn't have
-         * WOFF2, it probably doesn't have HTTP2. */
-        const fontGlob = resolve(projectDirPath, 'fonts') + '/*.woff2';
-        const fontFilePaths: Array<string> = await globProm(fontGlob);
-        const fontFiles = await Promise.all(fontFilePaths.map((filePath) => {
-          return readFileProm(filePath);
-        }));
-
-        /* Push the font files to the client. */
-        fontFiles.forEach((file, index) => {
-          const filePath = fontFilePaths[index];
-          const fileName = filePath.split('/').filter((aa) => aa).slice(-1)[0];
-          const stream = spdyRes.push(`/fonts/${fileName}`, nodeSpdyFontOptions);
-          stream.on('error', handlePushError);
-          stream.end(file);
-        });
       }
 
       const ambientStyleElement =
@@ -247,17 +170,23 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
       res.setHeader('Content-Encoding', 'gzip');
 
       if (!viewportSnifferElement) {
-        viewportSnifferElement =
-          `<script id="viewportSniffer">
-            ${await readFileProm(viewportSnifferPath)}
-          </script>`
+        try {
+          const viewportSniffer = await readFileProm(viewportSnifferPath);
+          viewportSnifferElement =
+            `<script id="viewportSniffer">
+              ${viewportSniffer}
+            </script>`
+        } catch (e) {}
       }
 
       if (!fontLoaderElement) {
-        fontLoaderElement =
-          `<script defer id="fontLoader">
-            ${await readFileProm(fontLoaderPath)}
-          </script>`;
+        try {
+          const fontLoader = await readFileProm(fontLoaderPath);
+          fontLoaderElement =
+            `<script defer id="fontLoader">
+              ${fontLoader}
+            </script>`;
+        } catch (e) {}
       }
 
       const responseStr =
@@ -295,7 +224,8 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
        * hang. Without this, you will get invisible errors, the server will
        * hang forever, and I'm not 100% sure why. My suspicion is that the way
        * Babel transforms async functions into ES5 somehow eats errors. */
-      console.error(e);
+      console.error(`Server encountered an error:\n${e}`);
+      console.trace();
       res.status(500);
       res.end();
       return;
