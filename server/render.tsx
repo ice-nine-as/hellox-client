@@ -271,7 +271,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
             <title>Hello X - ${PageTitles[state.location.type as PageIdentifiers] || '?'}</title>
             ${viewportSnifferElement}
             ${ambientStyleElement}
-            ${styles}
+            ${css}
             ${fontLoaderElement}
           </head>
           <body>
