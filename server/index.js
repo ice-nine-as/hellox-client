@@ -44,10 +44,10 @@ const headerMiddleware = app.use((req, res, next) => {
   } else if (req.path === '/static/sw.js') {
     /* Only cache the service worker for 5 seconds. */
     res.setHeader('Cache-Control', 'max-age=5');
-  } else if (/\.(js|css)$/.test(req.path)) {
+  } else if (/\.(js|css)$/.test(req.path) ||
+             /\/fonts\/.+\.woff2?/.test(req.path))
+  {
     res.setHeader('Cache-Control', 'max-age=31536000');
-  } else if (/\/fonts\/.+\.woff2?/.test(req.path)) {
-    res.setHeader('Cache-Control', 'max-age: 31536000');
   } 
 
   /* Deny HTTP entirely. */

@@ -5,7 +5,6 @@ export enum RouteIdentifiers {
   Home        = '/',
   NotFound    = '/notFound/',
   Podcast     = '/podcast/',
-  ReadDiscuss = '/readDiscuss/',
   ServerError = '/serverError/',
   Write       = '/write/',
 }
