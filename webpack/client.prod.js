@@ -28,9 +28,11 @@ const uglifyOptions = {
   sourceMap: true,
 };
 
-const pages = Object.keys(PageIdentifiers).map((key) => {
-  return key[0].toUpperCase() + key.slice(1);
-});
+/* All all pages except Home (already included at /) and Article, which
+ * requires an id clean url. */
+const pages = Object.keys(PageIdentifiers)
+  .filter((page) => !/^Article|Home$/.test(page))
+  .map((key) => `/${key[0].toLowerCase()}${key.slice(1)}`);
 
  /* Add all font files to cache. */
 const fontFiles = (() => {
@@ -171,7 +173,6 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin(uglifyOptions),
 
     new OfflinePlugin({
-      publicPath: '/static/',
       caches: 'all',
       events: true,
       excludes: [ 'https://cms.hellox.me/*', ],
