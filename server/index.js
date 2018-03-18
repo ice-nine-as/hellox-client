@@ -1,5 +1,5 @@
 const dev = process.env.NODE_ENV === 'development';
-console.log(`\nIs dev? ${dev}`);
+console.log(`\nIs dev?   ${dev}`);
 
 const h2 = require('./isHttp2')();
 console.log(`Is HTTP2? ${h2}\n`);
@@ -39,12 +39,16 @@ const headerMiddleware = app.use((req, res, next) => {
   /* Give the service worker root scope. */
   res.setHeader('Service-Worker-Allowed', '/');
 
-  if (req.path === '/sw.js') {
+  if (req.path === '/') {
+    res.setHeader('Cache-Control', 'no-cache');
+  } else if (req.path === '/static/sw.js') {
     /* Only cache the service worker for 5 seconds. */
-    res.setHeader('cache-control', 'max-age=5');
-  } else if (/\.(js|css))/.test(req.path)) {
-    res.setHeader('cache-control', 'max-age=31536000');
-  }
+    res.setHeader('Cache-Control', 'max-age=5');
+  } else if (/\.(js|css)$/.test(req.path)) {
+    res.setHeader('Cache-Control', 'max-age=31536000');
+  } else if (/\/fonts\/.+\.woff2?/.test(req.path)) {
+    res.setHeader('Cache-Control', 'max-age: 31536000');
+  } 
 
   /* Deny HTTP entirely. */
   res.setHeader('Strict-Transport-Security',
