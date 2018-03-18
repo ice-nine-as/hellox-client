@@ -2,6 +2,9 @@ const AutoDllPlugin     = require('autodll-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ExtractCssChunks  = require('extract-css-chunks-webpack-plugin');
 const glob              = require('glob');
+const {
+  PageIdentifiers,
+} = require('../src/Enums/PageIdentifiers');
 const { resolve, }      = require('path');
 const OfflinePlugin     = require('offline-plugin');
 const { promisify, }    = require('util');
@@ -25,12 +28,24 @@ const uglifyOptions = {
   sourceMap: true,
 };
 
- /* Add all font files to cache. */
-const globStr = resolve(__dirname, '..', 'fonts') + '/*.woff2';
-const fontFiles = glob.sync(globStr).map((fontFile) => {
-  const fileName = fontFile.split('/').filter((aa) => aa).slice(-1)[0];
-  return `/fonts/${fileName}`;
+const pages = Object.keys(PageIdentifiers).map((key) => {
+  return key[0].toUpperCase() + key.slice(1);
 });
+
+ /* Add all font files to cache. */
+const fontFiles = (() => {
+  try {
+    const globStr = resolve(__dirname, '..', 'fonts') + '/*.woff2';
+    return glob.sync(globStr).map((fontFile) => {
+      const fileName = fontFile.split('/').filter((aa) => aa).slice(-1)[0];
+      return `/fonts/${fileName}`;
+    });
+  } catch (e) {
+    console.log('Problem with font file glob search:');
+    console.log(e);
+    return [];
+  }
+})();
 
 module.exports = {
   name: 'client',
@@ -162,10 +177,12 @@ module.exports = {
       excludes: [ 'https://cms.hellox.me/*', ],
       externals: [
         '/',
-      ].concat(fontFiles),
+      ].concat(pages)
+       .concat(fontFiles),
 
       ServiceWorker: {
         scope: '/',
+        navigateFallbackURL: '/serverError',
       },
     }),
   ],
