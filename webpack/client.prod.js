@@ -166,7 +166,6 @@ module.exports = {
 
       ServiceWorker: {
         scope: '/',
-        navigateFallbackURL: '/',
       },
     }),
   ],
