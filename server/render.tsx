@@ -163,12 +163,16 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
       const appStr     = ReactDOMServer.renderToString(providerContainer);
       const chunkNames = flushChunkNames();
       const {
+        css,
         cssHash,
         js,
         scripts,
         styles,
         stylesheets,
-      } = flushChunks(clientStats, { chunkNames, });
+      } = flushChunks(clientStats, {
+        chunkNames,
+        outputPath: resolve(projectDirPath, 'dist', 'client'),
+      });
 
       const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
 
@@ -267,7 +271,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
             <title>Hello X - ${PageTitles[state.location.type as PageIdentifiers] || '?'}</title>
             ${viewportSnifferElement}
             ${ambientStyleElement}
-            ${styles}
+            ${css}
             ${fontLoaderElement}
           </head>
           <body>
