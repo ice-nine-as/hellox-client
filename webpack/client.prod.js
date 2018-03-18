@@ -27,7 +27,10 @@ const uglifyOptions = {
 
  /* Add all font files to cache. */
 const globStr = resolve(__dirname, '..', 'fonts') + '/*.woff2';
-const fontFiles = glob.sync(globStr).map((fontFile) => `/${fontFile}`);
+const fontFiles = glob.sync(globStr).map((fontFile) => {
+  const fileName = fontFile.split('/').filter((aa) => aa).slice(-1)[0];
+  return `/fonts/${fileName}`;
+});
 
 module.exports = {
   name: 'client',
@@ -152,8 +155,8 @@ module.exports = {
 
     new webpack.optimize.UglifyJsPlugin(uglifyOptions),
 
-    new OfflinePlugin({  
-      publicPath: '/',
+    new OfflinePlugin({
+      publicPath: '/static/',
       caches: 'all',
       events: true,
       excludes: [ 'https://cms.hellox.me/*', ],
