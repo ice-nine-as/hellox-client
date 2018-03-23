@@ -18,8 +18,12 @@ export const strings = {
 
 export const getFeedItem = (
   id:   string,
-  feed: IRssFeed): IRssPost | null =>
+  feed: IRssFeed | null): IRssPost | null =>
 {
+  if (feed === null) {
+    return null;
+  }
+
   if (typeof id !== 'string' || !id) {
     throw new Error(strings.ID_INVALID);
   } else if (!isRssFeed(feed)) {

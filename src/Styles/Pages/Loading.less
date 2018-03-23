@@ -1,15 +1,22 @@
-.LoadingMessage {
-  font-weight: bolder;
-}
+@import "../KeyColors.less";
 
-.LoadingIcon {
-  display: inline-block;
-  font-size: 250%;
-  animation-name: loadingIconSpin;
-  animation-duration: 1.05s;
-  animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
-  animation-iteration-count: infinite;
-  transform-origin: 45% 45%;
+.Loading {
+  min-height: 100%;
+  background: @light-purple;
+
+  .Message {
+    color: inherit;
+  }
+
+  .Icon {
+    display: inline-block;
+    font-size: 1000%;
+    animation-name: loadingIconSpin;
+    animation-duration: 1.05s;
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    animation-iteration-count: infinite;
+    transform-origin: 45% 45%;
+  }
 }
 
 @keyframes loadingIconSpin {

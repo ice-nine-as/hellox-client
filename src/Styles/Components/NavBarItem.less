@@ -1,6 +1,9 @@
 @import "../KeyColors.less";
 
 .NavBarItem {
+  position: relative;
+  display: flex;
+  align-items: center;
   font-size: 14pt;
   padding: 20px;
   color: white;
@@ -16,23 +19,13 @@
   }
 }
 
-
 .NavLinkHeaderIconLink {
-  position: relative;
-  display: inline-block;
   margin-right: 100px;
 }
 
-.NavLinkLogoContainer {
-  position: relative;
-  display: inline-block;
-}
-
 .NavLinkLogoImageContainer {
-  display: inline-block;
   width: 28px;
   height: 32px;
-  vertical-align: middle;
 }
 
 :global(.LanguageButtonContainer) {

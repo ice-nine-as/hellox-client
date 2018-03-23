@@ -1,27 +1,27 @@
 import {
   ILanguageAction,
-} from '../Actions/App/ILanguageAction';
+} from '../App/ILanguageAction';
 import {
   isLanguage,
-} from '../TypeGuards/isLanguage';
+} from '../../TypeGuards/isLanguage';
 import {
   isLanguageAction,
-} from '../TypeGuards/isLanguageAction';
+} from '../../TypeGuards/isLanguageAction';
 import {
   Languages,
-} from '../Enums/Languages';
+} from '../../Enums/Languages';
 
 export const strings = {
   LANGUAGE_ACTION_INVALID:
-    'The LanguageAction argument passed to the makeLanguageAction function did not ' +
+    'The LanguageAction argument passed to the createLanguageAction function did not ' +
     'meet the isLanguageAction type guard.',
 
   VALUE_INVALID:
-    'The value argument passed to the makeLanguageAction function was not null, ' +
+    'The value argument passed to the createLanguageAction function was not null, ' +
     'nor did it meet the isLanguageFeed type guard.',
 };
 
-export const makeLanguageAction =
+export const createLanguageAction =
   (languageAction: ILanguageAction, value: Languages): ILanguageAction =>
 {
   if (!isLanguageAction(languageAction)) {
@@ -33,4 +33,4 @@ export const makeLanguageAction =
   return Object.assign({}, languageAction, { value, });
 }
 
-export default makeLanguageAction;
+export default createLanguageAction;

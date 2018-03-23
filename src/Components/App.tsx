@@ -1,4 +1,7 @@
 import {
+  createAppAction,
+} from '../Actions/Creators/createAppAction';
+import {
   DoneAppAction,
 } from '../Actions/App/DoneAppAction';
 import {
@@ -19,9 +22,6 @@ import {
 import {
   LoadingAppAction,
 } from '../Actions/App/LoadingAppAction';
-import {
-  makeAppAction,
-} from '../Modules/makeAppAction';
 import {
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
@@ -146,19 +146,19 @@ export const mapStateToProps: MapStateToProps<TAppOwnProps, {}, TStoreProps> = (
 export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
   return {
     setDone(value: boolean) {
-      return dispatch(makeAppAction(DoneAppAction, value));
+      return dispatch(createAppAction(DoneAppAction, value));
     },
 
     setError(value: boolean) {
-      return dispatch(makeAppAction(ErrorAppAction, value));
+      return dispatch(createAppAction(ErrorAppAction, value));
     },
 
     setHamburgerStatus(value: boolean) {
-      return dispatch(makeAppAction(HamburgerOpenAction, value));
+      return dispatch(createAppAction(HamburgerOpenAction, value));
     },
 
     setLoading(value: boolean) {
-      return dispatch(makeAppAction(LoadingAppAction, value));
+      return dispatch(createAppAction(LoadingAppAction, value));
     },
   };
 };

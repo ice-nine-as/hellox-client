@@ -19,6 +19,10 @@ html, body, #root {
   overflow-x: hidden;
 }
 
+a:visited {
+  color: inherit;
+}
+
 @font-face {
   font-family: 'Roboto Subset';
   font-style: normal;
@@ -88,4 +92,6 @@ body {
 
 .fonts-stage-2 .condensed {
   font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }

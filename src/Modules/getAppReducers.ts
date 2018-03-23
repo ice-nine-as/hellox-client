@@ -23,7 +23,7 @@ import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
 
-export const getDefaultAppReducers = (): Readonly<TReducersMap<any, IAction>> => {
+export const getAppReducers = (): Readonly<TReducersMap<any, IAction>> => {
   return Object.freeze({
     done:          doneReducer,
     error:         errorReducer,
@@ -34,4 +34,4 @@ export const getDefaultAppReducers = (): Readonly<TReducersMap<any, IAction>> =>
   });
 }
 
-export default getDefaultAppReducers;
+export default getAppReducers;

@@ -9,8 +9,8 @@ import {
   FeedKeys,
 } from '../src/Enums/FeedKeys';
 import {
-  getDefaultRoutesMap,
-} from '../src/Modules/getDefaultRoutesMap';
+  getRoutesMap,
+} from '../src/Modules/getRoutesMap';
 import {
   getRssFeedThunk,
 } from '../src/Actions/Creators/getRssFeedThunk';
@@ -41,7 +41,7 @@ const Negotiator = require('negotiator');
 export async function configureServerStore(
   req: Request,
   res: Response,
-  routesMap = getDefaultRoutesMap(),
+  routesMap = getRoutesMap(),
   history   = null)
 {
   const _history = history || createMemoryHistory({
@@ -78,11 +78,11 @@ export async function configureServerStore(
   if (type === PageIdentifiers.Archives) {
     /* Pre-load same-language news feed for Archives page. */
     if (language === Languages.Norwegian) {
-      await store.dispatch(getRssFeedThunk(FeedKeys.NewsFullNo));
+      await store.dispatch(getRssFeedThunk({ feedKey: FeedKeys.NewsFullNo, }));
     } else if (language === Languages.Russian) {
-      await store.dispatch(getRssFeedThunk(FeedKeys.NewsFullRu));
+      await store.dispatch(getRssFeedThunk({ feedKey: FeedKeys.NewsFullRu, }));
     } else {
-      await store.dispatch(getRssFeedThunk(FeedKeys.NewsFullEn));
+      await store.dispatch(getRssFeedThunk({ feedKey: FeedKeys.NewsFullEn, }));
     }
   } else if (type === PageIdentifiers.Write) {
     /* Pre-load same-language story generator prompt. */

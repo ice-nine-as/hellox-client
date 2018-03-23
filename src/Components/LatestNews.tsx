@@ -2,14 +2,20 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  FeedKeys,
-} from '../Enums/FeedKeys';
-import {
   getFeed,
 } from '../Modules/getFeed';
 import {
   getRssFeedThunk,
 } from '../Actions/Creators/getRssFeedThunk';
+import {
+  IRssAction,
+} from '../Actions/App/IRssAction';
+import {
+  IRssFeed,
+} from '../Interfaces/IRssFeed';
+import {
+  isNode,
+} from '../Modules/isNode';
 import {
   NewsItemFull,
 } from './NewsItemFull';
@@ -18,13 +24,20 @@ import {
 } from './NewsItemPreview';
 import {
   connect,
+  MapStateToProps,
 } from 'react-redux';
+import {
+  TFeedsMap,
+} from '../TypeAliases/TFeedsMap';
 import {
   TLatestNewsDispatchProps,
 } from '../TypeAliases/TLatestNewsDispatchProps';
 import {
   TLatestNewsOwnProps,
 } from '../TypeAliases/TLatestNewsOwnProps';
+import {
+  TLatestNewsStoreProps,
+} from '../TypeAliases/TLatestNewsStoreProps';
 import {
   TStoreProps,
 } from '../TypeAliases/TStoreProps';
@@ -37,10 +50,10 @@ const _styles = styles || {};
 
 let reactKey = -1;
 
-export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsDispatchProps> {
+export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps> {
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
-  async doLoad() {
+  doLoad() {
     /* Loads the relevant feed based on language and detail level. */ 
     const {
       feed,
@@ -50,18 +63,35 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
       this.props.language,
       this.props.feeds,
       this.props.detailLevel);
+      
+    /* For some reason, possibly that we're only mutating a portion of a feed,
+     * the getNewsFeed method occasionally refuses to render new articles when
+     * a single article has been fetched beforehand. This is avoided through
+     * forceUpdate below. */
 
     if (!feed) {
-      this.props.getNewsFeed(key);
+      this.props.getNewsFeed(key).then(() => {
+        this.forceUpdate();
+      }, (reason) => console.error(reason));
+    } else if (feed.items && feed.items.length < 3) {
+      /* A single article has been loaded through an Article page. We won't
+       * bother to guess where it is in the feed. */
+      this.props.getNewsFeed(key, 0, feed).then(() => {
+        this.forceUpdate();
+      }, (reason) => console.error(reason));
     }
   }
 
   componentDidMount() {
-    this.doLoad();
+    if (!isNode()) {
+      this.doLoad();
+    }
   }
 
   componentDidUpdate() {
-    this.doLoad();
+    if (!isNode()) {
+      this.doLoad();
+    }
   }
 
   render() {
@@ -70,6 +100,9 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
       feeds,
       language,
     } = this.props;
+
+    console.log('Rendering.');
+    console.log(this.props);
 
     const {
       feed,
@@ -97,21 +130,24 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
   }
 }
 
-export const mapStateToProps = ({
+export const mapStateToProps: MapStateToProps<TLatestNewsOwnProps & TLatestNewsStoreProps, TLatestNewsOwnProps, TStoreProps> = ({
   language,
   feeds,
-}: TStoreProps,
-ownProps: { detailLevel: FeedDetailLevels, }) => ({
+}, ownProps) => ({
   ...ownProps,
   feeds,
   language,
 });
 
-export const mapDispatchToProps = (
-  dispatch: Function
-) => ({
-  getNewsFeed: (feedKey: FeedKeys, offset: number = 0) => {
-    return dispatch(getRssFeedThunk(feedKey, offset || 0));
+export const mapDispatchToProps = (dispatch: Function) => ({
+  getNewsFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null): Promise<IRssAction> {
+    const thunk = getRssFeedThunk({
+      composeWith,
+      feedKey: feedKey,
+      offset: offset || 0,
+    });
+
+    return dispatch(thunk);
   },
 });
 

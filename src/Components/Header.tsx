@@ -1,7 +1,4 @@
 import {
-  getDefaultNavLinks,
-} from '../Modules/getDefaultNavLinks';
-import {
   NavBar,
 } from './NavBar';
 import {
@@ -18,9 +15,7 @@ export class Header extends React.PureComponent<THeaderProps> {
   render() {
     return (
       <div className={`${_styles.Header} Header Page-${this.props.page}`}>
-        <NavBar>
-          {getDefaultNavLinks()}
-        </NavBar>
+        <NavBar />
       </div>
     );
   }

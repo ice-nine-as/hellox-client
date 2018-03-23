@@ -23,7 +23,7 @@ const _styles = styles || {};
 export class Footer extends React.PureComponent<TFooterProps> {
   render() {
     return (
-      <div className={`${_styles.Footer} Footer Page-${this.props.page}`}>
+      <div className={`${_styles.Footer} Footer Page-${this.props.page} condensed`}>
         <div className={`${_styles.VerticalHalf} ${_styles.First}`}>
           <div className={`${_styles.HorizontalHalf} ${_styles.Contact}`}>
             <h3 className={_styles.ContactHeader}>

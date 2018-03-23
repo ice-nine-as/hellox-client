@@ -2,18 +2,15 @@ import {
   IRssAction,
 } from '../App/IRssAction';
 import {
-  FeedKeys,
-} from '../../Enums/FeedKeys';
-import {
   Dispatch,
 } from 'redux';
 import {
-  IRssFeed,
-} from '../../Interfaces/IRssFeed';
+  TRssFeedGetterArg,
+} from './TRssFeedGetterArg';
 
 /* Used with redux-thunk. */
 export type TRssFeedGetter =
-  (feedKey: FeedKeys, offset?: number | null, urlArg?: string | null, composeWith?: IRssFeed | null) =>
+  (argObj: TRssFeedGetterArg) =>
     (dispatch: Dispatch<{}>) =>
       Promise<IRssAction>;
 

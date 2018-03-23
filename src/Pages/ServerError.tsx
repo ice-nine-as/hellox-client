@@ -6,11 +6,12 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/ServerError.less';
+const _styles = styles || {};
 
 export class ServerError extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={styles.ServerError}>
+      <div className={_styles.ServerError}>
         Unknown error. Sorry for the trouble!
       </div>
     );

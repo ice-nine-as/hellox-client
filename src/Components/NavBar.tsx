@@ -1,9 +1,45 @@
 import {
+  AboutLinkAction,
+} from '../Actions/Link/AboutLinkAction';
+import {
+  ArchivesLinkAction,
+} from '../Actions/Link/ArchivesLinkAction';
+import {
+  createLinkAction,
+} from '../Actions/Creators/createLinkAction';
+import {
   ConnectedHamburgerMenu,
 } from './HamburgerMenu';
 import {
+  forumUrl,
+} from '../Properties/forumUrl';
+import {
+  HomeLinkAction,
+} from '../Actions/Link/HomeLinkAction';
+import {
+  Languages,
+} from '../Enums/Languages';
+import {
+  ConnectedLanguageButton,
+} from './LanguageButton';
+import {
+  Logo,
+} from './Logo';
+import {
+  NavLink,
+} from 'redux-first-router-link';
+import {
+  LogoStates,
+} from '../Enums/LogoStates';
+import {
+  PodcastLinkAction,
+} from '../Actions/Link/PodcastLinkAction';
+import {
   TNavBarProps,
 } from '../TypeAliases/TNavBarProps';
+import {
+  WriteLinkAction,
+} from '../Actions/Link/WriteLinkAction';
 
 import * as React from 'react';
 
@@ -15,26 +51,85 @@ const _nbStyles = nbStyles || {};
 import nbiStyles from '../Styles/Components/NavBarItem.less';
 const _nbiStyles = nbiStyles || {};
 
+let reactKey = 0;
+
+export const navBarItems = Object.freeze([
+  <NavLink
+    to={createLinkAction(HomeLinkAction)}
+    exact={true}
+    className={`${_nbiStyles.NavBarItem} ${_nbiStyles.NavLinkHeaderIconLink} NavBarItem`}
+    activeClassName="unused"
+    key={reactKey += 1}
+  >
+    <div className={_nbiStyles.NavLinkLogoImageContainer}>
+      <Logo state={LogoStates.Small} />
+    </div>
+  </NavLink>,
+
+  <NavLink
+    className={`${_nbiStyles.NavBarItem} NavBarItem`}
+    to={createLinkAction(AboutLinkAction)}
+    key={reactKey += 1}
+  >
+    About
+  </NavLink>,
+
+  <NavLink
+    className={`${_nbiStyles.NavBarItem} NavBarItem`}
+    to={createLinkAction(PodcastLinkAction)}
+    key={reactKey += 1}
+  >
+    Podcast
+  </NavLink>,
+
+  <NavLink
+    className={`${_nbiStyles.NavBarItem} NavBarItem`}
+    to={createLinkAction(WriteLinkAction)}
+    key={reactKey += 1}
+  >
+    Write
+  </NavLink>,
+
+  <a
+    className={`${_nbiStyles.NavBarItem} NavBarItem`}
+    href={forumUrl}
+    key={reactKey += 1}
+  >
+    Read &amp; Discuss
+  </a>,
+
+  <NavLink
+    className={`${_nbiStyles.NavBarItem} NavBarItem`}
+    to={createLinkAction(ArchivesLinkAction)}
+    key={reactKey += 1}
+  >
+    Archives
+  </NavLink>,
+
+  <span
+    className={`${_nbiStyles.NavBarItem} NavBarItem LanguageButtonContainer`}
+    key={reactKey += 1}
+  >
+    {(Object as any).values(Languages).map((lang: Languages) => {
+      return (
+        <ConnectedLanguageButton
+          buttonLanguage={lang}
+          key={reactKey += 1}
+        />
+      );
+    })}
+  </span>
+]);
+
 export class NavBar extends React.PureComponent<TNavBarProps> {
   render() {
-    const children = React.Children.map(this.props.children, (child) => {
-      if (!child) {
-        return null;
-      }
-
-      const cn = ((child as any).props || {}).className || '';
-      const nbi = _nbiStyles.NavBarItem;
-      const className = cn ? `${cn} ${nbi}` : String(nbi);
-      
-      return typeof child === 'string' || typeof child === 'number' ?
-        <span className={className}>{child}</span> :
-        React.cloneElement(child, { className, });
-    });
-
     return (
       <div className={_nbStyles.NavBar}>
-        <ConnectedHamburgerMenu>{children}</ConnectedHamburgerMenu>
-        {children}
+        {/* Visible if the screen is mobile-sized. */}
+        <ConnectedHamburgerMenu>{navBarItems}</ConnectedHamburgerMenu>
+
+        {/* Visible if the screen is monitor-sized. */}
+        {navBarItems}
       </div>
     );
   }
