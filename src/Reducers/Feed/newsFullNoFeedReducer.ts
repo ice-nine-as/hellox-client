@@ -31,7 +31,7 @@ export const newsFullNoFeedReducer: TReducer<IRssFeed | null, IRssAction> = (
     throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isRssAction(action) && action.feedKey === FeedKeys.NewsFullEn) {
+  if (isRssAction(action) && action.feedKey === FeedKeys.NewsFullNo) {
     return action.value;
   }
 

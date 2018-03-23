@@ -21,41 +21,87 @@ declare module 'htmlparser2' {
   }
 }
 
-const fetch = require('isomorphic-fetch');
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
 export const strings = {
   URL_INVALID:
     'Neither an urlArg property nor valid feedKey property was provided in ' +
-    'the argument object.',
+    'the argument object. If the id argument was provided, the only allowed ' +
+    'FeedKey values are NewsFullEn, NewsFullNo, NewsFullRu',
 
   FEED_INVALID:
     'The feed was fetched from the provided URL, but it did not meet the ' +
     'isRssFeed type guard when transformed to a JS object.',
+
+  FEED_KEY_INVALID_WITH_ID:
+    'An id argument was provided in the argument object, but the feed key ' +
+    'was not one of the SingleArticle values, and therefore is incompatible ' +
+    'with single article lookups.',
 };
 
 export const downloadFeed = async ({
   feedKey,
+  id,
   offset,
   urlArg,
 }: {
-  feedKey?: FeedKeys,
-  offset?:  number | null,
-  urlArg?:  string | null,
-}) => {
-  const url = urlArg || feedKey ? FeedUrls[feedKey!] : null;
+  feedKey: FeedKeys,
+  id?:     string | null | undefined,
+  offset?: number | null | undefined,
+  urlArg?: string | null | undefined,
+}) =>
+{
+  let ignoreOffset = false;
+  const url = ((feedKey, id, urlArg) => {
+    if (urlArg && typeof urlArg === 'string') {
+      /* A custom URL has been provided. */
+      return urlArg;
+    } else if (id && typeof id === 'string') {
+      ignoreOffset = true;
+
+      /* Only a single article is being requested. Single article feed URLs
+       * require a run-time parameter, so they must be run through
+       * String.prototype.replace before actually being used. */
+      if (feedKey === FeedKeys.NewsFullEn) {
+        return FeedUrls.NewsSingleArticleEn.replace(':id', id);
+      } else if (feedKey === FeedKeys.NewsFullNo) {
+        return FeedUrls.NewsSingleArticleNo.replace(':id', id);
+      } else if (feedKey === FeedKeys.NewsFullRu) {
+        return FeedUrls.NewsSingleArticleRu.replace(':id', id);
+      } else {
+        throw new Error(strings.FEED_KEY_INVALID_WITH_ID);
+      }
+    } else {
+      /* Try to match the key to a complete URL. If not found, return null. */
+      // @ts-ignore
+      return FeedUrls[feedKey] || null;
+    }
+  })(feedKey, id, urlArg);
+
   if (!url) {
     throw new Error(strings.URL_INVALID);
   }
 
-  const fullUrl = typeof offset === 'number' && !Number.isNaN(offset) ?
-      `${url}/?offset=${offset}` :
-      url;
+  const offsetIsValid =
+    !ignoreOffset &&
+    typeof offset === 'number' &&
+    offset > 0 &&
+    offset % 1 === 0;
+
+  const fullUrl = offsetIsValid ?
+    `${url}/?offset=${offset}` :
+    url;
 
   const res = await fetch(fullUrl, {
     cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'omit',
     method:      'GET', // *GET, PUT, DELETE, etc.
   });
+
+  if (res.status !== 200) {
+    return null;
+  }
 
   const resText = await res.text();
 

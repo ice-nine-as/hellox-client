@@ -6,14 +6,15 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Loading.less';
+const _styles = styles || {};
 
 export class Loading extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={styles.Loading}>
-        <span className={styles.LoadingMessage}>Loading...</span>
+      <div className={_styles.Loading}>
+        <strong className={_styles.Message}>Loading...</strong>
         <div>
-          <span className={styles.LoadingIcon}>
+          <span className={_styles.Icon}>
             ⟳
           </span>
         </div>

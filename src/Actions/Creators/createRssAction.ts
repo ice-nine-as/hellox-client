@@ -1,4 +1,7 @@
 import {
+  FeedKeys,
+} from '../../Enums/FeedKeys';
+import {
   IRssAction,
 } from '../App/IRssAction';
 import {
@@ -8,18 +11,11 @@ import {
   isRssAction,
 } from '../../TypeGuards/isRssAction';
 import {
-  isRssActionSubtype,
-} from '../../TypeGuards/isRssActionSubtype';
-import {
   isRssFeed,
 } from '../../TypeGuards/isRssFeed';
 import {
-  RssActionSubtypes,
-} from '../../Enums/RssActionSubtypes';
-import {
   TActionCreator,
 } from './TActionCreator';
-import { FeedKeys } from '../../Enums/FeedKeys';
 
 export const strings = {
   RSS_ACTION_INVALID:
@@ -29,31 +25,22 @@ export const strings = {
   VALUE_INVALID:
     'The value argument passed to the makeRssAction function was not null, ' +
     'nor did it meet the isRssFeed type guard.',
-
-  RSS_ACTION_SUBTYPE_INVALID:
-    'The subtype argument passed to the makeRssAction function did not meet ' +
-    'the isRssActionSubtype type guard.',
-
 };
 
 export const createRssAction: TActionCreator<IRssAction> = (
   rssAction: Readonly<IRssAction>,
   feedKey:   FeedKeys,
   value:     IRssFeed | null,
-  subtype:   RssActionSubtypes = RssActionSubtypes.Compose
 ): IRssAction =>
 {
   if (!isRssAction(rssAction)) {
     throw new Error(strings.RSS_ACTION_INVALID);
   } else if (value !== null && !isRssFeed(value)) {
     throw new Error(strings.VALUE_INVALID);
-  } else if (!isRssActionSubtype(subtype)) {
-    throw new Error(strings.RSS_ACTION_SUBTYPE_INVALID);
   }
 
   return Object.assign({}, rssAction, {
     feedKey,
-    subtype,
     value,
   });
 }

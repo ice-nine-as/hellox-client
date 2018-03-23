@@ -5,8 +5,8 @@ import {
   ImageUrls,
 } from '../Enums/ImageUrls';
 import {
-  makeAppAction,
-} from '../Modules/makeAppAction';
+  createAppAction,
+} from '../Actions/Creators/createAppAction';
 import {
   connect,
 } from 'react-redux';
@@ -69,7 +69,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>) => ({
   toggleHamburgerMenu(state: boolean) {
-    return dispatch(makeAppAction(HamburgerOpenAction, !state));
+    return dispatch(createAppAction(HamburgerOpenAction, !state));
   },
 });
 

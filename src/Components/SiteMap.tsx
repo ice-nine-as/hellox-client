@@ -5,11 +5,11 @@ import {
   ArchivesLinkAction,
 } from '../Actions/Link/ArchivesLinkAction';
 import {
+  createLinkAction,
+} from '../Actions/Creators/createLinkAction';
+import {
   forumUrl,
 } from '../Properties/forumUrl';
-import {
-  makeLinkAction,
-} from '../Modules/makeLinkAction';
 import {
   NavLink,
 } from 'redux-first-router-link';
@@ -32,21 +32,21 @@ export class SiteMap extends React.PureComponent {
       <div className={_styles.SiteMap}>
         <NavLink
           className={_styles.Link}
-          to={makeLinkAction(AboutLinkAction)}
+          to={createLinkAction(AboutLinkAction)}
         >
           ABOUT
         </NavLink>
 
         <NavLink
           className={_styles.Link}
-          to={makeLinkAction(PodcastLinkAction)}
+          to={createLinkAction(PodcastLinkAction)}
         >
           PODCAST
         </NavLink>
 
         <NavLink
           className={_styles.Link}
-          to={makeLinkAction(WriteLinkAction)}
+          to={createLinkAction(WriteLinkAction)}
         >
           WRITE
         </NavLink>
@@ -60,12 +60,12 @@ export class SiteMap extends React.PureComponent {
 
         <NavLink
           className={_styles.Link}
-          to={makeLinkAction(ArchivesLinkAction)}
+          to={createLinkAction(ArchivesLinkAction)}
         >
           ARCHIVES
         </NavLink>
       </div>
-    )
+    );
   }
 }
 

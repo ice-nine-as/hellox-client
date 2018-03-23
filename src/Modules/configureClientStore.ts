@@ -2,8 +2,8 @@ import {
   getDefaultReducers,
 } from './getDefaultReducers';
 import {
-  getDefaultRoutesMap,
-} from './getDefaultRoutesMap';
+  getRoutesMap,
+} from './getRoutesMap';
 import {
   History,
 } from 'history';
@@ -31,7 +31,7 @@ import thunkMiddleware from 'redux-thunk';
 export function configureClientStore(
   history:        History,
   preloadedState: Partial<TStoreProps> = {},
-  routesMap:      RoutesMap = getDefaultRoutesMap()): TClientStoreReturn
+  routesMap:      RoutesMap = getRoutesMap()): TClientStoreReturn
 {
   const {
     enhancer,

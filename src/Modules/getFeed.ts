@@ -32,13 +32,16 @@ export const strings = {
   FEED_INVALID:
     'One of the items in the feeds array argument did not meet the ' +
     'isRssFeed type guard.',
+
+  DETAIL_LEVEL_INVALID:
+    'The detailLevel argument was not a member of FeedDetailLevels.',
 };
 
 export const getFeed = (
   type: 'newsItem' | 'storyTemplate',
   language: Languages,
   feeds: TFeedsMap,
-  detailLevel?: FeedDetailLevels): { key: FeedKeys, feed: IRssFeed | null, } =>
+  detailLevel: FeedDetailLevels): { key: keyof TFeedsMap, feed: IRssFeed | null, } =>
 {
   let feedKey: FeedKeys | null = null;
   if (!isLanguage(language)) {
@@ -47,6 +50,11 @@ export const getFeed = (
     throw new Error(strings.TYPE_INVALID);
   } else if (!feeds || typeof feeds !== 'object') {
     throw new Error(strings.FEEDS_INVALID);
+  } else if (detailLevel !== FeedDetailLevels.Full &&
+             detailLevel !== FeedDetailLevels.Teaser &&
+             detailLevel !== FeedDetailLevels.Titles)
+  {
+    throw new Error(strings.DETAIL_LEVEL_INVALID);
   }
 
   if (type === 'newsItem') {

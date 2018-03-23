@@ -11,9 +11,9 @@ import {
   TRouteProps,
 } from '../TypeAliases/TRouteProps';
 
-export function getDefaultRoutesMap(): RoutesMap<TRouteProps> {
-  const ids    = Object.values(PageIdentifiers);
-  const routes = Object.values(RouteIdentifiers);
+export function getRoutesMap(): RoutesMap<TRouteProps> {
+  const ids:    Array<string> = (Object as any).values(PageIdentifiers);
+  const routes: Array<string> = (Object as any).values(RouteIdentifiers);
   return ids.reduce<RoutesMap<TRouteProps>>((routesMap, id, index) => {
     routesMap[id] = {
       path: routes[index],
@@ -24,4 +24,4 @@ export function getDefaultRoutesMap(): RoutesMap<TRouteProps> {
   }, {});
 }
 
-export default getDefaultRoutesMap;
+export default getRoutesMap;

@@ -1,23 +1,23 @@
 import {
   ILinkAction,
-} from '../Actions/Link/ILinkAction';
+} from '../Link/ILinkAction';
 import {
   isLinkAction,
-} from '../TypeGuards/isLinkAction';
+} from '../../TypeGuards/isLinkAction';
 import {
   TMakeLinkAction,
-} from '../TypeAliases/TMakeLinkAction';
+} from '../../TypeAliases/TMakeLinkAction';
 
 export const strings = {
   LINK_ACTION_INVALID:
-    'The linkAction argument passed to the makeLinkAction function did not ' +
+    'The linkAction argument passed to the createLinkAction function did not ' +
     'meet the isLinkAction type guard.',
 
   PAYLOAD_INVALID:
-    'The payload argument passed to the makeLinkAction was not an object.',
+    'The payload argument passed to the createLinkAction was not an object.',
 };
 
-export const makeLinkAction: TMakeLinkAction<ILinkAction> =
+export const createLinkAction: TMakeLinkAction<ILinkAction> =
   (linkAction: ILinkAction, payload: object = {}): ILinkAction => {
     if (!isLinkAction(linkAction)) {
       throw new Error(strings.LINK_ACTION_INVALID);
@@ -28,4 +28,4 @@ export const makeLinkAction: TMakeLinkAction<ILinkAction> =
     return Object.assign({}, linkAction, { payload, });
   }
 
-  export default makeLinkAction;
+  export default createLinkAction;
