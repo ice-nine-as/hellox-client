@@ -143,14 +143,14 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
 
       if (isHttp2()) {
         try {
-          serverPush({
+          await serverPush({
             /*req,*/
             /* Double cast is because TS complains with the normal cast. The res
              * variable is definitely a SPDY response if isHttp2 returns true. */
             res: res as any as ServerResponse,
             scripts,
             stylesheets,
-          })
+          });
         } catch (e) {
           console.error('There was an error pushing files:');
           console.error(e);

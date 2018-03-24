@@ -4,7 +4,6 @@
       "env",
       {
         "targets": {
-          "browsers": [ "since 2007" ],
           "modules": false,
           "node": "current",
           "useBuiltins": true

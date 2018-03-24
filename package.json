@@ -4,6 +4,7 @@
   "description": "The backend and frontend for the Hello X multimedia project.",
   "main": "dist/es6.node/index.js",
   "types": "src/index.d.ts",
+  "browserslist": "since 2008",
   "scripts": {
     "clean": "gulp clean",
     "start-dev": "gulp clean && gulp copyManifest copyModernizr && cross-env NODE_ENV=development node server/index.js",
@@ -43,6 +44,7 @@
     "@types/xml2js": "^0.4.2",
     "ajv": "^6.2.1",
     "autodll-webpack-plugin": "^0.3.9",
+    "autoprefixer": "^8.2.0",
     "awesome-typescript-loader": "^3.5.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -73,6 +75,7 @@
     "node-object-hash": "^1.3.0",
     "nodemon": "^1.17.1",
     "offline-plugin": "^4.9.0",
+    "postcss-loader": "^2.1.3",
     "react-hot-loader": "^3.1.3",
     "react-test-renderer": "^16.2.0",
     "redux-devtools-extension": "^2.13.2",
