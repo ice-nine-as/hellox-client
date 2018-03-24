@@ -1,3 +1,16 @@
 .LatestNews {
   display: block;
+
+  &.Full {
+    display: block;
+  }
+
+  :global(.monitor) &.Teaser {
+    display: flex;
+    justify-content: center;
+  }
+
+  &.Title {
+    display: block;
+  }
 }

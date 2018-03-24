@@ -1,7 +1,7 @@
 export enum FeedDetailLevels {
   Full   = 'Full',
   Teaser = 'Teaser',
-  Titles = 'Titles',
+  Title  = 'Titles',
 }
 
 export default FeedDetailLevels;

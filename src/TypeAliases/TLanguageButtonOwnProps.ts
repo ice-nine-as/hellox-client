@@ -3,8 +3,8 @@ import {
 } from '../Enums/Languages';
 
 export type TLanguageButtonOwnProps = {
-  active: boolean;
   buttonLanguage: Languages;
+  className?:     string;
 };
 
 export default TLanguageButtonOwnProps;

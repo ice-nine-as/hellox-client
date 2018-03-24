@@ -52,7 +52,7 @@ export const getFeed = (
     throw new Error(strings.FEEDS_INVALID);
   } else if (detailLevel !== FeedDetailLevels.Full &&
              detailLevel !== FeedDetailLevels.Teaser &&
-             detailLevel !== FeedDetailLevels.Titles)
+             detailLevel !== FeedDetailLevels.Title)
   {
     throw new Error(strings.DETAIL_LEVEL_INVALID);
   }
@@ -66,7 +66,7 @@ export const getFeed = (
       } else {
         feedKey = FeedKeys.NewsFullEn;
       }
-    } else if (detailLevel === FeedDetailLevels.Titles) {
+    } else if (detailLevel === FeedDetailLevels.Title) {
       if (language === Languages.Norwegian) {
         feedKey = FeedKeys.NewsTitlesNo;
       } else if (language === Languages.Russian) {

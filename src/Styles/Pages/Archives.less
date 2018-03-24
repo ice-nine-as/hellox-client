@@ -1,7 +1,14 @@
 @import '../KeyColors.less';
 
 .Archives {
+  width: 100%;
+  background: @white;
+
   .Title {
-    font-size: 52pt;
+    font-size: 40pt;
+
+    :global(.monitor) & {
+      font-size: 50pt;
+    }
   }
 }

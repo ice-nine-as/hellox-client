@@ -70,15 +70,15 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
      * forceUpdate below. */
 
     if (!feed) {
-      this.props.getNewsFeed(key).then(() => {
-        this.forceUpdate();
-      }, (reason) => console.error(reason));
+      this.props.getNewsFeed(key)
+        .catch((reason) => console.error(reason))
+        .then(() => this.forceUpdate());
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
        * bother to guess where it is in the feed. */
-      this.props.getNewsFeed(key, 0, feed).then(() => {
-        this.forceUpdate();
-      }, (reason) => console.error(reason));
+      this.props.getNewsFeed(key, 0, feed)
+        .catch((reason) => console.error(reason))
+        .then(() => this.forceUpdate());
     }
   }
 
@@ -101,9 +101,6 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
       language,
     } = this.props;
 
-    console.log('Rendering.');
-    console.log(this.props);
-
     const {
       feed,
     } = getFeed('newsItem', language, feeds, detailLevel);
@@ -121,7 +118,7 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
 
     return (
       <div
-        className={_styles.LatestNews}
+        className={`${_styles.LatestNews} ${_styles[this.props.detailLevel]}`}
         key={reactKey += 1}
       >
         {newsItems}

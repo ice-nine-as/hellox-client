@@ -114,6 +114,7 @@ export const navBarItems = Object.freeze([
       return (
         <ConnectedLanguageButton
           buttonLanguage={lang}
+          className="NavBarItem"
           key={reactKey += 1}
         />
       );

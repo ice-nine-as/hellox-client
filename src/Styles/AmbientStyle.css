@@ -3,6 +3,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  background: black;
+}
+
 html, body, #root {
   position: relative;
   left: 0;
