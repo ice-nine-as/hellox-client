@@ -37,12 +37,16 @@ export class SiteMap extends React.PureComponent {
           ABOUT
         </NavLink>
 
+        <br />
+
         <NavLink
           className={_styles.Link}
           to={createLinkAction(PodcastLinkAction)}
         >
           PODCAST
         </NavLink>
+
+        <br />
 
         <NavLink
           className={_styles.Link}
@@ -51,12 +55,16 @@ export class SiteMap extends React.PureComponent {
           WRITE
         </NavLink>
 
+        <br />
+
         <a
           className={_styles.Link}
           href={forumUrl}
         >
           READ
         </a>
+
+        <br />
 
         <NavLink
           className={_styles.Link}

@@ -1,5 +1,5 @@
 export type TIconProps = {
-  offsetVertical?: number;
+  offset?: number;
 };
 
 export default TIconProps;

@@ -23,6 +23,9 @@ import {
   TLanguageButtonOwnProps,
 } from '../TypeAliases/TLanguageButtonOwnProps';
 import {
+  TLanguageButtonStoreProps,
+} from '../TypeAliases/TLanguageButtonStoreProps';
+import {
   TStoreProps,
 } from '../TypeAliases/TStoreProps';
 
@@ -32,14 +35,25 @@ import * as React from 'react';
 import styles from '../Styles/Components/LanguageButton.less';
 const _styles = styles || {};
 
-export class LanguageButton extends React.PureComponent<TLanguageButtonOwnProps & TLanguageButtonDispatchProps> {
+export class LanguageButton extends React.PureComponent<TLanguageButtonOwnProps & TLanguageButtonStoreProps & TLanguageButtonDispatchProps> {
   render() {
+    const languageClass = _styles[this.props.language] ?
+      _styles[this.props.language] :
+      '';
+
+    const activeClass = this.props.active ?
+      ` ${_styles.Active}` :
+      '';
+
+    const capitalizedButtonLanguage =
+      this.props.buttonLanguage[0].toUpperCase() +
+      this.props.buttonLanguage.slice(1);
     return (
       <button
-        className={`${_styles.LanguageButton}${this.props.active ? ' ' + _styles.Active : ''}`}
+        className={`${_styles.LanguageButton} ${languageClass}${activeClass}`}
         onClick={() => this.props.switchLanguage(this.props.buttonLanguage)}
       >
-        {this.props.buttonLanguage[0].toUpperCase() + this.props.buttonLanguage.slice(1)}
+        {capitalizedButtonLanguage}
       </button>
     );
   }
@@ -49,11 +63,13 @@ export const mapStateToProps = ({
   language,
 }: TStoreProps, {
   buttonLanguage,
-}: {
-  buttonLanguage: Languages,
-}): TLanguageButtonOwnProps => ({
+  className,
+}: TLanguageButtonOwnProps): TLanguageButtonOwnProps & TLanguageButtonStoreProps =>
+({
   active: language === buttonLanguage,
   buttonLanguage,
+  className,
+  language,
 });
 
 export const mapDispatchToProps = (dispatch: Dispatch<{}>): TLanguageButtonDispatchProps => ({

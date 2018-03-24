@@ -11,6 +11,9 @@ import {
   Footer,
 } from '../Components/Footer';
 import {
+  HamburgerOpenAction,
+} from '../Actions/App/HamburgerOpenAction';
+import {
   Header,
 } from '../Components/Header';
 import {
@@ -29,20 +32,24 @@ import {
   PageTitles,
 } from '../Enums/PageTitles';
 import {
-  connect, MapStateToProps,
+  connect,
+  MapStateToProps,
 } from 'react-redux';
 import {
   Dispatch,
 } from 'redux';
 import {
+  TAfterChangeDestructure,
+} from '../TypeAliases/TAfterChangeDestructure';
+import {
   TAppDispatchProps,
 } from '../TypeAliases/TAppDispatchProps';
 import {
-  TAppOwnProps,
+  TAppStoreProps,
 } from '../TypeAliases/TAppOwnProps';
 import {
-  TAfterChangeDestructure,
-} from '../TypeAliases/TAfterChangeDestructure';
+  TStoreProps,
+} from '../TypeAliases/TStoreProps';
 import {
   Universal,
 } from '../Components/Universal';
@@ -51,12 +58,10 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/App.less';
-import { TStoreProps } from '../TypeAliases/TStoreProps';
-import { HamburgerOpenAction } from '../Actions/App/HamburgerOpenAction';
 const _styles = styles || {};
 
-export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
-  constructor(props: TAppOwnProps & TAppDispatchProps) {
+export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps> {
+  constructor(props: TAppStoreProps & TAppDispatchProps) {
     super(props);
 
     this.beforeChange = this.beforeChange.bind(this);
@@ -77,12 +82,22 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
       <div className={_styles.App}>
         <Header page={realPage} />
 
-        <Universal
-          page={realPage}
-          onBefore={this.beforeChange}
-          onAfter={this.afterChange}
-          onError={this.handleError}
-        />
+        <div
+          className={_styles.PageContainer}
+          onClick={() => {
+            /* Close hamburger menu when any location on page is clicked. */
+            if (this.props.hamburgerOpen === true) {
+              this.props.setHamburgerStatus(false);
+            }
+          }}
+        >
+          <Universal
+            page={realPage}
+            onAfter={this.afterChange}
+            onBefore={this.beforeChange}
+            onError={this.handleError}
+          />
+        </div>
 
         <Footer page={realPage} />
       </div>
@@ -96,7 +111,9 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
     }
 
     /* Close the hamburger menu before we navigate to a new page. */
-    this.props.setHamburgerStatus(false);
+    if (this.props.hamburgerOpen === true) {
+      this.props.setHamburgerStatus(false);
+    }
   }
 
   afterChange({ isSync, isServer, isMount, }: TAfterChangeDestructure) {
@@ -127,21 +144,19 @@ export class App extends React.PureComponent<TAppOwnProps & TAppDispatchProps> {
   }
 }
 
-export const mapStateToProps: MapStateToProps<TAppOwnProps, {}, TStoreProps> = ({
+export const mapStateToProps: MapStateToProps<TAppStoreProps, {}, TStoreProps> = ({
   done,
   error,
   hamburgerOpen,
   loading,
   location,
-}) => {
-  return {
-    done,
-    error,
-    hamburgerOpen,
-    loading,
-    location,
-  };
-};
+}) => ({
+  done,
+  error,
+  hamburgerOpen,
+  loading,
+  location,
+});
 
 export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
   return {
