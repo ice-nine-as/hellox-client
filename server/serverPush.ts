@@ -35,12 +35,12 @@ const nodeSpdyOptions = {
   },
 };
 
-const nodeSpdyJsonOptions = Object.assign({}, nodeSpdyOptions, {
+/*const nodeSpdyJsonOptions = Object.assign({}, nodeSpdyOptions, {
   response: {
     'content-type': 'application/json',
     'content-encoding': 'gzip',
   },
-});
+});*/
 
 const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
   response: { 
@@ -73,16 +73,6 @@ export const serverPush = async ({
   scripts:     Array<string>,
   stylesheets: Array<string>,
 }) => {
-  try {
-    const manifestPath = getClientFilepath('manifest.json');
-    const manifestFile = await readFileProm(manifestPath);
-
-    /* Push the vendor file to the client. Cannot execute if file loading fails. */
-    const manifestStream = res.push('/static/manifest.json', nodeSpdyJsonOptions);
-    manifestStream.on('error', handlePushError);
-    manifestStream.end(manifestFile);
-  } catch (e) {}
-
   /* Load and the vendor and built script chunks. */
   const scriptFiles = await (async () => {
     let values: Array<Buffer> = [];
@@ -95,8 +85,8 @@ export const serverPush = async ({
         }),
       ]);
     } catch (e) {
-      console.log('Problem pushing vendor file:');
-      console.log(e);
+      console.error('Problem pushing vendor file:');
+      console.error(e);
       return values;
     }
 
@@ -123,8 +113,8 @@ export const serverPush = async ({
         return readFileProm(getClientFilepath(`${path}.gz`));
       }));
     } catch(e) {
-      console.log('Problem pushing script file:');
-      console.log(e);
+      console.error('Problem pushing script file:');
+      console.error(e);
       return [];
     }
   })();
@@ -147,8 +137,8 @@ export const serverPush = async ({
         return readFileProm(filePath);
       }));
     } catch (e) {
-      console.log('Problem pushing font file:');
-      console.log(e);
+      console.error('Problem pushing font file:');
+      console.error(e);
       return [];
     }
   })();
