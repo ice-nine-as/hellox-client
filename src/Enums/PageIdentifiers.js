@@ -1,4 +1,4 @@
-module.exports = {
+exports = module.exports = {
   PageIdentifiers: {
     About:       'About',
     Archives:    'Archives',

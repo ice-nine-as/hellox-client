@@ -25,7 +25,7 @@ export const createLinkAction: TMakeLinkAction<ILinkAction> =
       throw new Error(strings.PAYLOAD_INVALID);
     }
 
-    return Object.assign({}, linkAction, { payload, });
+    return Object.freeze(Object.assign({}, linkAction, { payload, }));
   }
 
   export default createLinkAction;

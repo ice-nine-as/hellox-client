@@ -1,6 +1,6 @@
 import {
-  getDefaultRoutesMap,
-} from '../../src/Modules/getDefaultRoutesMap';
+  getRoutesMap,
+} from '../../src/Modules/getRoutesMap';
 import {
   PageIdentifiers,
 } from '../../src/Enums/PageIdentifiers';
@@ -11,14 +11,14 @@ import {
   TRouteProps,
 } from '../../src/TypeAliases/TRouteProps';
 
-describe('getDefaultRoutesMap unit tests.', () => {
+describe('getRoutesMap unit tests.', () => {
   it('Returns a RoutesMap with PageIdentifiers keys as keys.', () => {
-    expect(Object.keys(getDefaultRoutesMap()))
+    expect(Object.keys(getRoutesMap()))
       .toEqual(Object.keys(PageIdentifiers));
   });
 
   it('Returns a RoutesMap with RouteIdentifiers values as path properties.', () => {
-    const routesMap = getDefaultRoutesMap();
+    const routesMap = getRoutesMap();
     const routesMapValues = Object.keys(routesMap).map((route) => {
       /* No string routes are used. */
       return (routesMap[route] as TRouteProps).path;

@@ -1,6 +1,6 @@
 import {
-  getDefaultReducers,
-} from './getDefaultReducers';
+  getReducers,
+} from './getReducers';
 import {
   getRoutesMap,
 } from './getRoutesMap';
@@ -41,7 +41,7 @@ export function configureClientStore(
   } = connectRoutes(history, routesMap);
 
   const rootReducer = combineReducers<TStoreProps>({
-    ...getDefaultReducers(),
+    ...getReducers(),
     location: locationReducer,
   });
 

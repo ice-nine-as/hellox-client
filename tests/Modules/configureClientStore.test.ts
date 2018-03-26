@@ -2,17 +2,17 @@ import {
   configureClientStore,
 } from '../../src/Modules/configureClientStore';
 
-jest.mock('../../src/Modules/getDefaultReducers');
+/* Mocked */
 import {
-  getDefaultReducers,
-} from '../../src/Modules/getDefaultReducers';
+  getReducers,
+} from '../../src/Modules/getReducers';
+jest.mock('../../src/Modules/getReducers');
 
-jest.mock('../../src/Modules/getDefaultRoutesMap');
 import {
-  getDefaultRoutesMap,
-} from '../../src/Modules/getDefaultRoutesMap';
+  getRoutesMap,
+} from '../../src/Modules/getRoutesMap';
+jest.mock('../../src/Modules/getRoutesMap');
 
-jest.mock('redux');
 import {
   applyMiddleware,
   combineReducers,
@@ -20,15 +20,16 @@ import {
   createStore,
   StoreEnhancerStoreCreator,
 } from 'redux';
+jest.mock('redux');
 
-jest.mock('redux-first-router');
 import {
   connectRoutes,
   RoutesMap,
 } from 'redux-first-router';
+jest.mock('redux-first-router');
 
-jest.mock('redux-thunk');
 import thunkMiddleware from 'redux-thunk';
+jest.mock('redux-thunk');
 
 type Mock = jest.Mock;
 
@@ -38,7 +39,7 @@ describe('configureClientStore unit tests.', () => {
     (<Mock>connectRoutes).mockImplementation(() => ({}));
 
     (<Mock>combineReducers).mockClear();
-    (<Mock>getDefaultReducers).mockClear();
+    (<Mock>getReducers).mockClear();
     (<Mock>applyMiddleware).mockClear();
     (<Mock>compose).mockClear();
     (<Mock>createStore).mockClear();
@@ -59,7 +60,7 @@ describe('configureClientStore unit tests.', () => {
 
   it('Calls getDefaultReducers with no arguments.', () => {
     (<Mock>configureClientStore)();
-    expect((<Mock>getDefaultReducers).mock.calls).toEqual([ [], ]);
+    expect((<Mock>getReducers).mock.calls).toEqual([ [], ]);
   });
 
   it('Passes the products of getDefaultReducer and the location reducer produced by connectRoutes to combineReducers.', () => {
@@ -68,10 +69,10 @@ describe('configureClientStore unit tests.', () => {
       reducer: locMock,
     }));
     
-    const symOne    = Symbol('arrSym1');
-    const symTwo    = Symbol('arrSym2');
-    const symThree  = Symbol('arrSym3');
-    (<Mock>getDefaultReducers).mockImplementation(() => ({
+    const symOne   = Symbol('arrSym1');
+    const symTwo   = Symbol('arrSym2');
+    const symThree = Symbol('arrSym3');
+    (<Mock>getReducers).mockImplementation(() => ({
       done:    symOne,
       error:   symTwo,
       loading: symThree,

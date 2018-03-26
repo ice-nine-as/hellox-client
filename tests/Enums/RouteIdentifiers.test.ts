@@ -49,11 +49,6 @@ describe('PageIdentifiers unit tests.', () => {
       .toBe(values.length);
   });
 
-  it('Has the same number of key-value pairs as exist in PageIdentifiers.', () => {
-    expect(Object.keys(RouteIdentifiers).length)
-      .toBe(Object.keys(RouteIdentifiers).length);
-  });
-
   it('Has identical keys to PageIdentifiers.', () => {
     const titleKeys = Object.keys(RouteIdentifiers);
     const idKeys = Object.keys(PageIdentifiers);

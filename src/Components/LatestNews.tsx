@@ -5,8 +5,8 @@ import {
   getFeed,
 } from '../Modules/getFeed';
 import {
-  getRssFeedThunk,
-} from '../Actions/Creators/getRssFeedThunk';
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
@@ -138,7 +138,7 @@ export const mapStateToProps: MapStateToProps<TLatestNewsOwnProps & TLatestNewsS
 
 export const mapDispatchToProps = (dispatch: Function) => ({
   getNewsFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null): Promise<IRssAction> {
-    const thunk = getRssFeedThunk({
+    const thunk = createRssThunk({
       composeWith,
       feedKey: feedKey,
       offset: offset || 0,

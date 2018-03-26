@@ -5,7 +5,6 @@ export enum PageTitles {
   Home        = 'Home',
   NotFound    = 'Not Found (404)',
   Podcast     = 'Podcast',
-  ReadDiscuss = 'Read/Discuss',
   ServerError = 'Server Error (500)',
   Write       = 'Write',
 }

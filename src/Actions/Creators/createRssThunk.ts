@@ -31,21 +31,21 @@ import {
 
 export const strings = {
   FEED_KEY_INVALID:
-    'The feedKey argument passed to getRssFeed did not meet the ' +
-    'isRssActionSubtype type guard.',
+    'The feedKey argument passed to createRssThunk did not meet the ' +
+    'isFeedKey type guard.',
 
   NO_SUBTYPE_URL:
-    'There was no url argument provided, nor a key in the FeedUrls enum ' +
-    'which matched the subtype argument provided to getRssFeed.',
+    'There was no urlArg argument provided, nor a key in the FeedUrls enum ' +
+    'which matched the subtype argument provided to createRssThunk.',
 
   FEED_RESPONSE_INVALID:
     'The response from the downloadFeed function was null, or did not meet ' +
     'the isRssFeed type guard.',
 };
 
-export const getRssFeedThunk: TRssFeedGetter = ({
-  feedKey,
+export const createRssThunk: TRssFeedGetter = ({
   composeWith = null,
+  feedKey,
   id = null,
   offset = null,
   urlArg = null,
@@ -62,7 +62,7 @@ export const getRssFeedThunk: TRssFeedGetter = ({
     composeWith.currentOffset >= 0;
 
   const offsetIsValid = typeof offset === 'number' && offset > 0;
-  const composeWithOffset = composeWithValid ? composeWith!.currentOffset : 0;
+  const composeWithOffset = composeWithValid ? composeWith.currentOffset : 0;
   const realOffset = offsetIsValid ? offset : composeWithOffset;
 
   /* Return a thunk, a function which can be called later, and returns a
@@ -70,10 +70,10 @@ export const getRssFeedThunk: TRssFeedGetter = ({
   return async (dispatch: Dispatch<{}>): Promise<IRssAction> => {
     const maybeOffsetObj = idValid ? { offset, } : {};
     const argObj = {
+      ...maybeOffsetObj,
       feedKey,
       id,
       urlArg,
-      ...maybeOffsetObj,
     };
 
     const feed = await downloadFeed(argObj);
@@ -111,4 +111,4 @@ export const getRssFeedThunk: TRssFeedGetter = ({
   };
 };
 
-export default getRssFeedThunk;
+export default createRssThunk;

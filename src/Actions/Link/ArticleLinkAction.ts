@@ -5,10 +5,10 @@ import {
   PageIdentifiers,
 } from '../../Enums/PageIdentifiers';
 
-export const ArchivesLinkAction: ILinkAction = Object.freeze({
+export const ArticleLinkAction: ILinkAction = Object.freeze({
   type:    PageIdentifiers.Article,
   payload: {},
   value:   null,
 });
 
-export default ArchivesLinkAction;
+export default ArticleLinkAction;
