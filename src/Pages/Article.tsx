@@ -8,8 +8,8 @@ import {
   getFeedItem,
 } from '../Modules/getFeedItem';
 import {
-  getRssFeedThunk,
-} from '../Actions/Creators/getRssFeedThunk';
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
@@ -109,7 +109,7 @@ export const mapDispatchToProps = (dispatch: Function) => ({
       feeds,
       FeedDetailLevels.Full);
 
-    const thunk = getRssFeedThunk({
+    const thunk = createRssThunk({
       composeWith: feedObj.feed,
       feedKey: feedObj.key,
       id,

@@ -11,11 +11,11 @@ import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';
 
-export function getDefaultReducers(): TReducersMap<any, IAction> {
+export function getReducers(): TReducersMap<any, IAction> {
   return {
     ...getAppReducers(),
     /*storyGenerator: combineReducers(getStoryGeneratorReducers()),*/
   };
 }
 
-export default getDefaultReducers;
+export default getReducers;

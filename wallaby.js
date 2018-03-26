@@ -24,6 +24,7 @@ module.exports = (wallaby) => ({
   files: [
     'tsconfig.json',
     'src/**/*.ts?(x)',
+    'src/**/*.js?(x)',
   ],
 
   preprocessors: {

@@ -50,6 +50,7 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.1",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-universal-import": "^1.4.0",
     "babel-polyfill": "^6.26.0",
@@ -68,7 +69,7 @@
     "gulp-cli": "^2.0.1",
     "hard-source-webpack-plugin": "^0.5.18",
     "history": "^4.7.2",
-    "jest": "^22.4.2",
+    "jest": "^22.4.3",
     "jest-css-modules": "^1.1.0",
     "less": "^2.7.3",
     "less-loader": "^4.1.0",
@@ -118,10 +119,10 @@
   },
   "jest": {
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
-      "jsx"
+      "jsx",
+      "ts",
+      "tsx"
     ],
     "testMatch": [
       "**/tests/**/*.test.{j,t}s?(x)"
@@ -129,7 +130,7 @@
     "transform": {
       "^.+\\.(css|less)$": "jest-css-modules",
       "^.+\\.jsx?$": "babel-jest",
-      "^.+\\.(ts|tsx)$": "ts-jest"
+      "^.+\\.tsx?$": "ts-jest"
     }
   }
 }

@@ -17,8 +17,8 @@ export const strings = {
     'meet the isLanguageAction type guard.',
 
   VALUE_INVALID:
-    'The value argument passed to the createLanguageAction function was not null, ' +
-    'nor did it meet the isLanguageFeed type guard.',
+    'The value argument passed to the createLanguageAction function did not ' +
+    'meet the isLanguageFeed type guard.',
 };
 
 export const createLanguageAction =
@@ -30,7 +30,7 @@ export const createLanguageAction =
     throw new Error(strings.VALUE_INVALID);
   }
 
-  return Object.assign({}, languageAction, { value, });
+  return Object.freeze(Object.assign({}, languageAction, { value, }));
 }
 
 export default createLanguageAction;
