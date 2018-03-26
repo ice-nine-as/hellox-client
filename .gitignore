@@ -1,7 +1,9 @@
-code-examples/
+coverage/
 dist/
 node_modules/
-.awcache
-*-design-doc.*
+private/
+.awcache/
 .DS_Store
+.vagrant/
+*.log
 *.swp
