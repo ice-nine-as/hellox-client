@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/ice-nine-as/hellox-client.svg?branch=master)](https://travis-ci.org/ice-nine-as/hellox-client)
 
-# X50
+# Hello X
 
 The primary code repository for developing and staging the Hello X multimedia art project.
 
