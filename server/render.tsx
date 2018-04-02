@@ -218,7 +218,9 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
 
       /* We don't currently (03.18) have any middleware after this, but it's
        * called in case we ever add any. */
-      next();
+      if (typeof next === 'function') {
+        next();
+      }
     } catch (e) {
       /* Catch all errors. Do not allow uncaught exceptions to cause server to
        * hang. Without this, you will get invisible errors, the server will

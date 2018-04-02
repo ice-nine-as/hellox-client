@@ -14,20 +14,23 @@ import {
   Languages,
 } from '../Enums/Languages';
 import {
+  StoryGeneratorParts,
+} from '../StoryGenerator/Enums/StoryGeneratorParts';
+import {
   TFeedsMap,
 } from '../TypeAliases/TFeedsMap';
 
 export const strings = {
   LANGUAGE_INVALID:
-    'The language argument provided to getFeedItem did not meet the ' +
+    'The language argument provided to getFeed did not meet the ' +
     'isLanguage type guard.',
 
   TYPE_INVALID:
-    'The type argument provided to getFeedItem was neither "newsItem" nor ' +
+    'The type argument provided to getFeed was neither "newsItem" nor ' +
     '"storyTemplate".',
 
   FEEDS_INVALID:
-    'The feeds argument provided to getFeedItem was not an object.',
+    'The feeds argument provided to getFeed was not an object.',
 
   FEED_INVALID:
     'One of the items in the feeds array argument did not meet the ' +
@@ -35,13 +38,28 @@ export const strings = {
 
   DETAIL_LEVEL_INVALID:
     'The detailLevel argument was not a member of FeedDetailLevels.',
+
+  STORY_PART_INVALID:
+    'The storyPart argument prop was not a, b, or c, in upper or lower case.',
 };
 
-export const getFeed = (
-  type: 'newsItem' | 'storyTemplate',
-  language: Languages,
-  feeds: TFeedsMap,
-  detailLevel: FeedDetailLevels): { key: keyof TFeedsMap, feed: IRssFeed | null, } =>
+export const getFeed = ({
+  type,
+  language,
+  feeds,
+  detailLevel,
+  storyPart,
+}: {
+  type:         'newsItem' | 'storyTemplate',
+  language:     Languages,
+  feeds:        TFeedsMap,
+  detailLevel?: FeedDetailLevels,
+  storyPart?:   StoryGeneratorParts,
+}):
+{
+  feed: IRssFeed | null,
+  key: keyof TFeedsMap,
+} =>
 {
   let feedKey: FeedKeys | null = null;
   if (!isLanguage(language)) {
@@ -50,7 +68,8 @@ export const getFeed = (
     throw new Error(strings.TYPE_INVALID);
   } else if (!feeds || typeof feeds !== 'object') {
     throw new Error(strings.FEEDS_INVALID);
-  } else if (detailLevel !== FeedDetailLevels.Full &&
+  } else if (detailLevel &&
+             detailLevel !== FeedDetailLevels.Full &&
              detailLevel !== FeedDetailLevels.Teaser &&
              detailLevel !== FeedDetailLevels.Title)
   {
@@ -84,12 +103,32 @@ export const getFeed = (
       }
     }
   } else {
-    if (language === Languages.Norwegian) {
-      feedKey = FeedKeys.StoryTemplateNo;
-    } else if (language === Languages.Russian) {
-      feedKey = FeedKeys.StoryTemplateRu;
+    if (/^a$/i.test(storyPart as string)) {
+      if (language === Languages.Norwegian) {
+        feedKey = FeedKeys.StoryTemplateNoPartA;
+      } else if (language === Languages.Russian) {
+        feedKey = FeedKeys.StoryTemplateRuPartA;
+      } else {
+        feedKey = FeedKeys.StoryTemplateEnPartA;
+      }
+    } else if (/^b$/i.test(storyPart as string)) {
+      if (language === Languages.Norwegian) {
+        feedKey = FeedKeys.StoryTemplateNoPartB;
+      } else if (language === Languages.Russian) {
+        feedKey = FeedKeys.StoryTemplateRuPartB;
+      } else {
+        feedKey = FeedKeys.StoryTemplateEnPartB;
+      }
+    } else if (/^c$/i.test(storyPart as string)) {
+      if (language === Languages.Norwegian) {
+        feedKey = FeedKeys.StoryTemplateNoPartC;
+      } else if (language === Languages.Russian) {
+        feedKey = FeedKeys.StoryTemplateRuPartC;
+      } else {
+        feedKey = FeedKeys.StoryTemplateEnPartC;
+      }
     } else {
-      feedKey = FeedKeys.StoryTemplateEn;
+      throw new Error(strings.STORY_PART_INVALID);
     }
   }
 

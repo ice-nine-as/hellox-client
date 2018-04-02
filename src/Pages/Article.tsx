@@ -44,21 +44,28 @@ const _styles = styles || {};
 
 export class Article extends React.Component<TArticleStoreProps & TArticleDispatchProps> {
   doLoad() {
+    const {
+      feeds,
+      getArticle,
+      language,
+      location: {
+        payload,
+      },
+    } = this.props;
+
     /* Loads the relevant feed based on language and detail level. */ 
     const {
       feed,
-    } = getFeed(
-      'newsItem',
-      this.props.language,
-      this.props.feeds,
-      FeedDetailLevels.Full);
+    } = getFeed({
+      detailLevel: FeedDetailLevels.Full,
+      feeds,
+      language,
+      type: 'newsItem',
+    });
 
-    const id = (this.props.location.payload as any).id.toString();
+    const id = (payload as any).id.toString();
     if (!feed || !getFeedItem(id, feed)) {
-      this.props.getArticle(
-        id,
-        this.props.feeds,
-        this.props.language);
+      getArticle(id, feeds, language);
     }
   }
 
@@ -72,12 +79,23 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
 
 
   render() {
-    const id = (this.props.location.payload as any).id.toString();
-    const { feed, } = getFeed(
-      'newsItem',
-      this.props.language,
-      this.props.feeds,
-      FeedDetailLevels.Full);
+    const {
+      feeds,
+      language,
+      location: {
+        payload,
+      },
+    } = this.props;
+
+    const id = (payload as any).id.toString();
+    const {
+      feed,
+    } = getFeed({
+      detailLevel: FeedDetailLevels.Full,
+      feeds,
+      language,
+      type: 'newsItem',
+    });
 
     const item = feed ? getFeedItem(id, feed) : null;
 
@@ -103,15 +121,19 @@ export const mapStateToProps: MapStateToProps<TArticleStoreProps, null, TStorePr
 
 export const mapDispatchToProps = (dispatch: Function) => ({
   getArticle(id: string, feeds: TFeedsMap, language: Languages): Promise<IRssAction> {
-    const feedObj = getFeed(
-      'newsItem',
-      language,
+    const {
+      feed,
+      key,
+    } = getFeed({
+      detailLevel: FeedDetailLevels.Full,
       feeds,
-      FeedDetailLevels.Full);
+      language,
+      type: 'newsItem',
+    });
 
     const thunk = createRssThunk({
-      composeWith: feedObj.feed,
-      feedKey: feedObj.key,
+      composeWith: feed,
+      feedKey:     key,
       id,
     });
 

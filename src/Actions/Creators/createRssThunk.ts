@@ -62,7 +62,7 @@ export const createRssThunk: TRssFeedGetter = ({
     composeWith.currentOffset >= 0;
 
   const offsetIsValid = typeof offset === 'number' && offset > 0;
-  const composeWithOffset = composeWithValid ? composeWith.currentOffset : 0;
+  const composeWithOffset = composeWithValid ? composeWith!.currentOffset : 0;
   const realOffset = offsetIsValid ? offset : composeWithOffset;
 
   /* Return a thunk, a function which can be called later, and returns a
