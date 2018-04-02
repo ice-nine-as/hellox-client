@@ -13,7 +13,7 @@ import {
 
 export interface IRssAction extends IAppAction {
   readonly type:     AppActionTypes.Rss;
-  readonly feedKey:  FeedKeys;
+  readonly feedKey?: FeedKeys;
   readonly value:    IRssFeed | null;
 }
 
