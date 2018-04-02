@@ -1,9 +1,9 @@
-/*import {
-  getRootReducer as getStoryGeneratorReducers,
-} from 'x50-story-generator/dist/esnext';*/
 import {
   getAppReducers,
 } from '../Modules/getAppReducers';
+import {
+  getRootReducer as getStoryGeneratorRootReducer,
+} from '../StoryGenerator/Modules/getRootReducer';
 import {
   IAction,
 } from '../Actions/IAction';
@@ -14,7 +14,7 @@ import {
 export function getReducers(): TReducersMap<any, IAction> {
   return {
     ...getAppReducers(),
-    /*storyGenerator: combineReducers(getStoryGeneratorReducers()),*/
+    storyGenerator: getStoryGeneratorRootReducer(),
   };
 }
 

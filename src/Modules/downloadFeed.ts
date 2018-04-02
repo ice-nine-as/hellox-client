@@ -13,6 +13,9 @@ import {
 import {
   isRssFeed,
 } from '../TypeGuards/isRssFeed';
+import {
+  TFeedsMap,
+} from '../TypeAliases/TFeedsMap';
 
 import * as htmlparser from 'htmlparser2';
 declare module 'htmlparser2' {
@@ -28,7 +31,7 @@ export const strings = {
   URL_INVALID:
     'Neither an urlArg property nor valid feedKey property was provided in ' +
     'the argument object. If the id argument was provided, the only allowed ' +
-    'FeedKey values are NewsFullEn, NewsFullNo, NewsFullRu',
+    'FeedKey values are NewsFullEn, NewsFullNo, and NewsFullRu.',
 
   FEED_INVALID:
     'The feed was fetched from the provided URL, but it did not meet the ' +
@@ -46,7 +49,7 @@ export const downloadFeed = async ({
   offset,
   urlArg,
 }: {
-  feedKey: FeedKeys,
+  feedKey: keyof TFeedsMap,
   id?:     string | null | undefined,
   offset?: number | null | undefined,
   urlArg?: string | null | undefined,
@@ -122,7 +125,7 @@ export const downloadFeed = async ({
       resolve(feed);
     });
 
-    const parser  = new htmlparser.Parser(handler, { xmlMode: true, });
+    const parser = new htmlparser.Parser(handler, { xmlMode: true, });
     parser.write(resText);
     parser.end();
   });

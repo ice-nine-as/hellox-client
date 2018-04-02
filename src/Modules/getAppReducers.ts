@@ -18,7 +18,7 @@ import {
 } from '../Reducers/loadingReducer';
 import {
   feedsReducer,
-} from '../Reducers/Feed/feedReducer';
+} from '../Reducers/feedsReducer';
 import {
   TReducersMap,
 } from '../TypeAliases/TReducersMap';

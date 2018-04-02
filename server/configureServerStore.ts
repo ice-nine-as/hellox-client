@@ -14,9 +14,6 @@ import {
 import {
   createRssThunk,
 } from '../src/Actions/Creators/createRssThunk';
-/*import {
-  getStoryTemplate,
-} from '../src/Modules/getStoryTemplate';*/
 import {
   createMemoryHistory,
 } from 'history';

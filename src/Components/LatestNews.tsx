@@ -54,15 +54,22 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
   doLoad() {
+    const {
+      detailLevel,
+      feeds,
+      language,
+    } = this.props;
+
     /* Loads the relevant feed based on language and detail level. */ 
     const {
       feed,
       key,
-    } = getFeed(
-      'newsItem',
-      this.props.language,
-      this.props.feeds,
-      this.props.detailLevel);
+    } = getFeed({
+      type: 'newsItem',
+      detailLevel,
+      feeds,
+      language,
+    });
       
     /* For some reason, possibly that we're only mutating a portion of a feed,
      * the getNewsFeed method occasionally refuses to render new articles when
@@ -88,12 +95,6 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     }
   }
 
-  componentDidUpdate() {
-    if (!isNode()) {
-      this.doLoad();
-    }
-  }
-
   render() {
     const {
       detailLevel,
@@ -103,7 +104,12 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
 
     const {
       feed,
-    } = getFeed('newsItem', language, feeds, detailLevel);
+    } = getFeed({
+      type: 'newsItem',
+      language,
+      feeds,
+      detailLevel,
+    });
 
     /* TODO: Add internationalization to no news items message. */
     const newsItems = feed && feed.items && feed.items.length > 0 ?
