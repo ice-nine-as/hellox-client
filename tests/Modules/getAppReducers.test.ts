@@ -12,7 +12,7 @@ import {
 } from '../../src/Reducers/loadingReducer';
 import { hamburgerOpenReducer } from '../../src/Reducers/hamburgerOpenReducer';
 import { languageReducer } from '../../src/Reducers/languageReducer';
-import { feedsReducer } from '../../src/Reducers/Feed/feedReducer';
+import { feedsReducer } from '../../src/Reducers/feedsReducer';
 
 describe('getAppReducers unit tests', () => {
   it('Returns a done property with the value of the doneReducer function.', () => {
