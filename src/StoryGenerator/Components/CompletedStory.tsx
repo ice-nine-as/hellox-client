@@ -1,4 +1,7 @@
 import {
+  StorySubmissionForm,
+} from './StorySubmissionForm';
+import {
   StoryTemplate,
 } from '../Objects/StoryTemplate';
 import {
@@ -18,14 +21,26 @@ export class CompletedStory extends React.PureComponent<TCompletedStoryProps> {
       new StoryTemplate(this.props.storyTemplate).getCompleteStory();
 
     return (
-      <div className={`CompletedStory ${_styles.CompletedStory}`}>
+      <div className={_styles.CompletedStory}>
         <textarea
-          className={`CompletedStoryTextArea ${_styles.CompletedStoryTextArea}`}
-          defaultValue={storyText} />
+          className={_styles.Editor}
+          defaultValue={storyText}
+        />
 
-        <button className={`CompletedStorySubmitButton ${_styles.CompletedStoryTextArea}`}>
-          Submit My Story
-        </button>
+        <p className={_styles.Explainer}>
+          Fill out the fields below and click the Submit My Story button
+          in order to send your customized, personal story to the Ice 9 team!
+          Include your e-mail address to get a copy sent to you. Please carefully
+          note that by sending in a submission, you grant Ice-9 AS the permanent
+          right to use that submission in future stories, podcasts, promotional
+          materials, etc. 
+        </p>
+
+        <StorySubmissionForm
+          completedStory={storyText}
+          language={this.props.language}
+          storyTemplate={this.props.storyTemplate}
+        />
       </div>
     );
   }

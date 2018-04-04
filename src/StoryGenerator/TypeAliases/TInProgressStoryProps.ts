@@ -21,6 +21,7 @@ export type TInProgressStoryProps = {
   currentPart:   StoryGeneratorParts,
   language:      Languages,
   storyTemplate: IStoryTemplate | null,
+  storyState:    StoryStates,
   templateKey:   StoryGeneratorTemplateKeys,
   setAnswerText(value: string, templateKey: StoryGeneratorTemplateKeys, id: string): IStoryGeneratorAction,
   setStoryState(value: StoryStates): IStoryGeneratorAction,

@@ -79,7 +79,7 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
     const realPage = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
 
     return (
-      <div className={_styles.App}>
+      <div className={`${_styles.App} Page-${page}`}>
         <Header page={realPage} />
 
         <div

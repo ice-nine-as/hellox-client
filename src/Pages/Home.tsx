@@ -60,7 +60,7 @@ const _styles = styles || {};
 export class Home extends React.PureComponent<THomePageProps> {
   render() {
     return (
-      <article className={`${_styles.Home} Page`}>
+      <article className={`${_styles.Home} ${_styles.Page}`}>
         <section className={`${_styles.Section} ${_styles.First}`}>
           <HomeBackgroundImage />
 

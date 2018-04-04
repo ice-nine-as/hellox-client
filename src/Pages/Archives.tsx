@@ -17,7 +17,7 @@ const _styles = styles || {};
 export class Archives extends React.PureComponent<TArchivesProps> {
   render() {
     return (
-      <div className={_styles.Archives}>
+      <div className={`${_styles.Archives} ${_styles.Page}`}>
         <h1 className={_styles.Title}>
           ARCHIVES
         </h1>

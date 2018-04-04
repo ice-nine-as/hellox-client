@@ -1,0 +1,56 @@
+@import '../../../Styles/KeyColors.less';
+
+.StoryPartSelector {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+
+  .SelectorContainer {
+    width: 180px;
+    padding-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  :global(.Hexagon) {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .PartSelector {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: @white;
+    font-size: 25pt;
+    cursor: pointer;
+
+    &.A {
+      color: inherit;
+    }
+
+    &.B {
+      /* TODO: remove when story generator episodes are complete. */
+      pointer-events: none;
+    }
+
+    &.C {
+      /* TODO: remove when story generator episodes are complete. */
+      pointer-events: none;
+    }
+  }
+
+  .Title {
+    display: inline-block;
+    width: 100%;
+    margin-top: 40px;
+    color: black;
+    font-size: 16pt;
+  }
+
+  :global(.active) .PartSelector {
+    color: black;
+  }
+}

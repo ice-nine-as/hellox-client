@@ -23,7 +23,7 @@ const _styles = styles || {};
 export class About extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={_styles.About}>
+      <div className={`${_styles.About} ${_styles.Page}`}>
         <img
           className={_styles.HeroImage}
           src={ImageUrls.AboutHero}

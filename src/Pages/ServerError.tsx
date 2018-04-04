@@ -11,7 +11,7 @@ const _styles = styles || {};
 export class ServerError extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={_styles.ServerError}>
+      <div className={`${_styles.ServerError} ${_styles.Page}`}>
         Unknown error. Sorry for the trouble!
       </div>
     );

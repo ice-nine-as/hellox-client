@@ -5,6 +5,9 @@ import {
   IStoryTemplate,
 } from '../Interfaces/IStoryTemplate';
 import {
+  Languages,
+} from '../../Enums/Languages';
+import {
   StoryGeneratorParts,
 } from '../Enums/StoryGeneratorParts';
 import {
@@ -15,9 +18,10 @@ import {
 } from '../Enums/StoryStates';
 
 export type TCompletedStoryProps = {
-  storyTemplate: IStoryTemplate | null;
-  setCurrentPart(value: StoryGeneratorParts, templateKey: StoryGeneratorTemplateKeys): IStoryGeneratorAction;
-  setStoryState(value: StoryStates): IStoryGeneratorAction;
+  language:      Languages,
+  storyTemplate: IStoryTemplate,
+  setCurrentPart(value: StoryGeneratorParts, templateKey: StoryGeneratorTemplateKeys): IStoryGeneratorAction,
+  setStoryState(value: StoryStates): IStoryGeneratorAction,
 };
 
 export default TCompletedStoryProps;

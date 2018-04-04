@@ -5,20 +5,26 @@ import {
   feedKeyToTemplateKey,
 } from '../StoryGenerator/Modules/feedKeyToTemplateKey';
 import {
+  getAttrFromFeedTemplate,
+} from '../StoryGenerator/Modules/getAttrFromFeedTemplate';
+import {
   getFeed,
 } from '../Modules/getFeed';
 import {
-  isNode,
-} from '../Modules/isNode';
-import {
   IFeedTemplate,
 } from '../StoryGenerator/Interfaces/IFeedTemplate';
+import {
+  IQuestionModel,
+} from '../StoryGenerator/Interfaces/IQuestionModel';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
   isFeedTemplate,
 } from '../StoryGenerator/TypeGuards/isFeedTemplate';
+import {
+  isNode,
+} from '../Modules/isNode';
 import {
   makeStoryGeneratorAction,
 } from '../StoryGenerator/Modules/makeStoryGeneratorAction';
@@ -58,8 +64,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Write.less';
-import { getAttrFromFeedTemplate } from '../StoryGenerator/Modules/getAttrFromFeedTemplate';
-import { IQuestionModel } from '../StoryGenerator/Interfaces/IQuestionModel';
 const _styles = styles || {};
 
 export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & TWriteDispatchProps> {
@@ -72,25 +76,26 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     /* Weird error below -- keeps complaining about null not being a member of
      * keyof TFeedsMap, which doesn't make much sense to me. */
     // @ts-ignore
-    const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>).map<keyof TFeedsMap | null>((storyPart) => {
-      /* Loads the relevant feed based on language and detail level. */ 
-      const {
-        feed,
-        key,
-      } = getFeed({
-        feeds,
-        language,
-        storyPart,
-        type: 'storyTemplate',
-      });
+    const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>)
+      .map<keyof TFeedsMap | null>((storyPart) => {
+        /* Loads the relevant feed based on language and detail level. */ 
+        const {
+          feed,
+          key,
+        } = getFeed({
+          feeds,
+          language,
+          storyPart,
+          type: 'storyTemplate',
+        });
 
-      if (feed) {
-        /* Return null if the feed already exists so it's not refetched. */
-        return null;
-      } else {
-        return key;
-      }
-    }).filter((aa: keyof TFeedsMap | null) => aa !== null);
+        if (feed) {
+          /* Return null if the feed already exists so it's not refetched. */
+          return null;
+        } else {
+          return key;
+        }
+      }).filter((aa: keyof TFeedsMap | null) => aa !== null);
 
     const partPromises = missingKeys.map((key: keyof TFeedsMap) => {
       return this.props.getStoryTemplate(key)
@@ -144,7 +149,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
 
   render() {
     return (
-      <div className={_styles.Write}>
+      <div className={`${_styles.Write} ${_styles.Page}`}>
         {
           /* It's not clear why, but rendering this as JSX breaks big-time. */
           React.createElement(ConnectedStoryGenerator)

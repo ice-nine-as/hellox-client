@@ -13,7 +13,7 @@ import {
 
 export type TStoryGeneratorDispatchProps = {
   setAnswerText(value: string, templateKey: StoryGeneratorTemplateKeys, id: string): IStoryGeneratorAction;
-  setCurrentPart(value: StoryGeneratorParts, templateKey: StoryGeneratorTemplateKeys): IStoryGeneratorAction;
+  setCurrentPart(value: StoryGeneratorParts): IStoryGeneratorAction;
   setStoryState(value: StoryStates): IStoryGeneratorAction;
 }
 
