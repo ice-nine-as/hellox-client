@@ -11,7 +11,7 @@ const _styles = styles || {};
 export class Loading extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={_styles.Loading}>
+      <div className={`${_styles.Loading} ${_styles.Page}`}>
         <strong className={_styles.Message}>Loading...</strong>
         <div>
           <span className={_styles.Icon}>

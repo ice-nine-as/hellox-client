@@ -6,11 +6,12 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/NotFound.less';
+const _styles = styles || {};
 
 export class NotFound extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={styles.NotFound}>
+      <div className={`${_styles.NotFound} ${_styles.Page}`}>
         <p className={`${styles.NotFoundParagraphFirst} ${styles.NotFoundParagraph}`}>
           Sorry, you've been misdirected somehow!
         </p>

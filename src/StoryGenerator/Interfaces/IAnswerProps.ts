@@ -13,10 +13,14 @@ import {
 import {
   StoryGeneratorTemplateKeys,
 } from '../Enums/StoryGeneratorTemplateKeys';
+import {
+  StoryStates,
+} from '../Enums/StoryStates';
 
 export interface IAnswerProps extends IAnswerModel {
   language:    Languages,
   part:        StoryGeneratorParts,
+  storyState:  StoryStates,
   templateKey: StoryGeneratorTemplateKeys,
   setAnswerText(value: string, templateKey: StoryGeneratorTemplateKeys, id: string): IStoryGeneratorAction;
 }

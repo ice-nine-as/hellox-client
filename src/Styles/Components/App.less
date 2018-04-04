@@ -1,9 +1,15 @@
+@import '../KeyColors.less';
+
 .App {
   display: block;
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
+
+  &:global(.Page-Write) {
+    background: @teal;
+  }
 
   .PageContainer {
     display: flex;

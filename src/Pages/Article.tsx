@@ -100,7 +100,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     const item = feed ? getFeedItem(id, feed) : null;
 
     return (
-      <div className={_styles.Article}>
+      <div className={`${_styles.Article} ${_styles.Page}`}>
         {item ?
           <NewsItemFull item={item} /> :
           'Article is loading...'}

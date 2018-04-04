@@ -1,4 +1,7 @@
 import {
+  ProgressWheel,
+} from '../../Components/ProgressWheel';
+import {
   Question,
 } from './Question';
 import {
@@ -21,33 +24,54 @@ export const strings = {
 };
 
 export class InProgressStory extends React.PureComponent<TInProgressStoryProps> {
+  constructor(props: any, context?: any) {
+    super(props, context);
+
+    this.complete = this.complete.bind(this);
+  }
+
   render() {
     let key = -1;
 
     return (
       <div className={`InProgressStory ${_styles.InProgressStory}`}>
         {this.props.storyTemplate ?
-          this.props.storyTemplate.questions.map((question) => {
+          this.props.storyTemplate.questions.map((question, index) => {
             return (
-              <Question
-                {...question}
-                currentPart={this.props.currentPart}
-                language={this.props.language}
-                setAnswerText={this.props.setAnswerText}
-                templateKey={this.props.templateKey}
+              <div
+                className={_styles.QuestionContainer}
                 key={key += 1}
-              />
+              >
+                <ProgressWheel
+                  current={index + 1}
+                  max={this.props.storyTemplate!.questions.length}
+                />
+
+                <Question
+                  {...question}
+                  currentPart={this.props.currentPart}
+                  language={this.props.language}
+                  setAnswerText={this.props.setAnswerText}
+                  storyState={this.props.storyState}
+                  templateKey={this.props.templateKey}
+                />
+              </div>
             )
           }) :
           'Loading story...'
         }
 
         <button
-          className={`InProgressStoryComplete ${_styles.InProgressStoryComplete}`}
-          onClick={() => this.props.setStoryState(StoryStates.Complete)}>
-          Complete Story
+          className={`${_styles.Complete} condensed`}
+          onClick={this.complete}
+        >
+          Generate Story
         </button>
       </div>
     )
+  }
+
+  complete() {
+    this.props.setStoryState(StoryStates.Complete);
   }
 }

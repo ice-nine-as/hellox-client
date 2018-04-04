@@ -1,9 +1,12 @@
 import {
+  AnswerTypes,
+} from '../Enums/AnswerTypes';
+import {
   IAnswerProps,
 } from '../Interfaces/IAnswerProps';
 import {
-  AnswerTypes,
-} from '../Enums/AnswerTypes';
+  StoryStates,
+} from '../Enums/StoryStates';
 
 import * as React from 'react';
 
@@ -13,15 +16,23 @@ const _styles = styles || {};
 
 export class Answer extends React.PureComponent<IAnswerProps> {
   render() {
-    /* Typescript compiler uses `_this` internally, so __this it is. */
-    const __this = this;
-
+    
     const element = (() => {
       const props: { [key: string]: any } = {
-        className:    `AnswerInput ${_styles.AnswerInput}`,
+        className:    _styles.AnswerInput,
         defaultValue: this.props.text,
+        placeholder:  'Click to type',
+        required:     true,
       };
+      
+      if (this.props.storyState === StoryStates.Complete) {
+        /* Do not allow the answers to be changed after the story is marked
+        * Complete. */
+        props.readOnly = true;
+      }
 
+      /* Typescript compiler uses `_this` internally, so __this it is. */
+      const __this = this;
       const changerFunc = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         __this.props.setAnswerText(
           e.currentTarget.value,
