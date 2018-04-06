@@ -110,15 +110,18 @@ export const navBarItems = Object.freeze([
     className={`${_nbiStyles.NavBarItem} NavBarItem LanguageButtonContainer`}
     key={reactKey += 1}
   >
-    {(Object as any).values(Languages).map((lang: Languages) => {
-      return (
-        <ConnectedLanguageButton
-          buttonLanguage={lang}
-          className="NavBarItem"
-          key={reactKey += 1}
-        />
-      );
-    })}
+    {(Object as any).values(Languages)
+      /* TODO: add Russian language when text is ready. */
+      .filter((lang: Languages) => lang !== Languages.Russian)
+      .map((lang: Languages) => {
+        return (
+          <ConnectedLanguageButton
+            buttonLanguage={lang}
+            className="NavBarItem"
+            key={reactKey += 1}
+          />
+        );
+      })}
   </span>
 ]);
 

@@ -13,7 +13,7 @@ export class ContactForm extends React.PureComponent {
         method="POST"
       >
         <label
-          className={`${_styles.NameLabel} ${_styles.Label}`}
+          className={`${_styles.Label} ${_styles.Name}`}
           htmlFor={_styles.NameInput}
         >
           Name or alias*
@@ -30,7 +30,7 @@ export class ContactForm extends React.PureComponent {
 
         
         <label
-          className={`${_styles.ReplyToLabel} ${_styles.Label}`}
+          className={`${_styles.Label} ${_styles.ReplyTo}`}
           htmlFor={_styles.ReplyToInput}
         >
           E-mail address
@@ -45,7 +45,7 @@ export class ContactForm extends React.PureComponent {
         />
 
         <label
-          className={`${_styles.MessageLabel} ${_styles.Label}`}
+          className={`${_styles.Label} ${_styles.Message}`}
           htmlFor={_styles.MessageInput}
         >
           Your message
@@ -73,7 +73,7 @@ export class ContactForm extends React.PureComponent {
         </label>
 
         <input
-          className={`${_styles.Submit} condensed`}
+          className={`${_styles.Submit} light`}
           type="submit"
           value="SUBMIT"
         />

@@ -182,7 +182,7 @@
           color: inherit;
         }
       }
-      
+
       .LinkContainer {
         position: relative;
         display: inline-block;
@@ -197,16 +197,16 @@
     }
 
     &.Second {
-      background: @light-purple;
+      background: @gold;
       padding-left: 25px;
       padding-right: 25px;
+      color: @purple;
 
       .ExplainerParagraph {
         position: relative;
         max-width: 675px;
         margin-left: auto;
         margin-right: auto;
-        color: @purple;
         font-size: 18pt;
 
         :global(.monitor) & {
@@ -221,8 +221,8 @@
         height: 42px;
         margin-left: auto;
         margin-right: auto;
-        border: 1px solid @white;
-
+        border: 1px solid @purple;
+        
         .Link {
           &.About {
             position: relative;
@@ -230,7 +230,7 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-            color: @white;
+            color: @purple;
             text-decoration: none;
 
             &:hover {
@@ -265,6 +265,7 @@
           display: inline-block;
           margin-top: 30px;
           margin-bottom: 60px;
+          color: @white;
           font-size: 24pt;
         }
       }
@@ -279,6 +280,10 @@
       :global(.monitor) & {
         padding-left:  20px;
         padding-right: 20px;
+      }
+
+      .LatestNewsTitle {
+        font-size: 34pt;
       }
     }
   }

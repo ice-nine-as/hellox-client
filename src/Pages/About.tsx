@@ -30,7 +30,7 @@ export class About extends React.PureComponent<TPageProps> {
         />
 
         <div className={_styles.Body}>
-          <h1 className={`${_styles.Header} condensed`}>
+          <h1 className={`${_styles.Header} light`}>
             Can stories shape our future? We think so.
           </h1>
 
@@ -73,7 +73,7 @@ export class About extends React.PureComponent<TPageProps> {
 
           <TeamMembers />
 
-          <h2 className={`${_styles.Subheader} condensed`}>
+          <h2 className={`${_styles.Subheader} light`}>
             Contact us
           </h2>
 
@@ -83,7 +83,7 @@ export class About extends React.PureComponent<TPageProps> {
             Our collaborators
           </h2>
 
-          <h3 className={`${_styles.Subsubheader} condensed`}>
+          <h3 className={`${_styles.Subsubheader} light`}>
             Creative team
           </h3>
 

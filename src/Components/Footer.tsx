@@ -23,10 +23,10 @@ const _styles = styles || {};
 export class Footer extends React.PureComponent<TFooterProps> {
   render() {
     return (
-      <div className={`${_styles.Footer} Footer Page-${this.props.page} condensed`}>
+      <div className={`${_styles.Footer} Footer Page-${this.props.page}`}>
         <div className={`${_styles.VerticalHalf} ${_styles.First}`}>
           <div className={`${_styles.HorizontalHalf} ${_styles.Contact}`}>
-            <h3 className={_styles.ContactHeader}>
+            <h3 className={`${_styles.Header}`}>
               Contact us
             </h3>
 
@@ -54,7 +54,7 @@ export class Footer extends React.PureComponent<TFooterProps> {
           </div>
 
           <div className={`${_styles.HorizontalHalf} ${_styles.SiteMap}`}>
-            <h3 className={_styles.SiteMapHeader}>
+            <h3 className={`${_styles.Header}`}>
               Menu
             </h3>
 
