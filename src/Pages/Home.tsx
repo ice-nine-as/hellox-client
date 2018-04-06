@@ -68,7 +68,7 @@ export class Home extends React.PureComponent<THomePageProps> {
             <Logo state={LogoStates.Normal} />
           </div>
 
-          <h1 className={`${_styles.Header} .condensed`}>
+          <h1 className={`${_styles.Header} light`}>
             Imagine the lives of the future
           </h1>
 
@@ -82,7 +82,7 @@ export class Home extends React.PureComponent<THomePageProps> {
                   WRITE
                 </h2>
 
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.Write} .condensed`}>
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
                   Add your vision
                 </h3>
 
@@ -101,14 +101,14 @@ export class Home extends React.PureComponent<THomePageProps> {
                   PODCAST #{3 /* TODO: scrape from wherever podcast data lives.  */}
                 </h2>
 
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast} .condensed`}>
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
                   Add your vision {/* TODO: scrape from wherever podcast data lives. */}
                 </h3>
 
                 <div className={_styles.LinkContainer}>
                   <PodcastIcon />
 
-                  <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts} .condensed`}>
+                  <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts}`}>
                     More podcasts
                   </h3>
                 </div>
@@ -149,7 +149,9 @@ export class Home extends React.PureComponent<THomePageProps> {
               className={`${_styles.Link} ${_styles.About}`}
               to={createLinkAction(AboutLinkAction)}
             >
-              <span className={`${_styles.LinkText} condensed`}>GO TO ABOUT</span>
+              <span className={`${_styles.LinkText}`}>
+                GO TO ABOUT
+              </span>
             </NavLink>
           </div>
 
@@ -158,15 +160,15 @@ export class Home extends React.PureComponent<THomePageProps> {
               <QuoteIcon />
             </div>
 
-            <em className={_styles.Quote}>
+            <span className={`${_styles.Quote} light`}>
               What is the loop of Creation? How is there something from
               nothing?
-            </em>
+            </span>
           </div>
         </section>
 
         <section className={`${_styles.Section} ${_styles.Third}`}>
-          <h2 className={_styles.LatestNewsTitle}>
+          <h2 className={`${_styles.LatestNewsTitle} light`}>
             What's up?
           </h2>
 

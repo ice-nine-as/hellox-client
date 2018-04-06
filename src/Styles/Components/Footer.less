@@ -1,15 +1,15 @@
-@import "../KeyColors.less";
+@import '../KeyColors.less';
 
 .Footer {
   position: relative;
   left: 0;
   width: 100%;
-  color: white;
+  color: @white;
   font-size: 18pt;
 
   a {
     text-decoration: none;
-    color: white;
+    color:@white;
 
     &:hover {
       color: @red;
@@ -17,12 +17,19 @@
     }
   }
 
+  .Header {
+    display: block;
+    font-family: 'Lato Light';
+    font-weight: 300;
+  }
+
   .VerticalHalf {
     position: relative;
 
     &.First {
-      background: @semi-light-purple;
+      display: block;
       padding-bottom: 50px;
+      background: @dark-purple;
 
       .HorizontalHalf {
         position: relative;
@@ -36,14 +43,12 @@
 
         &.Contact {
           padding-right: 1%;
+          font-family: 'Lato Light';
+          font-weight: 300;
 
           :global(.monitor) & {
             text-align: right;
           }
-        }
-
-        .ContactHeader {
-          display: block;
         }
 
         .ContactPara {
@@ -90,7 +95,7 @@
     }
 
     &.Second {
-      background: @light-purple;
+      background: @teal;
     }
   }
 }

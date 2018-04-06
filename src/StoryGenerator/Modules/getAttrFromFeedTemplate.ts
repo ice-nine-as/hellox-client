@@ -1,4 +1,7 @@
 import {
+  AllHtmlEntities,
+} from 'html-entities';
+import {
   IFeedTemplate,
 } from '../Interfaces/IFeedTemplate';
 import {
@@ -15,8 +18,14 @@ export const getAttrFromFeedTemplate = (
   template: IFeedTemplate) =>
 {
   if (attr === 'questions') {
+    const entities = new AllHtmlEntities();
     return template.field_field_question.map<IQuestionModel>((feedQuestion) => {
-      const selectOptions = (feedQuestion.raw.field_select_options.und[0] || { safe_value: '', }).safe_value.split(/,\s*/);
+      const selectOptions = entities.decode(
+        (feedQuestion.raw.field_select_options.und[0] ||
+          { safe_value: '', })
+        .safe_value)
+        .split(/,\s*/);
+ 
       return {
         answer: {
           id: feedQuestion.raw.field_answer_id.und[0].safe_value,
@@ -25,7 +34,7 @@ export const getAttrFromFeedTemplate = (
           type: feedQuestion.raw.field_answer_type.und[0].value,
         },
 
-        text: feedQuestion.raw.field_question_text.und[0].safe_value,
+        text: entities.decode(feedQuestion.raw.field_question_text.und[0].safe_value),
         type: feedQuestion.raw.field_answer_type.und[0].value,
       };
     });

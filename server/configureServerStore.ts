@@ -47,7 +47,9 @@ export async function configureServerStore(
 
   const language = (() => {
     const negotiator = new Negotiator(req);
-    const acceptedLanguages = (Object as any).values(Languages);
+    const acceptedLanguages = (Object as any).values(Languages)
+      /* TODO: add Russian language after text is ready. */
+      .filter((lang: Languages) => lang !== Languages.Russian);
     const lang = negotiator.language(acceptedLanguages);
     return isLanguage(lang) ? lang : Languages.English;
   })();
@@ -72,29 +74,39 @@ export async function configureServerStore(
     },
   } = store.getState();
 
-  if (type === PageIdentifiers.Archives) {
-    /* Pre-load same-language news feed for Archives page. */
-    if (language === Languages.Norwegian) {
-      await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullNo, }));
-    } else if (language === Languages.Russian) {
-      await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullRu, }));
-    } else {
-      await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullEn, }));
-    }
-  } else if (type === PageIdentifiers.Write) {
-    /* Pre-load same-language story generator prompt. */
-    /*if (language === Languages.Norwegian) {
-      await store.dispatch(createRssThunk(FeedKeys.StoryTemplateNo));
-    } else if (language === Languages.Russian) {
-      await store.dispatch(createRssThunk(FeedKeys.StoryTemplateRu));
-    } else {
-      await store.dispatch(createRssThunk(FeedKeys.StoryTemplateEn));
-    }*/
-  }
-
   if (location.kind === 'redirect') {
     res.redirect(302, pathname);
     return null;
+  }
+
+  if (type === PageIdentifiers.Archives) {
+    /* Pre-load same-language news feed for Archives page. */
+    try {
+      if (language === Languages.Norwegian) {
+        await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullNo, }));
+      } else if (language === Languages.Russian) {
+        await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullRu, }));
+      } else {
+        await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullEn, }));
+      }
+    } catch (e) {
+      console.error('Error encountered fetching articles.');
+      console.error(e);
+    }
+  } else if (type === PageIdentifiers.Write) {
+    try {
+      /* Pre-load same-language story generator prompt. */
+      /*if (language === Languages.Norwegian) {
+        await store.dispatch(createRssThunk(FeedKeys.StoryTemplateNo));
+      } else if (language === Languages.Russian) {
+        await store.dispatch(createRssThunk(FeedKeys.StoryTemplateRu));
+      } else {
+        await store.dispatch(createRssThunk(FeedKeys.StoryTemplateEn));
+      }*/
+    } catch (e) {
+      console.error('Error encountered fetching story templates.');
+      console.error(e);
+    }
   }
 
   const status = location.type === NOT_FOUND ? 404 : 200;

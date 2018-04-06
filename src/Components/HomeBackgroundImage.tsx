@@ -15,59 +15,102 @@ export class HomeBackgroundImage extends React.PureComponent {
     return (
       <picture className={_styles.HomeBackgroundImage}>
         <source
-          media="(max-width: 767px)"
-          sizes="(max-width: 1080px) 100vw, 1080px"
-          type="image/webp"
-          srcSet={`
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_1_1,c_fill,g_auto__c_scale,w_500.webp 500w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_1_1,c_fill,g_auto__c_scale,w_865.webp 865w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_1_1,c_fill,g_auto__c_scale,w_1073.webp 1073w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_1_1,c_fill,g_auto__c_scale,w_1080.webp 1080w`}
+          media="(aspect-ratio: 1/1)"
+          sizes="(max-width: 1534px) and (orientation: portrait) 100vh, (max-width: 1534px) and (not (orientation: portrait)) 100vw, 1534px"
+          srcSet=
+            {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_400.jpg 400w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_515.jpg 515w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_614.jpg 614w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_702.jpg 702w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_782.jpg 782w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_859.jpg 859w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_927.jpg 927w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_995.jpg 995w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1062.jpg 1062w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1123.jpg 1123w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1179.jpg 1179w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1237.jpg 1237w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1295.jpg 1295w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1351.jpg 1351w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1404.jpg 1404w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1452.jpg 1452w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1502.jpg 1502w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1532.jpg 1532w,
+          ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1534.jpg 1534w`}
         />
 
         <source
-          media="(min-width: 768px) and (max-width: 991px)"
-          sizes="(max-width: 1983px) 100vw, 1388px"
-          type="image/webp"
-          srcSet={`
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_4_3,c_fill,g_auto__c_scale,w_538.webp 538w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_4_3,c_fill,g_auto__c_scale,w_969.webp 969w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_4_3,c_fill,g_auto__c_scale,w_1344.webp 1344w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_4_3,c_fill,g_auto__c_scale,w_1388.webp 1388w`}
+          media="(aspect-ratio: 4/3)"
+          sizes="(max-width: 1983px) and (orientation: portrait) 100vh, (max-width: 1983px) and (not (orientation: portrait)) 100vw, 1983px"
+          srcSet=
+            {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_538.jpg 538w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_613.jpg 613w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_680.jpg 680w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_743.jpg 743w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_802.jpg 802w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_859.jpg 859w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_918.jpg 918w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_971.jpg 971w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1016.jpg 1016w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1065.jpg 1065w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1116.jpg 1116w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1160.jpg 1160w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1208.jpg 1208w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1249.jpg 1249w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1290.jpg 1290w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1330.jpg 1330w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1369.jpg 1369w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1382.jpg 1382w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_1388.jpg 1388w`}
         />
 
         <source
-          media="(min-width: 992px) and (max-width: 1199px)"
-          sizes="(max-width: 2400px) 100vw, 1440px"
-          type="image/webp"
-          srcSet={`
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_16_9,c_fill,g_auto__c_scale,w_596.webp 596w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_16_9,c_fill,g_auto__c_scale,w_1092.webp 1092w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_ksa0fy_ar_16_9,c_fill,g_auto__c_scale,w_1440.webp 1440w`}
+          media="(aspect-ratio: 16/9)"
+          sizes="(max-width: 2400px) and (orientation: portrait) 100vh, (max-width: 2400px) and (not (orientation: portrait)) 100vw, 2400px"          
+          srcSet=
+            {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_596.jpg 596w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_681.jpg 681w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_761.jpg 761w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_833.jpg 833w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_902.jpg 902w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_970.jpg 970w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1033.jpg 1033w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1090.jpg 1090w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1154.jpg 1154w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1211.jpg 1211w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1266.jpg 1266w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1318.jpg 1318w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1369.jpg 1369w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1416.jpg 1416w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1439.jpg 1439w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_1440.jpg 1440w`}
         />
 
         <img
-          alt="A background image with wabi-sabi hexagons containing images of the ocean and seabirds."
-          sizes="(max-width: 4800px) 40vw, 1920px"
-          srcSet={`
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_480.jpg 480w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_651.jpg 651w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_792.jpg 792w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_918.jpg 918w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1037.jpg 1037w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1137.jpg 1137w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1235.jpg 1235w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1328.jpg 1328w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1412.jpg 1412w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1495.jpg 1495w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1576.jpg 1576w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1656.jpg 1656w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1729.jpg 1729w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1802.jpg 1802w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1874.jpg 1874w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1919.jpg 1919w,
-            ${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1920.jpg 1920w`}
-          src={`${homeBackgroundRootUrl}HelloX_Landing_textures01_redigert_test_cxnveg_c_scale,w_1920.jpg`}
+          sizes="(min-width: 2401px) and (orientation: portrait) 100vh, (min-width: 2401px) and (not (orientation: portrait)) 100vw, 2401px"                  
+          srcSet=
+            {`${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_480.jpg 480w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_1132.jpg 1132w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_1558.jpg 1558w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_1905.jpg 1905w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_2230.jpg 2230w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_2506.jpg 2506w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_2759.jpg 2759w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_2992.jpg 2992w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_3218.jpg 3218w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_3451.jpg 3451w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_3645.jpg 3645w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_3849.jpg 3849w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4039.jpg 4039w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4234.jpg 4234w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4416.jpg 4416w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4600.jpg 4600w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4782.jpg 4782w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4953.jpg 4953w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_4985.jpg 4985w,
+            ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_5000.jpg 5000w`}
+          src={`${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_1132.jpg`}
+          alt="A hexagon-filled pictorial illustration showing fragments of fishscales, bird feathers, water, and other aspects of sea life."
         />
       </picture>
     );

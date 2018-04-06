@@ -1,4 +1,10 @@
 import {
+  ConnectedLatestNews,
+} from '../Components/LatestNews';
+import {
+  ContactForm,
+} from '../Components/ContactForm';
+import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
@@ -73,11 +79,6 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     this.doLoad();
   }
 
-  componentDidUpdate() {
-    this.doLoad();
-  }
-
-
   render() {
     const {
       feeds,
@@ -104,6 +105,22 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
         {item ?
           <NewsItemFull item={item} /> :
           'Article is loading...'}
+
+        <div className={`${_styles.Container} ${_styles.Contact}`}>
+          <h2 className={`${_styles.Header} ${_styles.Contact}`}>
+            Leave a message
+          </h2>
+
+          <ContactForm />
+        </div>
+
+        <div className={`${_styles.Container} ${_styles.LatestNews}`}>
+          <h2 className={`${_styles.Header} ${_styles.LatestNews}`}>
+            What's up?
+          </h2>
+
+          <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+        </div>
       </div>
     );
   }

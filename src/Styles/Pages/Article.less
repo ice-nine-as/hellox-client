@@ -2,7 +2,37 @@
 @import '../Page.less';
 
 .Article {
+  background: @white;
+  color: @dark-purple;
+
   :global(.Title) {
     font-size: 52pt;
+  }
+
+  .Container {
+    padding: 30px;
+
+    &.LatestNews {
+      padding-bottom: 40px;
+    } 
+  }
+
+  .Header {
+    margin: 0;
+    margin-bottom: 15px;
+    font-family: 'Lato Light';
+    font-weight: 300;
+
+    &.Contact {
+      color: @white;
+    }
+
+    &.LatestNews {
+      color: @dark-purple;
+    }
+  }
+  
+  .Contact {
+    background: @dark-purple;
   }
 }
