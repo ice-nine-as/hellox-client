@@ -15,8 +15,8 @@ export class HomeBackgroundImage extends React.PureComponent {
     return (
       <picture className={_styles.HomeBackgroundImage}>
         <source
-          media="(aspect-ratio: 1/1)"
-          sizes="(max-width: 1534px) and (orientation: portrait) 100vh, (max-width: 1534px) and (not (orientation: portrait)) 100vw, 1534px"
+          media="(max-aspect-ratio: 1/1)"
+          sizes="100vh, 1534px"
           srcSet=
             {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_400.jpg 400w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_515.jpg 515w,
@@ -36,7 +36,7 @@ export class HomeBackgroundImage extends React.PureComponent {
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1452.jpg 1452w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1502.jpg 1502w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1532.jpg 1532w,
-          ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1534.jpg 1534w`}
+            ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_1534.jpg 1534w`}
         />
 
         <source
@@ -65,7 +65,7 @@ export class HomeBackgroundImage extends React.PureComponent {
         />
 
         <source
-          media="(aspect-ratio: 16/9)"
+          media="(min-aspect-ratio: 16/9)"
           sizes="(max-width: 2400px) and (orientation: portrait) 100vh, (max-width: 2400px) and (not (orientation: portrait)) 100vw, 2400px"          
           srcSet=
             {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_596.jpg 596w,

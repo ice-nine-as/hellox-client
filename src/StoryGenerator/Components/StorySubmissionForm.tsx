@@ -22,7 +22,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
   render() {
     return (
       <form
-        action="https://formspree.io/info@ice-9.no"
+        action="https://formspree.io/hellox@ice-9.no"
         className={_styles.StorySubmissionForm}
         ref={(ref) => this.form = ref}
         method="POST"
