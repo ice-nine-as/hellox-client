@@ -30,7 +30,8 @@ export const getAttrFromFeedTemplate = (
         answer: {
           id: feedQuestion.raw.field_answer_id.und[0].safe_value,
           selectOptions,
-          text: '',
+          /* If selectOptions has been set, default to the first option. */
+          text: selectOptions.length ? selectOptions[0] : '',
           type: feedQuestion.raw.field_answer_type.und[0].value,
         },
 
