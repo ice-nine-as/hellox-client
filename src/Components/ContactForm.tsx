@@ -9,7 +9,7 @@ export class ContactForm extends React.PureComponent {
     return (
       <form
         className={_styles.ContactForm}
-        action="https://formspree.io/christine@ice-9.no"
+        action="https://formspree.io/hellox@ice-9.no"
         method="POST"
       >
         <label
