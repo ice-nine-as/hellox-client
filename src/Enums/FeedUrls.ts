@@ -1,20 +1,15 @@
 export enum FeedUrls {
-  NewsFullEn           = 'https://cms.hellox.me/feeds/en/news-feed-full.xml',
-  NewsFullNo           = 'https://cms.hellox.me/feeds/nb/news-feed-full.xml',
-  NewsFullRu           = 'https://cms.hellox.me/feeds/ru/news-feed-full-ru.xml',
+  NewsFull             = 'https://cms.hellox.me/feeds/news-feed-full.xml',
 
   /* These are *not* usable as URLs without replacing the node segment: :id. */
-  NewsSingleArticleEn  = 'https://cms.hellox.me/feeds/en/:id/news-feed-full-single.xml',
-  NewsSingleArticleNo  = 'https://cms.hellox.me/feeds/nb/:id/news-feed-full-single.xml',
-  NewsSingleArticleRu  = 'https://cms.hellox.me/feeds/ru/:id/news-feed-full-single.xml',
+  NewsSingleArticle    = 'https://cms.hellox.me/feeds/:id/news-feed-full-single.xml',
   /* */
-  NewsTeasersEn        = 'https://cms.hellox.me/feeds/en/news-feed-teaser.xml',
-  NewsTeasersNo        = 'https://cms.hellox.me/feeds/nb/news-feed-teaser.xml',
-  NewsTeasersRu        = 'https://cms.hellox.me/feeds/ru/news-feed-teaser.xml',
-  NewsTitlesEn         = 'https://cms.hellox.me/feeds/en/news-feed-title.xml',  
-  NewsTitlesNo         = 'https://cms.hellox.me/feeds/nb/news-feed-title.xml',  
-  NewsTitlesRu         = 'https://cms.hellox.me/feeds/ru/news-feed-title.xml',
-  
+
+  NewsTeasers          = 'https://cms.hellox.me/feeds/news-feed-teaser.xml',
+  NewsTitles           = 'https://cms.hellox.me/feeds/news-feed-title.xml',  
+
+  Podcast              = 'https://www.blubrry.com/feeds/hello_x.xml',
+
   StoryTemplateEnPartA = 'https://cms.hellox.me/feeds/en/A/story-template-feed.xml',
   StoryTemplateEnPartB = 'https://cms.hellox.me/feeds/en/B/story-template-feed.xml',
   StoryTemplateEnPartC = 'https://cms.hellox.me/feeds/en/C/story-template-feed.xml',

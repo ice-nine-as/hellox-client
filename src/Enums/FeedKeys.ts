@@ -1,26 +1,20 @@
 export enum FeedKeys {
   /* Stores whole articles. */
-  NewsFullEn           = 'NewsFullEn',
-  NewsFullNo           = 'NewsFullNo',
-  NewsFullRu           = 'NewsFullRu',
+  NewsFull           = 'NewsFull',
   
   /* These do *not* appear in the redux store, and are instead are fetched each
    * time a user visits an individual article, and composed into the relevant
-   * Full feed. This is done to avoid crosstalk. */
-  NewsSingleArticleEn  = 'NewsSingleArticleEn',
-  NewsSingleArticleNo  = 'NewsSingleArticleNo',
-  NewsSingleArticleRu  = 'NewsSingleArticleRu',
+   * Full feed. This is done to avoid redundant requests. */
+  NewsSingleArticle  = 'NewsSingleArticle',
   /* */
 
   /* Stores the hero image, authoring metadata, title, and header para. */
-  NewsTeasersEn        = 'NewsTeasersEn',
-  NewsTeasersNo        = 'NewsTeasersNo',
-  NewsTeasersRu        = 'NewsTeasersRu',
+  NewsTeasers        = 'NewsTeasers',
 
   /* Stores only the titles of articles. Not used at present. */
-  NewsTitlesEn         = 'NewsTitlesEn',  
-  NewsTitlesNo         = 'NewsTitlesNo',
-  NewsTitlesRu         = 'NewsTitlesRu',
+  NewsTitles         = 'NewsTitles',  
+ 
+  Podcast            = 'Podcast',
 
   /* Story templates. Each episode of a story has three parts, A, B, and C. */
   StoryTemplateEnPartA = 'StoryTemplateEnPartA',

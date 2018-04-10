@@ -32,8 +32,8 @@ import {
   LogoStates,
 } from '../Enums/LogoStates';
 import {
-  PodcastLinkAction,
-} from '../Actions/Link/PodcastLinkAction';
+  PodcastsLinkAction,
+} from '../Actions/Link/PodcastsLinkAction';
 import {
   TNavBarProps,
 } from '../TypeAliases/TNavBarProps';
@@ -76,10 +76,10 @@ export const navBarItems = Object.freeze([
 
   <NavLink
     className={`${_nbiStyles.NavBarItem} NavBarItem`}
-    to={createLinkAction(PodcastLinkAction)}
+    to={createLinkAction(PodcastsLinkAction)}
     key={reactKey += 1}
   >
-    Podcast
+    Podcasts
   </NavLink>,
 
   <NavLink

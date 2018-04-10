@@ -2,6 +2,9 @@ import {
   createAppAction,
 } from '../Actions/Creators/createAppAction';
 import {
+  createLinkAction,
+} from '../Actions/Creators/createLinkAction';
+import {
   DoneAppAction,
 } from '../Actions/App/DoneAppAction';
 import {
@@ -38,6 +41,9 @@ import {
 import {
   Dispatch,
 } from 'redux';
+import {
+  ServerErrorLinkAction,
+} from '../Actions/Link/ServerErrorLinkAction';
 import {
   TAfterChangeDestructure,
 } from '../TypeAliases/TAfterChangeDestructure';
@@ -142,6 +148,12 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
       document.title = 'Hello X - Error';
     }
   }
+
+  componentDidCatch(error: Error, info: any) {
+    console.error(info);
+    this.handleError(error);
+    this.props.setErrorPage();
+  }
 }
 
 export const mapStateToProps: MapStateToProps<TAppStoreProps, {}, TStoreProps> = ({
@@ -174,6 +186,10 @@ export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
 
     setLoading(value: boolean) {
       return dispatch(createAppAction(LoadingAppAction, value));
+    },
+
+    setErrorPage() {
+      return dispatch(createLinkAction(ServerErrorLinkAction));
     },
   };
 };

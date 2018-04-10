@@ -28,10 +28,10 @@ const uglifyOptions = {
   sourceMap: true,
 };
 
-/* All all pages except Home (already included at /) and Article, which
- * requires an id clean url. */
+/* All all pages except Home (already included at /) and Article+Podcast, which
+ * require id url components. */
 const pages = Object.keys(PageIdentifiers)
-  .filter((page) => !/^Article|Home$/.test(page))
+  .filter((page) => !/^Article|Home|Podcast$/.test(page))
   .map((key) => `/${key[0].toLowerCase()}${key.slice(1)}`);
 
  /* Add all font files to cache. */

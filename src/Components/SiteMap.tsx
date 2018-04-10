@@ -14,8 +14,8 @@ import {
   NavLink,
 } from 'redux-first-router-link';
 import {
-  PodcastLinkAction,
-} from '../Actions/Link/PodcastLinkAction';
+  PodcastsLinkAction,
+} from '../Actions/Link/PodcastsLinkAction';
 import {
   WriteLinkAction,
 } from '../Actions/Link/WriteLinkAction';
@@ -39,9 +39,9 @@ export class SiteMap extends React.PureComponent {
 
         <NavLink
           className={_styles.Link}
-          to={createLinkAction(PodcastLinkAction)}
+          to={createLinkAction(PodcastsLinkAction)}
         >
-          PODCAST
+          PODCASTS
         </NavLink>
 
         <NavLink

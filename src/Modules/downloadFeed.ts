@@ -31,7 +31,7 @@ export const strings = {
   URL_INVALID:
     'Neither an urlArg property nor valid feedKey property was provided in ' +
     'the argument object. If the id argument was provided, the only allowed ' +
-    'FeedKey values are NewsFullEn, NewsFullNo, and NewsFullRu.',
+    'FeedKey value is NewsFull.',
 
   FEED_INVALID:
     'The feed was fetched from the provided URL, but it did not meet the ' +
@@ -66,12 +66,8 @@ export const downloadFeed = async ({
       /* Only a single article is being requested. Single article feed URLs
        * require a run-time parameter, so they must be run through
        * String.prototype.replace before actually being used. */
-      if (feedKey === FeedKeys.NewsFullEn) {
-        return FeedUrls.NewsSingleArticleEn.replace(':id', id);
-      } else if (feedKey === FeedKeys.NewsFullNo) {
-        return FeedUrls.NewsSingleArticleNo.replace(':id', id);
-      } else if (feedKey === FeedKeys.NewsFullRu) {
-        return FeedUrls.NewsSingleArticleRu.replace(':id', id);
+      if (feedKey === FeedKeys.NewsFull) {
+        return FeedUrls.NewsSingleArticle.replace(':id', id);
       } else {
         throw new Error(strings.FEED_KEY_INVALID_WITH_ID);
       }

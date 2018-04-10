@@ -20,11 +20,12 @@ export const getAttrFromFeedTemplate = (
   if (attr === 'questions') {
     const entities = new AllHtmlEntities();
     return template.field_field_question.map<IQuestionModel>((feedQuestion) => {
-      const selectOptions = entities.decode(
-        (feedQuestion.raw.field_select_options.und[0] ||
-          { safe_value: '', })
-        .safe_value)
-        .split(/,\s*/);
+      const selectObj =
+        feedQuestion.raw.field_select_options.und[0] ||
+        { safe_value: '', };
+
+      const selectRaw = selectObj.safe_value;
+      const selectOptions = entities.decode(selectRaw).split(/,\s*/);
  
       return {
         answer: {

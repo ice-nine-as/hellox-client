@@ -26,11 +26,11 @@ import {
   NavLink,
 } from 'redux-first-router-link';
 import {
-  PodcastLinkAction,
-} from '../Actions/Link/PodcastLinkAction';
-import {
   PodcastIcon,
 } from '../Components/Icon/PodcastIcon';
+import {
+  PodcastsLinkAction,
+} from '../Actions/Link/PodcastsLinkAction';
 import {
   QuoteIcon,
 } from '../Components/Icon/QuoteIcon';
@@ -94,7 +94,7 @@ export class Home extends React.PureComponent<THomePageProps> {
 
             <NavLink
               className={`${_styles.Link} ${_styles.Podcast}`}
-              to={createLinkAction(PodcastLinkAction)}
+              to={createLinkAction(PodcastsLinkAction)}
             >
               <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
                 <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>

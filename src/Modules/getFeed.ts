@@ -27,7 +27,7 @@ export const strings = {
 
   TYPE_INVALID:
     'The type argument provided to getFeed was neither "newsItem" nor ' +
-    '"storyTemplate".',
+    '"podcast" nor "storyTemplate".',
 
   FEEDS_INVALID:
     'The feeds argument provided to getFeed was not an object.',
@@ -40,7 +40,7 @@ export const strings = {
     'The detailLevel argument was not a member of FeedDetailLevels.',
 
   STORY_PART_INVALID:
-    'The storyPart argument prop was not a, b, or c, in upper or lower case.',
+    'The storyPart argument prop was not A, B, or C.',
 };
 
 export const getFeed = ({
@@ -50,7 +50,7 @@ export const getFeed = ({
   detailLevel,
   storyPart,
 }: {
-  type:         'newsItem' | 'storyTemplate',
+  type:         'newsItem' | 'podcast' | 'storyTemplate',
   language:     Languages,
   feeds:        TFeedsMap,
   detailLevel?: FeedDetailLevels,
@@ -58,13 +58,16 @@ export const getFeed = ({
 }):
 {
   feed: IRssFeed | null,
-  key: keyof TFeedsMap,
+  key:  keyof TFeedsMap,
 } =>
 {
-  let feedKey: FeedKeys | null = null;
+  let feedKey: keyof TFeedsMap;
   if (!isLanguage(language)) {
     throw new Error(strings.LANGUAGE_INVALID);
-  } else if (type !== 'newsItem' && type !== 'storyTemplate') {
+  } else if (type !== 'newsItem' &&
+             type !== 'podcast' &&
+             type !== 'storyTemplate')
+  {
     throw new Error(strings.TYPE_INVALID);
   } else if (!feeds || typeof feeds !== 'object') {
     throw new Error(strings.FEEDS_INVALID);
@@ -78,32 +81,18 @@ export const getFeed = ({
 
   if (type === 'newsItem') {
     if (detailLevel === FeedDetailLevels.Full) {
-      if (language === Languages.Norwegian) {
-        feedKey = FeedKeys.NewsFullNo;
-      } else if (language === Languages.Russian) {
-        feedKey = FeedKeys.NewsFullRu;
-      } else {
-        feedKey = FeedKeys.NewsFullEn;
-      }
+      feedKey = FeedKeys.NewsFull;
     } else if (detailLevel === FeedDetailLevels.Title) {
-      if (language === Languages.Norwegian) {
-        feedKey = FeedKeys.NewsTitlesNo;
-      } else if (language === Languages.Russian) {
-        feedKey = FeedKeys.NewsTitlesRu;
-      } else {
-        feedKey = FeedKeys.NewsTitlesEn;
-      }
+      feedKey = FeedKeys.NewsTitles;
     } else {
-      if (language === Languages.Norwegian) {
-        feedKey = FeedKeys.NewsTeasersNo;
-      } else if (language === Languages.Russian) {
-        feedKey = FeedKeys.NewsTeasersRu;
-      } else {
-        feedKey = FeedKeys.NewsTeasersEn;
-      }
+      feedKey = FeedKeys.NewsTeasers;
     }
+  } else if (type === 'podcast') {
+    feedKey = FeedKeys.Podcast;
   } else {
-    if (/^a$/i.test(storyPart as string)) {
+    /* Story template */
+    const _storyPart = storyPart as string;
+    if (/^a$/i.test(_storyPart)) {
       if (language === Languages.Norwegian) {
         feedKey = FeedKeys.StoryTemplateNoPartA;
       } else if (language === Languages.Russian) {
@@ -111,7 +100,7 @@ export const getFeed = ({
       } else {
         feedKey = FeedKeys.StoryTemplateEnPartA;
       }
-    } else if (/^b$/i.test(storyPart as string)) {
+    } else if (/^b$/i.test(_storyPart)) {
       if (language === Languages.Norwegian) {
         feedKey = FeedKeys.StoryTemplateNoPartB;
       } else if (language === Languages.Russian) {
@@ -119,7 +108,7 @@ export const getFeed = ({
       } else {
         feedKey = FeedKeys.StoryTemplateEnPartB;
       }
-    } else if (/^c$/i.test(storyPart as string)) {
+    } else if (/^c$/i.test(_storyPart)) {
       if (language === Languages.Norwegian) {
         feedKey = FeedKeys.StoryTemplateNoPartC;
       } else if (language === Languages.Russian) {
@@ -133,8 +122,8 @@ export const getFeed = ({
   }
 
   return {
-    key: feedKey,
-    feed: feeds[feedKey] || null,
+    key:  feedKey,
+    feed: feedKey ? feeds[feedKey] || null : null,
   };
 };
 
