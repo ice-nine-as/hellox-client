@@ -20,6 +20,7 @@
   "private": true,
   "devDependencies": {
     "@types/express": "^4.11.1",
+    "@types/feedparser": "^2.2.1",
     "@types/history": "^4.6.2",
     "@types/html-entities": "^1.2.16",
     "@types/htmlparser2": "^3.7.31",
@@ -98,6 +99,7 @@
     "es6-promise": "^4.2.4",
     "express-sslify": "^1.2.0",
     "express-static-gzip": "^0.3.2",
+    "feedparser": "^2.2.9",
     "glob": "^7.1.2",
     "gulp-uglify": "^3.0.0",
     "html-entities": "^1.2.1",

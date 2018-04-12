@@ -79,8 +79,6 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
       storyTemplates,
     });
 
-    debugger;
-
     if (!key || !template) {
       return 'Now loading...';
     }

@@ -26,6 +26,9 @@ import {
   RssAction,
 } from '../App/RssAction';
 import {
+  TFeedsMap,
+} from '../../TypeAliases/TFeedsMap';
+import {
   TRssFeedGetter,
 } from './TRssFeedGetter';
 
@@ -71,7 +74,7 @@ export const createRssThunk: TRssFeedGetter = ({
     const maybeOffsetObj = idValid ? { offset, } : {};
     const argObj = {
       ...maybeOffsetObj,
-      feedKey,
+      feedKey: feedKey as keyof TFeedsMap,
       id,
       urlArg,
     };

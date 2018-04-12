@@ -46,6 +46,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Podcasts.less';
+import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const _styles = styles || {};
 
 export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps> {
@@ -106,21 +107,25 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
 
     if (!feed) {
       children = 'Podcast loading...';
-    } else if (feed.items && !feed.items.length) {
-      children = 'No podcasts yet. Sorry!';
-    } else if (feed.items && feed.items.length) {
-      children = [
-        /* Display the first podcast in full. */
-        <PodcastItemFull
-          key="keyOne"
-          item={feed.items[0]}
-        />,
+    } else if (feed.items) {
+      if (feed.items.length) {
+        /* TODO: add type guards for podcast posts? */
+        children = [
+          /* Display the first podcast in full. */
+          <PodcastItemFull
+            item={feed.items[0] as IPodcastPost}
+            key="keyOne"
+          />,
 
-        <ConnectedLatestPodcasts
-          detailLevel={FeedDetailLevels.Teaser}
-          key="keyTwo"
-        />,
-      ];
+          /* Display previews of all podcasts. */
+          <ConnectedLatestPodcasts
+            detailLevel={FeedDetailLevels.Teaser}
+            key="keyTwo"
+          />,
+        ];
+      } else {
+        children = 'No podcasts yet. Sorry!';
+      }
     }
     
     return (

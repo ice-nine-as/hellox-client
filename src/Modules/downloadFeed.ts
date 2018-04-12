@@ -4,25 +4,24 @@ import {
 import {
   FeedUrls,
 } from '../Enums/FeedUrls';
-import {
+/*import {
   AllHtmlEntities,
-} from 'html-entities';
+} from 'html-entities';*/
 import {
   IRssFeed,
 } from '../Interfaces/IRssFeed';
-import {
+/*import {
   isRssFeed,
-} from '../TypeGuards/isRssFeed';
+} from '../TypeGuards/isRssFeed';*/
 import {
   TFeedsMap,
 } from '../TypeAliases/TFeedsMap';
 
-import * as htmlparser from 'htmlparser2';
-declare module 'htmlparser2' {
-  export class FeedHandler {
-    constructor(callback: (err: any, feed: IRssFeed) => void, options?: object);
-  }
-}
+import {
+  // @ts-ignore
+  default as FeedParser,
+} from 'feedparser';
+import { IPodcastFeed } from '../Interfaces/IPodcastFeed';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
@@ -43,6 +42,7 @@ export const strings = {
     'with single article lookups.',
 };
 
+// @ts-ignore
 export const downloadFeed = async ({
   feedKey,
   id,
@@ -53,7 +53,7 @@ export const downloadFeed = async ({
   id?:     string | null | undefined,
   offset?: number | null | undefined,
   urlArg?: string | null | undefined,
-}) =>
+}): Promise<IRssFeed> =>
 {
   let ignoreOffset = false;
   const url = ((feedKey, id, urlArg) => {
@@ -91,38 +91,61 @@ export const downloadFeed = async ({
   const fullUrl = offsetIsValid ?
     `${url}/?offset=${offset}` :
     url;
+    
+  return new Promise<IRssFeed>(async (resolve, reject) => {
+    const res = await fetch(fullUrl, {
+      cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'omit',
+      method:      'GET', // *GET, PUT, DELETE, etc.
+    });
+    
+    if (res.status !== 200) {
+      reject(new Error(`Problem fetching feed. Status is ${res.status}.`));
+    }
+    
+    const resText = await res.text();
 
-  const res = await fetch(fullUrl, {
-    cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'omit',
-    method:      'GET', // *GET, PUT, DELETE, etc.
-  });
+    const feed: IRssFeed | IPodcastFeed = {
+      type: 'rss',
+      title: 'Not provided',
+      items: [],
+    };
 
-  if (res.status !== 200) {
-    return null;
-  }
-
-  const resText = await res.text();
-
-  return new Promise<IRssFeed>((resolve, reject) => {
-    const handler = new htmlparser.FeedHandler((err, feed) => {
-      if (err) {
-        reject(err);
+    const options = {};
+    var feedparser = new FeedParser(options);
+    feedparser.on('error', (error: Error) => {
+      if (error) {
+        console.error(error);
+        reject(error);
       }
+    });
+    
+    feedparser.on('readable', function () {
+      // @ts-ignore
+      const __this = this;
+      var stream = __this as FeedParser; // `this` is `feedparser`, which is a stream
+      //var meta = stream.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
+      var item;
 
-      if (!isRssFeed(feed)) {
-        throw new Error(strings.FEED_INVALID);
+      while (item = stream.read()) {
+        feed.title = item.meta.title;
+        if ('itunes:image' in item.meta && '@' in item.meta['itunes:image']) {
+          (feed as IPodcastFeed).itunesImage = item.meta['itunes:image']['@'].href;
+        }
+        
+        if ('itunes:summary' in item.meta && '@' in item.meta['itunes:summary']) {
+          (feed as IPodcastFeed).itunesSummary = item.meta['itunes:summary']['@'].href;
+        }
+
+        feed.items.push(item);
       }
-
-      feed.items.forEach((item) => {
-        item.description = new AllHtmlEntities().decode(item.description);
-      });
 
       resolve(feed);
     });
-
-    const parser = new htmlparser.Parser(handler, { xmlMode: true, });
-    parser.write(resText);
-    parser.end();
+  
+    /* Write to the stream. */
+    feedparser._write(resText, 'utf-8', () => {
+      /* Do nothing for now. */
+    });
   });
 };
