@@ -11,7 +11,8 @@
 
   .Section {
     position: relative;
-    font-weight: 100;
+    font-family: 'Lato Light';
+    font-weight: 300;
     padding: @space-lg;
 
     &.First {
@@ -20,7 +21,13 @@
       padding-top: @space-xlg;
       margin-bottom: -160px;
       overflow: hidden;
+      background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.png);
+      background-position: center center;
       background-size: cover;
+
+      :global(.monitor) & {
+        background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.png)
+      }
 
       @media screen and (min-width: 600px) {
         padding-top: @headerHeight;
@@ -78,12 +85,12 @@
         flex: 1;
         min-width: 100px;
 
-        &.Podcast{
+        &.Podcast {
           @media screen and (min-width: 600px) {
             display: none;
           }
         }
-        &.Podcast2{
+        &.Podcast2 {
           display: none;
           @media screen and (min-width: 600px) {
             display: block;
@@ -156,20 +163,21 @@
         font-size: @larger -1px;
         text-align: justify;
 
-        @media screen and (min-width:600px) {
+        @media screen and (min-width: 600px) {
           font-size: @larger;
         }
       }
 
       .LinkContainer {
         display: inline-block;
-        padding: @space-sm @space-lg;
-        margin: @space auto;
+        margin: @space auto;        
         border: 1px solid @purple;
         font-size: @tiny;
         
         .Link {
           &.About {
+            display: inline-block;
+            padding: @space-sm @space-lg;
             color: @purple;
             text-decoration: none;
 
@@ -226,7 +234,8 @@
         padding-right: 20px;
       }
 
-      .LatestNewsTitle {
+      .LatestNewsTitle {        
+        font-family: 'Lato Regular', sans-serif;
         font-size: 30px;
         font-weight: 400;
         text-align: left;
@@ -237,7 +246,7 @@
         }
       }
 
-      .NewsWrapper{
+      .NewsWrapper {
         margin: 0 auto;
         max-width: 800px;
         width: 100%;

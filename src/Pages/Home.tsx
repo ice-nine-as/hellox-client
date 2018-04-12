@@ -11,9 +11,6 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  HomeBackgroundImage,
-} from '../Components/HomeBackgroundImage';
-import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
 import {
@@ -62,8 +59,6 @@ export class Home extends React.PureComponent<THomePageProps> {
     return (
       <article className={`${_styles.Home} ${_styles.Page}`}>
         <section className={`${_styles.Section} ${_styles.First}`}>
-          <HomeBackgroundImage />
-
           <div className={_styles.LogoContainer}>
             <Logo state={LogoStates.Normal} />
           </div>

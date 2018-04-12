@@ -1,15 +1,15 @@
 @import '../KeyColors.less';
 
 .HamburgerMenu {
-  display: flex;
+  display: none;
   justify-content: space-between;
   position: relative;
   width: 100%;
   height: 100%;
 
-  @media screen and (min-width:900px) {
+  @media screen and (max-width: 900px) {
     /* Do not display hamburger menu on monitor view. */
-    display: none;
+    display: flex;
   }
 
   .HamburgerMenuLogo {
@@ -34,29 +34,27 @@
     justify-content: center;
 
     .HamburgerMenuContents {
-      opacity:0;
+      opacity: 0;
       pointer-events: none;
       display: block;
       position: fixed;
-      left:0;
-      right:0;
-      bottom:0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       top: 0;
-      padding-top:80px;
+      padding-top: 80px;
       text-align: center;
       background: @deep-purple;
-
-      transition:opacity 0.5s;
+      transition: opacity 0.5s;
       
       :global(.NavBarItem) {
-        display:block;
+        display: block;
       }
     }
 
     .HamburgerMenuContents:global(.open) {
-      opacity:1;
+      opacity: 1;
       pointer-events: all;
-
     }
   }
 }
