@@ -39,10 +39,9 @@ export async function configureServerStore(
   req: Request,
   res: Response,
   routesMap = getRoutesMap(),
-  history   = null)
-{
+  history = null) {
   const _history = history || createMemoryHistory({
-    initialEntries: [ req.path, ],
+    initialEntries: [req.path,],
   });
 
   const language = (() => {
@@ -111,55 +110,55 @@ export async function configureServerStore(
       console.error(e);
     }
   } else if (type === PageIdentifiers.Write) {
-    try {
-      /* Pre-load same-language story generator templates. */
-      if (language === Languages.Norwegian) {
-        await Promise.all([
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateNoPartA,
-          })),
+    //try {
+    /* Pre-load same-language story generator templates. */
+    /*if (language === Languages.Norwegian) {
+      await Promise.all([
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateNoPartA,
+        })),
 
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateNoPartB,
-          })),
-          
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateNoPartC,
-          })),
-        ]);
-      } else if (language === Languages.Russian) {
-        await Promise.all([
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateRuPartA,
-          })),
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateNoPartB,
+        })),
+        
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateNoPartC,
+        })),
+      ]);
+    } else if (language === Languages.Russian) {
+      await Promise.all([
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateRuPartA,
+        })),
 
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateRuPartB,
-          })),
-          
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateRuPartC,
-          })),
-        ]);
-      } else {
-        await Promise.all([
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateEnPartA,
-          })),
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateRuPartB,
+        })),
+        
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateRuPartC,
+        })),
+      ]);
+    } else {
+      await Promise.all([
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateEnPartA,
+        })),
 
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateEnPartB,
-          })),
-          
-          store.dispatch(createRssThunk({
-            feedKey: FeedKeys.StoryTemplateEnPartC,
-          })),
-        ]);
-      }
-    } catch (e) {
-      console.error('Error encountered fetching story templates.');
-      console.error(e);
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateEnPartB,
+        })),
+        
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.StoryTemplateEnPartC,
+        })),
+      ]);
     }
+  } catch (e) {
+    console.error('Error encountered fetching story templates.');
+    console.error(e);
+  }*/
   }
 
   const status = location.type === NOT_FOUND ? 404 : 200;
