@@ -39,10 +39,9 @@ export async function configureServerStore(
   req: Request,
   res: Response,
   routesMap = getRoutesMap(),
-  history   = null)
-{
+  history = null) {
   const _history = history || createMemoryHistory({
-    initialEntries: [ req.path, ],
+    initialEntries: [req.path,],
   });
 
   const language = (() => {

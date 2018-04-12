@@ -1,15 +1,15 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 
 .Footer {
   position: relative;
   left: 0;
   width: 100%;
   color: @white;
-  font-size: 18pt;
+  font-size: @h4;
 
   a {
     text-decoration: none;
-    color:@white;
+    color:inherit;
 
     &:hover {
       color: @red;
@@ -21,38 +21,50 @@
     display: block;
     font-family: 'Lato Light';
     font-weight: 300;
+    font-size:@larger;
+    color:@light-purple;
+    margin:0;
   }
 
   .VerticalHalf {
     position: relative;
-
+    padding-bottom:@space-lg;
+    padding-top:@space-lg;
+    
     &.First {
       display: block;
-      padding-bottom: 50px;
-      background: @dark-purple;
+      background: @deep-purple;
+      display:flex;
+      justify-content: center;
+      flex-direction: column;
+
+       @media screen and (min-width:600px) {
+        flex-direction: row;
+      }
 
       .HorizontalHalf {
         position: relative;
         display: inline-block;
-        width: 100%;
-        height: 100%;
-
-        :global(.monitor) & {
-          width: 49%;
-        }
 
         &.Contact {
+          display: flex;
+          flex-direction: column;
           padding-right: 1%;
+          justify-content: space-between;
           font-family: 'Lato Light';
           font-weight: 300;
+          
+       
 
-          :global(.monitor) & {
-            text-align: right;
+           @media screen and (min-width:600px) {
+            text-align: left;
+            margin-right:@space-elg;
           }
         }
 
         .ContactPara {
           margin: 0;
+          margin-top:@space;
 
           &.Names {
             display: block;
@@ -70,10 +82,14 @@
         .IconsContainer {
           display: flex;
           justify-content: center;
+          margin-top:@space-xlg;
+          margin-bottom:@space-lg;
 
-          :global(.monitor) & {
-            justify-content: flex-end;
-          }
+           @media screen and (min-width:600px) {
+            margin-top:@space-lg;
+            justify-content: flex-start;
+            margin-bottom:0;
+            }
 
           & img {
             margin-left: 8px;
@@ -86,7 +102,7 @@
           padding-left: 1%;
           text-align: center;
           
-          :global(.monitor) & {
+           @media screen and (min-width:600px) {
             text-align: left;
             vertical-align: top;
           }

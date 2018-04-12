@@ -1,4 +1,4 @@
-@import "../KeyColors.less";
+@import "../Vars.less";
 
 .NewsItemFull {
   display: block;
@@ -62,11 +62,7 @@
       :global(.Headline) {
         margin: 0;
         text-align: center;
-        font-size: 30pt;
-
-        :global(.monitor) {
-          font-size: 45pt;
-        }
+        font-size: @h1;
 
         a {
           text-decoration: none;
@@ -75,13 +71,14 @@
     
       :global(.AuthoringInfo) {
         margin: 0;
-        font-size: 14pt;
+        font-size: @larger;
         color: @light-blue;
         text-align: center;
       }
   
       :global(.Summary) {
-        font-size: 22pt;
+        font-size: @larger;
+        line-height: 1.4;
         font-weight: bold;
         color: @purple;
   
@@ -91,22 +88,26 @@
       }
 
       :global(.Body) {
-        font-size: 16pt;
+        font-size: @larger;
+        line-height: 1.4;
 
         blockquote {
           position: relative;
-          padding-top: 60px;
-          padding-bottom: 30px;
+          padding-top: @space-lg;
+          padding-bottom: @space;
+          margin: @space;
           color: @light-blue;
-          font-size: 22pt;
+          font-size: @h3;
+          text-align: center;    
         }
 
         blockquote::before {
           position: absolute;
           left: 50%;
           top: 15px;
-          width: 66px;
-          height: 46px;
+          width: 50px;
+          height: 50px;
+          
           transform: translateX(-50%);
           background-image: url('https://s3.amazonaws.com/x50/images/HelloX_Quote_1x_LightBlue.svg');
           background-repeat: no-repeat;
@@ -132,11 +133,8 @@
           }
 
           img + figcaption {
-            padding: 8px;
-            border-left: 1px solid @light-blue;
-            border-right: 1px solid @light-blue;          
-            border-top: 5px solid @light-blue;
-            border-bottom: 1px solid @light-blue;
+            border-top: 5px solid @teal;
+            font-size:@tiny;
           }
         }
 

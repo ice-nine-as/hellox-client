@@ -1,13 +1,15 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
 
 .ContactForm {
   position: relative;
-  max-width: 600px;
-  padding: 15px;
+  max-width: 450px;
+  padding: @space;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid @light-blue;
+  border: 1px solid @teal;
   background: @white;
+  font-family: 'Lato', 'sans-serif';
 
   .Label,
   .Input
@@ -24,16 +26,21 @@
 
   .Input {
     width: 100%;
-    padding: 5px;
+    padding: @space-sm;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 15px;
-    border: 1px solid @light-blue;
-    font-size: 16pt;
+    margin-bottom: @space;
+    border: 1px solid @teal;
+    font-size: @p;
   }
 
   .Textarea {
-    height: 200px;
+    font-family: 'Lato', 'sans-serif';
+    height: 100px;
+    @media screen and (min-width:600px){
+      height: 200px;
+
+    } 
   }
 
   .MessageInput {
@@ -41,9 +48,40 @@
   }
 
   .Checkbox {
-    width: initial;
-    border: 1px solid @light-blue;
-    background: none;
+    display:none;
+  }
+
+  .LabelBoxWrapper{
+    display:inline-block;
+    vertical-align: middle;
+    .LabelBox{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width:14px;
+      height: 14px;
+      font-size:@small;
+      border:solid 1px black;
+      margin-right: @space-sm;
+      padding:2px;
+      & p{
+        user-select: none;
+        padding-bottom: 2px;
+        visibility:hidden;
+        margin:0;
+      }
+    }
+  }
+
+  .CarbonCopyLabel{
+    user-select: none;
+  }
+
+  .Checkbox:checked + .CarbonCopyLabel{
+
+    & .LabelBoxWrapper .LabelBox p{
+      visibility:visible;
+    }
   }
 
   .CarbonCopy {
@@ -53,19 +91,20 @@
 
   .Submit {
     display: block;
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    padding:@space 0;
+    margin:@space auto;
     border: none;
     background: @red;
     color: @white;
-    font-size: 14pt;
+    width: 100%;
+    font-size: @p;
     letter-spacing: 1px;
     cursor: pointer;
+
+    @media screen and (min-width:600px){
+      width:auto;
+      padding:@space @space-xlg;
+
+    }
   }
 }

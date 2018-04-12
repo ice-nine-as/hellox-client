@@ -49,7 +49,7 @@ import {
   gzip,
 } from 'zlib';
 
-import * as React          from 'react';
+import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks from 'webpack-flush-chunks';
@@ -70,24 +70,22 @@ const readFileProm = promisify(readFile);
 const projectDirPath = resolve(__dirname, '..', '..');
 const serverDirPath = resolve(projectDirPath, 'server');
 
-const viewportSnifferPath = resolve(serverDirPath, 'viewportSniffer.js');  
+const viewportSnifferPath = resolve(serverDirPath, 'viewportSniffer.js');
 let viewportSnifferElement: string | null = null;
 
 const fontLoaderPath = resolve(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
-export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
-{
+export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
   const x50Response = async (
-    req:  Request,
-    res:  Response,
-    next: NextFunction) =>
-  {
+    req: Request,
+    res: Response,
+    next: NextFunction) => {
     try {
       /* Do not render the 404 page for failed code, image, and font lookups,
       * or for codefiles of which we already know the location. Doing so wastes
       * huge amounts of time and process. */
-      const re = /(\.(js|css)(\.map)?$)|\.(jpg|png|svg|woff2)|__webpack_hmr$/; 
+      const re = /(\.(js|css)(\.map)?$)|\.(jpg|png|svg|woff2)|__webpack_hmr$/;
       if (re.test(req.url)) {
         console.error(`Object at ${req.url} not found.`);
         res.status(404);
@@ -115,19 +113,19 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
         return;
       }
 
-      const state             = store.getState();
-      const stateStr          = JSON.stringify(state);
-      const openTag           = '<script id="reduxState">';
-      const varDef            = 'window.REDUX_STATE = ';
-      const closeTag          = '</script>';
-      const reduxScript       = openTag + varDef + stateStr + closeTag;
+      const state = store.getState();
+      const stateStr = JSON.stringify(state);
+      const openTag = '<script id="reduxState">';
+      const varDef = 'window.REDUX_STATE = ';
+      const closeTag = '</script>';
+      const reduxScript = openTag + varDef + stateStr + closeTag;
       const providerContainer = (
-                                  <ProviderContainer store={store}>
-                                    <ConnectedApp />
-                                  </ProviderContainer>
-                                );
+        <ProviderContainer store={store}>
+          <ConnectedApp />
+        </ProviderContainer>
+      );
 
-      const appStr     = ReactDOMServer.renderToString(providerContainer);
+      const appStr = ReactDOMServer.renderToString(providerContainer);
       const chunkNames = flushChunkNames();
       const {
         css,
@@ -176,7 +174,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
             `<script id="viewportSniffer">
               ${viewportSniffer}
             </script>`
-        } catch (e) {}
+        } catch (e) { }
       }
 
       if (!fontLoaderElement) {
@@ -186,7 +184,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) =>
             `<script defer id="fontLoader">
               ${fontLoader}
             </script>`;
-        } catch (e) {}
+        } catch (e) { }
       }
 
       const responseStr =

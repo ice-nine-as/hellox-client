@@ -1,15 +1,23 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 @import '../Page.less';
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
 
 .About {
   width: 100%;
-  min-height: 100%;
-  background: @light-purple;
-  color: black;
+  background: @deep-purple;
+  color: @purple;
+  font-family: 'Lato', 'sans-serif';
+
+  .Content{
+    max-width: 1024px;
+    width:100%;
+    margin:0 auto;   
+
+  }
 
   .HeroImage {
     width: 100%;
-    height: 600px;
     border-bottom: 6px solid @light-blue;
   }
   
@@ -18,61 +26,88 @@
     display: inline-block;
     top: -4px;
     width: 100%;
-    max-width: 1024px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: @space;
+    padding-right: @space;
     background: @white;
-    box-sizing: border-box;
+    box-sizing: border-box; 
+    padding-bottom:@space-lg;
     
-    :global(.monitor) & {
+    @media screen and (min-width:600px) {
       padding-left: 100px;
       padding-right: 100px;
     }
   }
 
   .Header {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    font-size: 60pt;
+    margin-top: @space-lg;
+    margin-bottom: @space-lg;
+    font-size: @h1;
+    font-weight: 400;
+    
+    @media screen and (min-width:600px) {
+      font-weight: 300;
+    }
+
+    &.NoBottomMargin{
+      margin-bottom:@space-sm;
+    }
   }
 
   .Paragraph {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .ParagraphText {
-    font-size: 20pt;
+    margin-top: @space-lg;
+    margin-bottom: @space-lg;
+    font-size: @larger;
+    text-align: left;
   }
 
   .OpeningParagraph {
     .Paragraph;
   }
 
-  .OpeningParagraphText {
-    .ParagraphText;
-  }
-
   .Subheader {
     display: block;
     margin-top: 75px;
-    margin-bottom: 40px;
-    font-size: 40pt;
+    margin-bottom: @space-lg;
+    font-size: @h2;
   }
 
   .Subheader:not(:global(.condensed)) {
     font-weight: 700;
   }
 
+  .ContactFormWrapper{
+    position: relative;
+    top: -4px;
+    background-color: @deep-purple;
+    overflow: hidden;
+    padding: @space @space @space-xlg ;
+
+    & .Header{
+      margin-top:0;
+      color:white;
+    }
+
+    @media screen and (min-width:600px){
+      padding:0;
+      background-color: white;
+
+      & .Header{
+        margin-top:0;
+        color:@purple;
+      }
+    }
+  }
+
   .CollaboratorsSubheader {
     margin-bottom: 10px;
+    width:100%;
   }
 
   .Subsubheader {
     display: block;
     margin-top: 15px;
     margin-bottom: 30px;
-    font-size: 32pt;
+    font-size: @h3;
   }
   
   .PictureContainer {
@@ -82,12 +117,10 @@
 
   .TeamPicture {
     width: 100%;
-    height: 400px;
   }
 
   .CollaboratorsPicture {
     width: 100%;
-    height: 400px;
   }
 
   .CollaboratorsParagraph {
@@ -95,21 +128,12 @@
     margin-bottom: 60px;
   }
 
-  .CollaboratorsParagraphText {
-    .ParagraphText;
-  }
-
   .PictureAttribution {
     position: relative;
     top: -4px;
-    padding: 15px;
-    padding-left: 25px;
-    padding-right: 25px;
-    border-left: 1px solid @light-blue;
-    border-right: 1px solid @light-blue;          
-    border-top: 5px solid @light-blue;
-    border-bottom: 1px solid @light-blue;
+    border-top: 5px solid @teal;
     text-align: left;
+    font-size: @tiny;
   }
 
   .AttributionSection {

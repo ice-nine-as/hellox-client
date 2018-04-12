@@ -52,14 +52,14 @@ const _styles = styles || {};
 export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps> {
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
- doLoad() {
-   const {
-     detailLevel,
-     feeds,
-     language,
+  doLoad() {
+    const {
+      detailLevel,
+      feeds,
+      language,
     } = this.props;
 
-    /* Loads the relevant feed based on language and detail level. */ 
+    /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
       key,
@@ -78,13 +78,13 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     if (!feed) {
       this.props.getNewsFeed(key)
         .then(() => this.forceUpdate(),
-              (reason) => console.error(reason));
+          (reason) => console.error(reason));
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
       * bother to guess where it is in the feed. */
       this.props.getNewsFeed(key, 0, feed)
         .then(() => this.forceUpdate(),
-              (reason) => console.error(reason));
+          (reason) => console.error(reason));
     }
   }
 
@@ -101,7 +101,7 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
       feeds,
       language,
     } = this.props;
-    
+
     const {
       feed,
     } = getFeed({
@@ -130,7 +130,7 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
           );
         }
       }) :
-      'Sorry, no news yet!';
+      <p>{'Sorry, no news yet!'}</p>;
 
     return (
       <div
@@ -164,6 +164,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedLatestNews = connect(mapStateToProps, mapDispatchToProps)(LatestNews); 
+export const ConnectedLatestNews = connect(mapStateToProps, mapDispatchToProps)(LatestNews);
 
 export default LatestNews;

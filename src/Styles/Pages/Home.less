@@ -1,5 +1,8 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 @import '../Page.less';
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
+
+@headerHeight:80px;
 
 .Home {
   position: relative; 
@@ -10,48 +13,63 @@
   .Section {
     position: relative;
     font-weight: 100;
-    padding: 20px;
+    padding: @space-lg;
 
     &.First {
-      height: 680px;
-      top: -110px;
-      padding-top: 50px;
+      font-family: 'Lato', sans-serif;
+      height: 100vh;
+      top: -@headerHeight;
+      padding-top: @space-xlg;
       margin-bottom: -160px;
       overflow: hidden;
+      background-size: cover;
 
-      :global(.monitor) & {
-        height: 850px;
-        padding-top: 110px;
+      @media screen and (min-width:600px){
+        padding-top: @headerHeight;
+      }
+
+      @media screen and (min-width:600px) {
+        height: 650px;
       }
         
       .LogoContainer {
         position: relative;
         display: inline-block;
-        width: 175px;
+        width: 150px;
 
-        :global(.monitor) & {
+        @media screen and (min-width:600px) {
           width: 250px;
-          height: 289px;
+          margin-bottom: @space-lg
+          //height: 289px;
         }
       }
 
       .Header {
+        font-family: 'Lato', sans-serif;
         position: relative;
-        font-weight: 400;
-        font-size: 18pt;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        font-weight: 100;
+        letter-spacing: 0.5px;
+        font-size: @larger;
+        margin-top: @space;
+        margin-bottom: @space;
 
-        :global(.monitor) & {
-          margin-top: 30px;
-          margin-bottom: 25px;
-          font-size: 48pt;
+        @media screen and (min-width:600px){
+          margin-top: 0px;
+          font-size: @h3;
         }
+        
       }
 
       .AllLinksContainer {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+
+        @media screen and (min-width:600px){
+          margin-top:@space-lg;
+        }
+
       }
 
       .Link {
@@ -59,63 +77,34 @@
         display: block;
         color: white;
         text-decoration: none;
+        overflow: hidden;
+        flex-shrink: 0;
+        flex-grow: 1;
+        flex:1;
+        min-width: 100px;
+
+        &.Podcast{
+          @media screen and (min-width:600px){
+            display:none;
+          }
+        }
+        &.Podcast2{
+          display:none;
+          @media screen and (min-width:600px){
+            display: block;
+          }
+        }
+
+        &:nth-child(1) {
+          flex-basis: 100%;
+          @media screen and (min-width:600px){
+            flex-basis: 0;
+          }
+        }
 
         &:hover, &:active {
           color: @red;
           transition: color 0.2s;
-        }
-
-        :global(.monitor) & {
-          display: inline-block;
-          margin-left: 65px;
-          margin-right: 65px;
-        }
-
-        @mobile-margin-top: 210px;
-        @mobile-margin-bottom: 100px;
-
-        &.Write {
-          float: left;
-          width: 45%;
-          margin-top: @mobile-margin-top;
-          margin-bottom: @mobile-margin-bottom;
-
-          :global(.monitor) & {
-            float: none;
-            width: inherit;
-            margin-left: 20px;
-            margin-top: 0;
-          }
-        }
-
-        &.Podcast {
-          position: absolute;
-          left: 0;
-          width: 60%;
-          margin-left: 20%;
-          margin-right: 20%;
-
-          :global(.monitor) & {
-            position: relative;
-            width: inherit;
-            left: inherit;
-            margin-left: -5px;
-            margin-right: 70px;
-          }
-        }
-
-        &.Read {
-          float: right;
-          width: 45%;
-          margin-top: @mobile-margin-top;
-          margin-bottom: @mobile-margin-bottom;
-
-          :global(.monitor) & {
-            float: none;
-            width: inherit;
-            margin-top: 0;
-            margin-left: 40px;
-          }
         }
       }
 
@@ -126,60 +115,25 @@
       .LinkTitle {
         position: relative;
         display: block;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        font-size: 20pt;
-        
-        :global(.monitor) & {
-          margin-top: 30px;
-          font-size: 34pt;
-        }
-
-        &.Podcast {
-          color: inherit;
-        }
-
-        &.Write {
-          color: inherit;
-        }
-
-        &.ReadDiscuss {
-          color: inherit;
-        }
+        margin-top: @space-sm;
+        margin-bottom: 0;
+        letter-spacing: 2px;
+        font-size: @larger;
+        color: inherit;
       }
       
       .LinkSubtitle {
         position: relative;
         display: block;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        font-weight: 400;
-        font-size: 15pt;
-
-        :global(.monitor) & {
-          margin-top: 30px;
-          margin-bottom: 30px;
-          font-size: 24pt;
-        }
-
-        &.Podcast {
-          color: inherit;
-        }
+        margin: @space-xsm auto;
+        font-weight: 100;
+        letter-spacing: 1px;
+        font-size: @larger;
+        color: inherit;
 
         &.MorePodcasts {
-          color: inherit;
-        }
-
-        &.Write {
-          color: inherit;
-        }
-
-        &.ReadDiscuss {
-          color: inherit;
+          font-size:@tiny;
+          font-weight: 400;
         }
       }
 
@@ -188,8 +142,8 @@
         display: inline-block;
 
         & :global(.LazyLoad) {
-          width: 80px;
-          height: 80px;
+          width: 70px;
+          height: 70px;
           margin-left: auto;
           margin-right: auto;
         }
@@ -198,38 +152,29 @@
 
     &.Second {
       background: @gold;
-      padding-left: 25px;
-      padding-right: 25px;
       color: @purple;
-
+      
       .ExplainerParagraph {
         position: relative;
         max-width: 675px;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 18pt;
+        margin:0 auto;
+        font-size: @larger -1px;
+        text-align: justify;
 
-        :global(.monitor) & {
-          font-size: 24pt;
+        @media screen and (min-width:600px) {
+          font-size: @larger;
         }
       }
 
       .LinkContainer {
-        display: flex;
-        justify-content: space-around;
-        width: 171px;
-        height: 42px;
-        margin-left: auto;
-        margin-right: auto;
+        display:inline-block;
+        padding:@space-sm @space-lg;
+        margin:@space auto;
         border: 1px solid @purple;
+        font-size:@tiny;
         
         .Link {
           &.About {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
             color: @purple;
             text-decoration: none;
 
@@ -251,22 +196,26 @@
 
       .QuoteContainer {
         position: relative;
-        margin-top: 50px;
+        margin-top: @space-lg;
 
         .QuoteIconContainer {
           position: relative;
-          width: 49px;
-          height: 34px;
+          width: 40px;
           margin-left: auto;
           margin-right: auto;
+
+          & :global(.LazyLoad) img{
+            max-width:100%;
+          }
         }
 
         .Quote {
           display: inline-block;
-          margin-top: 30px;
-          margin-bottom: 60px;
+          margin-top: @space;
+          margin-bottom: @space-lg;
           color: @white;
-          font-size: 24pt;
+          font-size: @h4+1;
+          //max-width: 270px;
         }
       }
     }
@@ -277,13 +226,29 @@
       color: @dark-purple;
       background: white;
 
-      :global(.monitor) & {
+      @media screen and (min-width:600px) {
         padding-left:  20px;
         padding-right: 20px;
       }
 
       .LatestNewsTitle {
-        font-size: 34pt;
+        font-family: 'Lato', sans-serif;
+        font-size: 30px;
+        font-weight: 400;
+        text-align: left;
+        margin-left: @space-sm;
+
+        @media screen and (min-width:600px){
+          text-align: center;
+        }
+      }
+
+      .NewsWrapper{
+        margin:0 auto;
+        max-width: 800px;
+        width:100%;
+        overflow: hidden;
+
       }
     }
   }
