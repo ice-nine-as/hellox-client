@@ -6,7 +6,6 @@ export enum AppActionTypes {
   Language      = 'LANGUAGE',
   Loading       = 'LOADING',
   Rss           = 'RSS',
-  ViewportState = 'VIEWPORT_STATE',
 }
 
 export default AppActionTypes;

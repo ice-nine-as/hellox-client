@@ -30,19 +30,9 @@ export class Footer extends React.PureComponent<TFooterProps> {
               Contact us
             </h3>
 
-            <p className={`${_styles.ContactPara} ${_styles.Names}`}>
-              Ice-9 · Christine Cynn
-            </p>
-
             <p className={`${_styles.ContactPara} ${_styles.Email}`}>
-              <a href="mailto:christine@ice-9.no">
-                christine@ice-nine.no
-              </a>
-            </p>
-
-            <p className={`${_styles.ContactPara} ${_styles.Phone}`}>
-              <a href="tel:+99999999">
-                99 99 99 99
+              <a href="mailto:helloX@ice-9.no">
+                helloX@ice-nine.no
               </a>
             </p>
 

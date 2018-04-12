@@ -17,11 +17,11 @@ import {
   isNode,
 } from '../Modules/isNode';
 import {
-  NewsItemFull,
-} from './NewsItemFull';
+  PodcastItemFull,
+} from './PodcastItemFull';
 import {
-  NewsItemPreview,
-} from './NewsItemPreview';
+  PodcastItemPreview,
+} from './PodcastItemPreview';
 import {
   connect,
   MapStateToProps,
@@ -30,14 +30,14 @@ import {
   TFeedsMap,
 } from '../TypeAliases/TFeedsMap';
 import {
-  TLatestNewsDispatchProps,
-} from '../TypeAliases/TLatestNewsDispatchProps';
+  TLatestPodcastsDispatchProps,
+} from '../TypeAliases/TLatestPodcastsDispatchProps';
 import {
-  TLatestNewsOwnProps,
-} from '../TypeAliases/TLatestNewsOwnProps';
+  TLatestPodcastsOwnProps,
+} from '../TypeAliases/TLatestPodcastsOwnProps';
 import {
-  TLatestNewsStoreProps,
-} from '../TypeAliases/TLatestNewsStoreProps';
+  TLatestPodcastsStoreProps,
+} from '../TypeAliases/TLatestPodcastsStoreProps';
 import {
   TStoreProps,
 } from '../TypeAliases/TStoreProps';
@@ -45,16 +45,15 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/LatestNews.less';
+import styles from '../Styles/Components/LatestPodcasts.less';
 const _styles = styles || {};
 
 
-export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps> {
+export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps & TLatestPodcastsStoreProps & TLatestPodcastsDispatchProps> {
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
  doLoad() {
    const {
-     detailLevel,
      feeds,
      language,
     } = this.props;
@@ -64,27 +63,22 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
       feed,
       key,
     } = getFeed({
-      type: 'newsItem',
-      detailLevel,
+      type: 'podcast',
       feeds,
       language,
     });
 
     /* For some reason, possibly that we're only mutating a portion of a feed,
-    * the getNewsFeed method occasionally refuses to render new articles when
+    * the getPodcastsFeed method occasionally refuses to render new articles when
     * a single article has been fetched beforehand. This is avoided through
     * forceUpdate below. */
 
     if (!feed) {
-      this.props.getNewsFeed(key)
-        .then(() => this.forceUpdate(),
-              (reason) => console.error(reason));
+      this.props.getPodcastFeed(key);
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
       * bother to guess where it is in the feed. */
-      this.props.getNewsFeed(key, 0, feed)
-        .then(() => this.forceUpdate(),
-              (reason) => console.error(reason));
+      this.props.getPodcastFeed(key, 0, feed)
     }
   }
 
@@ -105,45 +99,45 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     const {
       feed,
     } = getFeed({
-      type: 'newsItem',
-      language,
-      feeds,
       detailLevel,
+      feeds,
+      language,
+      type: 'podcast',
     });
 
-    /* TODO: Add internationalization to no news items message. */
-    const newsItems = feed && feed.items && feed.items.length > 0 ?
+    /* TODO: Add internationalization to no podcasts items message. */
+    const podcastItems = feed && feed.items && feed.items.length > 0 ?
       feed.items.map((item) => {
         if (this.props.detailLevel === FeedDetailLevels.Full) {
           return (
-            <NewsItemFull
+            <PodcastItemFull
               item={item}
               key={key += 1}
             />
           );
         } else {
           return (
-            <NewsItemPreview
+            <PodcastItemPreview
               item={item}
               key={key += 1}
             />
           );
         }
       }) :
-      'Sorry, no news yet!';
+      'Sorry, no podcasts yet!';
 
     return (
       <div
-        className={`${_styles.LatestNews} ${_styles[this.props.detailLevel]}`}
+        className={`${_styles.LatestPodcasts} ${_styles[this.props.detailLevel]}`}
         key={key += 1}
       >
-        {newsItems}
+        {podcastItems}
       </div>
     );
   }
 }
 
-export const mapStateToProps: MapStateToProps<TLatestNewsOwnProps & TLatestNewsStoreProps, TLatestNewsOwnProps, TStoreProps> = ({
+export const mapStateToProps: MapStateToProps<TLatestPodcastsOwnProps & TLatestPodcastsStoreProps, TLatestPodcastsOwnProps, TStoreProps> = ({
   language,
   feeds,
 }, ownProps) => ({
@@ -153,7 +147,7 @@ export const mapStateToProps: MapStateToProps<TLatestNewsOwnProps & TLatestNewsS
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
-  getNewsFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null = null): Promise<IRssAction> {
+  getPodcastFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null = null): Promise<IRssAction> {
     const thunk = createRssThunk({
       composeWith,
       feedKey: feedKey,
@@ -164,6 +158,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedLatestNews = connect(mapStateToProps, mapDispatchToProps)(LatestNews); 
+export const ConnectedLatestPodcasts = connect(mapStateToProps, mapDispatchToProps)(LatestPodcasts); 
 
-export default LatestNews;
+export default LatestPodcasts;

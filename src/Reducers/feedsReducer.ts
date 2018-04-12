@@ -20,15 +20,12 @@ import {
 export const getKeyObj = (key: keyof TFeedsMap) => ({ key, });
 
 export const feedsReducer: TReducer<TFeedsMap, IRssAction> = combineReducers({
-  [FeedKeys.NewsFullEn]:           feedReducer.bind(getKeyObj(FeedKeys.NewsFullEn)),
-  [FeedKeys.NewsFullNo]:           feedReducer.bind(getKeyObj(FeedKeys.NewsFullNo)),
-  [FeedKeys.NewsFullRu]:           feedReducer.bind(getKeyObj(FeedKeys.NewsFullRu)),
-  [FeedKeys.NewsTeasersEn]:        feedReducer.bind(getKeyObj(FeedKeys.NewsTeasersEn)),
-  [FeedKeys.NewsTeasersNo]:        feedReducer.bind(getKeyObj(FeedKeys.NewsTeasersNo)),
-  [FeedKeys.NewsTeasersRu]:        feedReducer.bind(getKeyObj(FeedKeys.NewsTeasersRu)),
-  [FeedKeys.NewsTitlesEn]:         feedReducer.bind(getKeyObj(FeedKeys.NewsTitlesEn)),
-  [FeedKeys.NewsTitlesNo]:         feedReducer.bind(getKeyObj(FeedKeys.NewsTitlesNo)),
-  [FeedKeys.NewsTitlesRu]:         feedReducer.bind(getKeyObj(FeedKeys.NewsTitlesRu)),
+  [FeedKeys.NewsFull]:             feedReducer.bind(getKeyObj(FeedKeys.NewsFull)),
+  [FeedKeys.NewsTeasers]:          feedReducer.bind(getKeyObj(FeedKeys.NewsTeasers)),
+  [FeedKeys.NewsTitles]:           feedReducer.bind(getKeyObj(FeedKeys.NewsTitles)),
+
+  [FeedKeys.Podcast]:              feedReducer.bind(getKeyObj(FeedKeys.Podcast)),
+
   [FeedKeys.StoryTemplateEnPartA]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateEnPartA)),
   [FeedKeys.StoryTemplateEnPartB]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateEnPartB)),
   [FeedKeys.StoryTemplateEnPartC]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateEnPartC)),

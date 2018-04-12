@@ -8,14 +8,14 @@ import {
   createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
-  forumUrl,
-} from '../Properties/forumUrl';
+  ExternalPageUrls,
+} from '../Enums/ExternalPageUrls';
 import {
   NavLink,
 } from 'redux-first-router-link';
 import {
-  PodcastLinkAction,
-} from '../Actions/Link/PodcastLinkAction';
+  PodcastsLinkAction,
+} from '../Actions/Link/PodcastsLinkAction';
 import {
   WriteLinkAction,
 } from '../Actions/Link/WriteLinkAction';
@@ -37,12 +37,16 @@ export class SiteMap extends React.PureComponent {
           ABOUT
         </NavLink>
 
+        <br />
+
         <NavLink
           className={_styles.Link}
-          to={createLinkAction(PodcastLinkAction)}
+          to={createLinkAction(PodcastsLinkAction)}
         >
-          PODCAST
+          PODCASTS
         </NavLink>
+
+        <br />
 
         <NavLink
           className={_styles.Link}
@@ -51,12 +55,16 @@ export class SiteMap extends React.PureComponent {
           WRITE
         </NavLink>
 
+        <br />
+
         <a
           className={_styles.Link}
-          href={forumUrl}
+          href={ExternalPageUrls.Forum}
         >
           READ
         </a>
+
+        <br />
 
         <NavLink
           className={_styles.Link}

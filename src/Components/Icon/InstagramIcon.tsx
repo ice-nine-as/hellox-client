@@ -1,4 +1,7 @@
 import {
+  ExternalPageUrls,
+} from '../../Enums/ExternalPageUrls';
+import {
   Icon,
 } from './Icon';
 import {
@@ -17,7 +20,7 @@ const _styles = styles || {};
 export class InstagramIcon extends React.PureComponent<TInstagramIconProps> {
   render() {
     return (
-      <Icon>
+      <Icon url={ExternalPageUrls.Instagram}>
         <img
           alt="The Instagram icon."
           className={_styles.InstagramIcon}

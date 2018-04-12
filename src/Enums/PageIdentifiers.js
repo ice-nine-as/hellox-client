@@ -6,6 +6,7 @@ exports = module.exports = {
     Home:        'Home',
     NotFound:    'NotFound',
     Podcast:     'Podcast',
+    Podcasts:    'Podcasts',
     ServerError: 'ServerError',
     Write:       'Write',
   },

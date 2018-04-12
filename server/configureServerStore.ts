@@ -80,29 +80,82 @@ export async function configureServerStore(
   }
 
   if (type === PageIdentifiers.Archives) {
-    /* Pre-load same-language news feed for Archives page. */
+    /* Pre-load news feed for Archives page. */
     try {
-      if (language === Languages.Norwegian) {
-        await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullNo, }));
-      } else if (language === Languages.Russian) {
-        await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullRu, }));
-      } else {
-        await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFullEn, }));
-      }
+      await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFull, }));
     } catch (e) {
       console.error('Error encountered fetching articles.');
       console.error(e);
     }
+  } else if (type === PageIdentifiers.Podcasts) {
+    /* Pre-load news feed for Archives page. */
+    try {
+      await store.dispatch(createRssThunk({ feedKey: FeedKeys.Podcast, }));
+    } catch (e) {
+      console.error('Error encountered fetching podcasts.');
+      console.error(e);
+    }
+  } else if (type === PageIdentifiers.Home) {
+    try {
+      await Promise.all([
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.Podcast,
+        })),
+
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.NewsTeasers,
+        })),
+      ]);
+    } catch (e) {
+      console.error('Error fetching ');
+      console.error(e);
+    }
   } else if (type === PageIdentifiers.Write) {
     try {
-      /* Pre-load same-language story generator prompt. */
-      /*if (language === Languages.Norwegian) {
-        await store.dispatch(createRssThunk(FeedKeys.StoryTemplateNo));
+      /* Pre-load same-language story generator templates. */
+      if (language === Languages.Norwegian) {
+        await Promise.all([
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateNoPartA,
+          })),
+
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateNoPartB,
+          })),
+          
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateNoPartC,
+          })),
+        ]);
       } else if (language === Languages.Russian) {
-        await store.dispatch(createRssThunk(FeedKeys.StoryTemplateRu));
+        await Promise.all([
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateRuPartA,
+          })),
+
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateRuPartB,
+          })),
+          
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateRuPartC,
+          })),
+        ]);
       } else {
-        await store.dispatch(createRssThunk(FeedKeys.StoryTemplateEn));
-      }*/
+        await Promise.all([
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateEnPartA,
+          })),
+
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateEnPartB,
+          })),
+          
+          store.dispatch(createRssThunk({
+            feedKey: FeedKeys.StoryTemplateEnPartC,
+          })),
+        ]);
+      }
     } catch (e) {
       console.error('Error encountered fetching story templates.');
       console.error(e);

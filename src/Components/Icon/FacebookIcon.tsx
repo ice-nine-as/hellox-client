@@ -1,4 +1,7 @@
 import {
+  ExternalPageUrls,
+} from '../../Enums/ExternalPageUrls';
+import {
   Icon,
 } from './Icon';
 import {
@@ -17,11 +20,12 @@ const _styles = styles || {};
 export class FacebookIcon extends React.PureComponent<TFacebookIconProps> {
   render() {
     return (
-      <Icon>
+      <Icon url={ExternalPageUrls.Facebook}>
         <img
           alt="The Facebook icon."
           className={_styles.FacebookIcon}
-          src={ImageUrls.FacebookIcon} />
+          src={ImageUrls.FacebookIcon}
+        />
       </Icon>
     );
   }

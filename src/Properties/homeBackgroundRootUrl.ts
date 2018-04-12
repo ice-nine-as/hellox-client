@@ -1,1 +1,0 @@
-export const homeBackgroundRootUrl = 'https://s3.amazonaws.com/x50/images/home-background/';

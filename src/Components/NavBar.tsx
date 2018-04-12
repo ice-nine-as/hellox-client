@@ -8,11 +8,11 @@ import {
   createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+  ExternalPageUrls,
+} from '../Enums/ExternalPageUrls';
+import {
   ConnectedHamburgerMenu,
 } from './HamburgerMenu';
-import {
-  forumUrl,
-} from '../Properties/forumUrl';
 import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
@@ -32,8 +32,8 @@ import {
   LogoStates,
 } from '../Enums/LogoStates';
 import {
-  PodcastLinkAction,
-} from '../Actions/Link/PodcastLinkAction';
+  PodcastsLinkAction,
+} from '../Actions/Link/PodcastsLinkAction';
 import {
   TNavBarProps,
 } from '../TypeAliases/TNavBarProps';
@@ -76,10 +76,10 @@ export const navBarItems = Object.freeze([
 
   <NavLink
     className={`${_nbiStyles.NavBarItem} NavBarItem`}
-    to={createLinkAction(PodcastLinkAction)}
+    to={createLinkAction(PodcastsLinkAction)}
     key={reactKey += 1}
   >
-    Podcast
+    Podcasts
   </NavLink>,
 
   <NavLink
@@ -92,7 +92,7 @@ export const navBarItems = Object.freeze([
 
   <a
     className={`${_nbiStyles.NavBarItem} NavBarItem`}
-    href={forumUrl}
+    href={ExternalPageUrls.Forum}
     key={reactKey += 1}
   >
     Read &amp; Discuss
