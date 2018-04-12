@@ -1,45 +1,58 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 
 .Collaborators {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  @media screen and (min-width:600px){
+    flex-direction: row;
+  }
 
   .Collaborator {
-    flex: 1 0 40%;
-    margin-bottom: 20px;
-
-    &:nth-child(2n-1) {
-      margin-left: 5%;
-    }
-
-    &:nth-child(2n) {
-      margin-right: 5%;
-    }
+    box-sizing: border-box;
+    margin-bottom: @space-lg;
+    flex:1;
+    
+    @media screen and (min-width:600px){
+      flex: 1 0 50%;
+    
+      &:nth-child(2n-1) {
+        padding-right: @space;
+      }
+  
+      &:nth-child(2n) {
+        padding-left: @space;
+      }
+    } 
   }
 
   .MemberMargin {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: @space-xsm;
+    margin-bottom: @space-xsm;
   }
 
   .Name {
     .MemberMargin;
-    font-size: 24pt;
+    font-size: @h3;
   }
 
   .Role {
     .MemberMargin;
-    font-size: 18pt;
+    font-size: @larger;
+    font-weight: 300;
   }
 
   .Company {
     .MemberMargin;
-    font-size: 18pt;
+    font-size: @larger;
+    font-weight: 300;
   }
 
   .Email {
     .MemberMargin;
-    font-size: 18pt;
+    font-size: @larger;
 
     &, & a {
       color: @light-blue;
