@@ -1,9 +1,9 @@
 import {
-  IRssPost,
-} from '../Interfaces/IRssPost';
+  IPodcastPost,
+} from '../Interfaces/IPodcastPost';
 
 export type TPodcastItemPreviewProps = {
-  item: IRssPost;
+  item: IPodcastPost;
 };
 
 export default TPodcastItemPreviewProps;

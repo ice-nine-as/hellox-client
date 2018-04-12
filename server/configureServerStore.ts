@@ -88,13 +88,13 @@ export async function configureServerStore(
       console.error(e);
     }
   } else if (type === PageIdentifiers.Podcasts) {
-    /* Pre-load news feed for Archives page. */
+    /* Pre-load news feed for Podcasts page.
     try {
       await store.dispatch(createRssThunk({ feedKey: FeedKeys.Podcast, }));
     } catch (e) {
       console.error('Error encountered fetching podcasts.');
       console.error(e);
-    }
+    }*/
   } else if (type === PageIdentifiers.Home) {
     try {
       await Promise.all([
@@ -113,7 +113,7 @@ export async function configureServerStore(
   } else if (type === PageIdentifiers.Write) {
     try {
       /* Pre-load same-language story generator templates. */
-      if (language === Languages.Norwegian) {
+      /*if (language === Languages.Norwegian) {
         await Promise.all([
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateNoPartA,
@@ -155,7 +155,7 @@ export async function configureServerStore(
             feedKey: FeedKeys.StoryTemplateEnPartC,
           })),
         ]);
-      }
+      }*/
     } catch (e) {
       console.error('Error encountered fetching story templates.');
       console.error(e);

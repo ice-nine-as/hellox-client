@@ -46,6 +46,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/LatestPodcasts.less';
+import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const _styles = styles || {};
 
 
@@ -111,14 +112,14 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
         if (this.props.detailLevel === FeedDetailLevels.Full) {
           return (
             <PodcastItemFull
-              item={item}
+              item={item as IPodcastPost}
               key={key += 1}
             />
           );
         } else {
           return (
             <PodcastItemPreview
-              item={item}
+              item={item as IPodcastPost}
               key={key += 1}
             />
           );

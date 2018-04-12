@@ -32,7 +32,7 @@ export class Footer extends React.PureComponent<TFooterProps> {
 
             <p className={`${_styles.ContactPara} ${_styles.Email}`}>
               <a href="mailto:helloX@ice-9.no">
-                helloX@ice-nine.no
+                helloX@ice-9.no
               </a>
             </p>
 
