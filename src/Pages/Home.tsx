@@ -74,25 +74,6 @@ export class Home extends React.PureComponent<THomePageProps> {
 
           <div className={_styles.AllLinksContainer}>
             <NavLink
-              className={`${_styles.Link} ${_styles.Write}`}
-              to={createLinkAction(WriteLinkAction)}
-            >
-              <div className={`${_styles.LinkBox} ${_styles.Write}`}>
-                <h2 className={`${styles.LinkTitle} ${_styles.Write}`}>
-                  WRITE
-                </h2>
-
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
-                  Add your vision
-                </h3>
-
-                <div className={_styles.LinkContainer}>
-                  <WriteIcon />
-                </div>
-              </div>
-            </NavLink>
-
-            <NavLink
               className={`${_styles.Link} ${_styles.Podcast}`}
               to={createLinkAction(PodcastsLinkAction)}
             >
@@ -114,7 +95,44 @@ export class Home extends React.PureComponent<THomePageProps> {
                 </div>
               </div>
             </NavLink>
+            <NavLink
+              className={`${_styles.Link} ${_styles.Write}`}
+              to={createLinkAction(WriteLinkAction)}
+            >
+              <div className={`${_styles.LinkBox} ${_styles.Write}`}>
+                <h2 className={`${styles.LinkTitle} ${_styles.Write}`}>
+                  WRITE
+                </h2>
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
+                  Add your vision
+                </h3>
+                <div className={_styles.LinkContainer}>
+                  <WriteIcon />
+                </div>
+              </div>
+            </NavLink>
+            <NavLink
+              className={`${_styles.Link} ${_styles.Podcast2}`}
+              to={createLinkAction(PodcastsLinkAction)}
+            >
+              <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
+                <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>
+                  PODCAST #{3 /* TODO: scrape from wherever podcast data lives.  */}
+                </h2>
 
+                <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
+                  Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+                </h3>
+
+                <div className={_styles.LinkContainer}>
+                  <PodcastIcon />
+
+                  <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts}`}>
+                    More podcasts
+                  </h3>
+                </div>
+              </div>
+            </NavLink>
             <a
               className={`${_styles.Link} ${_styles.Read}`}
               href={ExternalPageUrls.Forum}
@@ -172,10 +190,11 @@ export class Home extends React.PureComponent<THomePageProps> {
           <h2 className={`${_styles.LatestNewsTitle} light`}>
             What's up?
           </h2>
-
-          <LazyLoad offset={500}>
-            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
-          </LazyLoad>
+          <div className={`${_styles.NewsWrapper}`}>
+            <LazyLoad offset={500}>
+              <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+            </LazyLoad>
+          </div>
         </section>
       </article>
     );

@@ -5,11 +5,12 @@
     display: block;
   }
 
-  :global(.monitor) &.Teaser {
-    display: flex;
-    justify-content: center;
+  @media screen and (min-width:600px){
+    &.Teaser {
+      display: flex;
+      justify-content: center;
+    }
   }
-
   &.Title {
     display: block;
   }

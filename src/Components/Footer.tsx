@@ -26,16 +26,17 @@ export class Footer extends React.PureComponent<TFooterProps> {
       <div className={`${_styles.Footer} Footer Page-${this.props.page}`}>
         <div className={`${_styles.VerticalHalf} ${_styles.First}`}>
           <div className={`${_styles.HorizontalHalf} ${_styles.Contact}`}>
-            <h3 className={`${_styles.Header}`}>
-              Contact us
-            </h3>
+            <div>
+              <h3 className={`${_styles.Header}`}>
+                Contact us
+              </h3>
 
-            <p className={`${_styles.ContactPara} ${_styles.Email}`}>
-              <a href="mailto:helloX@ice-9.no">
-                helloX@ice-nine.no
-              </a>
-            </p>
-
+              <p className={`${_styles.ContactPara} ${_styles.Email}`}>
+                <a href="mailto:helloX@ice-9.no">
+                  helloX@ice-nine.no
+                </a>
+              </p>
+            </div>
             <div className={_styles.IconsContainer}>
               <FacebookIcon />
               <TwitterIcon />
@@ -47,7 +48,7 @@ export class Footer extends React.PureComponent<TFooterProps> {
             <h3 className={`${_styles.Header}`}>
               Menu
             </h3>
-
+            <br />
             <SiteMap />
           </div>
         </div>
