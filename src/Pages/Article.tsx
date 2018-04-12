@@ -59,7 +59,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
       },
     } = this.props;
 
-    /* Loads the relevant feed based on language and detail level. */ 
+    /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
     } = getFeed({
@@ -150,7 +150,7 @@ export const mapDispatchToProps = (dispatch: Function) => ({
 
     const thunk = createRssThunk({
       composeWith: feed,
-      feedKey:     key,
+      feedKey: key,
       id,
     });
 
@@ -158,6 +158,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedArticle = connect(mapStateToProps, mapDispatchToProps)(Article); 
+export const ConnectedArticle = connect(mapStateToProps, mapDispatchToProps)(Article);
 
 export default ConnectedArticle;

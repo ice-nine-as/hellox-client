@@ -153,7 +153,6 @@ export class Home extends React.PureComponent<THomePageProps> {
             </a>
           </div>
         </section>
-
         <section className={`${_styles.Section} ${_styles.Second}`}>
           <p className={_styles.ExplainerParagraph}>
             hello X is a story laboratory where you can collaborate with
