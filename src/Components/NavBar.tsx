@@ -8,11 +8,11 @@ import {
   createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+  ExternalPageUrls,
+} from '../Enums/ExternalPageUrls';
+import {
   ConnectedHamburgerMenu,
 } from './HamburgerMenu';
-import {
-  forumUrl,
-} from '../Properties/forumUrl';
 import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
@@ -92,7 +92,7 @@ export const navBarItems = Object.freeze([
 
   <a
     className={`${_nbiStyles.NavBarItem} NavBarItem`}
-    href={forumUrl}
+    href={ExternalPageUrls.Forum}
     key={reactKey += 1}
   >
     Read &amp; Discuss

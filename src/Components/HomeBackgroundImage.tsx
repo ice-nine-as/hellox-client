@@ -1,12 +1,10 @@
-import {
-  homeBackgroundRootUrl,
-} from '../Properties/homeBackgroundRootUrl';
-
 import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/HomeBackgroundImage.less';
 const _styles = styles || {};
+
+export const homeBackgroundRootUrl = 'https://s3.amazonaws.com/x50/images/home-background/';
 
 /* Do NOT add a slash between the end of homeBackgroundRootUrl and the image
  * name. This will break the link. */
@@ -16,7 +14,6 @@ export class HomeBackgroundImage extends React.PureComponent {
       <picture className={_styles.HomeBackgroundImage}>
         <source
           media="(max-aspect-ratio: 1/1)"
-          sizes="100vh, 1534px"
           srcSet=
             {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_400.jpg 400w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_1_1,c_fill,g_auto__c_scale,w_515.jpg 515w,
@@ -41,7 +38,6 @@ export class HomeBackgroundImage extends React.PureComponent {
 
         <source
           media="(aspect-ratio: 4/3)"
-          sizes="(max-width: 1983px) and (orientation: portrait) 100vh, (max-width: 1983px) and (not (orientation: portrait)) 100vw, 1983px"
           srcSet=
             {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_538.jpg 538w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_4_3,c_fill,g_auto__c_scale,w_613.jpg 613w,
@@ -66,7 +62,6 @@ export class HomeBackgroundImage extends React.PureComponent {
 
         <source
           media="(min-aspect-ratio: 16/9)"
-          sizes="(max-width: 2400px) and (orientation: portrait) 100vh, (max-width: 2400px) and (not (orientation: portrait)) 100vw, 2400px"          
           srcSet=
             {`${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_596.jpg 596w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_ar_16_9,c_fill,g_auto__c_scale,w_681.jpg 681w,
@@ -87,7 +82,6 @@ export class HomeBackgroundImage extends React.PureComponent {
         />
 
         <img
-          sizes="(min-width: 2401px) and (orientation: portrait) 100vh, (min-width: 2401px) and (not (orientation: portrait)) 100vw, 2401px"                  
           srcSet=
             {`${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_480.jpg 480w,
             ${homeBackgroundRootUrl}home_background_ojn7bb_c_scale,w_1132.jpg 1132w,

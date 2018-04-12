@@ -8,7 +8,9 @@ export enum FeedUrls {
   NewsTeasers          = 'https://cms.hellox.me/feeds/news-feed-teaser.xml',
   NewsTitles           = 'https://cms.hellox.me/feeds/news-feed-title.xml',  
 
-  Podcast              = 'https://www.blubrry.com/feeds/hello_x.xml',
+  /* Mirrored on the CMS in order to get around CORS problems with
+   * in-browser fetch. */
+  Podcast              = 'https://cms.hellox.me/feeds/podcast-feed.xml',
 
   StoryTemplateEnPartA = 'https://cms.hellox.me/feeds/en/A/story-template-feed.xml',
   StoryTemplateEnPartB = 'https://cms.hellox.me/feeds/en/B/story-template-feed.xml',

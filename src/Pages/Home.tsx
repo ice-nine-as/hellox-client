@@ -5,11 +5,11 @@ import {
   createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+  ExternalPageUrls,
+} from '../Enums/ExternalPageUrls';
+import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
-import {
-  forumUrl,
-} from '../Properties/forumUrl';
 import {
   HomeBackgroundImage,
 } from '../Components/HomeBackgroundImage';
@@ -117,7 +117,7 @@ export class Home extends React.PureComponent<THomePageProps> {
 
             <a
               className={`${_styles.Link} ${_styles.Read}`}
-              href={forumUrl}
+              href={ExternalPageUrls.Forum}
             >
               <div className={`${_styles.LinkBox} ${_styles.Read}`}>
                 <h2 className={`${styles.LinkTitle} ${_styles.Read}`}>
@@ -138,10 +138,11 @@ export class Home extends React.PureComponent<THomePageProps> {
 
         <section className={`${_styles.Section} ${_styles.Second}`}>
           <p className={_styles.ExplainerParagraph}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea.
+            hello X is a story laboratory where you can collaborate with
+            artists, scientists, and kids to create stories about X, a woman
+            living in the Arctic in 2068. The key question of this story
+            cycle asks how the food of tomorrow may be shaped by our habits and
+            choices today.
           </p>
 
           <div className={`${_styles.LinkContainer} ${_styles.About}`}>
@@ -150,7 +151,7 @@ export class Home extends React.PureComponent<THomePageProps> {
               to={createLinkAction(AboutLinkAction)}
             >
               <span className={`${_styles.LinkText}`}>
-                GO TO ABOUT
+                READ MORE
               </span>
             </NavLink>
           </div>

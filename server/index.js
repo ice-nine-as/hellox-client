@@ -25,6 +25,7 @@ const webpack                    = require('webpack');
 const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+require('isomorphic-fetch');
 console.log('Dependencies loaded.\n');
 
 const publicPath  = clientConfigDev.output.publicPath;
@@ -67,8 +68,25 @@ const headerMiddleware = app.use((req, res, next) => {
 app.use(serveFavicon(resolve(imagesPath, 'favicon-96x96.png')));
 app.use('/fonts', express.static(resolve(fontsPath)));
 
+/* Mirror the podcast feed to get around in-browser CORS issues. */ 
+app.get('/podcast-feed.xml', async (req, res) => {
+  try {
+    const fetchRes = await fetch('https://www.blubrry.com/feeds/hello_x.xml');
+    const text     = await fetchRes.text();
+    res.write(text);
+    res.end();
+  } catch (e) {
+    console.error('Problem mirroring podcast feed.');
+    console.error(e);
+    res.status(500);
+    res.end();
+  }
+});
+
 let isBuilt = false;
 
+/* Directory with keys in it. Currently volumed with Docker from the host
+ * filesystem. */
 const letsEncryptDir = resolve(projectPath, 'private', 'live', 'hellox.me');
 
 const getSpdyOptions = () => ({

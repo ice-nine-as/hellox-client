@@ -45,7 +45,7 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Podcast.less';
+import styles from '../Styles/Pages/Podcasts.less';
 const _styles = styles || {};
 
 export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps> {
