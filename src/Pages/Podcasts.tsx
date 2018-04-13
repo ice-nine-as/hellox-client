@@ -58,7 +58,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
       language,
     } = this.props;
 
-    /* Loads the relevant feed based on language and detail level. */ 
+    /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
       key,
@@ -82,12 +82,12 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
     }
   }
 
- componentDidMount() {
-   /* Don't load within the component on the server. */
-   if (!isNode()) {
-    this.doLoad(); 
-   }
- }
+  componentDidMount() {
+    /* Don't load within the component on the server. */
+    if (!isNode()) {
+      this.doLoad();
+    }
+  }
 
   render() {
     const {
@@ -116,21 +116,38 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
             item={feed.items[0] as IPodcastPost}
             key="keyOne"
           />,
-
+          <div key="sub" className={_styles.SubscribeWrapper}>
+            <h3>Subscribe on</h3>
+            <p>Apple Podcasts &bull; RadioPublic</p>
+            <p>Google Play &bull; Spotify &bull; RSS</p>
+          </div>,
           /* Display previews of all podcasts. */
-          <ConnectedLatestPodcasts
-            detailLevel={FeedDetailLevels.Teaser}
-            key="keyTwo"
-          />,
+          <div className={_styles.Content}>
+            <ConnectedLatestPodcasts
+              detailLevel={FeedDetailLevels.Teaser}
+              key="keyTwo"
+            />
+          </div>,
         ];
       } else {
         children = 'No podcasts yet. Sorry!';
       }
     }
-    
+
     return (
       <div className={`${_styles.Podcasts} ${_styles.Page}`}>
         {children}
+        <div className={`${_styles.LeaveAMessageWrapper} ${_styles.SubscribeWrapper}`}>
+          <div className={`${_styles.LeaveAMessage}`}>
+            <h4>Leave a message</h4>
+            <p>We would love to hear from you!<br />Do you have any ideas or...</p>
+            <div className={_styles.RecordButton}>
+              <div className={_styles.RecordButtonDot} />
+              <p>START RECORDING</p>
+            </div>
+            <p>Note: Your message won't be sent until you press "Send"</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -159,6 +176,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedPodcasts = connect(mapStateToProps, mapDispatchToProps)(Podcasts); 
+export const ConnectedPodcasts = connect(mapStateToProps, mapDispatchToProps)(Podcasts);
 
 export default ConnectedPodcasts;

@@ -1,0 +1,56 @@
+@import '../Vars.less';
+
+.PodcastItemPreview{
+    position: relative;
+    flex-basis: 30%;
+    margin:@space @space-xsm;
+    color:black;
+    
+    @media screen and (max-width:600px){
+        width:100%; 
+        flex-basis: 100%;
+        margin-left:0;
+        margin-right:0;
+    }
+
+    .ImageWrapper{
+        width:100%;
+        padding-bottom:66%;
+        overflow:hidden;
+        background-position: center;
+        background-size:cover;
+        border-bottom: 6px solid @teal;
+    }
+
+    .PodcastIframe{
+        display:block;
+        border: 0;
+        border-radius: 5px;
+        height:90px;
+        overflow:hidden;
+        margin:@space-sm auto;
+        transform-origin: 0 0;
+        width:100%;
+        //transform:scale(0.8);
+      }
+
+    .TextContent{
+        padding:@space-sm;
+        border:solid 1px @teal;
+        text-align: left;
+        font-size:@larger;
+        @media screen and (max-width:600px){
+            border: none;  
+        }
+
+        & p, & h3{
+            margin:@space-sm 0;
+        }
+
+        h3{
+            margin-top:5px;
+            font-size:@h3;
+
+        }
+    }
+}

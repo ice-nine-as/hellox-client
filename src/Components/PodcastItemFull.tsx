@@ -14,43 +14,11 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
   }
 
   render() {
-    const img = (() => {
-      if (this.props.item &&
-          this.props.item['itunes:image'] &&
-          this.props.item['itunes:image']['#'])
-      {
-        /* Use the episode image. */
-        return (
-          <img
-            className={_styles.EpisodeHero}
-            src={this.props.item['itunes:image']['#']}
-          />
-        );
-      }
-
-      if (this.props.item &&
-          this.props.item.meta &&
-          this.props.item.meta.image &&
-          this.props.item.meta.image.url)
-      {
-        /* Use the fallback series image. */
-        return (
-          <img
-          className={_styles.EpisodeHero}
-          src={this.props.item.meta.image.url}
-          />
-        );
-      }
-
-      return null;
-    })();
-
     const iframe = (() => {
       if (!this.props.item ||
         !this.props.item.enclosures ||
         !this.props.item.enclosures[0] ||
-        !this.props.item.enclosures[0].url)
-      {
+        !this.props.item.enclosures[0].url) {
         return 'Embed failed.';
       }
 
@@ -64,6 +32,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
       return (
         <iframe
           className={_styles.PodcastIframe}
+          scrolling="no"
           src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedUrl)}`}
         ></iframe>
       );
@@ -72,8 +41,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
     const summary = (() => {
       console.log(this.props.item);
       if (!this.props.item ||
-          !this.props.item.description)
-      {
+        !this.props.item.description) {
         return 'No description provided.';
       }
 
@@ -86,9 +54,29 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
       );
     })();
 
+    const title = (() => {
+      console.log(this.props.item);
+      if (!this.props.item ||
+        !this.props.item.title) {
+        return 'No Title provided.';
+      }
+
+      return (
+        <h1
+          className={_styles.Title}
+          dangerouslySetInnerHTML={this.getPreparedHtml(this.props.item.title)}
+        >
+        </h1>
+      );
+    })();
+
     return (
       <div className={_styles.PodcastItemFull}>
-        {img}
+        <div
+          className={_styles.ImageWrapper}
+          style={{ backgroundImage: `url('${this.props.item['itunes:image']['#']}')` }}>
+        </div>
+        {title}
         {iframe}
         {summary}
       </div>

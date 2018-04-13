@@ -13,12 +13,12 @@
     position: relative;
     font-family: 'Lato Light';
     font-weight: 300;
-    padding: @space-lg;
+    padding: @space-lg @space-sm;
 
     &.First {
       height: 100vh;
       top: -@headerHeight;
-      padding-top: @space-xlg;
+      padding-top: @space-lg;
       margin-bottom: -160px;
       overflow: hidden;
       background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.png);
@@ -64,12 +64,13 @@
       }
 
       .AllLinksContainer {
+        position: relative;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        width:100%;
         flex-direction: row;
         max-width:900px;
-        
         @media screen and (min-width: 600px) {
           margin:0 auto;
           margin-top: @space-lg;
