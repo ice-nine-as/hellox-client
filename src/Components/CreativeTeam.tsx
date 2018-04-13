@@ -50,7 +50,7 @@ export const collaborators = Object.freeze([
 
 let reactKey = 0;
 
-export class Collaborators extends React.PureComponent {
+export class CreativeTeam extends React.PureComponent {
   render() {
     return (
       <div className={_styles.Collaborators}>
@@ -85,4 +85,4 @@ export class Collaborators extends React.PureComponent {
   }
 }
 
-export default Collaborators;
+export default CreativeTeam;
