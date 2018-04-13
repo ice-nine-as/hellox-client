@@ -5,13 +5,13 @@ export enum ImageUrls {
   HamburgerMenuIcon     = 'https://s3.amazonaws.com/x50/images/HelloX_Burger_2x.svg',
   InstagramIcon         = 'https://s3.amazonaws.com/x50/images/Instagram.svg',
   MainLogo              = 'https://s3.amazonaws.com/x50/images/HelloX_Logo_Landing_Desktop.svg',
-  PodcastIcon           = 'https://s3.amazonaws.com/x50/images/HelloX_Play.svg',
+  PodcastIcon           = 'https://s3.eu-central-1.amazonaws.com/hellox/images/Play_gold.svg',
   QuoteIcon             = 'https://s3.amazonaws.com/x50/images/HelloX_Quote_1x.svg',
-  ReadDiscussIcon       = 'https://s3.amazonaws.com/x50/images/HelloX_Forum.svg',
+  ReadDiscussIcon       = 'https://s3.eu-central-1.amazonaws.com/hellox/images/Forum_gold.svg',
   SmallLogo             = 'https://s3.amazonaws.com/x50/images/HelloX_Logo_Small_Menu.svg',
   TeamPicture           = 'https://cdn.psychologytoday.com/sites/default/files/styles/image-article_inline_full/public/field_blog_entry_teaser_image/people%20laughing_0.jpg?itok=ZZYdQ3_u',
   TwitterIcon           = 'https://s3.amazonaws.com/x50/images/Twitter.svg',
-  WriteIcon             = 'https://s3.amazonaws.com/x50/images/HelloX_Write.svg',
+  WriteIcon             = 'https://s3.eu-central-1.amazonaws.com/hellox/images/Write_gold.svg',
 }
 
 export default ImageUrls;
