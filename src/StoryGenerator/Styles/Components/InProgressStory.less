@@ -1,23 +1,19 @@
-@import '../../../Styles/KeyColors.less';
+@import '../../../Styles/Vars.less';
 
 .InProgressStory {
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-
   .QuestionContainer {
-    display: flex;
+    width:100%;
   }
 
   .Complete {
-    width: 400px;
-    padding: 10px;
-    margin-top: 30px;
+    display: block;
+    padding: @space-sm+5 @space-lg;
+    margin:@space auto;
     border: none;
     background: @gold;
-    color: black;
-    font-size: 16pt;
+    color: @deep-purple;
+    font-size: @small;
+    text-transform: uppercase;
     cursor: pointer;
   }
 }

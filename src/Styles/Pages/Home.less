@@ -68,9 +68,12 @@
         justify-content: center;
         flex-wrap: wrap;
         flex-direction: row;
-
+        max-width:900px;
+        
         @media screen and (min-width: 600px) {
+          margin:0 auto;
           margin-top: @space-lg;
+          justify-content: space-between;
         }
       }
 

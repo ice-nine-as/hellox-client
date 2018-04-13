@@ -4,6 +4,9 @@ import {
 import {
   IQuestionProps,
 } from '../Interfaces/IQuestionProps';
+import {
+  ProgressWheel,
+} from '../../Components/ProgressWheel';
 
 import * as React from 'react';
 
@@ -16,8 +19,15 @@ export class Question extends React.PureComponent<IQuestionProps> {
   render() {
     return (
       <div className={`Question ${_styles.Question}`}>
-        <div className={_styles.QuestionText}>
-          {this.props.text}
+
+        <div className={_styles.QuestionWrapper}>
+          <ProgressWheel
+            current={this.props.current}
+            max={this.props.max}
+          />
+          <div className={_styles.QuestionText}>
+            {this.props.text}
+          </div>
         </div>
 
         <Answer

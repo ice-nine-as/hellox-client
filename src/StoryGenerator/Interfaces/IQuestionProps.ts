@@ -19,9 +19,11 @@ import {
 
 export interface IQuestionProps extends IQuestionModel {
   currentPart: StoryGeneratorParts,
-  language:    Languages,
-  storyState:  StoryStates,
+  language: Languages,
+  storyState: StoryStates,
   templateKey: StoryGeneratorTemplateKeys,
+  max: number,
+  current: number,
   setAnswerText(value: string, templateKey: StoryGeneratorTemplateKeys, id: string): IStoryGeneratorAction,
 }
 

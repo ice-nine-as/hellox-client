@@ -101,7 +101,7 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
     } else {
       titleMap[StoryGeneratorParts.A] = 'Part A';
     }
-    
+
     titleKey = getStoryTemplate({
       currentPart: StoryGeneratorParts.B,
       language,
@@ -130,43 +130,69 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
 
     return (
       <div className={_styles.StoryGenerator}>
-        <h2 className={_styles.ExplainerHeader}>
-          <strong>
-            How does it work?
+        <div className={_styles.Content}></div>
+        <div className={_styles.Explainer}>
+          <h2 className={_styles.ExplainerHeader}>
+            <strong>
+              How does it work?
           </strong>
-        </h2>
-
-        <p className={_styles.Explainer}>
-          Answer each of the questions, then click the Generate Story button to
-          see your personalized story. Click Submit Story to send it to Ice-9 for
-          a chance at your words being included in the further narrative of X,
-          or being discussed on the podcast by one of the team members!  
+          </h2>
+          <ol>
+            <li>Answer each of the questions, then click the Generate Story button to
+          see your personalized story. Click Submit Story to send it to Ice-9 for</li>
+            <li>Answer each of the questions, then click the Generate Story button to
+          see your personalized story. Click Submit Story to send it to Ice-9 for</li>
+            <li>Answer each of the questions, then click the Generate Story button to
+          see your personalized story. Click Submit Story to send it to Ice-9 for</li>
+          </ol>
+          <p>
+            Answer each of the questions, then click the Generate Story button to
+            see your personalized story. Click Submit Story to send it to Ice-9 for
+            a chance at your words being included in the further narrative of X,
+            or being discussed on the podcast by one of the team members!
         </p>
+        </div>
+        <div className={_styles.InProgressWrapper}>
+          <div className={_styles.TheQuestion}>
+            <div className={_styles.Content}>
+              <div className={_styles.InnerContent}>
+                <h3>The question</h3>
+                <p>Answer each of the questions, then click the Generate Story button to
+              see your personalized story. Click Submit Story to send it to Ice-9 forAnswer each of the questions, then click the Generate Story button to
+              see your personalized story. Click Submit Story to send it to Ice-9 forAnswer each of the question.</p>
+                <button className={_styles.Button}>Start writing</button>
+              </div>
+            </div>
+          </div>
+          <div className={_styles.Content}>
+            <div className={_styles.InnerContent}>
+              <StoryPartSelector
+                currentPart={this.props.currentPart}
+                setCurrentPart={this.props.setCurrentPart}
+                titleMap={titleMap}
+              />
 
-        <StoryPartSelector
-          currentPart={this.props.currentPart}
-          setCurrentPart={this.props.setCurrentPart}
-          titleMap={titleMap}
-        />
+              <InProgressStory
+                currentPart={this.props.currentPart}
+                language={this.props.language}
+                setAnswerText={this.props.setAnswerText}
+                setStoryState={this.props.setStoryState}
+                storyState={this.props.storyState}
+                storyTemplate={template}
+                templateKey={key}
+              />
 
-        <InProgressStory
-          currentPart={this.props.currentPart}
-          language={this.props.language}
-          setAnswerText={this.props.setAnswerText}
-          setStoryState={this.props.setStoryState}
-          storyState={this.props.storyState}
-          storyTemplate={template}
-          templateKey={key}
-        />
-        
-        {this.props.storyState === StoryStates.Complete ?
-          <CompletedStory
-            language={this.props.language}
-            setCurrentPart={this.props.setCurrentPart}
-            setStoryState={this.props.setStoryState}
-            storyTemplate={template}
-          /> :
-          null}
+              {this.props.storyState === StoryStates.Complete ?
+                <CompletedStory
+                  language={this.props.language}
+                  setCurrentPart={this.props.setCurrentPart}
+                  setStoryState={this.props.setStoryState}
+                  storyTemplate={template}
+                /> :
+                null}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -176,22 +202,22 @@ export const mapStateToProps: MapStateToProps<
   TStoryGeneratorStoreProps,
   {},
   {
-    language:       Languages,
+    language: Languages,
     storyGenerator: TStoryGeneratorStoreProps,
   }
-> = ({
-  language,
-  storyGenerator: {
+  > = ({
+    language,
+    storyGenerator: {
+      currentPart,
+      storyTemplates,
+      storyState,
+    },
+  }) => ({
     currentPart,
+    language,
     storyTemplates,
     storyState,
-  },
-}) => ({
-  currentPart,
-  language,
-  storyTemplates,
-  storyState,
-});
+  });
 
 export const mapDispatchToProps: MapDispatchToProps<TStoryGeneratorDispatchProps, TStoryGeneratorStoreProps> = (dispatch: Dispatch<IStoryGeneratorAction>) => ({
   setAnswerText(value: string, templateKey: StoryGeneratorTemplateKeys, id: string) {
