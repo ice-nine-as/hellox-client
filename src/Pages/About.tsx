@@ -1,6 +1,6 @@
 import {
-  Collaborators,
-} from '../Components/Collaborators';
+  CreativeTeam,
+} from '../Components/CreativeTeam';
 import {
   ContactForm,
 } from '../Components/ContactForm';
@@ -18,6 +18,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/About.less';
+import { ScienceTeam } from '../Components/ScienceTeam';
 const _styles = styles || {};
 
 export class About extends React.PureComponent<TPageProps> {
@@ -33,11 +34,11 @@ export class About extends React.PureComponent<TPageProps> {
           <div className={_styles.Body}>
             <h2 className={_styles.Header}>
               What is hello X?
-          </h2>
+            </h2>
 
             <p className={_styles.OpeningParagraph}>
               Can stories shape our future? We think so.
-          </p>
+            </p>
 
             <p className={_styles.OpeningParagraph}>
               hello X is a story laboratory to collectively imagine X,
@@ -45,7 +46,7 @@ export class About extends React.PureComponent<TPageProps> {
               of hello X asks how human impacts on the Arctic ecosystem
               (think: climate change, pollution, industrial food production)
               might affect food webs and food culture for X in 2068.
-          </p>
+            </p>
 
             <p className={_styles.OpeningParagraph}>
               You can contribute to the first cycle of X shor stories
@@ -57,11 +58,11 @@ export class About extends React.PureComponent<TPageProps> {
               and scientific teams, and propose new story games. This is a
               laboratory with live experiments, and lots of potential
               surprises, so subscribe to the hello X
-          </p>
+            </p>
 
             <h2 className={_styles.Header}>
               Our mission
-          </h2>
+            </h2>
 
             <p className={_styles.OpeningParagraph}>
               Ice-9's mission is to build experimental spaces for
@@ -72,7 +73,7 @@ export class About extends React.PureComponent<TPageProps> {
               education, supporting a transition towards a knowledge-based
               circular economy in an inclusive, just, and democratic global
               society.
-          </p>
+            </p>
 
             <p className={_styles.OpeningParagraph}>
               Productive storyplay means serious fun — serious because
@@ -83,11 +84,11 @@ export class About extends React.PureComponent<TPageProps> {
               yield us rewards in the forms of purpose, courage, and hope
               (compounded daily). And best of all, X inherits this fortune
               alongside a vision far beyond mere survival.
-          </p>
+            </p>
 
             <h2 className={_styles.Header}>
               Ice-9
-          </h2>
+            </h2>
 
             <p className={_styles.OpeningParagraph}>
               Ice-9 was founded in 2014 by artists Christine Cynn &amp;
@@ -99,35 +100,36 @@ export class About extends React.PureComponent<TPageProps> {
               He specializes in process-based art, created within communities in
               dialogue with local stories and landscapes. Ice-9 is based in
               Tromsø, Northern Norway.
-          </p>
+            </p>
 
             <h2 className={`${_styles.Header} ${_styles.NoBottomMargin}`}>
               The team
-          </h2>
+            </h2>
 
             <figure className={_styles.PictureContainer}>
               <img
                 className={_styles.TeamPicture}
-                src={ImageUrls.TeamPicture}
+                src={ImageUrls.CoreTeamPicture}
               />
 
               <figcaption className={_styles.PictureAttribution}>
                 <p className={_styles.AttributionSection}>
-                  Barbecue The Secrets Of The Greek Way
-              </p>
+                  Illustration by Valentin Manz
+                </p>
               </figcaption>
             </figure>
 
             <TeamMembers />
-
-
           </div>
+
           <div className={_styles.ContactFormWrapper}>
             <h2 className={`${_styles.Header} ${_styles.NoBottomMargin}`}>
               Contact us
             </h2>
+
             <ContactForm />
           </div>
+
           <div className={_styles.Body}>
             <h2 className={`${_styles.CollaboratorsSubheader} ${_styles.Subheader}`}>
               Our collaborators
@@ -140,12 +142,12 @@ export class About extends React.PureComponent<TPageProps> {
             <figure className={_styles.PictureContainer}>
               <img
                 className={_styles.CollaboratorsPicture}
-                src={ImageUrls.CollaboratorsPicture}
+                src={ImageUrls.CreativeTeamPicture}
               />
 
               <figcaption className={_styles.PictureAttribution}>
                 Illustration by Valentin Manz
-            </figcaption>
+              </figcaption>
             </figure>
 
             <p className={_styles.CollaboratorsParagraph}>
@@ -155,7 +157,33 @@ export class About extends React.PureComponent<TPageProps> {
               programmers from around the world.
             </p>
 
-            <Collaborators />
+            <CreativeTeam />
+
+            <h3 className={_styles.Subsubheader}>
+              Science team
+            </h3>
+
+            <figure className={_styles.PictureContainer}>
+              <img
+                className={_styles.ScienceTeamPicture}
+                src={ImageUrls.ScienceTeamPicture}
+              />
+
+              <figcaption className={_styles.PictureAttribution}>
+                Illustration by Valentin Manz
+              </figcaption>
+            </figure>
+
+            <p className={_styles.ScienceTeamParagraph}>
+              The hello X science team is led by environmental
+              anthropologist Ann Eileen Lennert and includes
+              marine biologists, bioenergeticists, ecotoxicologists,
+              and more from our partner research institutes (see
+              FRAM High North Research Center for Climate and the
+              Environment and Nansen Legacy Project links below.
+            </p>
+
+            <ScienceTeam />
           </div>
         </div>
       </div >
