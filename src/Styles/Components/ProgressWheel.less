@@ -1,13 +1,14 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 
 .ProgressWheel {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 60px;
-  height: 60px;
-  margin-left: 10px;
+  width: 70px;
+  
+  height: 70px;
+  margin: 0 @space-sm;
   background-clip: padding-box;
   border-radius: 50%;
   
@@ -16,6 +17,13 @@
     width: 60px;
     height: 60px;
     background-color: @gold;
+    border-radius: 50%;
+  }
+  .Gray {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: @light-gray;
     border-radius: 50%;
   }
   
@@ -27,7 +35,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: black;
+    background: @deep-purple;
     color: white;
     font-size: 12pt;
   }

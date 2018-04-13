@@ -76,9 +76,9 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     /* Weird error below -- keeps complaining about null not being a member of
      * keyof TFeedsMap, which doesn't make much sense to me. */
     // @ts-ignore
-    const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>)
+    const missingKeys: Array<keyof TFeedsMap> = (['A', /*'B', 'C',*/] as Array<StoryGeneratorParts>)
       .map<keyof TFeedsMap | null>((storyPart) => {
-        /* Loads the relevant feed based on language and detail level. */ 
+        /* Loads the relevant feed based on language and detail level. */
         const {
           feed,
           key,
@@ -106,9 +106,8 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
       const _actions = actions as Array<IRssAction>;
       _actions.forEach((action) => {
         if (!action.value ||
-            !action.value.items ||
-            !action.value.items.length)
-        {
+          !action.value.items ||
+          !action.value.items.length) {
           return;
         }
 
@@ -150,6 +149,11 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
   render() {
     return (
       <div className={`${_styles.Write} ${_styles.Page}`}>
+        <div className={_styles.Content}>
+          <div className={_styles.MediaContainer}>
+            <img src="https://dynaimage.cdn.cnn.com/cnn/q_auto,w_1024,c_fill,g_auto,h_576,ar_16:9/http%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F170407220907-01-iconic-mountains-k2-restricted.jpg" />
+          </div>
+        </div>
         {
           /* It's not clear why, but rendering this as JSX breaks big-time. */
           React.createElement(ConnectedStoryGenerator)
@@ -181,9 +185,9 @@ export const mapDispatchToProps = (dispatch: Function) => ({
 
   setStoryTemplate(key: StoryGeneratorTemplateKeys, value: IFeedTemplate) {
     const template = {
-      questions:  Object.freeze(getAttrFromFeedTemplate('questions', value) as Array<IQuestionModel>),
-      storyText:  getAttrFromFeedTemplate('storyText', value) as string,
-      title:      getAttrFromFeedTemplate('title', value) as string,
+      questions: Object.freeze(getAttrFromFeedTemplate('questions', value) as Array<IQuestionModel>),
+      storyText: getAttrFromFeedTemplate('storyText', value) as string,
+      title: getAttrFromFeedTemplate('title', value) as string,
     };
 
     const action = makeStoryGeneratorAction({

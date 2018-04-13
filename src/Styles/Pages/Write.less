@@ -1,7 +1,23 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 @import '../Page.less';
 
 .Write {
-  display: flex;
-  justify-content: center;
+  background-color:white;
+}
+
+.Content{
+  width: 100%;
+  max-width: @pageMaxWidth;
+  overflow: hidden;
+  margin:0 auto;
+}
+
+.MediaContainer{
+  position: relative;
+  width: 100%;
+  border-bottom:solid 5px @teal;
+  & img{
+    margin-bottom:-5px;
+    width: 100%;
+  }
 }

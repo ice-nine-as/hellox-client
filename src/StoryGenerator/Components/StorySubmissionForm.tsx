@@ -10,8 +10,8 @@ const _styles = styles || {};
 
 export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFormProps> {
   carbonCopy: HTMLInputElement | null = null;
-  email:      HTMLInputElement | null = null;
-  form:       HTMLFormElement  | null = null;
+  email: HTMLInputElement | null = null;
+  form: HTMLFormElement | null = null;
 
   constructor(props: any, context?: any) {
     super(props, context);
@@ -66,11 +66,15 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
           ref={(ref) => this.carbonCopy = ref}
           type="checkbox"
         />
-
         <label
           className={`${_styles.CarbonCopyLabel} ${_styles.Label}`}
           htmlFor={_styles.CarbonCopy}
         >
+          <div className={`${_styles.LabelBoxWrapper}`}>
+            <div className={`${_styles.LabelBox}`}>
+              <p>✓</p>
+            </div>
+          </div>
           Send to me by e-mail
         </label>
 
@@ -117,17 +121,16 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
 
   submit() {
     if (this.carbonCopy &&
-        this.carbonCopy.checked &&
-        this.email &&
-        this.email.value &&
-        this.form)
-    {
+      this.carbonCopy.checked &&
+      this.email &&
+      this.email.value &&
+      this.form) {
       /* Insert CC data for formspree. */
-      const ccInput  = document.createElement('input');
+      const ccInput = document.createElement('input');
       ccInput.hidden = true;
-      ccInput.name   = '_cc';
-      ccInput.type   = 'hidden';
-      ccInput.value  = this.email.value;
+      ccInput.name = '_cc';
+      ccInput.type = 'hidden';
+      ccInput.value = this.email.value;
       this.form.appendChild(ccInput);
     }
   }
