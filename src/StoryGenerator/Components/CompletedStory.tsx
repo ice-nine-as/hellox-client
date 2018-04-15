@@ -22,25 +22,29 @@ export class CompletedStory extends React.PureComponent<TCompletedStoryProps> {
 
     return (
       <div className={_styles.CompletedStory}>
-        <textarea
-          className={_styles.Editor}
-          defaultValue={storyText}
-        />
-
-        <p className={_styles.Explainer}>
-          Fill out the fields below and click the Submit My Story button
-          in order to send your customized, personal story to the Ice 9 team!
-          Include your e-mail address to get a copy sent to you. Please carefully
-          note that by sending in a submission, you grant Ice-9 AS the permanent
-          right to use that submission in future stories, podcasts, promotional
-          materials, etc. 
+        <div className={_styles.Instructions}><p className={_styles.InstructionText}>Click in the text box below to edit your story</p></div>
+        <div className={_styles.EditorWrapper}>
+          <textarea
+            className={_styles.Editor}
+            defaultValue={storyText}
+          />
+        </div>
+        <div className={_styles.formWrapper}>
+          <p>
+            Fill out the fields below and click the Submit My Story button
+            in order to send your customized, personal story to the Ice 9 team!
+            Include your e-mail address to get a copy sent to you. Please carefully
+            note that by sending in a submission, you grant Ice-9 AS the permanent
+            right to use that submission in future stories, podcasts, promotional
+            materials, etc.
         </p>
 
-        <StorySubmissionForm
-          completedStory={storyText}
-          language={this.props.language}
-          storyTemplate={this.props.storyTemplate}
-        />
+          <StorySubmissionForm
+            completedStory={storyText}
+            language={this.props.language}
+            storyTemplate={this.props.storyTemplate}
+          />
+        </div>
       </div>
     );
   }

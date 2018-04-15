@@ -1,18 +1,35 @@
+@import '../../../Styles/Vars.less';
+
+
 .Question {
   display: block;
-  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-left: 10px;
   margin-top: -8px;
   text-align: left;
-  font-size: 16pt;
+  font-size: @larger;
+  overflow:hidden;
+  box-sizing: border-box;
+  
+  .QuestionWrapper{
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: hidden;
+  }
 
   .QuestionText {
-    width: 60%;
-    padding: 15px;
-    border-radius: 15px;
-    background: grey;
-    color: white;
+    padding: @space-sm;
+    border-radius: 0 @space-sm @space-sm 0;
+    background: @light-gray;
+    color: @deep-purple;
+    font-weight: 600;
+    flex-grow:1;
+
+    @media screen and (min-width:600px){
+      border-radius: @space-sm;
+    }
   }
 }

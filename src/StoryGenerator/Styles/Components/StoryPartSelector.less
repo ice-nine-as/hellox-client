@@ -1,15 +1,16 @@
-@import '../../../Styles/KeyColors.less';
+@import '../../../Styles/Vars.less';
 
 .StoryPartSelector {
   display: flex;
   align-items: start;
   justify-content: center;
+  margin: @space-lg 0;
 
   .SelectorContainer {
-    width: 180px;
-    padding-top: 50px;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 100%;
+    padding-top: @space-lg;
+    margin-left: @space-sm;
+    margin-right: @space-sm;
   }
 
   :global(.Hexagon) {
@@ -20,11 +21,9 @@
 
   .PartSelector {
     width: 100%;
-    height: 100%;
     border: none;
     background: transparent;
     color: @white;
-    font-size: 25pt;
     cursor: pointer;
 
     &.A {
@@ -45,9 +44,9 @@
   .Title {
     display: inline-block;
     width: 100%;
-    margin-top: 40px;
+    margin-top: @space+@space-sm;
     color: black;
-    font-size: 16pt;
+    font-size: @p;
   }
 
   :global(.active) .PartSelector {
