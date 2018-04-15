@@ -21,6 +21,8 @@ export type TFeedsMap = {
   [FeedKeys.StoryTemplateRuPartA]: IRssFeed | null,
   [FeedKeys.StoryTemplateRuPartB]: IRssFeed | null,
   [FeedKeys.StoryTemplateRuPartC]: IRssFeed | null,
+
+  [FeedKeys.TeamMembers]:          IRssFeed | null,
 };
 
 export default TFeedsMap;

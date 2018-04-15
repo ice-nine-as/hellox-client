@@ -8,6 +8,9 @@ import {
   SiteMap,
 } from './SiteMap';
 import {
+  SponsorIcons,
+} from './SponsorIcons';
+import {
   TFooterProps,
 } from '../TypeAliases/TFooterProps';
 import {
@@ -54,7 +57,7 @@ export class Footer extends React.PureComponent<TFooterProps> {
         </div>
 
         <div className={`${_styles.VerticalHalf} ${_styles.Second}`}>
-          Sponsor icons go here.
+          <SponsorIcons />
         </div>
       </div>
     );

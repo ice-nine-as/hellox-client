@@ -21,6 +21,8 @@ export enum FeedUrls {
   StoryTemplateRuPartA = 'https://cms.hellox.me/feeds/ru/A/story-template-feed.xml',
   StoryTemplateRuPartB = 'https://cms.hellox.me/feeds/ru/B/story-template-feed.xml',
   StoryTemplateRuPartC = 'https://cms.hellox.me/feeds/ru/C/story-template-feed.xml',
+
+  TeamMembers          = 'https://cms.hellox.me/feeds/team-members-feed.xml',
 }
 
 export default FeedUrls;

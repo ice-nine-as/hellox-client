@@ -26,6 +26,9 @@ export enum FeedKeys {
   StoryTemplateRuPartA = 'StoryTemplateRuPartA',
   StoryTemplateRuPartB = 'StoryTemplateRuPartB',
   StoryTemplateRuPartC = 'StoryTemplateRuPartC',
+
+  /* Stores metadata about Ice-9 employees and associates. */
+  TeamMembers          = 'TeamMembers',
 }
 
 export default FeedKeys;
