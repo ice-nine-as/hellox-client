@@ -163,13 +163,6 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
               Your written addition goes live to the storyverse!
             </li>
           </ol>
-
-          <p>
-            Answer each of the questions, then click the Generate Story button to
-            see your personalized story. Click Submit Story to send it to Ice-9 for
-            a chance at your words being included in the further narrative of X,
-            or being discussed on the podcast by one of the team members!
-          </p>
         </div>
 
         <div className={_styles.InProgressWrapper}>
