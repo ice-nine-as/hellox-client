@@ -68,7 +68,7 @@
 				align-items: center;
 				background-color: @deep-purple;
 				color: white;
-				padding: @space-sm+5 @space-lg;
+				padding: @space-sm+5 @space;
 				& p {
 					margin: 0;
 				}
@@ -78,6 +78,10 @@
 				}
 				&:active {
 					transform: translateY(1px);
+				}
+
+				@media screen and (min-width:600px) {
+					padding: @space-sm+5 @space-lg;
 				}
 
 				.RecordButtonDot {

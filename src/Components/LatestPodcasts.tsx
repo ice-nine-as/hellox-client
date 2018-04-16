@@ -133,10 +133,6 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
         key={key += 1}
       >
         {podcastItems}
-        {podcastItems}
-        {podcastItems}
-        {podcastItems}
-        {podcastItems}
         <div className={_styles.FillerItem} />
         <div className={_styles.FillerItem} />
         <div className={_styles.FillerItem} />
