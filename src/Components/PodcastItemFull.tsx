@@ -44,7 +44,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 			}
 			return (
 				<p className={_styles.Date}>
-          {getFormattedDate(this.props.item.pubDate.toISOString())}
+          {getFormattedDate(new Date(this.props.item.pubDate).toISOString())}
 				</p>
 			);
 		})();

@@ -52,11 +52,12 @@ import styles from '../Styles/Components/LatestNews.less';
 const _styles = styles || {};
 
 
-export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { loadMoreVisible: boolean, }> {
+export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { error: string, loadMoreVisible: boolean, }> {
   constructor(props: any, context?: any) {
     super(props, context);
 
     this.state = {
+      error:           '',
       loadMoreVisible: true,
     };
 
@@ -83,42 +84,71 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       language,
     });
 
+    const rejector = (reason: Error) => {
+      console.error(reason);
+      this.setState({
+        error: 'An error was encountered in loading the news feed. Sorry!',
+      });
+    };
+
     /* For some reason, possibly that we're only mutating a portion of a feed,
     * the getNewsFeed method occasionally refuses to render new articles when
     * a single article has been fetched beforehand. This is avoided through
     * forceUpdate below. */
-
-    debugger;
     if (!feed) {
       this.props.getNewsFeed(key)
-        .then(() => this.forceUpdate(),
-          (reason) => console.error(reason));
+        .then(
+          /* Resolve */
+          () => this.forceUpdate(),
+
+          /* Reject */
+          (reason) => rejector(reason)
+        );
     } else if (feed.currentOffset) {
       const origFeedLength = feed.items.length;
 
       /* We've already loaded a set of articles, so we need to use the offset. */
       this.props.getNewsFeed(key, feed.currentOffset, feed)
-        .then((action) => {
-          if (action.value &&
-              /* If less than three items were fetched, the tail has been reached. */
-              action.value.items.length < origFeedLength + 3)
-          {
-            /* Feed is now at tail and the Load More button should be disabled. */
-            this.setState({
-              loadMoreVisible: false,
-            });
-          } else {
-            this.forceUpdate();
+        .then(
+          /* Resolve */
+          (action) => {
+            if (action.value &&
+                /* If less than three items were fetched, the tail has been reached. */
+                action.value.items.length < origFeedLength + 3)
+            {
+              /* Feed is now at tail and the Load More button should be disabled. */
+              this.setState({
+                loadMoreVisible: false,
+              });
+            } else {
+              this.forceUpdate();
+            }
+          },
+
+          /* Reject */
+          (reason) => {
+            rejector(reason);
           }
-        })
+        )
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
        * bother to guess where it is in the feed. */
       this.props.getNewsFeed(key, 0, feed)
-        .then(() => this.forceUpdate(),
-          (reason) => console.error(reason));
+        .then(
+          /* Resolve */
+          () => this.forceUpdate(),
+
+          /* Reject */
+          (reason) => rejector(reason)
+        );
     } else {
-      this.props.getNewsFeed(key, 0, feed).then(() => this.forceUpdate());
+      this.props.getNewsFeed(key, 0, feed).then(
+        /* Resolve */
+        () => this.forceUpdate(),
+      
+        /* Reject */
+        (reason) => rejector(reason)
+      );
     }
   }
 
@@ -140,8 +170,9 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
         language,
       });
 
-      /* Don't autoload if we already have a full stack of previews. */
-      if (feed && feed.items.length < 3) {
+      /* Only autoload if the feed has never been fetched, or there is not a
+       * full triple-stack of items already. */
+      if (!feed || (feed.items && feed.items.length < 3)) {
         this.doLoad();
       }
     }
@@ -165,35 +196,77 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     });
 
     /* TODO: Add internationalization to no news items message. */
-    const newsItems = feed && feed.items && feed.items.length > 0 ?
-      feed.items.map((item) => {
-        if (this.props.detailLevel === FeedDetailLevels.Full) {
-          return (
-            <NewsItemFull
-              item={item}
-              key={reactKey += 1}
-            />
-          );
-        } else {
-          return (
-            <NewsItemPreview
-              item={item}
-              key={reactKey += 1}
-            />
-          );
-        }
-      }) :
-      <p>{'Sorry, no news yet!'}</p>;
+    const newsItems = (() => {
+      if (!feed) {
+        return (
+          <p key="___key">
+            News is loading...
+          </p>
+        );
+      } else if (feed.items && feed.items.length > 0) {
+        return feed.items.map((item) => {
+          if (this.props.detailLevel === FeedDetailLevels.Full) {
+            return (
+              <NewsItemFull
+                item={item}
+                key={reactKey += 1}
+              />
+            );
+          } else {
+            return (
+              <NewsItemPreview
+                item={item}
+                key={reactKey += 1}
+              />
+            );
+          }
+        });
+      } else {
+        return (
+          <p key="____key">
+            Sorry, no news yet!
+          </p>
+        );
+      }
+    })();
 
     return (
       <div
         className={`${_styles.LatestNews} ${_styles[this.props.detailLevel]}`}
         key={reactKey += 1}
       >
-        {newsItems}
-        {this.state.loadMoreVisible ?
-          <LoadMoreButton func={this.doLoad} /> :
-          null}
+        {
+          this.state.error ?
+            /* Display the error if loading fails. */
+            this.state.error :
+            [
+              newsItems,
+              
+              (() => {
+                if (!feed) {
+                  /* Don't show the Load More button if the feed hasn't been
+                   * fetched. */
+                  return null;
+                } else if (this.state.loadMoreVisible) {
+                  return (
+                    <LoadMoreButton
+                      func={this.doLoad}
+                      key="_key1"
+                    />
+                  );
+                } else {
+                  return (
+                    <p
+                      className={styles.NoMoreNews}
+                      key="_key2"
+                    >
+                      No more news!
+                    </p>
+                  );
+                }
+              })(),
+            ]
+        }
       </div>
     );
   }
@@ -209,7 +282,12 @@ export const mapStateToProps: MapStateToProps<TLatestNewsOwnProps & TLatestNewsS
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
-  getNewsFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null = null): Promise<IRssAction> {
+  getNewsFeed(
+    feedKey: keyof TFeedsMap,
+    offset: number = 0,
+    composeWith: IRssFeed | null = null
+  ): Promise<IRssAction>
+  {
     const thunk = createRssThunk({
       composeWith,
       feedKey: feedKey,

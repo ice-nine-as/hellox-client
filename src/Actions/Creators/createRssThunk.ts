@@ -79,10 +79,20 @@ export const createRssThunk: TRssFeedGetter = ({
       urlArg,
     };
 
-    const feed = await downloadFeed(argObj);
-    if (!feed || !isRssFeed(feed)) {
-      throw new Error(strings.FEED_RESPONSE_INVALID);
-    }
+    const feed = await (async () => {
+      let tmp;
+      try {
+        tmp = await downloadFeed(argObj);
+      } catch (e) {
+        throw new Error(strings.FEED_RESPONSE_INVALID);
+      }
+
+      if (!tmp || !isRssFeed(tmp)) {
+        throw new Error(strings.FEED_RESPONSE_INVALID);
+      }
+
+      return tmp;
+    })();
 
     let finalFeedObj: IRssFeed | null = null;
     if (composeWith && isRssFeed(composeWith)) {

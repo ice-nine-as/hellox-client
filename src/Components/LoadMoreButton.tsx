@@ -7,9 +7,9 @@ const styles = _styles || {};
 export class LoadMoreButton extends React.PureComponent<{ func: (event: React.MouseEvent<HTMLButtonElement>) => void, }> {
   render() {
     return (
-      <div className={styles.LoadMoreButton}>
+      <div className={styles.LoadMoreContainer}>
         <button
-          className={styles.Button}
+          className={`${styles.Button} light`}
           onClick={this.props.func}
         >
           LOAD MORE

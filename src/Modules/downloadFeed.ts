@@ -93,16 +93,28 @@ export const downloadFeed = async ({
     url;
     
   return new Promise<IRssFeed>(async (resolve, reject) => {
-    const res = await fetch(fullUrl, {
-      cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'omit',
-      method:      'GET', // *GET, PUT, DELETE, etc.
-    });
-    
+    const res = await (async () => {
+      try {
+        return await fetch(fullUrl, {
+          cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'omit',
+          method:      'GET', // *GET, PUT, DELETE, etc.
+        });
+      } catch (e) {
+        console.error('RSS feed fetch failed.');
+        reject(e);
+        return null;
+      }
+    })();
+
+    if (!res) {
+      return;
+    }
+
     if (res.status !== 200) {
       reject(new Error(`Problem fetching feed. Status is ${res.status}.`));
     }
-    
+
     const resText = await res.text();
 
     const feed: IRssFeed | IPodcastFeed = {
@@ -119,13 +131,13 @@ export const downloadFeed = async ({
         reject(error);
       }
     });
-    
+
     feedparser.on('readable', function () {
       // @ts-ignore
       const __this = this;
-      var stream = __this as FeedParser; // `this` is `feedparser`, which is a stream
+      const stream = __this as FeedParser; // `this` is `feedparser`, which is a stream
       //var meta = stream.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
-      var item;
+      let item;
 
       while (item = stream.read()) {
         feed.title = item.meta.title;
@@ -139,13 +151,15 @@ export const downloadFeed = async ({
 
         feed.items.push(item);
       }
-
-      resolve(feed);
     });
   
     /* Write to the stream. */
     feedparser._write(resText, 'utf-8', () => {
-      /* Do nothing for now. */
+      /* Resolve the promise, with the constructed feed as the value. This
+       * /must/ be performed here, as opposed to in the readable event,
+       * because feeds with no content (e.g. at the tail of the feed) do not
+       * fire the readable event. */ 
+      resolve(feed);
     });
   });
 };

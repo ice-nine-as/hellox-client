@@ -48,35 +48,34 @@ export class PodcastItemPreview extends React.PureComponent<
 
 	render() {
 		const iframe = (() => {
-			if (
-				!this.props.item ||
-				!this.props.item.enclosures ||
-				!this.props.item.enclosures[0] ||
-				!this.props.item.enclosures[0].url
-			) {
+			if (!this.props.item ||
+					!this.props.item.enclosures ||
+					!this.props.item.enclosures[0] ||
+					!this.props.item.enclosures[0].url)
+			{
 				return 'Embed failed.';
 			}
 
 			const correctedUrl =
-				/* Add https. */
-				'https' +
-				this.props.item.enclosures[0].url
-					/* Remove http. */
-					.slice(4);
+				/* Prepare for being placed as an URL argument. */
+				encodeURIComponent(
+					/* Add https. */
+					'https' +
+					this.props.item.enclosures[0].url
+						/* Remove http. */
+						.slice(4)
+				);
 
 			return (
 				<iframe
 					className={_styles.PodcastIframe}
 					scrolling="no"
-					src={`https://player.blubrry.com/?media_url=${encodeURIComponent(
-						correctedUrl
-					)}`}
+					src={`https://player.blubrry.com/?media_url=${correctedUrl}`}
 				/>
 			);
 		})();
 
 		const summary = (() => {
-			//console.log(this.props.item);
 			if (!this.props.item || !this.props.item.description) {
 				return 'No description provided.';
 			}
@@ -87,7 +86,8 @@ export class PodcastItemPreview extends React.PureComponent<
 					dangerouslySetInnerHTML={this.getPreparedHtml(
 						this.props.item.description
 					)}
-				/>
+				>
+				</p>
 			);
 		})();
 
@@ -96,28 +96,23 @@ export class PodcastItemPreview extends React.PureComponent<
 				return 'No date provided.';
 			}
 			return (
-				<p
-					className={_styles.Date}
-					dangerouslySetInnerHTML={this.getPreparedHtml(
-						getFormattedDate(this.props.item.pubDate.toISOString())
-					)}
-				/>
+				<p className={_styles.Date}>
+					{getFormattedDate(new Date(this.props.item.pubDate).toISOString())}
+				</p>
 			);
 		})();
 
 		const title = (() => {
-			//console.log(this.props.item);
 			if (!this.props.item || !this.props.item.title) {
-				return 'No Title provided.';
+				return 'No title provided.';
 			}
 
 			return (
 				<h3
 					className={_styles.Title}
-					dangerouslySetInnerHTML={this.getPreparedHtml(
-						this.props.item.title
-					)}
-				/>
+				>
+					{this.props.item.title}
+				</h3>
 			);
 		})();
 
@@ -126,9 +121,7 @@ export class PodcastItemPreview extends React.PureComponent<
 				<div
 					className={_styles.ImageWrapper}
 					style={{
-						backgroundImage: `url('${this.props.item[
-							'itunes:image'
-						]['#']}')`,
+						backgroundImage: `url('${this.props.item['itunes:image']['#']}')`,
 					}}
 				/>
 				<div className={_styles.TextContent}>

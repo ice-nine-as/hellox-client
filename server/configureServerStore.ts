@@ -1,19 +1,19 @@
 import {
   configureClientStore,
 } from '../src/Modules/configureClientStore';
+/*import {
+  createRssThunk,
+} from '../src/Actions/Creators/createRssThunk';*/
 import {
   Request,
   Response,
 } from 'express';
-import {
+/*import {
   FeedKeys,
-} from '../src/Enums/FeedKeys';
+} from '../src/Enums/FeedKeys';*/
 import {
   getRoutesMap,
 } from '../src/Modules/getRoutesMap';
-import {
-  createRssThunk,
-} from '../src/Actions/Creators/createRssThunk';
 import {
   createMemoryHistory,
 } from 'history';
@@ -80,12 +80,12 @@ export async function configureServerStore(
 
   if (type === PageIdentifiers.Archives) {
     /* Pre-load news feed for Archives page. */
-    try {
+    /*try {
       await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFull, }));
     } catch (e) {
       console.error('Error encountered fetching articles.');
       console.error(e);
-    }
+    }*/
   } else if (type === PageIdentifiers.Podcasts) {
     /* Pre-load news feed for Podcasts page.
     try {
@@ -95,7 +95,7 @@ export async function configureServerStore(
       console.error(e);
     }*/
   } else if (type === PageIdentifiers.Home) {
-    try {
+    /*try {
       await Promise.all([
         store.dispatch(createRssThunk({
           feedKey: FeedKeys.Podcast,
@@ -108,11 +108,11 @@ export async function configureServerStore(
     } catch (e) {
       console.error('Error fetching ');
       console.error(e);
-    }
+    }*/
   } else if (type === PageIdentifiers.Write) {
-    try {
-      /* Pre-load same-language story generator templates. */
-      /*if (language === Languages.Norwegian) {
+    /* Pre-load same-language story generator templates. */
+    /*try {
+      if (language === Languages.Norwegian) {
         await Promise.all([
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateNoPartA,
@@ -154,11 +154,11 @@ export async function configureServerStore(
             feedKey: FeedKeys.StoryTemplateEnPartC,
           })),
         ]);
-      }*/
+      }
     } catch (e) {
       console.error('Error encountered fetching story templates.');
       console.error(e);
-    }
+    }*/
   }
 
   const status = location.type === NOT_FOUND ? 404 : 200;
