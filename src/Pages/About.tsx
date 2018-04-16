@@ -108,7 +108,7 @@ export class About extends React.PureComponent<TPageProps> {
 
             <figure className={_styles.PictureContainer}>
               <img
-                className={_styles.TeamPicture}
+                className={_styles.AboutContentPicture}
                 src={ImageUrls.CoreTeamPicture}
               />
 
@@ -141,7 +141,7 @@ export class About extends React.PureComponent<TPageProps> {
 
             <figure className={_styles.PictureContainer}>
               <img
-                className={_styles.CollaboratorsPicture}
+                className={_styles.AboutContentPicture}
                 src={ImageUrls.CreativeTeamPicture}
               />
 
@@ -165,7 +165,7 @@ export class About extends React.PureComponent<TPageProps> {
 
             <figure className={_styles.PictureContainer}>
               <img
-                className={_styles.ScienceTeamPicture}
+                className={_styles.AboutContentPicture}
                 src={ImageUrls.ScienceTeamPicture}
               />
 
