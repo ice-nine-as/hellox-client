@@ -1,17 +1,19 @@
 .LatestNews {
-  display: block;
+	display: block;
+	max-width: 1024px;
+	width: 100%;
+	margin: 0 auto;
+	&.Full {
+		display: block;
+	}
 
-  &.Full {
-    display: block;
-  }
-
-  @media screen and (min-width:600px){
-    &.Teaser {
-      display: flex;
-      justify-content: center;
-    }
-  }
-  &.Title {
-    display: block;
-  }
+	@media screen and (min-width: 600px) {
+		&.Teaser {
+			display: flex;
+			justify-content: center;
+		}
+	}
+	&.Title {
+		display: block;
+	}
 }

@@ -1,106 +1,113 @@
 @import '../Vars.less';
 
 .ContactForm {
-  position: relative;
-  max-width: 450px;
-  padding: @space;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid @teal;
-  background: @white;
+	position: relative;
+	max-width: 450px;
+	padding: @space;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid @teal;
+	background: @white;
 
-  .Label,
-  .Input
-  {
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-  }
+	.Label,
+	.Input {
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+	}
 
-  .Label {
-    text-align: left;
-    margin-bottom: 4px;
-  }
+	.Label {
+		text-align: left;
+		margin-bottom: 4px;
+	}
 
-  .Input {
-    width: 100%;
-    padding: @space-sm;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: @space;
-    border: 1px solid @teal;
-    font-size: @p;
-  }
+	.Input {
+		width: 100%;
+		padding: @space-sm;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: @space;
+		border: 1px solid @teal;
+		font-size: @p;
+	}
 
-  .Textarea {
-    height: 100px;
-    @media screen and (min-width:600px){
-      height: 200px;
-    } 
-  }
+	.Textarea {
+		height: 100px;
+		@media screen and (min-width: 600px) {
+			height: 200px;
+		}
+	}
 
-  .MessageInput {
-    display: block;
-  }
+	.MessageInput {
+		display: block;
+	}
 
-  .Checkbox {
-    display:none;
-  }
+	.Checkbox {
+		display: none;
+	}
 
-  .LabelBoxWrapper{
-    display:inline-block;
-    vertical-align: middle;
-    .LabelBox{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width:14px;
-      height: 14px;
-      font-size:@small;
-      border:solid 1px black;
-      margin-right: @space-sm;
-      padding:2px;
-      & p{
-        user-select: none;
-        padding-bottom: 2px;
-        visibility:hidden;
-        margin:0;
-      }
-    }
-  }
+	.LabelBoxWrapper {
+		display: inline-block;
+		vertical-align: middle;
+		.LabelBox {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 14px;
+			height: 14px;
+			font-size: @small;
+			border: solid 1px black;
+			margin-right: @space-sm;
+			padding: 2px;
+			& p {
+				user-select: none;
+				padding-bottom: 2px;
+				visibility: hidden;
+				margin: 0;
+			}
+		}
+	}
 
-  .CarbonCopyLabel{
-    user-select: none;
-  }
+	.CarbonCopyLabel {
+		user-select: none;
+	}
 
-  .Checkbox:checked + .CarbonCopyLabel{
+	.Checkbox:checked + .CarbonCopyLabel {
+		& .LabelBoxWrapper .LabelBox p {
+			visibility: visible;
+		}
+	}
 
-    & .LabelBoxWrapper .LabelBox p{
-      visibility:visible;
-    }
-  }
+	.CarbonCopy {
+		float: left;
+		margin-right: 10px;
+	}
 
-  .CarbonCopy {
-    float: left;
-    margin-right: 10px;
-  }
+	.Submit {
+		display: block;
+		padding: @space 0;
+		margin: @space auto;
+		border: none;
+		background: @gold;
+		color: @deep-purple;
+		width: 100%;
+		font-size: @tiny;
+		font-weight: 400;
+		letter-spacing: 1px;
+		cursor: pointer;
+		outline: none;
 
-  .Submit {
-    display: block;
-    padding:@space 0;
-    margin:@space auto;
-    border: none;
-    background: @red;
-    color: @white;
-    width: 100%;
-    font-size: @p;
-    letter-spacing: 1px;
-    cursor: pointer;
+		@media screen and (min-width: 600px) {
+			width: auto;
+			padding: @space-sm @space-lg;
 
-    @media screen and (min-width:600px){
-      width:auto;
-      padding:@space @space-xlg;
+			&:hover {
+				color: white;
+			}
 
-    }
-  }
+			&:active {
+				transform: translateY(1px);
+			}
+		}
+	}
 }
