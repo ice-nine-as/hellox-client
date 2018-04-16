@@ -1,8 +1,11 @@
+@import '../Vars.less';
+
 .LatestNews {
 	display: block;
 	max-width: 1024px;
 	width: 100%;
 	margin: 0 auto;
+	flex-wrap: wrap;
 	&.Full {
 		display: block;
 	}
@@ -15,5 +18,18 @@
 	}
 	&.Title {
 		display: block;
+	}
+
+	.FillerItem{
+ 	   	flex: 1;
+ 	   	flex-shrink: 0;
+ 	   	height: 0;
+ 	   	margin:0 @space;
+ 	   	margin-bottom: @space-lg;
+ 	   	overflow: hidden;
+ 	   	text-align: left;
+ 	   	box-sizing:border-box;
+ 	   	min-width: 200px;
+ 	   	display: flex;
 	}
 }

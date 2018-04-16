@@ -138,6 +138,9 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
         key={key += 1}
       >
         {newsItems}
+        <div className={_styles.FillerItem} />
+        <div className={_styles.FillerItem} />
+        <div className={_styles.FillerItem} />
       </div>
     );
   }

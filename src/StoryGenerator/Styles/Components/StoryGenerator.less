@@ -8,12 +8,12 @@
   font-size: @larger;
   box-sizing: border-box;
   text-align: left;
-  
+
   .Content{
     width:100%;
     box-sizing: border-box;
     max-width: @pageMaxWidth;
-    margin:0 auto; 
+    margin:0 auto;
     overflow: hidden;
     background-color:white;
     .InnerContent{
@@ -33,7 +33,7 @@
     margin-top: @space-sm;
     margin-bottom: @space-sm;
   }
-  
+
   .Explainer{
     padding:@space;
     max-width: 600px;
@@ -73,11 +73,11 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       cursor: pointer;
-  
+
       @media screen and (min-width:600px){
         width:auto;
-        padding:@space-sm+5 @space-lg;
-  
+        padding:@space-sm+@space-xsm @space+@space-sm;
+
       }
     }
   }
