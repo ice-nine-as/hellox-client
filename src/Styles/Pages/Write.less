@@ -3,11 +3,14 @@
 
 .Write {
   background-color: white;
+  color: black;
+  font-size: @larger;
+  text-align: left;
 }
 
 .Content {
   width: 100%;
-  max-width: @pageMaxWidth;
+  max-width: 600px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -15,11 +18,81 @@
 .MediaContainer {
   position: relative;
   width: 100%;
-  min-height: 550px;
+  max-width: @pageMaxWidth;
+  min-height: 590px;
+  margin: 0 auto;
   border-bottom: solid 5px @teal;
 
   video {
     margin-bottom: -5px;
     width: 100%;
+  }
+}
+
+ol {
+  padding-left: @space;
+}
+
+li {
+  margin-bottom: @space-xsm;
+}
+
+.ParticipateList {
+  font-family: 'Lato Bold';
+  font-weight: 400;
+}
+
+.ExplainerHeader {
+  margin-top: @space-sm;
+  margin-bottom: @space-sm;
+}
+
+.Explainer {
+  padding:@space;
+  max-width: 600px;
+  margin:0 auto;
+}
+
+.InProgressWrapper {
+  background-color: @teal;
+  margin:0;
+}
+
+.Participate {
+  width: 100%;
+  background-color: @gold;
+  color: @deep-purple;
+
+  h3 {
+    text-align: center;
+    font-size: @h2;
+  }
+
+  p {
+    font-size: @p + 1;
+  }
+
+  & .Content {
+    background-color: @gold;
+    padding: @space;
+  }
+
+  & .Button {
+    display: block;
+    padding: @space-sm+5 @space-lg;
+    margin: @space auto;
+    margin-top: @space-xlg;
+    border: solid 1px @deep-purple;
+    background: @gold;
+    color: @deep-purple;
+    font-size: @tiny;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    @media screen and (min-width: 600px) {
+      width: auto;
+      padding: @space-sm + @space-xsm @space + @space-sm;
+    }
   }
 }

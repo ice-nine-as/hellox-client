@@ -21,12 +21,12 @@
 			padding-top: @space-lg;
 			margin-bottom: -160px;
 			overflow: hidden;
-			background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.png);
+			background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.jpg);
 			background-position: center center;
 			background-size: cover;
 
-			:global(.monitor) & {
-				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.png);
+			@media screen and (min-width: 600px) {
+				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.jpg);
 			}
 
 			@media screen and (min-width: 600px) {

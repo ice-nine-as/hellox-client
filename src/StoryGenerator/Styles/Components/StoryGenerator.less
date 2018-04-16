@@ -3,82 +3,20 @@
 .StoryGenerator {
   position: relative;
   background: @white;
-  color: black;
-  width:100%;
-  font-size: @larger;
+  width: 100%;
   box-sizing: border-box;
-  text-align: left;
 
-  .Content{
+  .Content {
     width:100%;
     box-sizing: border-box;
     max-width: @pageMaxWidth;
     margin:0 auto;
     overflow: hidden;
     background-color:white;
-    .InnerContent{
-      max-width:600px;
-      margin:0 auto;
-    }
-  }
-
-  ol{
-    padding-left:@space;
-  }
-  li{
-    margin-bottom: @space-xsm;
-  }
-
-  .ExplainerHeader {
-    margin-top: @space-sm;
-    margin-bottom: @space-sm;
-  }
-
-  .Explainer{
-    padding:@space;
-    max-width: 600px;
-    margin:0 auto;
-  }
-
-  .InProgressWrapper{
-    background-color:@teal;
-    margin:0;
-  }
-
-  .TheQuestion{
-    background-color: @gold;
-    color:@deep-purple;
-    font-weight: 600;
-    & h3{
-      text-align: center;
-      font-size:@h2;
-    }
-    & p{
-      font-size:@p+1;
-
-    }
-    & .Content{
-      background-color:@gold;
-      padding:@space;
-    }
-    & .Button {
-      display: block;
-      padding:@space-sm+5 @space-lg;
-      margin:@space auto;
-      margin-top:@space-xlg;
-      border: solid 1px @deep-purple;
-      background: @gold;
-      color:@deep-purple;
-      font-size: @tiny;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-
-      @media screen and (min-width:600px){
-        width:auto;
-        padding:@space-sm+@space-xsm @space+@space-sm;
-
-      }
+    
+    .InnerContent {
+      max-width: 600px;
+      margin: 0 auto;
     }
   }
 }
