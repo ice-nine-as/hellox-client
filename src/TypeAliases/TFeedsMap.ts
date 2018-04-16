@@ -12,6 +12,8 @@ export type TFeedsMap = {
 
   [FeedKeys.Podcast]:              IRssFeed | null,
 
+  [FeedKeys.Quotes]:               IRssFeed | null,
+
   [FeedKeys.StoryTemplateEnPartA]: IRssFeed | null,
   [FeedKeys.StoryTemplateEnPartB]: IRssFeed | null,
   [FeedKeys.StoryTemplateEnPartC]: IRssFeed | null,

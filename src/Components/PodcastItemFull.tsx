@@ -7,21 +7,18 @@ import {getFormattedDate} from './PodcastItemPreview';
 import styles from '../Styles/Components/PodcastItemFull.less';
 const _styles = styles || {};
 
-export class PodcastItemFull extends React.PureComponent<
-	TPodcastItemFullProps
-> {
+export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> {
 	getPreparedHtml(str: string): {__html: string} {
 		return {__html: str};
 	}
 
 	render() {
 		const iframe = (() => {
-			if (
-				!this.props.item ||
-				!this.props.item.enclosures ||
-				!this.props.item.enclosures[0] ||
-				!this.props.item.enclosures[0].url
-			) {
+			if (!this.props.item ||
+				  !this.props.item.enclosures ||
+				  !this.props.item.enclosures[0] ||
+          !this.props.item.enclosures[0].url)
+      {
 				return 'Embed failed.';
 			}
 
@@ -36,9 +33,7 @@ export class PodcastItemFull extends React.PureComponent<
 				<iframe
 					className={_styles.PodcastIframe}
 					scrolling="no"
-					src={`https://player.blubrry.com/?media_url=${encodeURIComponent(
-						correctedUrl
-					)}`}
+					src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedUrl)}`}
 				/>
 			);
 		})();
@@ -48,17 +43,13 @@ export class PodcastItemFull extends React.PureComponent<
 				return 'No date provided.';
 			}
 			return (
-				<p
-					className={_styles.Date}
-					dangerouslySetInnerHTML={this.getPreparedHtml(
-						getFormattedDate(this.props.item.pubDate.toISOString())
-					)}
-				/>
+				<p className={_styles.Date}>
+          {getFormattedDate(this.props.item.pubDate.toISOString())}
+				</p>
 			);
 		})();
 
 		const summary = (() => {
-			console.log(this.props.item);
 			if (!this.props.item || !this.props.item.description) {
 				return 'No description provided.';
 			}
@@ -74,9 +65,8 @@ export class PodcastItemFull extends React.PureComponent<
 		})();
 
 		const title = (() => {
-			console.log(this.props.item);
 			if (!this.props.item || !this.props.item.title) {
-				return 'No Title provided.';
+				return 'No title provided.';
 			}
 
 			return (
@@ -99,6 +89,7 @@ export class PodcastItemFull extends React.PureComponent<
 						]['#']}')`,
 					}}
 				/>
+
 				{title}
 				{date}
 				{iframe}

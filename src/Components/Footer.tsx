@@ -8,7 +8,7 @@ import {
   SiteMap,
 } from './SiteMap';
 import {
-  SponsorIcons,
+  //SponsorIcons,
 } from './SponsorIcons';
 import {
   TFooterProps,
@@ -36,10 +36,11 @@ export class Footer extends React.PureComponent<TFooterProps> {
 
               <p className={`${_styles.ContactPara} ${_styles.Email}`}>
                 <a href="mailto:helloX@ice-9.no">
-                  helloX@ice-nine.no
+                  helloX@ice-9.no
                 </a>
               </p>
             </div>
+
             <div className={_styles.IconsContainer}>
               <FacebookIcon />
               <TwitterIcon />
@@ -51,13 +52,15 @@ export class Footer extends React.PureComponent<TFooterProps> {
             <h3 className={`${_styles.Header}`}>
               Menu
             </h3>
+
             <br />
+
             <SiteMap />
           </div>
         </div>
 
         <div className={`${_styles.VerticalHalf} ${_styles.Second}`}>
-          <SponsorIcons />
+          {/*<SponsorIcons />*/'Sponsor icons go here'}
         </div>
       </div>
     );

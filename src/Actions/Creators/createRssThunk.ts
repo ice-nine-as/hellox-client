@@ -71,7 +71,7 @@ export const createRssThunk: TRssFeedGetter = ({
   /* Return a thunk, a function which can be called later, and returns a
    * promise. */
   return async (dispatch: Dispatch<{}>): Promise<IRssAction> => {
-    const maybeOffsetObj = idValid ? { offset, } : {};
+    const maybeOffsetObj = offsetIsValid && !idValid ? { offset, } : {};
     const argObj = {
       ...maybeOffsetObj,
       feedKey: feedKey as keyof TFeedsMap,

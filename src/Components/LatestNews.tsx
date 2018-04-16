@@ -17,6 +17,9 @@ import {
   isNode,
 } from '../Modules/isNode';
 import {
+  LoadMoreButton,
+} from './LoadMoreButton';
+import {
   NewsItemFull,
 } from './NewsItemFull';
 import {
@@ -49,7 +52,17 @@ import styles from '../Styles/Components/LatestNews.less';
 const _styles = styles || {};
 
 
-export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps> {
+export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { loadMoreVisible: boolean, }> {
+  constructor(props: any, context?: any) {
+    super(props, context);
+
+    this.state = {
+      loadMoreVisible: true,
+    };
+
+    this.doLoad = this.doLoad.bind(this);
+  }
+  
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
   doLoad() {
@@ -75,27 +88,67 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     * a single article has been fetched beforehand. This is avoided through
     * forceUpdate below. */
 
+    debugger;
     if (!feed) {
       this.props.getNewsFeed(key)
         .then(() => this.forceUpdate(),
           (reason) => console.error(reason));
+    } else if (feed.currentOffset) {
+      const origFeedLength = feed.items.length;
+
+      /* We've already loaded a set of articles, so we need to use the offset. */
+      this.props.getNewsFeed(key, feed.currentOffset, feed)
+        .then((action) => {
+          if (action.value &&
+              /* If less than three items were fetched, the tail has been reached. */
+              action.value.items.length < origFeedLength + 3)
+          {
+            /* Feed is now at tail and the Load More button should be disabled. */
+            this.setState({
+              loadMoreVisible: false,
+            });
+          } else {
+            this.forceUpdate();
+          }
+        })
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
-      * bother to guess where it is in the feed. */
+       * bother to guess where it is in the feed. */
       this.props.getNewsFeed(key, 0, feed)
         .then(() => this.forceUpdate(),
           (reason) => console.error(reason));
+    } else {
+      this.props.getNewsFeed(key, 0, feed).then(() => this.forceUpdate());
     }
   }
 
   componentDidMount() {
     if (!isNode()) {
-      this.doLoad();
+      const {
+        detailLevel,
+        feeds,
+        language,
+      } = this.props;
+  
+      /* Loads the relevant feed based on language and detail level. */
+      const {
+        feed,
+      } = getFeed({
+        type: 'newsItem',
+        detailLevel,
+        feeds,
+        language,
+      });
+
+      /* Don't autoload if we already have a full stack of previews. */
+      if (feed && feed.items.length < 3) {
+        this.doLoad();
+      }
     }
   }
 
   render() {
-    let key = -1;
+    let reactKey = -1;
     const {
       detailLevel,
       feeds,
@@ -118,14 +171,14 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
           return (
             <NewsItemFull
               item={item}
-              key={key += 1}
+              key={reactKey += 1}
             />
           );
         } else {
           return (
             <NewsItemPreview
               item={item}
-              key={key += 1}
+              key={reactKey += 1}
             />
           );
         }
@@ -135,12 +188,12 @@ export class LatestNews extends React.PureComponent<TLatestNewsOwnProps & TLates
     return (
       <div
         className={`${_styles.LatestNews} ${_styles[this.props.detailLevel]}`}
-        key={key += 1}
+        key={reactKey += 1}
       >
         {newsItems}
-        <div className={_styles.FillerItem} />
-        <div className={_styles.FillerItem} />
-        <div className={_styles.FillerItem} />
+        {this.state.loadMoreVisible ?
+          <LoadMoreButton func={this.doLoad} /> :
+          null}
       </div>
     );
   }

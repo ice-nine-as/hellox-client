@@ -12,6 +12,9 @@ export enum FeedUrls {
    * in-browser fetch. */
   Podcast              = 'https://cms.hellox.me/feeds/podcast-feed.xml',
 
+  /* Provides the source for the rotating quotes on the home page. */
+  Quotes               = 'https://cms.hellox.me/feeds/quotes-feed.xml',
+
   StoryTemplateEnPartA = 'https://cms.hellox.me/feeds/en/A/story-template-feed.xml',
   StoryTemplateEnPartB = 'https://cms.hellox.me/feeds/en/B/story-template-feed.xml',
   StoryTemplateEnPartC = 'https://cms.hellox.me/feeds/en/C/story-template-feed.xml',

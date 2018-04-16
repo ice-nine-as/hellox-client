@@ -1,6 +1,6 @@
 export interface IRssPost {
   description: string;
-  id:          string;
+  guid:        string;
   link:        string;
   pubDate:     Date;
 }

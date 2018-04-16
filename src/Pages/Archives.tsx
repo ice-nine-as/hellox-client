@@ -1,6 +1,12 @@
-import {FeedDetailLevels} from '../Enums/FeedDetailLevels';
-import {ConnectedLatestNews} from '../Components/LatestNews';
-import {TPageProps} from '../TypeAliases/TPageProps';
+import {
+	FeedDetailLevels,
+} from '../Enums/FeedDetailLevels';
+import {
+	ConnectedLatestNews,
+} from '../Components/LatestNews';
+import {
+	TPageProps,
+} from '../TypeAliases/TPageProps';
 
 import * as React from 'react';
 
@@ -14,7 +20,7 @@ export class Archives extends React.PureComponent<TPageProps> {
 			<div className={`${_styles.Archives} ${_styles.Page}`}>
 				<h1 className={_styles.Title}>ARCHIVES</h1>
 
-				<ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+				<ConnectedLatestNews detailLevel={FeedDetailLevels.Full} />
 			</div>
 		);
 	}

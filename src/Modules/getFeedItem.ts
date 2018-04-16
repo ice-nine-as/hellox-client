@@ -30,7 +30,7 @@ export const getFeedItem = (
     throw new Error(strings.FEED_INVALID);
   }
   
-  return feed.items.find((item) => item.id === id) || null;
+  return feed.items.find((item) => item.guid === id) || null;
 };
 
 export default getFeedItem;
