@@ -59,6 +59,9 @@ import {
 import {
   TWriteStoreProps,
 } from '../TypeAliases/TWriteStoreProps';
+import {
+  VideoUrls,
+} from '../Enums/VideoUrls';
 
 import * as React from 'react';
 
@@ -76,7 +79,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     /* Weird error below -- keeps complaining about null not being a member of
      * keyof TFeedsMap, which doesn't make much sense to me. */
     // @ts-ignore
-    const missingKeys: Array<keyof TFeedsMap> = (['A', /*'B', 'C',*/] as Array<StoryGeneratorParts>)
+    const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>)
       .map<keyof TFeedsMap | null>((storyPart) => {
         /* Loads the relevant feed based on language and detail level. */
         const {
@@ -151,7 +154,14 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
       <div className={`${_styles.Write} ${_styles.Page}`}>
         <div className={_styles.Content}>
           <div className={_styles.MediaContainer}>
-            <img src="https://dynaimage.cdn.cnn.com/cnn/q_auto,w_1024,c_fill,g_auto,h_576,ar_16:9/http%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F170407220907-01-iconic-mountains-k2-restricted.jpg" />
+            <video
+              autoPlay={true}
+              className={_styles.HeroVideo}
+              controls={false}
+              loop={true}
+              src={VideoUrls.WritePageHero}
+            >
+            </video>
           </div>
         </div>
         {

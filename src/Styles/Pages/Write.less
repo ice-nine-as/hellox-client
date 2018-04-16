@@ -2,22 +2,24 @@
 @import '../Page.less';
 
 .Write {
-  background-color:white;
+  background-color: white;
 }
 
-.Content{
+.Content {
   width: 100%;
   max-width: @pageMaxWidth;
+  margin: 0 auto;
   overflow: hidden;
-  margin:0 auto;
 }
 
-.MediaContainer{
+.MediaContainer {
   position: relative;
   width: 100%;
-  border-bottom:solid 5px @teal;
-  & img{
-    margin-bottom:-5px;
+  min-height: 550px;
+  border-bottom: solid 5px @teal;
+
+  video {
+    margin-bottom: -5px;
     width: 100%;
   }
 }
