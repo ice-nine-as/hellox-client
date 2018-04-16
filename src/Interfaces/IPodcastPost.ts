@@ -20,6 +20,7 @@ export interface IPodcastPost extends IRssPost {
       url: string,
     },
   },
+  title: string,
 }
 
 export default IPodcastPost;

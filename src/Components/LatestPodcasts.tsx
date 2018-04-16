@@ -53,13 +53,13 @@ const _styles = styles || {};
 export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps & TLatestPodcastsStoreProps & TLatestPodcastsDispatchProps> {
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
- doLoad() {
-   const {
-     feeds,
-     language,
+  doLoad() {
+    const {
+      feeds,
+      language,
     } = this.props;
 
-    /* Loads the relevant feed based on language and detail level. */ 
+    /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
       key,
@@ -96,7 +96,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
       feeds,
       language,
     } = this.props;
-    
+
     const {
       feed,
     } = getFeed({
@@ -133,6 +133,9 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
         key={key += 1}
       >
         {podcastItems}
+        <div className={_styles.FillerItem} />
+        <div className={_styles.FillerItem} />
+        <div className={_styles.FillerItem} />
       </div>
     );
   }
@@ -159,6 +162,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedLatestPodcasts = connect(mapStateToProps, mapDispatchToProps)(LatestPodcasts); 
+export const ConnectedLatestPodcasts = connect(mapStateToProps, mapDispatchToProps)(LatestPodcasts);
 
 export default LatestPodcasts;

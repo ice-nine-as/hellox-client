@@ -4,257 +4,259 @@
 @headerHeight: 80px;
 
 .Home {
-  position: relative; 
-  display: block;
-  color: @white;
-  background: black;
+	position: relative;
+	display: block;
+	color: @white;
+	background: black;
 
-  .Section {
-    position: relative;
-    font-family: 'Lato Light';
-    font-weight: 300;
-    padding: @space-lg;
+	.Section {
+		position: relative;
+		font-family: 'Lato Light';
+		font-weight: 300;
+		padding: @space-lg @space-sm;
 
-    &.First {
-      height: 100vh;
-      top: -@headerHeight;
-      padding-top: @space-xlg;
-      margin-bottom: -160px;
-      overflow: hidden;
-      background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.png);
-      background-position: center center;
-      background-size: cover;
+		&.First {
+			height: 100vh;
+			top: -@headerHeight;
+			padding-top: @space-lg;
+			margin-bottom: -160px;
+			overflow: hidden;
+			background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.png);
+			background-position: center center;
+			background-size: cover;
 
-      :global(.monitor) & {
-        background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.png)
-      }
+			:global(.monitor) & {
+				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.png);
+			}
 
-      @media screen and (min-width: 600px) {
-        padding-top: @headerHeight;
-      }
+			@media screen and (min-width: 600px) {
+				padding-top: @headerHeight;
+			}
 
-      @media screen and (min-width: 600px) {
-        height: 650px;
-      }
+			@media screen and (min-width: 600px) {
+				height: 650px;
+			}
 
-      .LogoContainer {
-        position: relative;
-        display: inline-block;
-        width: 150px;
+			.LogoContainer {
+				position: relative;
+				display: inline-block;
+				width: 150px;
 
-        @media screen and (min-width: 600px) {
-          width: 250px;
-          margin-bottom: @space-lg;
-          //height: 289px;
-        }
-      }
+				@media screen and (min-width: 600px) {
+					width: 250px;
+					margin-bottom: @space-lg;
+					//height: 289px;
+				}
+			}
 
-      .Header {
-        position: relative;
-        font-weight: 100;
-        letter-spacing: 0.5px;
-        font-size: @larger;
-        margin-top: @space;
-        margin-bottom: @space;
+			.Header {
+				position: relative;
+				font-weight: 100;
+				letter-spacing: 0.5px;
+				font-size: @larger;
+				margin-top: @space;
+				margin-bottom: @space;
 
-        @media screen and (min-width: 600px) {
-          margin-top: 0px;
-          font-size: @h3;
-        }
-      }
+				@media screen and (min-width: 600px) {
+					margin-top: 0px;
+					font-size: @h3;
+				}
+			}
 
-      .AllLinksContainer {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        flex-direction: row;
-        max-width:900px;
-        
-        @media screen and (min-width: 600px) {
-          margin:0 auto;
-          margin-top: @space-lg;
-          justify-content: space-between;
-        }
-      }
+			.AllLinksContainer {
+				position: relative;
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				width: 100%;
+				flex-direction: row;
+				max-width: 900px;
+				@media screen and (min-width: 600px) {
+					margin: 0 auto;
+					margin-top: @space-lg;
+					justify-content: space-between;
+				}
+			}
 
-      .Link {
-        position: relative;
-        display: block;
-        color: white;
-        text-decoration: none;
-        overflow: hidden;
-        flex-shrink: 0;
-        flex-grow: 1;
-        flex: 1;
-        min-width: 100px;
+			.Link {
+				position: relative;
+				display: block;
+				color: white;
+				text-decoration: none;
+				overflow: hidden;
+				flex-shrink: 0;
+				flex-grow: 1;
+				flex: 1;
+				min-width: 100px;
 
-        &.Podcast {
-          @media screen and (min-width: 600px) {
-            display: none;
-          }
-        }
-        &.Podcast2 {
-          display: none;
-          @media screen and (min-width: 600px) {
-            display: block;
-          }
-        }
+				&.Podcast {
+					@media screen and (min-width: 600px) {
+						display: none;
+					}
+				}
+				&.Podcast2 {
+					display: none;
+					@media screen and (min-width: 600px) {
+						display: block;
+					}
+				}
 
-        &:nth-child(1) {
-          flex-basis: 100%;
-          @media screen and (min-width: 600px) {
-            flex-basis: 0;
-          }
-        }
+				&:nth-child(1) {
+					flex-basis: 100%;
+					@media screen and (min-width: 600px) {
+						flex-basis: 0;
+					}
+				}
 
-        &:hover, &:active {
-          color: @red;
-          transition: color 0.2s;
-        }
-      }
+				&:hover,
+				&:active {
+					color: @red;
+					transition: color 0.2s;
+				}
+			}
 
-      .LinkBox {
-        display: block;
-      }
+			.LinkBox {
+				display: block;
+			}
 
-      .LinkTitle {
-        position: relative;
-        display: block;
-        margin-top: @space-sm;
-        margin-bottom: 0;
-        letter-spacing: 2px;
-        font-size: @larger;
-        color: inherit;
-      }
-      
-      .LinkSubtitle {
-        position: relative;
-        display: block;
-        margin: @space-xsm auto;
-        font-weight: 100;
-        letter-spacing: 1px;
-        font-size: @larger;
-        color: inherit;
+			.LinkTitle {
+				position: relative;
+				display: block;
+				margin-top: @space-sm;
+				margin-bottom: 0;
+				letter-spacing: 2px;
+				font-size: @larger;
+				color: inherit;
+			}
 
-        &.MorePodcasts {
-          font-size: @tiny;
-          font-weight: 400;
-        }
-      }
+			.LinkSubtitle {
+				position: relative;
+				display: block;
+				margin: @space-xsm auto;
+				font-weight: 100;
+				letter-spacing: 1px;
+				font-size: @larger;
+				color: inherit;
 
-      .LinkContainer {
-        position: relative;
-        display: inline-block;
+				&.MorePodcasts {
+					font-size: @tiny;
+					font-weight: 400;
+				}
+			}
 
-        & :global(.LazyLoad) {
-          width: 70px;
-          height: 70px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-      }
-    }
+			.LinkContainer {
+				position: relative;
+				display: inline-block;
 
-    &.Second {
-      background: @gold;
-      color: @purple;
-      
-      .ExplainerParagraph {
-        position: relative;
-        max-width: 675px;
-        margin: 0 auto;
-        font-size: @larger -1px;
-        text-align: justify;
+				& :global(.LazyLoad) {
+					width: 70px;
+					height: 70px;
+					margin-left: auto;
+					margin-right: auto;
+				}
+			}
+		}
 
-        @media screen and (min-width: 600px) {
-          font-size: @larger;
-        }
-      }
+		&.Second {
+			background: @gold;
+			color: @purple;
 
-      .LinkContainer {
-        display: inline-block;
-        margin: @space auto;        
-        border: 1px solid @purple;
-        font-size: @tiny;
-        
-        .Link {
-          &.About {
-            display: inline-block;
-            padding: @space-sm @space-lg;
-            color: @purple;
-            text-decoration: none;
+			.ExplainerParagraph {
+				position: relative;
+				max-width: 675px;
+				margin: 0 auto;
+				font-size: @larger -1px;
+				text-align: justify;
 
-            &:hover {
-              background-color: white;
-              color: @light-purple;
-              transition: 0.2s color;
-            }
-          }
+				@media screen and (min-width: 600px) {
+					font-size: @larger;
+				}
+			}
 
-          .LinkText {
-            display: inline-block;
-            margin-top: auto;
-            margin-bottom: auto;
-            font-weight: 400;
-          }
-        }
-      }
+			.LinkContainer {
+				display: inline-block;
+				margin: @space auto;
+				border: 1px solid @purple;
+				font-size: @tiny;
 
-      .QuoteContainer {
-        position: relative;
-        margin-top: @space-lg;
+				.Link {
+					&.About {
+						display: inline-block;
+						padding: @space-sm @space-lg;
+						color: @purple;
+						text-decoration: none;
 
-        .QuoteIconContainer {
-          position: relative;
-          width: 40px;
-          margin-left: auto;
-          margin-right: auto;
+						&:hover {
+							background-color: white;
+							color: @light-purple;
+							transition: 0.2s color;
+						}
+					}
 
-          & :global(.LazyLoad) img {
-            max-width:100%;
-          }
-        }
+					.LinkText {
+						display: inline-block;
+						margin-top: auto;
+						margin-bottom: auto;
+						font-weight: 400;
+					}
+				}
+			}
 
-        .Quote {
-          display: inline-block;
-          margin-top: @space;
-          margin-bottom: @space-lg;
-          color: @white;
-          font-size: @h4 + 1;
-          //max-width: 270px;
-        }
-      }
-    }
+			.QuoteContainer {
+				position: relative;
+				margin-top: @space-lg;
 
-    &.Third {
-      padding-left: 0;
-      padding-right: 0;
-      color: @dark-purple;
-      background: white;
+				.QuoteIconContainer {
+					position: relative;
+					width: 40px;
+					margin-left: auto;
+					margin-right: auto;
 
-      @media screen and (min-width: 600px) {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
+					& :global(.LazyLoad) img {
+						max-width: 100%;
+					}
+				}
 
-      .LatestNewsTitle {        
-        font-family: 'Lato Regular', sans-serif;
-        font-size: 30px;
-        font-weight: 400;
-        text-align: left;
-        margin-left: @space-sm;
+				.Quote {
+					display: inline-block;
+					margin-top: @space;
+					margin-bottom: @space-lg;
+					color: @white;
+					font-size: @h4 + 1;
+					//max-width: 270px;
+				}
+			}
+		}
 
-        @media screen and (min-width: 600px) {
-          text-align: center;
-        }
-      }
+		&.Third {
+			padding-left: 0;
+			padding-right: 0;
+			color: @dark-purple;
+			background: white;
 
-      .NewsWrapper {
-        margin: 0 auto;
-        max-width: 800px;
-        width: 100%;
-        overflow: hidden;
-      }
-    }
-  }
+			@media screen and (min-width: 600px) {
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+
+			.LatestNewsTitle {
+				font-family: 'Lato Regular', sans-serif;
+				font-size: 30px;
+				font-weight: 400;
+				text-align: left;
+				margin-left: @space-sm;
+
+				@media screen and (min-width: 600px) {
+					text-align: center;
+				}
+			}
+
+			.NewsWrapper {
+				margin: 0 auto;
+				max-width: 800px;
+				width: 100%;
+				overflow: hidden;
+			}
+		}
+	}
 }

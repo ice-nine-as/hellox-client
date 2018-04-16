@@ -1,20 +1,48 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 @import '../Page.less';
 
 .Article {
   background: @white;
   color: @dark-purple;
 
+	.Main{
+
+	}
+
   :global(.Title) {
     font-size: 52pt;
   }
 
   .Container {
+	background: @white;
     padding: 30px;
+  }
 
-    &.LatestNews {
-      padding-bottom: 40px;
-    } 
+  .ReadButton{
+	  margin:@space;
+	  margin-top: 0;
+	  color:@gold;
+	  border:solid 1px @gold;
+	  padding:@space-sm+@space-xsm @space-lg;
+	  background:@deep-purple;
+	  outline: 0;
+	  transition: all 0.12s;
+	  @media screen and (min-width:600px) {
+		  &:hover{
+			  cursor: pointer;
+			  color:white;
+			  border-color: white;
+		  }
+		  &:active{
+			  transform: translateY(1px);
+		  }
+	  }
+  }
+
+  .LatestNews {
+    padding-top:@space;
+    padding-bottom: 40px;
+	flex-wrap: wrap;
   }
 
   .Header {
@@ -27,11 +55,13 @@
       color: @white;
     }
 
+
     &.LatestNews {
-      color: @dark-purple;
+		background: @white;
+        color: @dark-purple;
     }
   }
-  
+
   .Contact {
     background-color:@deep-purple;
   }

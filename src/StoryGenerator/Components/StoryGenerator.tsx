@@ -13,10 +13,10 @@ import {
 import {
   InProgressStory,
 } from './InProgressStory';
-import {
+/*import {
   // @ts-ignore
   IStoryTemplate,
-} from '../Interfaces/IStoryTemplate';
+} from '../Interfaces/IStoryTemplate';*/
 import {
   IStoryGeneratorAction,
 } from '../Actions/IStoryGeneratorAction';

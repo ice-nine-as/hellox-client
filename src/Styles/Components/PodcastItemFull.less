@@ -1,3 +1,43 @@
+@import '../Vars.less';
+
 .PodcastItemFull {
-  display: block;
+	display: block;
+	max-width: @pageMaxWidth;
+	width: 100%;
+	margin: 0 auto;
+	color: @deep-purple;
+
+	.ImageWrapper {
+		width: 100%;
+		padding-bottom: 50%;
+		overflow: hidden;
+		background-position: center;
+		background-size: cover;
+		border-bottom: 6px solid @teal;
+	}
+
+	.PodcastIframe {
+		border: 0;
+		border-radius: 5px;
+		height: 90px;
+		overflow: hidden;
+		width: 410px;
+	}
+	.Date {
+		font-size: @small;
+		color: @blue;
+	}
+	.Title {
+		font-size: @h1;
+		font-weight: 100;
+	}
+	.Summary {
+		padding: 0 @space;
+		margin: 0 auto;
+		margin-top: @space-lg+@space;
+		margin-bottom: @space-lg+@space;
+		font-size: @h4;
+		font-weight: 600;
+		max-width: 600px;
+	}
 }

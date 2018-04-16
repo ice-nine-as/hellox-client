@@ -1,4 +1,4 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 
 .HamburgerMenu {
   display: none;
@@ -46,10 +46,11 @@
       text-align: center;
       background: @deep-purple;
       transition: opacity 0.5s;
-      
+
       :global(.NavBarItem) {
-        display: block;
+        display: block !important;
       }
+
     }
 
     .HamburgerMenuContents:global(.open) {
