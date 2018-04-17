@@ -1,7 +1,7 @@
-import {TPodcastItemFullProps} from '../TypeAliases/TPodcastItemFullProps';
+import { TPodcastItemFullProps } from '../TypeAliases/TPodcastItemFullProps';
 
 import * as React from 'react';
-import {getFormattedDate} from './PodcastItemPreview';
+import { getFormattedDate } from './PodcastItemPreview';
 
 // @ts-ignore
 import styles from '../Styles/Components/PodcastItemFull.less';
@@ -9,9 +9,9 @@ const _styles = styles || {};
 
 export class PodcastItemFull extends React.PureComponent<
 	TPodcastItemFullProps
-> {
-	getPreparedHtml(str: string): {__html: string} {
-		return {__html: str};
+	> {
+	getPreparedHtml(str: string): { __html: string } {
+		return { __html: str };
 	}
 
 	render() {
@@ -33,13 +33,15 @@ export class PodcastItemFull extends React.PureComponent<
 					.slice(4);
 
 			return (
-				<iframe
-					className={_styles.PodcastIframe}
-					scrolling="no"
-					src={`https://player.blubrry.com/?media_url=${encodeURIComponent(
-						correctedUrl
-					)}`}
-				/>
+				<div className={_styles.PlayerWrapper}>
+					<iframe
+						className={_styles.PodcastIframe}
+						scrolling="no"
+						src={`https://player.blubrry.com/?media_url=${encodeURIComponent(
+							correctedUrl
+						)}`}
+					/>
+				</div>
 			);
 		})();
 
