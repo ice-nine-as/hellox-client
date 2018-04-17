@@ -13,6 +13,11 @@
   max-width: 600px;
   margin: 0 auto;
   overflow: hidden;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 600px) {
+    max-width: 100%;
+  }
 }
 
 .MediaContainer {
@@ -76,14 +81,14 @@ li {
     font-size: @p + 1;
   }
 
-  & .Content {
+  .Content {
     background-color: @gold;
     padding: @space;
   }
 
-  & .Button {
+  .Button {
     display: block;
-    padding: @space-sm+5 @space-lg;
+    padding: @space-sm + 5 @space-lg;
     margin: @space auto;
     margin-top: @space-xlg;
     border: solid 1px @deep-purple;
