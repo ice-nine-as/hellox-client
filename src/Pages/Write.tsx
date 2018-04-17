@@ -156,7 +156,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
           <video
             autoPlay={true}
             className={_styles.HeroVideo}
-            controls={false}
+            controls={true}
             loop={true}
             src={VideoUrls.WritePageHero}
           >
