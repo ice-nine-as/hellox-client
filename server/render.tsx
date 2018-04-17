@@ -70,9 +70,6 @@ const readFileProm = promisify(readFile);
 const projectDirPath = resolve(__dirname, '..', '..');
 const serverDirPath = resolve(projectDirPath, 'server');
 
-const viewportSnifferPath = resolve(serverDirPath, 'viewportSniffer.js');
-let viewportSnifferElement: string | null = null;
-
 const fontLoaderPath = resolve(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
@@ -167,16 +164,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
 
-      if (!viewportSnifferElement) {
-        try {
-          const viewportSniffer = await readFileProm(viewportSnifferPath);
-          viewportSnifferElement =
-            `<script id="viewportSniffer">
-              ${viewportSniffer}
-            </script>`
-        } catch (e) { }
-      }
-
       if (!fontLoaderElement) {
         try {
           const fontLoader = await readFileProm(fontLoaderPath);
@@ -196,7 +183,6 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
             <meta name="theme-color" content="rgb(234, 80, 80)">
             <link rel="manifest" href="/static/manifest.json">
             <title>Hello X - ${PageTitles[state.location.type as PageIdentifiers] || '?'}</title>
-            ${viewportSnifferElement}
             ${ambientStyleElement}
             ${css}
             ${fontLoaderElement}
