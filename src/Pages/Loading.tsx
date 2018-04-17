@@ -13,11 +13,11 @@ export class Loading extends React.PureComponent<TPageProps> {
     return (
       <div className={`${_styles.Loading} ${_styles.Page}`}>
         <strong className={_styles.Message}>Loading...</strong>
-        <div>
+        {/* <div>
           <span className={_styles.Icon}>
             ⟳
           </span>
-        </div>
+        </div> */}
       </div>
     );
   }
