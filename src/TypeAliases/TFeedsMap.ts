@@ -12,6 +12,8 @@ export type TFeedsMap = {
 
   [FeedKeys.Podcast]:              IRssFeed | null,
 
+  [FeedKeys.Quotes]:               IRssFeed | null,
+
   [FeedKeys.StoryTemplateEnPartA]: IRssFeed | null,
   [FeedKeys.StoryTemplateEnPartB]: IRssFeed | null,
   [FeedKeys.StoryTemplateEnPartC]: IRssFeed | null,
@@ -21,6 +23,8 @@ export type TFeedsMap = {
   [FeedKeys.StoryTemplateRuPartA]: IRssFeed | null,
   [FeedKeys.StoryTemplateRuPartB]: IRssFeed | null,
   [FeedKeys.StoryTemplateRuPartC]: IRssFeed | null,
+
+  [FeedKeys.TeamMembers]:          IRssFeed | null,
 };
 
 export default TFeedsMap;

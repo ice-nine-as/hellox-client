@@ -7,9 +7,9 @@
   "browserslist": "since 2008",
   "scripts": {
     "clean": "gulp clean",
-    "start-dev": "gulp clean && gulp copyManifest copyModernizr && cross-env NODE_ENV=development node server/index.js",
-    "start-prod": "gulp clean && gulp copyManifest copyModernizr && cross-env NODE_ENV=production node server/index.js",
-    "start-h2": "gulp clean && gulp copyManifest copyModernizr && cross-env NODE_ENV=production H2=true node server/index.js",
+    "start-dev": "gulp clean && gulp copyManifest && cross-env NODE_ENV=development node server/index.js",
+    "start-prod": "gulp clean && gulp copyManifest && cross-env NODE_ENV=production node server/index.js",
+    "start-h2": "gulp clean && gulp copyManifest && cross-env NODE_ENV=production H2=true node server/index.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-watch": "jest --watch",

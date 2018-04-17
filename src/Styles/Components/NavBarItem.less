@@ -1,4 +1,4 @@
-@import "../KeyColors.less";
+@import '../Vars.less';
 
 .NavBarItem {
   position: relative;
@@ -16,7 +16,7 @@
 
   &:hover, &:active, &:global(.active) {
     color: @red;
-    transition: color 0.2s;
+    transition: color @button-transition-duration;
   }
 }
 

@@ -8,6 +8,9 @@ import {
   getFeed,
 } from '../Modules/getFeed';
 import {
+  IPodcastPost,
+} from '../Interfaces/IPodcastPost';
+import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
@@ -46,7 +49,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Podcasts.less';
-import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const _styles = styles || {};
 
 export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps> {
@@ -116,13 +118,29 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
             item={feed.items[0] as IPodcastPost}
             key="keyOne"
           />,
-          <div key="sub" className={_styles.SubscribeWrapper}>
-            <h3>Subscribe on</h3>
-            <p>Apple Podcasts &bull; RadioPublic</p>
-            <p>Google Play &bull; Spotify &bull; RSS</p>
+
+          <div
+            className={_styles.SubscribeWrapper}
+            key="sub"
+          >
+            <h3>
+              Subscribe on
+            </h3>
+            
+            <p>
+              Apple Podcasts &bull; RadioPublic
+            </p>
+
+            <p>
+              Google Play &bull; Spotify &bull; RSS
+            </p>
           </div>,
+
           /* Display previews of all podcasts. */
-          <div className={_styles.Content}>
+          <div
+            className={_styles.Content}
+            key="keyThree"
+          >
             <ConnectedLatestPodcasts
               detailLevel={FeedDetailLevels.Teaser}
               key="keyTwo"
@@ -137,15 +155,30 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
     return (
       <div className={`${_styles.Podcasts} ${_styles.Page}`}>
         {children}
+        
         <div className={`${_styles.LeaveAMessageWrapper} ${_styles.SubscribeWrapper}`}>
           <div className={`${_styles.LeaveAMessage}`}>
-            <h4>Leave a message</h4>
-            <p>We would love to hear from you!<br />Do you have any ideas or...</p>
+            <h4>
+              Leave a message
+            </h4>
+
+            <p>
+              We would love to hear from you!
+              <br />
+              Do you have any ideas or...
+            </p>
+
             <div className={_styles.RecordButton}>
-              <div className={_styles.RecordButtonDot} />
-              <p>START RECORDING</p>
+              <div className={_styles.RecordButtonDot}></div>
+
+              <p>
+                START RECORDING
+              </p>
             </div>
-            <p>Note: Your message won't be sent until you press "Send"</p>
+
+            <p>
+              Note: Your message won't be sent until you press "Send"
+            </p>
           </div>
         </div>
       </div>
@@ -165,7 +198,12 @@ export const mapStateToProps: MapStateToProps<TPodcastsStoreProps, TPageProps, T
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
-  getPodcastFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null = null): Promise<IRssAction> {
+  getPodcastFeed(
+    feedKey: keyof TFeedsMap,
+    offset: number = 0,
+    composeWith: IRssFeed | null = null
+  ): Promise<IRssAction>
+  {
     const thunk = createRssThunk({
       composeWith,
       feedKey: feedKey,

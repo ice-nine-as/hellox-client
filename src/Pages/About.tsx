@@ -8,6 +8,9 @@ import {
   ImageUrls,
 } from '../Enums/ImageUrls';
 import {
+  ScienceTeam,
+} from '../Components/ScienceTeam';
+import {
   TeamMembers,
 } from '../Components/TeamMembers';
 import {
@@ -18,7 +21,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/About.less';
-import { ScienceTeam } from '../Components/ScienceTeam';
 const _styles = styles || {};
 
 export class About extends React.PureComponent<TPageProps> {

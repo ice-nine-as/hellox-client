@@ -59,6 +59,9 @@ import {
 import {
   TWriteStoreProps,
 } from '../TypeAliases/TWriteStoreProps';
+import {
+  VideoUrls,
+} from '../Enums/VideoUrls';
 
 import * as React from 'react';
 
@@ -76,7 +79,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     /* Weird error below -- keeps complaining about null not being a member of
      * keyof TFeedsMap, which doesn't make much sense to me. */
     // @ts-ignore
-    const missingKeys: Array<keyof TFeedsMap> = (['A', /*'B', 'C',*/] as Array<StoryGeneratorParts>)
+    const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>)
       .map<keyof TFeedsMap | null>((storyPart) => {
         /* Loads the relevant feed based on language and detail level. */
         const {
@@ -149,9 +152,85 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
   render() {
     return (
       <div className={`${_styles.Write} ${_styles.Page}`}>
-        <div className={_styles.Content}>
-          <div className={_styles.MediaContainer}>
-            <img src="https://dynaimage.cdn.cnn.com/cnn/q_auto,w_1024,c_fill,g_auto,h_576,ar_16:9/http%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F170407220907-01-iconic-mountains-k2-restricted.jpg" />
+        <div className={_styles.MediaContainer}>
+          <video
+            autoPlay={true}
+            className={_styles.HeroVideo}
+            controls={false}
+            loop={true}
+            src={VideoUrls.WritePageHero}
+          >
+          </video>
+        </div>
+
+        <div className={_styles.Explainer}>
+          <h2 className={_styles.ExplainerHeader}>
+            <strong>
+              How does it work?
+            </strong>
+          </h2>
+
+          <ol className={_styles.ExplainerList}>
+            <li>
+              Answer the questions below
+            </li>
+            
+            <li>
+              Our super-clever story generator creates a pre-written scene from your answers
+            </li>
+
+            <li>
+              You get a chance to edit, add, scrap or entirely re-write the resulting story scene. No rules!
+            </li>
+
+            <li>
+              Enter your email address (which we’ll never share), and we’ll send you the final edited text 
+            </li>
+
+            <li>
+              We quickly check over what you’ve written to make sure it isn’t offensive
+            </li>
+
+            <li>
+              Your written addition goes live to the storyverse!
+            </li>
+          </ol>
+        </div>
+
+        <div className={_styles.Participate}>
+          <div className={_styles.Content}>
+            <div className={_styles.InnerContent}>
+              <h3>
+                Why participate?
+              </h3>
+
+              <ol className={_styles.ParticipateList}>
+                <li>
+                  Because it’s fun, just try it.
+                </li>
+
+                <li>
+                  Because imagining future people is less depressing and
+                  futile than trying to ignore them, and more productive than
+                  simply hoping for the best.
+                </li>
+
+                <li>
+                  Because your contribution might trigger debate (or
+                  laughter) on the podcast and in the discussion forum.
+                </li>
+
+                <li> 
+                  Because you want to see what happens when your ideas are
+                  mashed-up, re-mixed, and fermented with thousands of other
+                  inputs by the hello X creative team in our top secret chaos
+                  machine at the bottom of the Gakkel Ridge hydrothermal vent
+                  (or in the kitchen of our Tromsø studio), creating short
+                  stories for use in live performances, interactive apps, or
+                  published in old-fashioned, uh… books.
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
         {

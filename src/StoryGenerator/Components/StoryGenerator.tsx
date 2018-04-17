@@ -130,40 +130,9 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
 
     return (
       <div className={_styles.StoryGenerator}>
-        <div className={_styles.Content}></div>
-        <div className={_styles.Explainer}>
-          <h2 className={_styles.ExplainerHeader}>
-            <strong>
-              How does it work?
-          </strong>
-          </h2>
-          <ol>
-            <li>Answer each of the questions, then click the Generate Story button to
-          see your personalized story. Click Submit Story to send it to Ice-9 for</li>
-            <li>Answer each of the questions, then click the Generate Story button to
-          see your personalized story. Click Submit Story to send it to Ice-9 for</li>
-            <li>Answer each of the questions, then click the Generate Story button to
-          see your personalized story. Click Submit Story to send it to Ice-9 for</li>
-          </ol>
-          <p>
-            Answer each of the questions, then click the Generate Story button to
-            see your personalized story. Click Submit Story to send it to Ice-9 for
-            a chance at your words being included in the further narrative of X,
-            or being discussed on the podcast by one of the team members!
-        </p>
-        </div>
+        
+
         <div className={_styles.InProgressWrapper}>
-          <div className={_styles.TheQuestion}>
-            <div className={_styles.Content}>
-              <div className={_styles.InnerContent}>
-                <h3>The question</h3>
-                <p>Answer each of the questions, then click the Generate Story button to
-              see your personalized story. Click Submit Story to send it to Ice-9 forAnswer each of the questions, then click the Generate Story button to
-              see your personalized story. Click Submit Story to send it to Ice-9 forAnswer each of the question.</p>
-                <button className={_styles.Button}>Start writing</button>
-              </div>
-            </div>
-          </div>
           <div className={_styles.Content}>
             <div className={_styles.InnerContent}>
               <StoryPartSelector

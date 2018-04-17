@@ -56,29 +56,6 @@ const copyManifest = async () => {
 
 module.exports.copyManifest = copyManifest;
 
-const copyModernizr = async () => {
-  const copyFileProm = promisify(copyFile);
-  console.log('Copying modernizr-custom.js and modernizr-custom.js.gz to ' +
-              'dist/client.');
-  await Promise.all([
-    copyFileProm(
-      resolve(__dirname, 'modernizr-custom.js'),
-      resolve(__dirname, 'dist', 'client', 'modernizr.js')
-    ),
-
-    copyFileProm(
-      resolve(__dirname, 'modernizr-custom.js.gz'),
-      resolve(__dirname, 'dist', 'client', 'modernizr.js.gz')
-    ),
-  ]);
-
-  console.log('Copied modernizr-custom.js and modernizr-custom.js.gz to ' +
-              'dist/client.');
-  console.log('copyModernizr task complete.');
-};
-
-module.exports.copyModernizr = copyModernizr;
-
 const dockerBuild = async () => {
   console.log(`Building ${imageName} image.`);
   await promisify(exec)('docker build -t icenineas/hellox-client ' + __dirname);

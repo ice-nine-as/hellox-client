@@ -8,7 +8,7 @@
   height: 100%;
   
   /* Do not display full NavBar on mobile. */
-  :global(.mobile) & {
+  @media screen and (max-width: 901px) {
     & :global(.NavBarItem){
       display: none;
 
