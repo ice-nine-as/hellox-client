@@ -19,7 +19,11 @@
   position: relative;
   width: 100%;
   max-width: @pageMaxWidth;
-  min-height: 590px;
+
+  @media screen and (min-width: 1050px) {
+    min-height: 590px;
+  }
+
   margin: 0 auto;
   border-bottom: solid 5px @teal;
 

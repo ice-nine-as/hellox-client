@@ -1,6 +1,9 @@
 import {
   CreativeTeam,
 } from '../Components/CreativeTeam';
+/*import {
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';*/
 import {
   ContactForm,
 } from '../Components/ContactForm';
@@ -8,8 +11,24 @@ import {
   ImageUrls,
 } from '../Enums/ImageUrls';
 import {
+  isNode,
+} from '../Modules/isNode';
+/*import {
+  connect,
+  MapStateToProps,
+} from 'react-redux';*/
+import {
   ScienceTeam,
 } from '../Components/ScienceTeam';
+/*import {
+  TAboutDispatchProps,
+} from '../TypeAliases/TAboutDispatchProps';
+import {
+  TAboutStoreProps,
+} from '../TypeAliases/TAboutStoreProps';*/
+import {
+
+} from '../TypeAliases/'
 import {
   TeamMembers,
 } from '../Components/TeamMembers';
@@ -23,7 +42,16 @@ import * as React from 'react';
 import styles from '../Styles/Pages/About.less';
 const _styles = styles || {};
 
-export class About extends React.PureComponent<TPageProps> {
+export class About extends React.PureComponent<TPageProps /*& TAboutStoreProps & TAboutDispatchProps*/> {
+  doLoad() {
+  }
+
+  componentDidMount() {
+    if (!isNode()) {
+      this.doLoad();
+    }
+  }
+
   render() {
     return (
       <div className={`${_styles.About} ${_styles.Page}`}>
@@ -192,5 +220,18 @@ export class About extends React.PureComponent<TPageProps> {
     );
   }
 }
+
+/*export const mapStateToProps: MapStateToProps<TAboutStoreProps, TPageProps, TStoreProps> = ({
+  feeds,
+}) =>
+{
+  quotes: 
+};
+
+export const mapDispatchToProps: (dispatch: Function) => {
+
+};
+
+export const ConnectedAbout = connect(mapStateToProps, mapDispatchToProps)(About);*/
 
 export default About;
