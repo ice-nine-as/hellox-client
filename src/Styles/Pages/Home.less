@@ -16,10 +16,10 @@
 		padding: @space-lg @space-sm;
 
 		&.First {
-			height: 100vh;
+			min-height: 100vh;
 			top: -@headerHeight;
 			padding-top: @space-lg;
-			margin-bottom: -160px;
+			margin-bottom: -@headerHeight;
 			overflow: hidden;
 			background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.png);
 			background-position: center center;
@@ -37,6 +37,10 @@
 				height: 650px;
 			}
 
+			@media screen and (min-height: 800px) {
+				min-height: auto;
+			}
+
 			.LogoContainer {
 				position: relative;
 				display: inline-block;
@@ -46,6 +50,11 @@
 					width: 250px;
 					margin-bottom: @space-lg;
 					//height: 289px;
+				}
+			
+				@media screen and (max-width: 370px) {
+					width: 100px;
+					margin-bottom: @space-sm;
 				}
 			}
 
@@ -61,6 +70,10 @@
 					margin-top: 0px;
 					font-size: @h3;
 				}
+				@media screen and (max-width: 370px) {
+					margin-top: 0;
+					margin-bottom: @space-sm;
+				}
 			}
 
 			.AllLinksContainer {
@@ -74,8 +87,10 @@
 				@media screen and (min-width: 600px) {
 					margin: 0 auto;
 					margin-top: @space-lg;
+					margin-bottom: @space-xlg;
 					justify-content: space-between;
 				}
+
 			}
 
 			.Link {
@@ -108,10 +123,12 @@
 					}
 				}
 
-				&:hover,
-				&:active {
-					color: @red;
-					transition: color 0.2s;
+				@media screen and (min-width: 600px) {
+					&:hover,
+					&:active {
+						color: @red;
+						transition: color 0.2s;
+					}
 				}
 			}
 
@@ -138,9 +155,18 @@
 				font-size: @larger;
 				color: inherit;
 
-				&.MorePodcasts {
+				@media screen and (max-width: 370px) {
+					font-size: @p;
+					margin-top:0;
+				}
+
+				&.MorePodcasts {				
 					font-size: @tiny;
 					font-weight: 400;
+					margin-top:@space-xsm;
+					@media screen and (min-height: 800px) {
+						font-size: @p;
+					}
 				}
 			}
 
@@ -149,10 +175,20 @@
 				display: inline-block;
 
 				& :global(.LazyLoad) {
-					width: 70px;
 					height: 70px;
 					margin-left: auto;
 					margin-right: auto;
+
+					@media screen and (max-width: 370px) {
+						height: 50px;
+					}
+					@media screen and (min-height: 800px) {
+						height: 100px;
+					}
+
+					& img{
+						height:100%;
+					}
 				}
 			}
 		}
