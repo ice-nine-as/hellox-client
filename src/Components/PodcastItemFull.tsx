@@ -1,24 +1,23 @@
-import {TPodcastItemFullProps} from '../TypeAliases/TPodcastItemFullProps';
+import { TPodcastItemFullProps } from '../TypeAliases/TPodcastItemFullProps';
 
 import * as React from 'react';
-import {getFormattedDate} from './PodcastItemPreview';
+import { getFormattedDate } from './PodcastItemPreview';
 
 // @ts-ignore
 import styles from '../Styles/Components/PodcastItemFull.less';
 const _styles = styles || {};
 
 export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> {
-	getPreparedHtml(str: string): {__html: string} {
-		return {__html: str};
+	getPreparedHtml(str: string): { __html: string } {
+		return { __html: str };
 	}
 
 	render() {
 		const iframe = (() => {
 			if (!this.props.item ||
-				  !this.props.item.enclosures ||
-				  !this.props.item.enclosures[0] ||
-          !this.props.item.enclosures[0].url)
-      {
+				!this.props.item.enclosures ||
+				!this.props.item.enclosures[0] ||
+				!this.props.item.enclosures[0].url) {
 				return 'Embed failed.';
 			}
 
@@ -30,11 +29,13 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 					.slice(4);
 
 			return (
-				<iframe
-					className={_styles.PodcastIframe}
-					scrolling="no"
-					src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedUrl)}`}
-				/>
+				<div className={_styles.PlayerWrapper}>
+					<iframe
+						className={_styles.PodcastIframe}
+						scrolling="no"
+						src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedUrl)}`}
+					/>
+				</div>
 			);
 		})();
 
@@ -44,7 +45,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 			}
 			return (
 				<p className={_styles.Date}>
-          {getFormattedDate(new Date(this.props.item.pubDate).toISOString())}
+					{getFormattedDate(new Date(this.props.item.pubDate).toISOString())}
 				</p>
 			);
 		})();
