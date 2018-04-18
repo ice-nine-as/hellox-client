@@ -16,12 +16,12 @@ import {
 import {
   HomeLinkAction,
 } from '../Actions/Link/HomeLinkAction';
-import {
+/*import {
   Languages,
 } from '../Enums/Languages';
 import {
   ConnectedLanguageButton,
-} from './LanguageButton';
+} from './LanguageButton';*/
 import {
   Logo,
 } from './Logo';
@@ -106,12 +106,12 @@ export const navBarItems = Object.freeze([
     Archives
   </NavLink>,
 
-  <span
+  /*<span
     className={`${_nbiStyles.NavBarItem} NavBarItem LanguageButtonContainer`}
     key={reactKey += 1}
   >
     {(Object as any).values(Languages)
-      /* TODO: add Russian language when text is ready. */
+      // TODO: add Russian language when text is ready.
       .filter((lang: Languages) => lang !== Languages.Russian)
       .map((lang: Languages) => {
         return (
@@ -122,7 +122,7 @@ export const navBarItems = Object.freeze([
           />
         );
       })}
-  </span>
+  </span>*/
 ]);
 
 export class NavBar extends React.PureComponent<TNavBarProps> {

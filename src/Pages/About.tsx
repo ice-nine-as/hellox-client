@@ -101,7 +101,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
       }
       
       return null;
-    })(teamMembersFeed, this.state.error);console.log(teamMembers);
+    })(teamMembersFeed, this.state.error);
 
     const creativeTeamMembers = ((error) => {
       if (error) {
