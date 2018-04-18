@@ -24,6 +24,7 @@ export enum ImageUrls {
   SponsorVsfIcon       = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/VSF.svg',
 
   TwitterIcon          = 'https://s3.amazonaws.com/x50/images/Twitter.svg',
+  WriteHeroAnimation   = 'https://s3.eu-central-1.amazonaws.com/hellox/images/WRITE%2Bpage%2Bvideos-1.gif',
   WriteIcon            = 'https://s3.eu-central-1.amazonaws.com/hellox/images/Write_gold.svg',
 }
 

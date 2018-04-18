@@ -59,14 +59,12 @@ import {
 import {
   TWriteStoreProps,
 } from '../TypeAliases/TWriteStoreProps';
-/*import {
-  VideoUrls,
-} from '../Enums/VideoUrls';*/
 
 import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Write.less';
+import { ImageUrls } from '../Enums/ImageUrls';
 const _styles = styles || {};
 
 export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & TWriteDispatchProps> {
@@ -153,19 +151,11 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     return (
       <div className={`${_styles.Write} ${_styles.Page}`}>
         <div className={_styles.MediaContainer}>
-          {/*<video
-            autoPlay={true}
-            className={_styles.HeroVideo}
-            controls={true}
-            loop={true}
-            src={VideoUrls.WritePageHero}
+          <img
+            className={_styles.HeroAnimation}
+            src={ImageUrls.WriteHeroAnimation}
           >
-          </video>*/}
-          <iframe
-            src="https://player.vimeo.com/video/265139389?autoplay=1&loop=1&title=0&byline=0&portrait=0"
-            width="640"
-            height="360"
-            frameBorder="0"></iframe>
+          </img>
         </div>
 
         <div className={_styles.Explainer}>
