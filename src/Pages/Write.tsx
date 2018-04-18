@@ -59,9 +59,9 @@ import {
 import {
   TWriteStoreProps,
 } from '../TypeAliases/TWriteStoreProps';
-import {
+/*import {
   VideoUrls,
-} from '../Enums/VideoUrls';
+} from '../Enums/VideoUrls';*/
 
 import * as React from 'react';
 
@@ -153,20 +153,25 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     return (
       <div className={`${_styles.Write} ${_styles.Page}`}>
         <div className={_styles.MediaContainer}>
-          <video
+          {/*<video
             autoPlay={true}
             className={_styles.HeroVideo}
             controls={true}
             loop={true}
             src={VideoUrls.WritePageHero}
           >
-          </video>
+          </video>*/}
+          <iframe
+            src="https://player.vimeo.com/video/265139389?autoplay=1&loop=1&title=0&byline=0&portrait=0"
+            width="640"
+            height="360"
+            frameBorder="0"></iframe>
         </div>
 
         <div className={_styles.Explainer}>
           <h2 className={_styles.ExplainerHeader}>
             <strong>
-              How does it work?
+              How do I add my vision to a story?
             </strong>
           </h2>
 
