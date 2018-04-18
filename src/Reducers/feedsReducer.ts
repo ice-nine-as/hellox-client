@@ -25,6 +25,8 @@ export const feedsReducer: TReducer<TFeedsMap, IRssAction> = combineReducers({
   [FeedKeys.NewsTitles]:           feedReducer.bind(getKeyObj(FeedKeys.NewsTitles)),
 
   [FeedKeys.Podcast]:              feedReducer.bind(getKeyObj(FeedKeys.Podcast)),
+  
+  [FeedKeys.Quotes]:               feedReducer.bind(getKeyObj(FeedKeys.Quotes)),
 
   [FeedKeys.StoryTemplateEnPartA]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateEnPartA)),
   [FeedKeys.StoryTemplateEnPartB]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateEnPartB)),
@@ -35,6 +37,8 @@ export const feedsReducer: TReducer<TFeedsMap, IRssAction> = combineReducers({
   [FeedKeys.StoryTemplateRuPartA]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateRuPartA)),
   [FeedKeys.StoryTemplateRuPartB]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateRuPartB)),
   [FeedKeys.StoryTemplateRuPartC]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateRuPartC)),
+
+  [FeedKeys.TeamMembers]:          feedReducer.bind(getKeyObj(FeedKeys.TeamMembers)),
 });
 
 export default feedsReducer;
