@@ -8,19 +8,20 @@ export class VoiceMemoForm extends React.PureComponent {
   render() {
     return (
       <div id={_styles.VoiceMemoForm}>
+        <iframe
+          src="https://www.speakpipe.com/widget/inline/mvzh4wzb2lvfzokadte7rxqlrg0xicwd"
+          // @ts-ignore
+          allow="microphone"
+          width="100%"
+          height="180"
+          frameBorder="0"
+        >
+        </iframe>
         <script
-          id="sayquick_embedded_widget_2kxqn5xw"
-          type="text/javascript"
-          dangerouslySetInnerHTML={{
-            __html: `(function(d) {
-              var t = 'script',
-                ul = d.createElement(t),
-                s = d.getElementsByTagName(t)[0];
-              ul.async = true;
-              ul.src = "https://sayquick.com/widgets/embedded/2kxqn5xw.js";
-              s.parentNode.insertBefore(ul, s);
-            })(document);`
-          }}>
+          async={true}
+          src="https://www.speakpipe.com/widget/loader.js"
+          charSet="utf-8"
+        >
         </script>
       </div>
     );
