@@ -129,11 +129,11 @@ export class NavBar extends React.PureComponent<TNavBarProps> {
   render() {
     return (
       <div className={_nbStyles.NavBar}>
-        {/* Visible if the screen is mobile-sized. */}
-        <ConnectedHamburgerMenu>{navBarItems}</ConnectedHamburgerMenu>
+        {/* Visible if the screen is mobile-sized. */
+          <ConnectedHamburgerMenu>{navBarItems}</ConnectedHamburgerMenu>}
 
-        {/* Visible if the screen is monitor-sized. */}
-        {navBarItems}
+        {/* Visible if the screen is monitor-sized. */
+          navBarItems}
       </div>
     );
   }

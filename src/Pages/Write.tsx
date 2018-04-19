@@ -14,6 +14,9 @@ import {
   IFeedTemplate,
 } from '../StoryGenerator/Interfaces/IFeedTemplate';
 import {
+  ImageUrls,
+} from '../Enums/ImageUrls';
+import {
   IQuestionModel,
 } from '../StoryGenerator/Interfaces/IQuestionModel';
 import {
@@ -64,7 +67,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Write.less';
-import { ImageUrls } from '../Enums/ImageUrls';
 const _styles = styles || {};
 
 export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & TWriteDispatchProps> {

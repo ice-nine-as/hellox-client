@@ -5,6 +5,9 @@ import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
 import {
+  AllHtmlEntities,
+} from 'html-entities';
+import {
   ImageUrls,
 } from '../Enums/ImageUrls';
 import {
@@ -97,7 +100,11 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
       }
       
       if (feed && Array.isArray(feed.items) && feed.items[0]) {
-        return JSON.parse(feed.items[0].description || 'null');
+        if (feed.items[0].description) {
+          const ahe = new AllHtmlEntities();
+          const decodedDescription = ahe.decode(feed.items[0].description);
+          return JSON.parse(decodedDescription);
+        }
       }
       
       return null;
