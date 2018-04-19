@@ -8,7 +8,20 @@ export class VoiceMemoForm extends React.PureComponent {
   render() {
     return (
       <div id={_styles.VoiceMemoForm}>
-        Voice memo goes here.
+        <script
+          id="sayquick_embedded_widget_2kxqn5xw"
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `(function(d) {
+              var t = 'script',
+                ul = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+              ul.async = true;
+              ul.src = "https://sayquick.com/widgets/embedded/2kxqn5xw.js";
+              s.parentNode.insertBefore(ul, s);
+            })(document);`
+          }}>
+        </script>
       </div>
     );
   }

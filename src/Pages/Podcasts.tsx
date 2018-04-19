@@ -49,6 +49,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Podcasts.less';
+import { VoiceMemoForm } from '../Components/VoiceMemoForm';
 const _styles = styles || {};
 
 export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps> {
@@ -155,8 +156,10 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
     return (
       <div className={`${_styles.Podcasts} ${_styles.Page}`}>
         {children}
-        
-        <div className={`${_styles.LeaveAMessageWrapper} ${_styles.SubscribeWrapper}`}>
+
+        <VoiceMemoForm />
+
+        {/*<div className={`${_styles.LeaveAMessageWrapper} ${_styles.SubscribeWrapper}`}>
           <div className={`${_styles.LeaveAMessage}`}>
             <h4>
               Leave a message
@@ -180,7 +183,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
               Note: Your message won't be sent until you press "Send"
             </p>
           </div>
-        </div>
+        </div>*/}
       </div>
     );
   }
