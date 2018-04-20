@@ -11,8 +11,6 @@
 
 	.Section {
 		position: relative;
-		font-family: 'Lato Light';
-		font-weight: 300;
 		padding: @space-lg @space-sm;
 
 		&.First {
@@ -21,19 +19,21 @@
 			padding-top: @space-lg;
 			margin-bottom: -@headerHeight;
 			overflow: hidden;
-			background: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.jpg);
+			/* JPG, smaller */
+			background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.jpg);
+			
+			/* WEBP, smaller */
+			background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.webp);
 			background-position: center center;
 			background-size: cover;
 
 			@media screen and (min-width: 600px) {
+				/* JPG, larger */
 				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.jpg);
-			}
-
-			@media screen and (min-width: 600px) {
+				
+				/* WEBP, larger */
+				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.webp);
 				padding-top: @headerHeight;
-			}
-
-			@media screen and (min-width: 600px) {
 				height: 650px;
 			}
 
@@ -174,7 +174,7 @@
 				position: relative;
 				display: inline-block;
 
-				& :global(.LazyLoad) {
+				:global(.Icon) {
 					height: 70px;
 					margin-left: auto;
 					margin-right: auto;
@@ -182,6 +182,7 @@
 					@media screen and (max-width: 370px) {
 						height: 50px;
 					}
+
 					@media screen and (min-height: 800px) {
 						height: 100px;
 					}
@@ -248,7 +249,7 @@
 					margin-left: auto;
 					margin-right: auto;
 
-					& :global(.LazyLoad) img {
+					:global(.Icon) img {
 						max-width: 100%;
 					}
 				}
@@ -276,7 +277,7 @@
 			}
 
 			.LatestNewsTitle {
-				font-family: 'Lato Regular', sans-serif;
+				font-family: 'Lato Regular', 'Lato Subset', sans-serif;
 				font-size: 30px;
 				font-weight: 400;
 				text-align: left;
@@ -295,4 +296,8 @@
 			}
 		}
 	}
+}
+
+:global(.LazyLoad) {
+	height: 100%;
 }

@@ -66,8 +66,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Write.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/Write.less';
+const styles = _styles || {};
 
 export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & TWriteDispatchProps> {
   doLoad() {
@@ -151,23 +151,23 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
 
   render() {
     return (
-      <div className={`${_styles.Write} ${_styles.Page}`}>
-        <div className={_styles.MediaContainer}>
+      <div className={`${styles.Write} ${styles.Page}`}>
+        <div className={styles.MediaContainer}>
           <img
-            className={_styles.HeroAnimation}
+            className={styles.HeroAnimation}
             src={ImageUrls.WriteHeroAnimation}
           >
           </img>
         </div>
 
-        <div className={_styles.Explainer}>
-          <h2 className={_styles.ExplainerHeader}>
+        <div className={styles.Explainer}>
+          <h2 className={styles.ExplainerHeader}>
             <strong>
               How do I add my vision to a story?
             </strong>
           </h2>
 
-          <ol className={_styles.ExplainerList}>
+          <ol className={styles.ExplainerList}>
             <li>
               Answer the questions below
             </li>
@@ -194,14 +194,14 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
           </ol>
         </div>
 
-        <div className={_styles.Participate}>
-          <div className={_styles.Content}>
-            <div className={_styles.InnerContent}>
+        <div className={styles.Participate}>
+          <div className={styles.Content}>
+            <div className={styles.InnerContent}>
               <h3>
                 Why participate?
               </h3>
 
-              <ol className={_styles.ParticipateList}>
+              <ol className={styles.ParticipateList}>
                 <li>
                   Because it’s fun, just try it.
                 </li>

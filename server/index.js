@@ -48,6 +48,7 @@ const headerMiddleware = app.use((req, res, next) => {
   } else if (/\.(js|css)$/.test(req.path) ||
              /\/fonts\/.+\.woff2?/.test(req.path))
   {
+    /* Cache all scripts, styles, and fonts for one year. */
     res.setHeader('Cache-Control', 'max-age=31536000');
   } 
 
@@ -72,7 +73,7 @@ app.use('/fonts', express.static(resolve(fontsPath)));
 app.get('/podcast-feed.xml', async (req, res) => {
   try {
     const fetchRes = await fetch('https://www.blubrry.com/feeds/hello_x.xml');
-    const text     = await fetchRes.text();
+    const text = await fetchRes.text();
     res.write(text);
     res.end();
   } catch (e) {

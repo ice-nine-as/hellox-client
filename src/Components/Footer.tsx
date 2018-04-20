@@ -28,7 +28,7 @@ export class Footer extends React.PureComponent<TFooterProps> {
     return (
       <div className={`${_styles.Footer} Footer Page-${this.props.page}`}>
         <div className={`${_styles.VerticalHalf} ${_styles.First}`}>
-          <div className={`${_styles.HorizontalHalf} ${_styles.Contact}`}>
+          <div className={`${_styles.HorizontalHalf} ${_styles.Contact} light`}>
             <div>
               <h3 className={`${_styles.Header}`}>
                 Contact us

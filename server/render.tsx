@@ -168,7 +168,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
         try {
           const fontLoader = await readFileProm(fontLoaderPath);
           fontLoaderElement =
-            `<script defer id="fontLoader">
+            `<script async defer id="fontLoader">
               ${fontLoader}
             </script>`;
         } catch (e) { }
@@ -185,9 +185,9 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
             <title>Hello X - ${PageTitles[state.location.type as PageIdentifiers] || '?'}</title>
             ${ambientStyleElement}
             ${css}
-            ${fontLoaderElement}
           </head>
           <body>
+            ${fontLoaderElement}
             <script defer type="text/javascript" src="/static/vendor.js"></script>
             <div id="root">${appStr}</div>
             ${cssHash}

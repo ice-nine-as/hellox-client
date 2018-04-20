@@ -102,26 +102,33 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
 
     return (
       <div className={`${_styles.Page}`}>
-		<div className={_styles.Article}>
-			{item ?
-	          <NewsItemFull item={item} /> :
-	          'Article is loading...'}
+		    <div className={_styles.Article}>
+          {
+            item ?
+                <NewsItemFull item={item} /> :
+                'Article is loading...'
+          }
 
 	        <div className={`${_styles.Container} ${_styles.Contact}`}>
-	          <h2 className={`${_styles.Header} ${_styles.Contact}`}>
+	          <h2 className={`${_styles.Header} ${_styles.Contact} light`}>
 	            Comments?
 	          </h2>
-			  <button className={_styles.ReadButton} >Go to Read/Discuss</button>
-	          <ContactForm />
+			      
+            <button className={_styles.ReadButton}>
+              Go to Read/Discuss
+            </button>
+	          
+            <ContactForm />
 	        </div>
-			<div className={`${_styles.LatestNews}`}>
+			
+          <div className={`${_styles.LatestNews}`}>
 	          <h2 className={`${_styles.Header}`}>
 	            What's up?
 	          </h2>
-	          <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+	        
+            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
 	        </div>
-		</div>
-
+		    </div>
       </div>
     );
   }

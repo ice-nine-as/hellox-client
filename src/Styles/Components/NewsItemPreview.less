@@ -1,4 +1,5 @@
 @import '../Vars.less';
+
 .NewsItemPreview {
 	flex: 1;
 	flex-shrink: 0;
@@ -15,6 +16,7 @@
 		margin-left: @space-sm;
 		margin-right: @space-sm;
 	}
+
 	:global(.ArticleTeaser) {
 		position: relative;
 		display: flex;
@@ -29,13 +31,14 @@
 			border-color: @deep-purple;
 			@media screen and (min-width: 600px) {
 				&:hover {
-					& div :global(.HeroImage) {
+					div :global(.HeroImage) {
 						color: @deep-purple-active;
 						border-color: @deep-purple-active;
 					}
-					& :global(.Main) {
+
+					:global(.Main) {
 						border-color: @deep-purple-active;
-						& :global(.Headline) {
+						:global(.Headline) {
 							color: @deep-purple-active;
 						}
 					}
@@ -86,6 +89,7 @@
 
 			:global(.Headline) {
 				font-size: 30px;
+				font-family: 'Lato Light', 'Lato Subset', sans-serif;
 				margin: 10px 0;
 			}
 
@@ -98,7 +102,7 @@
 
 			:global(.Summary) {
 				font-size: 18px;
-				font-family: 'Lato Light';
+				font-family: 'Lato Light', 'Lato Subset', sans-serif;
 				font-weight: 300;
 				//height: 100px;
 

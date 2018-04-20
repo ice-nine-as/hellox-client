@@ -25,7 +25,7 @@ export class CompletedStory extends React.PureComponent<TCompletedStoryProps> {
         <div className={_styles.Instructions}><p className={_styles.InstructionText}>Click in the text box below to edit your story</p></div>
         <div className={_styles.EditorWrapper}>
           <textarea
-            className={_styles.Editor}
+            className={`${_styles.Editor} light`}
             defaultValue={storyText}
           />
         </div>
