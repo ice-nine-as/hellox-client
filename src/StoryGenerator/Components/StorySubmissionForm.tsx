@@ -22,7 +22,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
   render() {
     return (
       <form
-        action="https://formspree.io/hellox@ice-9.no"
+        action="/story-generator-mailer"
         className={_styles.StorySubmissionForm}
         ref={(ref) => this.form = ref}
         method="POST"
@@ -53,7 +53,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         <input
           className={_styles.Input}
           id={_styles.ReplyToInput}
-          name="_replyto"
+          name="replyTo"
           placeholder="Type here"
           ref={(ref) => this.email = ref}
           type="email"
@@ -62,10 +62,11 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         <input
           className={`${_styles.CarbonCopy} ${_styles.Input} ${_styles.Checkbox}`}
           id={_styles.CarbonCopy}
-          name="CarbonCopy"
+          name="carbonCopy"
           ref={(ref) => this.carbonCopy = ref}
           type="checkbox"
         />
+
         <label
           className={`${_styles.CarbonCopyLabel} ${_styles.Label}`}
           htmlFor={_styles.CarbonCopy}
@@ -79,7 +80,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         </label>
 
         <input
-          className={`${_styles.Submit} condensed`}
+          className={`${_styles.Submit} light`}
           onClick={this.submit}
           type="submit"
           value="Submit Story"
@@ -87,14 +88,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
 
         <input
           hidden={true}
-          name="_language"
-          type="hidden"
-          value={this.props.language}
-        />
-
-        <input
-          hidden={true}
-          name="Answers"
+          name="answers"
           type="hidden"
           value={JSON.stringify(this.props.storyTemplate.questions.map<{ id: string, text: string, }>((question) => {
             const {
@@ -111,7 +105,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
 
         <input
           hidden={true}
-          name="Story"
+          name="story"
           type="hidden"
           value={this.props.completedStory}
         />

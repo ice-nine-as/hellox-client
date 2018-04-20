@@ -1,5 +1,5 @@
 export enum ImageUrls {
-  AboutHero            = 'http://www.ucl.ac.uk/european-institute/events/2016-17/Ocean.png',
+  AboutHero            = 'https://s3.eu-central-1.amazonaws.com/hellox/images/About+page.gif',
   CoreTeamPicture      = 'https://s3.eu-central-1.amazonaws.com/hellox/images/core+team+ice-9+DT.jpg',
   CreativeTeamPicture  = 'https://s3.eu-central-1.amazonaws.com/hellox/images/Creative+team+DT.jpg',
 

@@ -32,12 +32,11 @@ export const composeFeeds = (feedOne: IRssFeed | null, feedTwo: IRssFeed | null)
       composed.items = composed.items
         .concat(newItems as Array<IRssPost>)
         .sort((itemOne, itemTwo) => {
-          if (itemOne.guid > itemTwo.guid) {
+          if (itemOne.pubDate > itemTwo.pubDate) {
             return -1;
-          } else if (itemOne.guid < itemTwo.guid) {
+          } else if (itemOne.pubDate < itemTwo.pubDate) {
             return 1;
           } else {
-            console.error('Duplicate RSS item id found: ', itemOne.guid);
             return 0;
           }
         });

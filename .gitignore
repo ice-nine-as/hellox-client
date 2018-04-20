@@ -4,6 +4,7 @@ node_modules/
 private/
 .awcache/
 .DS_Store
+.email-credentials*
 .vagrant/
 *.log
 *.swp

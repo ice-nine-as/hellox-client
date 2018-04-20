@@ -1,9 +1,9 @@
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
-import {
+/*import {
   FeedDetailLevels,
-} from '../Enums/FeedDetailLevels';
+} from '../Enums/FeedDetailLevels';*/
 import {
   getFeed,
 } from '../Modules/getFeed';
@@ -19,9 +19,9 @@ import {
 import {
   isNode,
 } from '../Modules/isNode';
-import {
+/*import {
   ConnectedLatestPodcasts,
-} from '../Components/LatestPodcasts';
+} from '../Components/LatestPodcasts';*/
 import {
   PodcastItemFull,
 } from '../Components/PodcastItemFull';
@@ -44,12 +44,14 @@ import {
 import {
   TStoreProps,
 } from '../TypeAliases/TStoreProps';
+import {
+  VoiceMemoForm,
+} from '../Components/VoiceMemoForm';
 
 import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Podcasts.less';
-import { VoiceMemoForm } from '../Components/VoiceMemoForm';
 const _styles = styles || {};
 
 export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps> {
@@ -129,16 +131,19 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
             </h3>
             
             <p>
-              Apple Podcasts &bull; RadioPublic
+              {/*Apple Podcasts &bull; RadioPublic*/}
             </p>
 
             <p>
-              Google Play &bull; Spotify &bull; RSS
+              {/*Google Play &bull; Spotify &bull; */}
+              <a href="https://www.blubrry.com/feeds/hello_x.xml">
+                RSS
+              </a>
             </p>
           </div>,
 
           /* Display previews of all podcasts. */
-          <div
+          /*<div
             className={_styles.Content}
             key="keyThree"
           >
@@ -146,7 +151,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
               detailLevel={FeedDetailLevels.Teaser}
               key="keyTwo"
             />
-          </div>,
+          </div>,*/
         ];
       } else {
         children = 'No podcasts yet. Sorry!';

@@ -48,7 +48,6 @@ import {
 } from '../Components/Icon/WriteIcon';
 
 import * as React from 'react';
-const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
@@ -190,9 +189,7 @@ export class Home extends React.PureComponent<THomePageProps> {
           </h2>
 
           <div className={`${styles.NewsWrapper}`}>
-            <LazyLoad>
-              <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
-            </LazyLoad>
+            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
           </div>
         </section>
       </article>

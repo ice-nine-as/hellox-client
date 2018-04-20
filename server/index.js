@@ -11,11 +11,16 @@ const express                    = require('express');
 const enforce                    = require('express-sslify');
 const expressStaticGzip          = require('express-static-gzip');
 const gulp                       = require('gulp');
-const { readFileSync, }          = require('fs');
+const {
+  readFile,
+  readFileSync,
+} = require('fs');
+const nodeSES                    = require('node-ses');
 const {
   dirname,
   resolve,
 } = require('path');
+const { promisify, }             = require('util');
 const serveFavicon               = require('serve-favicon');
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
@@ -81,6 +86,52 @@ app.get('/podcast-feed.xml', async (req, res) => {
     console.error(e);
     res.status(500);
     res.end();
+  }
+});
+
+/* Mail endpoint for story generator */
+app.post('/story-generator-mailer', (req, res) => {
+  console.error(req.params);
+
+  const handleError = (e) => {
+    console.error('Problem e-mailing story generator feed.');
+    console.error(e);
+    res.status(500);
+    res.write('Sorry, there was a problem submitting the generated story.');
+    res.end();
+  };
+
+  try {
+    const credentials = require('./.email-credentials.json');
+
+    const client = nodeSES.createClient({
+      amazon: 'https://email.eu-west-1.amazonaws.com',
+      key:    credentials.username,
+      secret: credentials.password,
+    });
+
+    const sesArgs = {
+      to:      'helloX@ice-9.no',
+      from:    'no-reply@hellox.me',
+      subject: `Here's your story, ${req.param.name}!`,
+      message: `${req.param.story}`,
+      altText: 'plain text',
+    };
+  
+    const carbonCopy = req.params.carbonCopy;
+    const replyTo = req.params.replyTo;
+    if (carbonCopy && replyTo) {
+      sesArgs.cc = replyTo;
+    }
+
+    // Give SES the details and let it construct the message for you.
+    client.sendEmail(sesArgs, (err, data) => {
+      if (err) {
+        handleError(err);
+      }
+    });
+  } catch (e) {
+    handleError(e);
   }
 });
 

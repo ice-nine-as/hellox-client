@@ -107,6 +107,7 @@
     "is-node": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
     "negotiator": "^0.6.1",
+    "node-ses": "^2.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-lazy-load": "^3.0.13",
