@@ -27,13 +27,14 @@
 			background-size: cover;
 
 			@media screen and (min-width: 600px) {
+				height: 650px;
+				padding-top: @headerHeight;
+
 				/* JPG, larger */
 				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.jpg);
 				
 				/* WEBP, larger */
 				//background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.webp);
-				padding-top: @headerHeight;
-				height: 650px;
 			}
 
 			@media screen and (min-height: 800px) {

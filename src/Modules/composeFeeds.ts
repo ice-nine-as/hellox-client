@@ -32,7 +32,9 @@ export const composeFeeds = (feedOne: IRssFeed | null, feedTwo: IRssFeed | null)
       composed.items = composed.items
         .concat(newItems as Array<IRssPost>)
         .sort((itemOne, itemTwo) => {
-          if (itemOne.pubDate > itemTwo.pubDate) {
+          const dateOne = new Date(itemOne.pubDate);
+          const dateTwo = new Date(itemTwo.pubDate);
+          if (dateOne > dateTwo) {
             return -1;
           } else if (itemOne.pubDate < itemTwo.pubDate) {
             return 1;

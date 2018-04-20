@@ -9,22 +9,11 @@ import styles from '../Styles/Components/StorySubmissionForm.less';
 const _styles = styles || {};
 
 export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFormProps> {
-  carbonCopy: HTMLInputElement | null = null;
-  email: HTMLInputElement | null = null;
-  form: HTMLFormElement | null = null;
-
-  constructor(props: any, context?: any) {
-    super(props, context);
-
-    this.submit = this.submit.bind(this);
-  }
-
   render() {
     return (
       <form
         action="/story-generator-mailer"
         className={_styles.StorySubmissionForm}
-        ref={(ref) => this.form = ref}
         method="POST"
       >
         <label
@@ -55,7 +44,6 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
           id={_styles.ReplyToInput}
           name="replyTo"
           placeholder="Type here"
-          ref={(ref) => this.email = ref}
           type="email"
         />
 
@@ -63,7 +51,6 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
           className={`${_styles.CarbonCopy} ${_styles.Input} ${_styles.Checkbox}`}
           id={_styles.CarbonCopy}
           name="carbonCopy"
-          ref={(ref) => this.carbonCopy = ref}
           type="checkbox"
         />
 
@@ -81,7 +68,6 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
 
         <input
           className={`${_styles.Submit} light`}
-          onClick={this.submit}
           type="submit"
           value="Submit Story"
         />
@@ -111,22 +97,6 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         />
       </form>
     );
-  }
-
-  submit() {
-    if (this.carbonCopy &&
-      this.carbonCopy.checked &&
-      this.email &&
-      this.email.value &&
-      this.form) {
-      /* Insert CC data for formspree. */
-      const ccInput = document.createElement('input');
-      ccInput.hidden = true;
-      ccInput.name = '_cc';
-      ccInput.type = 'hidden';
-      ccInput.value = this.email.value;
-      this.form.appendChild(ccInput);
-    }
   }
 }
 
