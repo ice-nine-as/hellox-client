@@ -91,7 +91,7 @@ app.get('/podcast-feed.xml', async (req, res) => {
 
 /* Mail endpoint for story generator */
 app.post('/story-generator-mailer', (req, res) => {
-  console.error(req.params);
+  console.error(req);
 
   const handleError = (e) => {
     console.error('Problem e-mailing story generator feed.');
@@ -113,8 +113,8 @@ app.post('/story-generator-mailer', (req, res) => {
     const sesArgs = {
       to:      'helloX@ice-9.no',
       from:    'no-reply@hellox.me',
-      subject: `Here's your story, ${req.param.name}!`,
-      message: `${req.param.story}`,
+      subject: `Here's your story, ${req.params.name}!`,
+      message: `${req.params.story}`,
       altText: 'plain text',
     };
   
