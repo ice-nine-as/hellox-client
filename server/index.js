@@ -111,7 +111,7 @@ app.post('/story-generator-mailer', (req, res) => {
   };
 
   try {
-    publishToGoogleSheet(req.body.name, req.body.email, req.body.story);
+    publishToGoogleSheet(req.body.name, req.body.carbonCopy, req.body.story);
   } catch (e) {
     handleSheetsError(e);
   }
