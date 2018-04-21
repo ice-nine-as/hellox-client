@@ -28,7 +28,6 @@ export class ContactForm extends React.PureComponent {
           type="text"
         />
 
-
         <label
           className={`${_styles.Label} ${_styles.ReplyTo}`}
           htmlFor={_styles.ReplyToInput}
@@ -39,7 +38,7 @@ export class ContactForm extends React.PureComponent {
         <input
           className={_styles.Input}
           id={_styles.ReplyToInput}
-          name="_replyto"
+          name="email"
           placeholder="Type here"
           type="email"
         />
