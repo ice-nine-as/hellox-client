@@ -42,7 +42,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         <input
           className={_styles.Input}
           id={_styles.ReplyToInput}
-          name="replyTo"
+          name="email"
           placeholder="Type here"
           type="email"
         />
