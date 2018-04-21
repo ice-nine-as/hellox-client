@@ -128,7 +128,7 @@ const dockerRun = async () => {
                         '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
                         /* Volume in credentials for e-mail and Drive Sheets
                          * publishing. */
-                        '-v /etc/hellox-credentials/:/etc/hellox-client/server/credentials/' +
+                        '-v /etc/hellox-credentials/:/etc/hellox-client/server/credentials/ ' +
                         /* Run the icenineas/hellox-client image. */
                         'icenineas/hellox-client');
 
