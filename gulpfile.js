@@ -95,8 +95,8 @@ module.exports.dockerRebuild = dockerRebuild;
 
 const dockerStart = async () => {
   console.log(`Starting ${containerName} container.`);
-  await promisify(exec)(`docker start ${runContainerName}`);
-  console.log(`Started ${runContainerName} container.`);
+  await promisify(exec)(`docker start ${containerName}`);
+  console.log(`Started ${containerName} container.`);
   console.log('dockerStart task complete.');
 }
 
@@ -104,7 +104,7 @@ module.exports.dockerStart = dockerStart;
 
 const dockerStop = async () => {
   console.log(`Stopping ${containerName} container.`);
-  await promisify(exec)(`docker stop ${runContainerName}`);
+  await promisify(exec)(`docker stop ${containerName}`);
   console.log(`Stopped ${containerName} container.`);
   console.log('dockerStop task complete.');
 };
@@ -114,11 +114,22 @@ module.exports.dockerStop = dockerStop;
 const dockerRun = async () => {
   console.log(`Running ${containerName} container.`);
   await promisify(exec)('docker run ' +
+                        /* Run the process on a separate thread from the shell. */
                         '-d ' +
+                        /* Call the container hellox-client. */
                         `--name  ${containerName} ` +
+                        /* Expose port 3001 on the container as port 80 on the
+                         * host machine. */
                         '-p 80:3001 ' +
+                        /* Expose port 3000 on the container as port 443 on the
+                         * host machine. */
                         '-p 443:3000 ' +
+                        /* Volume in keys for HTTPS. */
                         '-v /etc/letsencrypt/:/etc/hellox-client/private/ ' +
+                        /* Volume in credentials for e-mail and Drive Sheets
+                         * publishing. */
+                        '-v /etc/hellox-credentials/:/etc/hellox-client/server/credentials/' +
+                        /* Run the icenineas/hellox-client image. */
                         'icenineas/hellox-client');
 
   console.log(`Ran ${containerName} container.`);

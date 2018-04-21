@@ -5,22 +5,31 @@ const h2 = require('./isHttp2')();
 console.log(`Is HTTP2? ${h2}\n`);
 
 console.log('Loading dependencies.');
-const clientConfigDev            = require('../webpack/client.dev');
-const clientConfigProd           = require('../webpack/client.prod');
-const express                    = require('express');
-const enforce                    = require('express-sslify');
-const expressStaticGzip          = require('express-static-gzip');
-const gulp                       = require('gulp');
+
+const bodyParser        = require('body-parser');
+const clientConfigDev   = require('../webpack/client.dev');
+const clientConfigProd  = require('../webpack/client.prod');
+const express           = require('express');
+const enforce           = require('express-sslify');
+const expressStaticGzip = require('express-static-gzip');
+const gulp              = require('gulp');
+
 const {
   readFile,
   readFileSync,
 } = require('fs');
-const nodeSES                    = require('node-ses');
+
+const nodeSES = require('node-ses');
+
 const {
   dirname,
   resolve,
 } = require('path');
-const { promisify, }             = require('util');
+
+const {
+  publishToGoogleSheet,
+} = require('./publishToGoogleSheet');
+
 const serveFavicon               = require('serve-favicon');
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
@@ -31,6 +40,7 @@ const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 require('isomorphic-fetch');
+
 console.log('Dependencies loaded.\n');
 
 const publicPath  = clientConfigDev.output.publicPath;
@@ -41,7 +51,8 @@ const fontsPath   = resolve(projectPath, 'fonts');
 
 const app = express();
 
-const headerMiddleware = app.use((req, res, next) => {
+/* Header middleware. */
+app.use((req, res, next) => {
   /* Give the service worker root scope. */
   res.setHeader('Service-Worker-Allowed', '/');
 
@@ -71,38 +82,43 @@ const headerMiddleware = app.use((req, res, next) => {
   next();
 });
 
+/* Favicon middleware. */
 app.use(serveFavicon(resolve(imagesPath, 'favicon-96x96.png')));
+
+/* Fonts static file middleware. */
 app.use('/fonts', express.static(resolve(fontsPath)));
 
-/* Mirror the podcast feed to get around in-browser CORS issues. */ 
-app.get('/podcast-feed.xml', async (req, res) => {
-  try {
-    const fetchRes = await fetch('https://www.blubrry.com/feeds/hello_x.xml');
-    const text = await fetchRes.text();
-    res.write(text);
-    res.end();
-  } catch (e) {
-    console.error('Problem mirroring podcast feed.');
-    console.error(e);
-    res.status(500);
-    res.end();
-  }
-});
+/* Form parser middleware. */
+app.use(bodyParser.urlencoded({ extended: true, }));
 
 /* Mail endpoint for story generator */
 app.post('/story-generator-mailer', (req, res) => {
-  console.error(req);
+  const storyMarkup = ((req.body || {}).story || '').replace(/\n/g, '<br>');
+  
+  const handleSheetsError = (e) => {
+    console.error('Problem publishing generated story to Google Sheets.');
+    console.error(e);
+  };
 
-  const handleError = (e) => {
-    console.error('Problem e-mailing story generator feed.');
+  const handleEmailError = (e) => {
+    console.error('Problem e-mailing generated story.');
     console.error(e);
     res.status(500);
-    res.write('Sorry, there was a problem submitting the generated story.');
+    res.write(
+      `Sorry, there was a problem submitting the generated story.<br>
+      ${storyMarkup}`);
     res.end();
   };
 
   try {
-    const credentials = require('./.email-credentials.json');
+    publishToGoogleSheet(req.body.name, req.body.email, req.body.story);
+  } catch (e) {
+    handleSheetsError(e);
+  }
+
+  try {
+    /* Should be copied locally for dev, or volumed in with Docker for prod. */
+    const credentials = require('./credentials/email-credentials.json');
 
     const client = nodeSES.createClient({
       amazon: 'https://email.eu-west-1.amazonaws.com',
@@ -112,14 +128,14 @@ app.post('/story-generator-mailer', (req, res) => {
 
     const sesArgs = {
       to:      'helloX@ice-9.no',
-      from:    'no-reply@hellox.me',
-      subject: `Here's your story, ${req.params.name}!`,
-      message: `${req.params.story}`,
+      from:    'helloX@ice-9.no',
+      subject: `Here's your story, ${req.body.name}!`,
+      message: `${storyMarkup}`,
       altText: 'plain text',
     };
   
-    const carbonCopy = req.params.carbonCopy;
-    const replyTo = req.params.replyTo;
+    const carbonCopy = req.body.carbonCopy;
+    const replyTo = req.body.replyTo;
     if (carbonCopy && replyTo) {
       sesArgs.cc = replyTo;
     }
@@ -127,11 +143,14 @@ app.post('/story-generator-mailer', (req, res) => {
     // Give SES the details and let it construct the message for you.
     client.sendEmail(sesArgs, (err, data) => {
       if (err) {
-        handleError(err);
+        handleEmailError(err);
       }
+
+      res.write('Thanks for submitting your story!');
+      res.end();
     });
   } catch (e) {
-    handleError(e);
+    handleEmailError(e);
   }
 });
 

@@ -63,6 +63,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
               <p>✓</p>
             </div>
           </div>
+
           Send to me by e-mail
         </label>
 

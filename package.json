@@ -19,6 +19,7 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
+    "@types/body-parser": "^1.16.8",
     "@types/express": "^4.11.1",
     "@types/feedparser": "^2.2.1",
     "@types/history": "^4.6.2",
@@ -96,11 +97,13 @@
   },
   "dependencies": {
     "@types/glob": "^5.0.35",
+    "body-parser": "^1.18.2",
     "es6-promise": "^4.2.4",
     "express-sslify": "^1.2.0",
     "express-static-gzip": "^0.3.2",
     "feedparser": "^2.2.9",
     "glob": "^7.1.2",
+    "googleapis": "^29.0.0",
     "gulp-uglify": "^3.0.0",
     "html-entities": "^1.2.1",
     "htmlparser2": "^3.9.2",
