@@ -44,7 +44,7 @@ function publishToGoogleSheet(name, email, story) {
         values: [
           /* [2] is Rating, which should be filled in, after reading, by
            * editors. */
-          [ name, email, '', story, ],
+          [ name, email, ' ', story, ],
         ],
       },
 
