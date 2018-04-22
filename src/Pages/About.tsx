@@ -305,7 +305,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
               </figcaption>
             </figure>
 
-            <p className={styles.ScienceTeamParagraph}>
+            <p className={styles.CollaboratorsParagraph}>
               The hello X science team is led by environmental
               anthropologist Ann Eileen Lennert and includes
               marine biologists, bioenergeticists, ecotoxicologists,

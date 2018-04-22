@@ -143,7 +143,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
           </div>,
 
           /* Display previews of all podcasts. */
-          <div
+          /*<div
             className={_styles.Content}
             key="keyThree"
           >
@@ -151,7 +151,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
               detailLevel={FeedDetailLevels.Teaser}
               key="keyTwo"
             />
-          </div>,
+          </div>*/,
         ];
       } else {
         children = 'No podcasts yet. Sorry!';
