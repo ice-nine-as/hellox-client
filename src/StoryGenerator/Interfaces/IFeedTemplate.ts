@@ -11,8 +11,8 @@ export interface IFeedTemplate {
     }
   ];
 
-  field_field_question: Array<IFeedTemplateQuestion>;
-  node_title: string;
+  field_field_question: Array<IFeedTemplateQuestion>,
+  node_title: string,
 }
 
 export default IFeedTemplate;

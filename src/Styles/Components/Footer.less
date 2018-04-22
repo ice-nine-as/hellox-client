@@ -28,21 +28,20 @@
     position: relative;
     padding-bottom: @space-lg;
     padding-top: @space-lg;
-    
+
     &.First {
-      display: block;
-      background: @deep-purple;
-      display:flex;
+      display: flex;
       justify-content: center;
       flex-direction: column;
+      background: @deep-purple;
 
-       @media screen and (min-width:600px) {
+      @media screen and (min-width: 600px) {
         flex-direction: row;
       }
 
       .HorizontalHalf {
-        position: relative;
         display: inline-block;
+        position: relative;
 
         &.Contact {
           display: flex;
@@ -76,16 +75,20 @@
         .IconsContainer {
           display: flex;
           justify-content: center;
-          margin-top: @space-xlg;
+          margin-top: @space;
           margin-bottom: @space-lg;
 
-           @media screen and (min-width:600px) {
-            margin-top: @space-lg;
+          @media screen and (min-width: 600px) {
             justify-content: flex-start;
-            margin-bottom:0;
-            }
+            margin-top: @space-lg;
+            margin-bottom: 0;
+          }
 
-          & img {
+          :global(.Icon) {
+            width: initial;
+          }
+
+          img {
             margin-left: 8px;
             margin-right: 8px;
             margin-top: 10px;
@@ -95,8 +98,8 @@
         &.SiteMap {
           padding-left: 1%;
           text-align: center;
-          
-          @media screen and (min-width:600px) {
+
+          @media screen and (min-width: 600px) {
             text-align: left;
             vertical-align: top;
           }

@@ -93,6 +93,8 @@ app.use(bodyParser.urlencoded({ extended: true, }));
 
 /* Mail endpoint for story generator */
 app.post('/story-generator-mailer', (req, res) => {
+  /* Cross-reference with StorySubmissionForm component. */
+
   const storyMarkup = ((req.body || {}).story || '').replace(/\n/g, '<br>');
   
   const handleSheetsError = (e) => {

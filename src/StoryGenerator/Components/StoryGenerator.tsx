@@ -13,10 +13,6 @@ import {
 import {
   InProgressStory,
 } from './InProgressStory';
-/*import {
-  // @ts-ignore
-  IStoryTemplate,
-} from '../Interfaces/IStoryTemplate';*/
 import {
   IStoryGeneratorAction,
 } from '../Actions/IStoryGeneratorAction';
@@ -80,7 +76,11 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
     });
 
     if (!key || !template) {
-      return 'Now loading...';
+      return (
+        <p className={_styles.Loading} style={{ textAlign: 'center', }}>
+          Now loading...
+        </p>
+      );
     }
 
     const titleMap = {} as {
@@ -112,7 +112,8 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
       // @ts-ignore
       titleMap[StoryGeneratorParts.B] = storyTemplates[titleKey].title;
     } else {
-      titleMap[StoryGeneratorParts.B] = 'Part B';
+      /* TODO: change back to Part B. */
+      titleMap[StoryGeneratorParts.B] = 'Coming soon';
     }
 
     titleKey = getStoryTemplate({
@@ -125,13 +126,12 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
       // @ts-ignore
       titleMap[StoryGeneratorParts.C] = storyTemplates[titleKey].title;
     } else {
-      titleMap[StoryGeneratorParts.C] = 'Part C';
+      /* TODO: change back to Part C. */
+      titleMap[StoryGeneratorParts.C] = 'Coming soon';
     }
 
     return (
       <div className={_styles.StoryGenerator}>
-        
-
         <div className={_styles.InProgressWrapper}>
           <div className={_styles.Content}>
             <div className={_styles.InnerContent}>
@@ -178,14 +178,14 @@ export const mapStateToProps: MapStateToProps<
     language,
     storyGenerator: {
       currentPart,
-      storyTemplates,
       storyState,
+      storyTemplates,
     },
   }) => ({
     currentPart,
     language,
-    storyTemplates,
     storyState,
+    storyTemplates,
   });
 
 export const mapDispatchToProps: MapDispatchToProps<TStoryGeneratorDispatchProps, TStoryGeneratorStoreProps> = (dispatch: Dispatch<IStoryGeneratorAction>) => ({

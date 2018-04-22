@@ -1,3 +1,5 @@
+/* Cross-reference with StorySubmissionForm component. */
+
 const google = require('googleapis').google;
 const sheets = google.sheets('v4');
 
@@ -5,16 +7,20 @@ function authorize(callback) {
   /* Should be copied locally for dev, or volumed in with Docker for prod. */
   const credentials = require('./credentials/google-sheets-credentials.json');
   const jwtClient = new google.auth.JWT(
+    /* Client email. */
     credentials.client_email,
+    /* Keyfile. Not used. */
     null,
+    /* Private key. */
     credentials.private_key,
+    /* Scopes. */
     [
       'https://www.googleapis.com/auth/spreadsheets',
       'https://www.googleapis.com/auth/drive',
       'https://www.googleapis.com/auth/drive.file',
     ]);
 
-  //authenticate request
+  // authenticate request
   jwtClient.authorize((err, tokens) => {
     if (err) {
       return;

@@ -59,7 +59,7 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
           className={`${_styles.Complete} condensed`}
           onClick={this.complete}
         >
-          Generate Story
+          GENERATE STORY
         </button>
       </div>
     )

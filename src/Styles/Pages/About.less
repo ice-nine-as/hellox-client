@@ -6,11 +6,10 @@
   background: @deep-purple;
   color: @purple;
 
-  .Content{
+  .Content {
     max-width: @pageMaxWidth;
-    width:100%;
-    margin:0 auto;
-
+    width: 100%;
+    margin: 0 auto;
   }
 
   .HeroImage {
@@ -27,7 +26,7 @@
     padding-right: @space;
     background: @white;
     box-sizing: border-box;
-    padding-bottom:@space-lg;
+    padding-bottom: @space-lg;
 
     @media screen and (min-width:600px) {
       padding-left: 100px;
@@ -38,16 +37,12 @@
   .Header {
     margin-top: @space-lg;
     margin-bottom: @space-lg;
+    font-family: 'Lato Bold', 'Lato Subset', sans-serif;
     font-size: @h1;
-    font-weight: 400;
+    font-weight: 700;
 
-    @media screen and (min-width: 600px) {
-      font-family: 'Lato Light', 'Lato Subset', sans-serif;
-      font-weight: 300;
-    }
-
-    &.NoBottomMargin{
-      margin-bottom:@space-sm;
+    &.NoBottomMargin {
+      margin-bottom: @space-sm;
     }
   }
 
@@ -80,25 +75,25 @@
     overflow: hidden;
     padding: @space @space @space-xlg ;
 
-    & .Header{
-      margin-top:0;
-      color:white;
+    .Header {
+      margin-top: 0;
+      color: white;
     }
 
     @media screen and (min-width:600px){
-      padding:0;
+      padding: 0;
       background-color: white;
 
-      & .Header{
-        margin-top:0;
-        color:@purple;
+      .Header {
+        margin-top: 0;
+        color: @purple;
       }
     }
   }
 
   .CollaboratorsSubheader {
     margin-bottom: 10px;
-    width:100%;
+    width: 100%;
   }
 
   .Subsubheader {

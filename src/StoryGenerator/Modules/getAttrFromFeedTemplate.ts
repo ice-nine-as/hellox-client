@@ -27,8 +27,22 @@ export const getAttrFromFeedTemplate = (
       const selectRaw = selectObj.safe_value;
       const selectOptions = entities.decode(selectRaw).split(/,\s*/);
  
+      const def = (() => {
+        if (feedQuestion.raw &&
+            feedQuestion.raw.field_default_answer &&
+            feedQuestion.raw.field_default_answer.und &&
+            feedQuestion.raw.field_default_answer.und[0] &&
+            feedQuestion.raw.field_default_answer.und[0].safe_value)
+        {
+          return feedQuestion.raw.field_default_answer.und[0].safe_value;
+        }
+
+        return '';
+      })();
+
       return {
         answer: {
+          default: def,
           id: feedQuestion.raw.field_answer_id.und[0].safe_value,
           selectOptions,
           /* If selectOptions has been set, default to the first option. */

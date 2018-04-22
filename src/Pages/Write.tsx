@@ -106,8 +106,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     });
 
     Promise.all(partPromises).then((actions) => {
-      const _actions = actions as Array<IRssAction>;
-      _actions.forEach((action) => {
+      (actions as Array<IRssAction>).forEach((action) => {
         if (!action.value ||
           !action.value.items ||
           !action.value.items.length) {
@@ -132,11 +131,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
         const template: IFeedTemplate | null = isFeedTemplate(obj) ?
           obj :
           null;
-        if (template) {
-          if (!action.feedKey) {
-            return;
-          }
-
+        if (template && action.feedKey) {
           this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
         }
       });

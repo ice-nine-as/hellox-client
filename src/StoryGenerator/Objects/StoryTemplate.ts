@@ -45,7 +45,7 @@ export class StoryTemplate implements IStoryTemplate, IStoryCompletion {
     this.questions.forEach((question) => {
       const id = question.answer.id;
       const re = new RegExp(escape(`{{${id}}}`), 'g');
-      completed = completed.replace(re, question.answer.text);
+      completed = completed.replace(re, question.answer.text || question.answer.default);
     });
 
     return completed;
