@@ -31,9 +31,32 @@ export const composeFeeds = (feedOne: IRssFeed | null, feedTwo: IRssFeed | null)
       duplicates += feedTwo.items.length - newItems.length;
       composed.items = composed.items
         .concat(newItems as Array<IRssPost>)
-        .sort((itemOne, itemTwo) => {
-          const dateOne = new Date(itemOne.pubDate);
-          const dateTwo = new Date(itemTwo.pubDate);
+        .sort((itemOne, itemTwo) =>
+        {
+          const rawDateOne = (() => {
+            if (itemOne &&
+                (itemOne as any)['rss:pubdate'] &&
+                (itemOne as any)['rss:pubdate']['#'])
+            {
+              return (itemOne as any)['rss:pubdate']['#'].replace(/-/g, ',');
+            }
+
+            return null;
+          })();
+
+          const rawDateTwo = (() => {
+            if (itemTwo &&
+                (itemTwo as any)['rss:pubdate'] &&
+                (itemTwo as any)['rss:pubdate']['#'])
+            {
+              return (itemTwo as any)['rss:pubdate']['#'].replace(/-/g, ',');
+            }
+
+            return null;
+          })();
+
+          const dateOne = new Date(rawDateOne);
+          const dateTwo = new Date(rawDateTwo);
           if (dateOne > dateTwo) {
             return -1;
           } else if (dateOne < dateTwo) {

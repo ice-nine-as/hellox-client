@@ -15,7 +15,6 @@
 		max-width: 247px;
 		margin-left: @space-sm;
 		margin-right: @space-sm;
-		border: solid 1px @teal;
 	}
 
 	.HeroImageContainer {
@@ -48,12 +47,20 @@
 		font-size: @larger;
 		box-sizing: border-box;
 
+		@media screen and (min-width: 600px) {
+			border: solid 1px @teal;
+		}
+
 		.Date {
 			margin: 5px 0;
 			font-size: 14px;
 			font-family: 'Lato Bold', 'Lato Subset', sans-serif;
 			font-weight: 700;
 			color: @blue;
+		}
+		
+		a {
+			text-decoration: none;
 		}
 
 		p, h3 {

@@ -2,6 +2,9 @@ import {TPodcastItemPreviewProps} from '../TypeAliases/TPodcastItemPreviewProps'
 import * as React from 'react';
 // @ts-ignore
 import styles from '../Styles/Components/PodcastItemPreview.less';
+import { NavLink } from 'redux-first-router-link';
+import { PodcastLinkAction } from '../Actions/Link/PodcastLinkAction';
+import { createLinkAction } from '../Actions/Creators/createLinkAction';
 const _styles = styles || {};
 
 export function getFormattedDate(dateString: string) {
@@ -74,9 +77,9 @@ export class PodcastItemPreview extends React.PureComponent<
 			}
 
 			return (
-				<p className={_styles.Date}>
+				<time className={_styles.Date}>
 					{getFormattedDate(new Date(this.props.item.pubDate).toISOString())}
-				</p>
+				</time>
 			);
 		})();
 
@@ -96,14 +99,20 @@ export class PodcastItemPreview extends React.PureComponent<
 
 		const spacerBar = (
 			<div className={_styles.SpacerBar}></div>
-		)
+		);
 
+		const id = this.props.item.guid.split('/').filter((aa) => aa).slice(-1)[0];
 		return (
 			<div className={_styles.PodcastItemPreview}>
-				{img}				
+				<NavLink to={createLinkAction(PodcastLinkAction, { id, })}>
+					{img}
+				</NavLink>
 
-				<div className={_styles.TextContent}>
-					{title}
+				<div className={_styles.TextContent}>	
+					<NavLink to={createLinkAction(PodcastLinkAction, { id, })}>
+						{title}
+					</NavLink>
+
 					{date}
 					{summary}
 				</div>

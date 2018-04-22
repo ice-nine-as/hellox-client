@@ -4,6 +4,7 @@ import {
 import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
+import { FeedKeys } from '../Enums/FeedKeys';
 import {
   getFeed,
 } from '../Modules/getFeed';
@@ -29,6 +30,12 @@ import {
   NewsItemPreview,
 } from './NewsItemPreview';
 import {
+  PodcastItemFull,
+} from './PodcastItemFull';
+import {
+  PodcastItemPreview,
+} from './PodcastItemPreview';
+import {
   connect,
   MapStateToProps,
 } from 'react-redux';
@@ -51,12 +58,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/LatestNews.less';
-import { FeedKeys } from '../Enums/FeedKeys';
-import { PodcastItemFull } from './PodcastItemFull';
-import { PodcastItemPreview } from './PodcastItemPreview';
-const _styles = styles || {};
-
+import _styles from '../Styles/Components/LatestNews.less';
+const styles = _styles || {};
 
 export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { error: string, loadMoreVisible: boolean, }> {
   constructor(props: any, context?: any) {
@@ -258,10 +261,10 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
 
     return (
       <div
-        className={`${_styles.LatestNews} ${_styles[this.props.detailLevel]}`}
+        className={`${styles.LatestNews} ${styles[this.props.detailLevel]}`}
         key={reactKey += 1}
       >
-        <div className={_styles.NewsContainer}>
+        <div className={styles.NewsContainer}>
           {
             this.state.error ?
               /* Display the error if loading fails. */

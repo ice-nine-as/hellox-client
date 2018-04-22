@@ -51,9 +51,11 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
+import { TPageProps } from '../TypeAliases/TPageProps';
+import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const styles = _styles || {};
 
-export class Home extends React.PureComponent<THomePageProps> {
+export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   render() {
     return (
       <article className={`${styles.Home} ${styles.Page}`}>
@@ -73,11 +75,19 @@ export class Home extends React.PureComponent<THomePageProps> {
             >
               <div className={`${styles.LinkBox} ${styles.Podcast}`}>
                 <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-                  PODCAST #{3 /* TODO: scrape from wherever podcast data lives.  */}
+                  PODCAST #{
+                      this.props.feeds.Podcast ?
+                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
+                        '-'
+                    }
                 </h2>
 
                 <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
-                  Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+                  {
+                    this.props.feeds.Podcast ?
+                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
+                      '-'
+                  }
                 </h3>
 
                 <div className={styles.LinkContainer}>
@@ -113,11 +123,19 @@ export class Home extends React.PureComponent<THomePageProps> {
             >
               <div className={`${styles.LinkBox} ${styles.Podcast}`}>
                 <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-                  PODCAST #{3 /* TODO: scrape from wherever podcast data lives.  */}
+                  PODCAST #{
+                      this.props.feeds.Podcast ?
+                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
+                        '-'
+                    }
                 </h2>
 
                 <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
-                  Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+                  {
+                    this.props.feeds.Podcast ?
+                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
+                      '-'
+                  }
                 </h3>
 
                 <div className={styles.LinkContainer}>
@@ -198,9 +216,12 @@ export class Home extends React.PureComponent<THomePageProps> {
 }
 
 export const mapStateToProps = ({
-  page,
-}: THomePageProps) => ({
-  page,
+  feeds,
+}: THomePageProps,
+ownProps: TPageProps) =>
+({
+  ...ownProps,
+  feeds,
 });
 
 export const ConnectedHome = connect(mapStateToProps)(Home);
