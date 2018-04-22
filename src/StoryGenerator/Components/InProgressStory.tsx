@@ -1,7 +1,4 @@
 import {
-  ProgressWheel,
-} from '../../Components/ProgressWheel';
-import {
   Question,
 } from './Question';
 import {
@@ -42,11 +39,6 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
                 className={_styles.QuestionContainer}
                 key={key += 1}
               >
-                <ProgressWheel
-                  current={index + 1}
-                  max={this.props.storyTemplate!.questions.length}
-                />
-
                 <Question
                   {...question}
                   currentPart={this.props.currentPart}
@@ -54,6 +46,8 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
                   setAnswerText={this.props.setAnswerText}
                   storyState={this.props.storyState}
                   templateKey={this.props.templateKey}
+                  current={index + 1}
+                  max={this.props.storyTemplate!.questions.length}
                 />
               </div>
             )
@@ -65,7 +59,7 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
           className={`${_styles.Complete} condensed`}
           onClick={this.complete}
         >
-          Generate Story
+          GENERATE STORY
         </button>
       </div>
     )

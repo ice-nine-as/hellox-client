@@ -1,5 +1,9 @@
+import {
+  TFeedsMap,
+} from './TFeedsMap';
+
 export type THomePageProps = {
-  page: string;
+  feeds: TFeedsMap;
 };
 
 export default THomePageProps;

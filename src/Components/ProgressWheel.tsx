@@ -11,7 +11,7 @@ const _styles = styles || {};
 export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
   render() {
     const ratio = this.props.current / this.props.max;
-    const goldStyles:  { [key: string]: string } = {};
+    const goldStyles: { [key: string]: string } = {};
     if (ratio <= 0.125) {
       const subRatio = 50 + Math.round(ratio / 0.125 * 100) / 2;
       goldStyles.clipPath = `polygon(50% 0, 50% 50%, ${subRatio}% 0)`;
@@ -31,6 +31,7 @@ export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
 
     return (
       <div className={_styles.ProgressWheel}>
+        <div className={_styles.Gray} />
         <div
           className={_styles.Gold}
           style={{ ...goldStyles, }}

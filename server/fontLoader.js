@@ -5,13 +5,15 @@
     const fontClasses = 'fonts-stage-1 fonts-stage-2';
     document.documentElement.className +=
       document.documentElement.className ?
-      ' ' + fontClasses :
+        ' ' + fontClasses :
         fontClasses;
     return;
   }
 
   var loadSingleFont = function (fontLoader) {
-    return fontLoader.load().catch(function (reason) {
+    return fontLoader.load().then(function () {
+      
+    }, function (reason) {
       if (reason) {
         console.error(reason);
         return Promise.resolve();
@@ -40,14 +42,15 @@
       loadSingleFont(latoItalic),
     ];
 
-    Promise.all(promises).catch(function (reason) {
-      if (reason) {
-        return Promise.reject(reason);
-      }
-    }).then(function () {
+    Promise.all(promises).then(function () {
       document.documentElement.className += ' fonts-stage-2';
       // Optimization for Repeat Views
       sessionStorage.criticalFoftDataUriFontsLoaded = true;
+    }, function (reason) {
+      if (reason) {
+        console.error(reason);
+        return Promise.reject(reason);
+      }
     });
   };
 
@@ -56,10 +59,11 @@
 
   var latoSubset = new FontFaceObserver('Lato Subset');
   
-  /* Load full fonts even if the subset fails. Do not allow longer than 500ms. */
+  // Load full fonts even if the subset fails. Do not allow longer than 500ms.
   latoSubset.load(null, 500).catch(function (reason) {
     if (reason) {
       loadFullFonts(false);
+      console.error(reason);
       return Promise.resolve('Subset loading failed with reason:', reason);
     }
   }).then(function () {

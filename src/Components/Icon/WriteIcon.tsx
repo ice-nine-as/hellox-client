@@ -2,25 +2,38 @@ import {
   Icon,
 } from './Icon';
 import {
+  IIconProps,
+} from '../../Interfaces/IIconProps';
+import {
   ImageUrls,
 } from '../../Enums/ImageUrls';
-import {
-  TWriteIconProps,
-} from '../../TypeAliases/TWriteIconProps';
 
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../../Styles/Components/Icon/WriteIcon.less';
-const _styles = styles || {};
+import _styles from '../../Styles/Components/Icon/WriteIcon.less';
+const styles = _styles || {};
 
-export class WriteIcon extends React.PureComponent<TWriteIconProps> {
+export class WriteIcon extends React.PureComponent<IIconProps> {
   render() {
+    const addIns: { [key: string]: any } = {};
+    if (this.props.dontLazyLoad) {
+      addIns.dontLazyLoad = this.props.dontLazyLoad;
+    }
+
+    if (this.props.offset) {
+      addIns.offset = this.props.offset;
+    }
+
+    if (this.props.url) {
+      addIns.url = this.props.url;
+    }
+
     return (
-      <Icon>
+      <Icon {...addIns}>
         <img
           alt="A stylized drawing of a pencil."
-          className={_styles.WriteIcon}
+          className={styles.WriteIcon}
           src={ImageUrls.WriteIcon}
         />
       </Icon>

@@ -1,68 +1,60 @@
+import {
+  ITeamMember,
+} from '../Interfaces/ITeamMember';
+
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/TeamMembers.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/TeamMembers.less';
+const styles = _styles || {};
 
-export const teamMembers = Object.freeze([
-  {
-    name: 'Vincent Snyder',
-    role: 'sometimes the text will be long',
-    company: 'Company',
-    email: 'vincent@ice-9.no',
-  },
-
-  {
-    name: 'Vincent Snyder',
-    role: 'and sometimes short',
-    company: 'Company',
-    email: 'vincent@ice-9.no',
-  },
-
-  {
-    name: 'Vincent Snyder',
-    role: 'Role',
-    company: 'Company',
-    email: 'vincent@ice-9.no',
-  },
-
-  {
-    name: 'Vincent Snyder',
-    role: 'Role',
-    company: 'Company',
-    email: 'vincent@ice-9.no',
-  },
-]);
-
-let reactKey = 0;
-
-export class TeamMembers extends React.PureComponent {
+export class TeamMembers extends React.PureComponent<{ members: ReadonlyArray<ITeamMember> }> {
   render() {
+    let reactKey = 0;
     return (
-      <div className={_styles.TeamMembers}>
-        {teamMembers.map((member) => {
+      <div className={styles.TeamMembers}>
+        {this.props.members.map((member) => {
           return (
             <div
-              className={_styles.TeamMember}
+              className={styles.TeamMember}
               key={reactKey += 1}
             >
-              <strong className={_styles.Name}>
-                {member.name}
+              <strong className={styles.Name}>
+                {
+                  (member.email ?
+                    <a href={`mailto:${member.email}`}>
+                      {member.name}
+                    </a> :
+                    member.name) ||
+                  'Name not provided'
+                }
               </strong>
 
-              <p className={_styles.Role}>
-                {member.role}
-              </p>
+              {
+                member.title ?
+                  <p className={styles.Role}>
+                    {member.title}
+                  </p> :
+                  null
+              }
 
-              <p className={_styles.Company}>
-                {member.company}
-              </p>
+              {
+                member.organization ?
+                  <p className={styles.Company}>
+                    {member.organization}
+                  </p> :
+                  null
+              }
 
-              <p className={_styles.Email}>
-                <a href={`mailto:${member.email}`}>
-                  {member.email}
-                </a>
-              </p>
+              {
+                member.website ?
+                  <p className={styles.Website}>
+                    <a href={member.website.startsWith('http') ? member.website : 'http://' + member.website}>
+                      {member.website}
+                    </a>
+                  </p> :
+                  null
+              }
             </div>
           );
         })}

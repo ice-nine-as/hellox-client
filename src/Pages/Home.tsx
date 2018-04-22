@@ -11,9 +11,6 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  HomeBackgroundImage,
-} from '../Components/HomeBackgroundImage';
-import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
 import {
@@ -51,64 +48,100 @@ import {
 } from '../Components/Icon/WriteIcon';
 
 import * as React from 'react';
-const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
-import styles from '../Styles/Pages/Home.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/Home.less';
+import { TPageProps } from '../TypeAliases/TPageProps';
+import { IPodcastPost } from '../Interfaces/IPodcastPost';
+const styles = _styles || {};
 
-export class Home extends React.PureComponent<THomePageProps> {
+export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   render() {
     return (
-      <article className={`${_styles.Home} ${_styles.Page}`}>
-        <section className={`${_styles.Section} ${_styles.First}`}>
-          <HomeBackgroundImage />
-
-          <div className={_styles.LogoContainer}>
+      <article className={`${styles.Home} ${styles.Page}`}>
+        <section className={`${styles.Section} ${styles.First} light`}>
+          <div className={styles.LogoContainer}>
             <Logo state={LogoStates.Normal} />
           </div>
 
-          <h1 className={`${_styles.Header} light`}>
+          <h1 className={`${styles.Header} light`}>
             Imagine the lives of the future
           </h1>
 
-          <div className={_styles.AllLinksContainer}>
+          <div className={styles.AllLinksContainer}>
             <NavLink
-              className={`${_styles.Link} ${_styles.Write}`}
-              to={createLinkAction(WriteLinkAction)}
+              className={`${styles.Link} ${styles.Podcast}`}
+              to={createLinkAction(PodcastsLinkAction)}
             >
-              <div className={`${_styles.LinkBox} ${_styles.Write}`}>
-                <h2 className={`${styles.LinkTitle} ${_styles.Write}`}>
-                  WRITE
+              <div className={`${styles.LinkBox} ${styles.Podcast}`}>
+                <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
+                  PODCAST #{
+                      this.props.feeds.Podcast ?
+                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
+                        '-'
+                    }
                 </h2>
 
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.Write}`}>
-                  Add your vision
+                <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
+                  {
+                    this.props.feeds.Podcast ?
+                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
+                      '-'
+                  }
                 </h3>
 
-                <div className={_styles.LinkContainer}>
-                  <WriteIcon />
+                <div className={styles.LinkContainer}>
+                  <PodcastIcon dontLazyLoad={true} />
+
+                  <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
+                    More podcasts
+                  </h3>
                 </div>
               </div>
             </NavLink>
 
             <NavLink
-              className={`${_styles.Link} ${_styles.Podcast}`}
+              className={`${styles.Link} ${styles.Write}`}
+              to={createLinkAction(WriteLinkAction)}
+            >
+              <div className={`${styles.LinkBox} ${styles.Write}`}>
+                <h2 className={`${styles.LinkTitle} ${styles.Write}`}>
+                  WRITE
+                </h2>
+                <h3 className={`${styles.LinkSubtitle} ${styles.Write}`}>
+                  Add your vision
+                </h3>
+                <div className={styles.LinkContainer}>
+                  <WriteIcon dontLazyLoad={true} />
+                </div>
+              </div>
+            </NavLink>
+
+            <NavLink
+              className={`${styles.Link} ${styles.Podcast2}`}
               to={createLinkAction(PodcastsLinkAction)}
             >
-              <div className={`${_styles.LinkBox} ${_styles.Podcast}`}>
-                <h2 className={`${_styles.LinkTitle} ${_styles.Podcast}`}>
-                  PODCAST #{3 /* TODO: scrape from wherever podcast data lives.  */}
+              <div className={`${styles.LinkBox} ${styles.Podcast}`}>
+                <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
+                  PODCAST #{
+                      this.props.feeds.Podcast ?
+                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
+                        '-'
+                    }
                 </h2>
 
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.Podcast}`}>
-                  Add your vision {/* TODO: scrape from wherever podcast data lives. */}
+                <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
+                  {
+                    this.props.feeds.Podcast ?
+                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
+                      '-'
+                  }
                 </h3>
 
-                <div className={_styles.LinkContainer}>
-                  <PodcastIcon />
+                <div className={styles.LinkContainer}>
+                  <PodcastIcon dontLazyLoad={true} />
 
-                  <h3 className={`${_styles.LinkSubtitle} ${_styles.MorePodcasts}`}>
+                  <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
                     More podcasts
                   </h3>
                 </div>
@@ -116,28 +149,28 @@ export class Home extends React.PureComponent<THomePageProps> {
             </NavLink>
 
             <a
-              className={`${_styles.Link} ${_styles.Read}`}
+              className={`${styles.Link} ${styles.Read}`}
               href={ExternalPageUrls.Forum}
             >
-              <div className={`${_styles.LinkBox} ${_styles.Read}`}>
-                <h2 className={`${styles.LinkTitle} ${_styles.Read}`}>
+              <div className={`${styles.LinkBox} ${styles.Read}`}>
+                <h2 className={`${styles.LinkTitle} ${styles.Read}`}>
                   READ
                 </h2>
 
-                <h3 className={`${_styles.LinkSubtitle} ${_styles.Read}`}>
+                <h3 className={`${styles.LinkSubtitle} ${styles.Read}`}>
                   Discuss
                 </h3>
 
-                <div className={_styles.LinkContainer}>
-                  <ReadDiscussIcon />
+                <div className={styles.LinkContainer}>
+                  <ReadDiscussIcon dontLazyLoad={true} />
                 </div>
               </div>
             </a>
           </div>
         </section>
 
-        <section className={`${_styles.Section} ${_styles.Second}`}>
-          <p className={_styles.ExplainerParagraph}>
+        <section className={`${styles.Section} ${styles.Second} light`}>
+          <p className={styles.ExplainerParagraph}>
             hello X is a story laboratory where you can collaborate with
             artists, scientists, and kids to create stories about X, a woman
             living in the Arctic in 2068. The key question of this story
@@ -145,37 +178,37 @@ export class Home extends React.PureComponent<THomePageProps> {
             choices today.
           </p>
 
-          <div className={`${_styles.LinkContainer} ${_styles.About}`}>
+          <div className={`${styles.LinkContainer} ${styles.About}`}>
             <NavLink
-              className={`${_styles.Link} ${_styles.About}`}
+              className={`${styles.Link} ${styles.About}`}
               to={createLinkAction(AboutLinkAction)}
             >
-              <span className={`${_styles.LinkText}`}>
+              <span className={`${styles.LinkText}`}>
                 READ MORE
               </span>
             </NavLink>
           </div>
 
-          <div className={_styles.QuoteContainer}>
-            <div className={_styles.QuoteIconContainer}>
-              <QuoteIcon />
+          <div className={styles.QuoteContainer}>
+            <div className={styles.QuoteIconContainer}>
+              <QuoteIcon dontLazyLoad={true} />
             </div>
 
-            <span className={`${_styles.Quote} light`}>
+            <span className={`${styles.Quote} light`}>
               What is the loop of Creation? How is there something from
               nothing?
             </span>
           </div>
         </section>
 
-        <section className={`${_styles.Section} ${_styles.Third}`}>
-          <h2 className={`${_styles.LatestNewsTitle} light`}>
+        <section className={`${styles.Section} ${styles.Third}`}>
+          <h2 className={`${styles.LatestNewsTitle} light`}>
             What's up?
           </h2>
 
-          <LazyLoad offset={500}>
+          <div className={`${styles.NewsWrapper}`}>
             <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
-          </LazyLoad>
+          </div>
         </section>
       </article>
     );
@@ -183,9 +216,12 @@ export class Home extends React.PureComponent<THomePageProps> {
 }
 
 export const mapStateToProps = ({
-  page,
-}: THomePageProps) => ({
-  page,
+  feeds,
+}: THomePageProps,
+ownProps: TPageProps) =>
+({
+  ...ownProps,
+  feeds,
 });
 
 export const ConnectedHome = connect(mapStateToProps)(Home);

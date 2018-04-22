@@ -46,19 +46,20 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/LatestPodcasts.less';
+import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const _styles = styles || {};
 
 
 export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps & TLatestPodcastsStoreProps & TLatestPodcastsDispatchProps> {
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
- doLoad() {
-   const {
-     feeds,
-     language,
+  doLoad() {
+    const {
+      feeds,
+      language,
     } = this.props;
 
-    /* Loads the relevant feed based on language and detail level. */ 
+    /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
       key,
@@ -95,7 +96,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
       feeds,
       language,
     } = this.props;
-    
+
     const {
       feed,
     } = getFeed({
@@ -111,14 +112,14 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
         if (this.props.detailLevel === FeedDetailLevels.Full) {
           return (
             <PodcastItemFull
-              item={item}
+              item={item as IPodcastPost}
               key={key += 1}
             />
           );
         } else {
           return (
             <PodcastItemPreview
-              item={item}
+              item={item as IPodcastPost}
               key={key += 1}
             />
           );
@@ -158,6 +159,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedLatestPodcasts = connect(mapStateToProps, mapDispatchToProps)(LatestPodcasts); 
+export const ConnectedLatestPodcasts = connect(mapStateToProps, mapDispatchToProps)(LatestPodcasts);
 
 export default LatestPodcasts;

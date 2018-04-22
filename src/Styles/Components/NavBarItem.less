@@ -1,4 +1,4 @@
-@import "../KeyColors.less";
+@import '../Vars.less';
 
 .NavBarItem {
   position: relative;
@@ -8,14 +8,15 @@
   padding: 20px;
   color: white;
   text-decoration: none;
-  
+  background-color: inherit;
+
   &:visited {
     color: inherit;
   }
 
   &:hover, &:active, &:global(.active) {
     color: @red;
-    transition: color 0.2s;
+    transition: color @button-transition-duration;
   }
 }
 

@@ -1,11 +1,21 @@
+@import '../Vars.less';
+
 .NavBar {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: inherit;
   height: 100%;
-
+  
   /* Do not display full NavBar on mobile. */
-  :global(.mobile) & > :global(.NavBarItem) {
-    display: none;
+  @media screen and (max-width: 901px) {
+    & :global(.NavBarItem){
+      display: none;
+
+      &:nth-child(1){
+        display: flex;
+        z-index: 3;
+      }
+    }
   }
 }

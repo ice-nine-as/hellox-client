@@ -8,13 +8,13 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/Header.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/Header.less';
+const styles = _styles || {};
 
 export class Header extends React.PureComponent<THeaderProps> {
   render() {
     return (
-      <div className={`${_styles.Header} Header`}>
+      <div className={`${styles.Header} Header`}>
         <NavBar />
       </div>
     );

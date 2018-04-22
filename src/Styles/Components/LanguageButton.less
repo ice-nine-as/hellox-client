@@ -1,6 +1,6 @@
 .LanguageButton {
   position: relative;
-  display: inline-block;
+  display: none;
   border: 0;
   color: white;
   font: inherit;
@@ -10,5 +10,10 @@
 
   &.Active {
     color: red;
+  }
+
+  /* Only display language buttons on Write page. */
+  :global(.Page-Write) & {
+    display: inline-block;
   }
 }

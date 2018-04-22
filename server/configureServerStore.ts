@@ -1,19 +1,19 @@
 import {
   configureClientStore,
 } from '../src/Modules/configureClientStore';
+/*import {
+  createRssThunk,
+} from '../src/Actions/Creators/createRssThunk';*/
 import {
   Request,
   Response,
 } from 'express';
-import {
+/*import {
   FeedKeys,
-} from '../src/Enums/FeedKeys';
+} from '../src/Enums/FeedKeys';*/
 import {
   getRoutesMap,
 } from '../src/Modules/getRoutesMap';
-import {
-  createRssThunk,
-} from '../src/Actions/Creators/createRssThunk';
 import {
   createMemoryHistory,
 } from 'history';
@@ -39,10 +39,9 @@ export async function configureServerStore(
   req: Request,
   res: Response,
   routesMap = getRoutesMap(),
-  history   = null)
-{
+  history = null) {
   const _history = history || createMemoryHistory({
-    initialEntries: [ req.path, ],
+    initialEntries: [req.path,],
   });
 
   const language = (() => {
@@ -81,22 +80,22 @@ export async function configureServerStore(
 
   if (type === PageIdentifiers.Archives) {
     /* Pre-load news feed for Archives page. */
-    try {
+    /*try {
       await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFull, }));
     } catch (e) {
       console.error('Error encountered fetching articles.');
       console.error(e);
-    }
+    }*/
   } else if (type === PageIdentifiers.Podcasts) {
-    /* Pre-load news feed for Archives page. */
+    /* Pre-load news feed for Podcasts page.
     try {
       await store.dispatch(createRssThunk({ feedKey: FeedKeys.Podcast, }));
     } catch (e) {
       console.error('Error encountered fetching podcasts.');
       console.error(e);
-    }
+    }*/
   } else if (type === PageIdentifiers.Home) {
-    try {
+    /*try {
       await Promise.all([
         store.dispatch(createRssThunk({
           feedKey: FeedKeys.Podcast,
@@ -109,10 +108,10 @@ export async function configureServerStore(
     } catch (e) {
       console.error('Error fetching ');
       console.error(e);
-    }
+    }*/
   } else if (type === PageIdentifiers.Write) {
-    try {
-      /* Pre-load same-language story generator templates. */
+    /* Pre-load same-language story generator templates. */
+    /*try {
       if (language === Languages.Norwegian) {
         await Promise.all([
           store.dispatch(createRssThunk({
@@ -159,7 +158,7 @@ export async function configureServerStore(
     } catch (e) {
       console.error('Error encountered fetching story templates.');
       console.error(e);
-    }
+    }*/
   }
 
   const status = location.type === NOT_FOUND ? 404 : 200;

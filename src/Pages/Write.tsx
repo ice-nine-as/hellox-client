@@ -14,6 +14,9 @@ import {
   IFeedTemplate,
 } from '../StoryGenerator/Interfaces/IFeedTemplate';
 import {
+  ImageUrls,
+} from '../Enums/ImageUrls';
+import {
   IQuestionModel,
 } from '../StoryGenerator/Interfaces/IQuestionModel';
 import {
@@ -63,8 +66,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Write.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/Write.less';
+const styles = _styles || {};
 
 export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & TWriteDispatchProps> {
   doLoad() {
@@ -78,7 +81,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     // @ts-ignore
     const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>)
       .map<keyof TFeedsMap | null>((storyPart) => {
-        /* Loads the relevant feed based on language and detail level. */ 
+        /* Loads the relevant feed based on language and detail level. */
         const {
           feed,
           key,
@@ -103,12 +106,10 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
     });
 
     Promise.all(partPromises).then((actions) => {
-      const _actions = actions as Array<IRssAction>;
-      _actions.forEach((action) => {
+      (actions as Array<IRssAction>).forEach((action) => {
         if (!action.value ||
-            !action.value.items ||
-            !action.value.items.length)
-        {
+          !action.value.items ||
+          !action.value.items.length) {
           return;
         }
 
@@ -130,11 +131,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
         const template: IFeedTemplate | null = isFeedTemplate(obj) ?
           obj :
           null;
-        if (template) {
-          if (!action.feedKey) {
-            return;
-          }
-
+        if (template && action.feedKey) {
           this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
         }
       });
@@ -149,7 +146,85 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
 
   render() {
     return (
-      <div className={`${_styles.Write} ${_styles.Page}`}>
+      <div className={`${styles.Write} ${styles.Page}`}>
+        <div className={styles.MediaContainer}>
+          <img
+            className={styles.HeroAnimation}
+            src={ImageUrls.WriteHeroAnimation}
+          >
+          </img>
+        </div>
+
+        <div className={styles.Explainer}>
+          <h2 className={styles.ExplainerHeader}>
+            <strong>
+              How do I add my vision to a story?
+            </strong>
+          </h2>
+
+          <ol className={styles.ExplainerList}>
+            <li>
+              Answer the questions below
+            </li>
+            
+            <li>
+              Our super-clever story generator creates a pre-written scene from your answers
+            </li>
+
+            <li>
+              You get a chance to edit, add, scrap or entirely re-write the resulting story scene. No rules!
+            </li>
+
+            <li>
+              Enter your email address (which we’ll never share), and we’ll send you the final edited text 
+            </li>
+
+            <li>
+              We quickly check over what you’ve written to make sure it isn’t offensive
+            </li>
+
+            <li>
+              Your written addition goes live to the storyverse!
+            </li>
+          </ol>
+        </div>
+
+        <div className={styles.Participate}>
+          <div className={styles.Content}>
+            <div className={styles.InnerContent}>
+              <h3>
+                Why participate?
+              </h3>
+
+              <ol className={styles.ParticipateList}>
+                <li>
+                  Because it’s fun, just try it.
+                </li>
+
+                <li>
+                  Because imagining future people is less depressing and
+                  futile than trying to ignore them, and more productive than
+                  simply hoping for the best.
+                </li>
+
+                <li>
+                  Because your contribution might trigger debate (or
+                  laughter) on the podcast and in the discussion forum.
+                </li>
+
+                <li> 
+                  Because you want to see what happens when your ideas are
+                  mashed-up, re-mixed, and fermented with thousands of other
+                  inputs by the hello X creative team in our top secret chaos
+                  machine at the bottom of the Gakkel Ridge hydrothermal vent
+                  (or in the kitchen of our Tromsø studio), creating short
+                  stories for use in live performances, interactive apps, or
+                  published in old-fashioned, uh… books.
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
         {
           /* It's not clear why, but rendering this as JSX breaks big-time. */
           React.createElement(ConnectedStoryGenerator)
@@ -181,9 +256,9 @@ export const mapDispatchToProps = (dispatch: Function) => ({
 
   setStoryTemplate(key: StoryGeneratorTemplateKeys, value: IFeedTemplate) {
     const template = {
-      questions:  Object.freeze(getAttrFromFeedTemplate('questions', value) as Array<IQuestionModel>),
-      storyText:  getAttrFromFeedTemplate('storyText', value) as string,
-      title:      getAttrFromFeedTemplate('title', value) as string,
+      questions: Object.freeze(getAttrFromFeedTemplate('questions', value) as Array<IQuestionModel>),
+      storyText: getAttrFromFeedTemplate('storyText', value) as string,
+      title: getAttrFromFeedTemplate('title', value) as string,
     };
 
     const action = makeStoryGeneratorAction({

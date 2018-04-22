@@ -1,20 +1,32 @@
 import {
-  TIconProps,
-} from '../../TypeAliases/TIconProps';
+  IIconProps,
+} from '../../Interfaces/IIconProps';
 
 import * as React from 'react';
 const LazyLoad = require('react-lazy-load').default;
 
-export class Icon extends React.PureComponent<TIconProps> {
+// @ts-ignore
+import _styles from '../../Styles/Components/Icon/Icon.less';
+const styles = _styles || {};
+
+export class Icon extends React.PureComponent<IIconProps> {
   render() {
+    const content = this.props.url ?
+      <a href={this.props.url}>
+        {this.props.children}
+      </a> :
+      this.props.children;
+
     return (
-      <LazyLoad offset={this.props.offset || 400}>
-        {this.props.url ?
-          <a href={this.props.url}>
-            {this.props.children}
-          </a> :
-          this.props.children}
-      </LazyLoad>
+      <div className={`${styles.Icon} Icon`}>
+        {
+          this.props.dontLazyLoad ?
+            content :
+            <LazyLoad offset={this.props.offset || 600}>
+              {content}
+            </LazyLoad>
+        }
+      </div>
     );
   }
 }

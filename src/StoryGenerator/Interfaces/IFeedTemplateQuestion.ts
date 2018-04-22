@@ -22,6 +22,10 @@ export interface IFeedTemplateQuestion {
       ],
     },
 
+    field_default_answer: {
+      und: TDrupalUnd,
+    },
+
     field_question_text: {
       und: TDrupalUnd,
     },

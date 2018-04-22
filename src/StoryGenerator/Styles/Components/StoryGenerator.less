@@ -1,24 +1,22 @@
-@import '../../../Styles/KeyColors.less';
+@import '../../../Styles/Vars.less';
 
 .StoryGenerator {
   position: relative;
-  width: 100%;
-  height: 100%;
   background: @white;
-  color: black;
-  font-size: 20pt;
+  width: 100%;
+  box-sizing: border-box;
 
-  :global(.monitor) & {
-    max-width: 1024px;
-  }
-
-  .ExplainerHeader {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .Explainer {
-    padding-left: 100px;
-    padding-right: 100px;
+  .Content {
+    width:100%;
+    box-sizing: border-box;
+    max-width: @pageMaxWidth;
+    margin:0 auto;
+    overflow: hidden;
+    background-color:white;
+    
+    .InnerContent {
+      max-width: 600px;
+      margin: 0 auto;
+    }
   }
 }

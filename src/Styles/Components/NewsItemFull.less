@@ -1,22 +1,13 @@
-@import "../KeyColors.less";
+@import "../Vars.less";
 
 .NewsItemFull {
   display: block;
   width: 100%;
-  max-width: 1024px;
+  max-width: @pageMaxWidth;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 60px;
   text-align: left;
-
-  &:not(:last-of-type)::after {
-    position: relative;
-    display: block;
-    text-align: center;
-    font-size: 25pt;
-    color: @dark-purple;
-    content: '●';
-  }
 
   h3 a {
     text-decoration: none;
@@ -40,7 +31,7 @@
       margin-right: auto;
       margin-bottom: 30px;
 
-      :global(.monitor) & {
+      @media screen and (min-width: 600px) {
         width: 900px;
         height: 600px;
       }
@@ -61,12 +52,9 @@
   
       :global(.Headline) {
         margin: 0;
+        margin-bottom: @space;
         text-align: center;
-        font-size: 30pt;
-
-        :global(.monitor) {
-          font-size: 45pt;
-        }
+        font-size: @h1;
 
         a {
           text-decoration: none;
@@ -75,13 +63,15 @@
     
       :global(.AuthoringInfo) {
         margin: 0;
-        font-size: 14pt;
+        margin-bottom: @space;
+        font-size: @larger;
         color: @light-blue;
         text-align: center;
       }
   
       :global(.Summary) {
-        font-size: 22pt;
+        font-size: @larger;
+        line-height: 1.4;
         font-weight: bold;
         color: @purple;
   
@@ -91,22 +81,26 @@
       }
 
       :global(.Body) {
-        font-size: 16pt;
+        font-size: @larger;
+        line-height: 1.4;
 
         blockquote {
           position: relative;
-          padding-top: 60px;
-          padding-bottom: 30px;
+          padding-top: @space-lg;
+          padding-bottom: @space;
+          margin: @space;
           color: @light-blue;
-          font-size: 22pt;
+          font-size: @h3;
+          text-align: center;    
         }
 
         blockquote::before {
           position: absolute;
           left: 50%;
           top: 15px;
-          width: 66px;
-          height: 46px;
+          width: 50px;
+          height: 50px;
+          
           transform: translateX(-50%);
           background-image: url('https://s3.amazonaws.com/x50/images/HelloX_Quote_1x_LightBlue.svg');
           background-repeat: no-repeat;
@@ -121,7 +115,7 @@
           margin-left: 50%;
           transform: translateX(-50%);
 
-          :global(.monitor) & {
+          @media screen and (min-width: 600px) {
             max-width: 600px;
           }
 
@@ -132,16 +126,18 @@
           }
 
           img + figcaption {
-            padding: 8px;
-            border-left: 1px solid @light-blue;
-            border-right: 1px solid @light-blue;          
-            border-top: 5px solid @light-blue;
-            border-bottom: 1px solid @light-blue;
+            border-top: 5px solid @teal;
+            font-size:@tiny;
           }
         }
 
         p {
           position: relative;
+        }
+
+        video {
+          width: 100%;
+          height: 100%;
         }
       }
     }

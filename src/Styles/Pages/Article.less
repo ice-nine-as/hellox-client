@@ -1,4 +1,4 @@
-@import '../KeyColors.less';
+@import '../Vars.less';
 @import '../Page.less';
 
 .Article {
@@ -10,29 +10,57 @@
   }
 
   .Container {
+	  background: @white;
     padding: 30px;
+  }
 
-    &.LatestNews {
-      padding-bottom: 40px;
-    } 
+  .ReadButton {
+    display: inline-block;
+	  padding: @space-sm + @space-xsm @space-lg;
+	  margin: @space;
+	  margin-top: 0;
+	  border: solid 1px @gold;
+	  color: @gold;
+	  background: @deep-purple;
+	  outline: 0;
+    transition: all @button-transition-duration;
+    text-decoration: none;
+    font-family: 'Lato Light', 'Lato Subset', sans-serif;
+
+	  @media screen and (min-width: 600px) {
+		  &:hover {
+			  cursor: pointer;
+			  color:white;
+			  border-color: white;
+      }
+
+		  &:active {
+			  transform: translateY(1px);
+		  }
+	  }
+  }
+
+  .LatestNews {
+    padding-top: @space;
+    padding-bottom: 40px;
+	  flex-wrap: wrap;
   }
 
   .Header {
     margin: 0;
     margin-bottom: 15px;
-    font-family: 'Lato Light';
-    font-weight: 300;
 
     &.Contact {
       color: @white;
     }
 
     &.LatestNews {
+		  background: @white;
       color: @dark-purple;
     }
   }
-  
+
   .Contact {
-    background: @dark-purple;
+    background-color: @deep-purple;
   }
 }

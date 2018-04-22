@@ -28,7 +28,6 @@ export class ContactForm extends React.PureComponent {
           type="text"
         />
 
-        
         <label
           className={`${_styles.Label} ${_styles.ReplyTo}`}
           htmlFor={_styles.ReplyToInput}
@@ -39,7 +38,7 @@ export class ContactForm extends React.PureComponent {
         <input
           className={_styles.Input}
           id={_styles.ReplyToInput}
-          name="_replyto"
+          name="email"
           placeholder="Type here"
           type="email"
         />
@@ -64,11 +63,16 @@ export class ContactForm extends React.PureComponent {
           name="CarbonCopy"
           type="checkbox"
         />
-        
+
         <label
           className={`${_styles.CarbonCopyLabel} ${_styles.Label}`}
           htmlFor={_styles.CarbonCopy}
         >
+          <div className={`${_styles.LabelBoxWrapper}`}>
+            <div className={`${_styles.LabelBox}`}>
+              <p>✓</p>
+            </div>
+          </div>
           Send to me by e-mail
         </label>
 

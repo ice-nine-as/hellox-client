@@ -5,6 +5,9 @@ import {
   ContactForm,
 } from '../Components/ContactForm';
 import {
+  ExternalPageUrls,
+} from '../Enums/ExternalPageUrls';
+import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
@@ -59,7 +62,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
       },
     } = this.props;
 
-    /* Loads the relevant feed based on language and detail level. */ 
+    /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
     } = getFeed({
@@ -101,26 +104,37 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     const item = feed ? getFeedItem(id, feed) : null;
 
     return (
-      <div className={`${_styles.Article} ${_styles.Page}`}>
-        {item ?
-          <NewsItemFull item={item} /> :
-          'Article is loading...'}
+      <div className={`${_styles.Page}`}>
+		    <div className={_styles.Article}>
+          {
+            item ?
+                <NewsItemFull item={item} /> :
+                'Article is loading...'
+          }
 
-        <div className={`${_styles.Container} ${_styles.Contact}`}>
-          <h2 className={`${_styles.Header} ${_styles.Contact}`}>
-            Leave a message
-          </h2>
-
-          <ContactForm />
-        </div>
-
-        <div className={`${_styles.Container} ${_styles.LatestNews}`}>
-          <h2 className={`${_styles.Header} ${_styles.LatestNews}`}>
-            What's up?
-          </h2>
-
-          <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
-        </div>
+	        <div className={`${_styles.Container} ${_styles.Contact}`}>
+	          <h2 className={`${_styles.Header} ${_styles.Contact} light`}>
+	            Comments?
+	          </h2>
+			      
+            <a
+              className={_styles.ReadButton}
+              href={ExternalPageUrls.Forum}
+            >
+              Go to Read/Discuss
+            </a>
+	          
+            <ContactForm />
+	        </div>
+			
+          <div className={`${_styles.LatestNews}`}>
+	          <h2 className={`${_styles.Header}`}>
+	            What's up?
+	          </h2>
+	        
+            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+	        </div>
+		    </div>
       </div>
     );
   }
@@ -150,7 +164,7 @@ export const mapDispatchToProps = (dispatch: Function) => ({
 
     const thunk = createRssThunk({
       composeWith: feed,
-      feedKey:     key,
+      feedKey: key,
       id,
     });
 
@@ -158,6 +172,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedArticle = connect(mapStateToProps, mapDispatchToProps)(Article); 
+export const ConnectedArticle = connect(mapStateToProps, mapDispatchToProps)(Article);
 
 export default ConnectedArticle;
