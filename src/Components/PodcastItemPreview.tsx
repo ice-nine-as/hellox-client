@@ -19,6 +19,7 @@ export function getFormattedDate(dateString: string) {
 		'Nov',
 		'Dec',
 	];
+
 	const myDate = new Date(dateString);
 	let hours = myDate.getHours();
 	const ampm = hours >= 12 ? 'pm' : 'am';
@@ -28,14 +29,9 @@ export function getFormattedDate(dateString: string) {
 	const minuteString = minutes < 10 ? '0' + minutes : minutes;
 	const strTime = hours + ':' + minuteString + ampm;
 	// e.g. "13 Nov 2016 11:00pm";
-	return (
-		myDate.getDate() +
-		' ' +
-		month[myDate.getMonth()] +
-		' ' +
-		myDate.getFullYear() +
-		' ' +
-		strTime
+	return ( 
+		`${myDate.getDate()} ${month[myDate.getMonth()]} ` +
+		`${myDate.getFullYear()} ${strTime}`
 	);
 }
 
@@ -47,33 +43,14 @@ export class PodcastItemPreview extends React.PureComponent<
 	}
 
 	render() {
-		const iframe = (() => {
-			if (!this.props.item ||
-					!this.props.item.enclosures ||
-					!this.props.item.enclosures[0] ||
-					!this.props.item.enclosures[0].url)
-			{
-				return 'Embed failed.';
-			}
-
-			const correctedUrl =
-				/* Prepare for being placed as an URL argument. */
-				encodeURIComponent(
-					/* Add https. */
-					'https' +
-					this.props.item.enclosures[0].url
-						/* Remove http. */
-						.slice(4)
-				);
-
-			return (
-				<iframe
-					className={_styles.PodcastIframe}
-					scrolling="no"
-					src={`https://player.blubrry.com/?media_url=${correctedUrl}`}
+		const img = (
+			<div className={_styles.HeroImageContainer}>
+				<img
+					className={_styles.HeroImage}
+					src={this.props.item['itunes:image']['#']}
 				/>
-			);
-		})();
+			</div>
+		);
 
 		const summary = (() => {
 			if (!this.props.item || !this.props.item.description) {
@@ -95,6 +72,7 @@ export class PodcastItemPreview extends React.PureComponent<
 			if (!this.props.item || !this.props.item.pubDate) {
 				return 'No date provided.';
 			}
+
 			return (
 				<p className={_styles.Date}>
 					{getFormattedDate(new Date(this.props.item.pubDate).toISOString())}
@@ -116,20 +94,21 @@ export class PodcastItemPreview extends React.PureComponent<
 			);
 		})();
 
+		const spacerBar = (
+			<div className={_styles.SpacerBar}></div>
+		)
+
 		return (
 			<div className={_styles.PodcastItemPreview}>
-				<div
-					className={_styles.ImageWrapper}
-					style={{
-						backgroundImage: `url('${this.props.item['itunes:image']['#']}')`,
-					}}
-				/>
+				{img}				
+
 				<div className={_styles.TextContent}>
-					{iframe}
 					{title}
 					{date}
 					{summary}
 				</div>
+					
+				{spacerBar}
 			</div>
 		);
 	}

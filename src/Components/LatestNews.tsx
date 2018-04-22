@@ -1,4 +1,7 @@
 import {
+  composeFeeds,
+} from '../Modules/composeFeeds';
+import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
@@ -49,6 +52,9 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/LatestNews.less';
+import { FeedKeys } from '../Enums/FeedKeys';
+import { PodcastItemFull } from './PodcastItemFull';
+import { PodcastItemPreview } from './PodcastItemPreview';
 const _styles = styles || {};
 
 
@@ -66,12 +72,20 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
   
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
-  doLoad() {
+  async doLoad() {
     const {
       detailLevel,
       feeds,
       language,
     } = this.props;
+
+    if (!feeds.Podcast) {
+      try {
+        await this.props.getPodcasts();
+      } catch (e) {
+        console.error(e);
+      }
+    }
 
     /* Loads the relevant feed based on language and detail level. */
     const {
@@ -130,19 +144,8 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
             rejector(reason);
           }
         )
-    } else if (feed.items && feed.items.length < 3) {
-      /* A single article has been loaded through an Article page. We won't
-       * bother to guess where it is in the feed. */
-      this.props.getNewsFeed(key, 0, feed)
-        .then(
-          /* Resolve */
-          () => this.forceUpdate(),
-
-          /* Reject */
-          (reason) => rejector(reason)
-        );
     } else {
-      this.props.getNewsFeed(key, 0, feed).then(
+      this.props.getNewsFeed(key).then(
         /* Resolve */
         () => this.forceUpdate(),
       
@@ -203,22 +206,45 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
             News is loading...
           </p>
         );
-      } else if (feed.items && feed.items.length > 0) {
-        return feed.items.map((item) => {
+      } else if ((feed.items && feed.items.length) ||
+                 (feeds.Podcast && feeds.Podcast.items &&
+                   feeds.Podcast.items.length))
+      {
+        /* Compose podcasts into news items. */
+        const finalFeed: IRssFeed = composeFeeds(feed, feeds.Podcast).feed!;
+        return finalFeed.items.map((item) => {
           if (this.props.detailLevel === FeedDetailLevels.Full) {
-            return (
-              <NewsItemFull
+            if ('itunes:episode' in item) {
+              return (
+                <PodcastItemFull
                 item={item}
-                key={reactKey += 1}
-              />
-            );
+                  key={reactKey += 1}
+                />
+              );
+            } else {
+              return (
+                <NewsItemFull
+                  item={item}
+                  key={reactKey += 1}
+                />
+              );
+            }
           } else {
-            return (
-              <NewsItemPreview
-                item={item}
-                key={reactKey += 1}
-              />
-            );
+            if ('itunes:episode' in item) {
+              return (
+                <PodcastItemPreview
+                  item={item}
+                  key={reactKey += 1}
+                />
+              );
+            } else {
+              return (
+                <NewsItemPreview
+                  item={item}
+                  key={reactKey += 1}
+                />
+              );
+            }
           }
         });
       } else {
@@ -235,38 +261,38 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
         className={`${_styles.LatestNews} ${_styles[this.props.detailLevel]}`}
         key={reactKey += 1}
       >
-        {
-          this.state.error ?
-            /* Display the error if loading fails. */
-            this.state.error :
-            [
-              newsItems,
-              
-              (() => {
-                if (!feed) {
-                  /* Don't show the Load More button if the feed hasn't been
-                   * fetched. */
-                  return null;
-                } else if (this.state.loadMoreVisible) {
-                  return (
-                    <LoadMoreButton
-                      func={this.doLoad}
-                      key="_key1"
-                    />
-                  );
-                } else {
-                  return (
-                    <p
-                      className={styles.NoMoreNews}
-                      key="_key2"
-                    >
-                      No more news!
-                    </p>
-                  );
-                }
-              })(),
-            ]
-        }
+        <div className={_styles.NewsContainer}>
+          {
+            this.state.error ?
+              /* Display the error if loading fails. */
+              this.state.error :
+              newsItems
+          }
+        </div>
+
+        {(() => {
+          if (!feed) {
+            /* Don't show the Load More button if the feed hasn't been
+              * fetched. */
+            return null;
+          } else if (this.state.loadMoreVisible) {
+            return (
+              <LoadMoreButton
+                func={this.doLoad}
+                key="_key1"
+              />
+            );
+          } else {
+            return (
+              <p
+                className={styles.NoMoreNews}
+                key="_key2"
+              >
+                No more news!
+              </p>
+            );
+          }
+        })()}
       </div>
     );
   }
@@ -294,6 +320,11 @@ export const mapDispatchToProps = (dispatch: Function) => ({
       offset: offset || 0,
     });
 
+    return dispatch(thunk);
+  },
+
+  getPodcasts(): Promise<IRssAction> {
+    const thunk = createRssThunk({ feedKey: FeedKeys.Podcast, });
     return dispatch(thunk);
   },
 });

@@ -9,7 +9,8 @@ import {
 } from './TFeedsMap';
 
 export type TLatestNewsDispatchProps = {
-  getNewsFeed(feedKey: keyof TFeedsMap, offset?: number, composeWith?: IRssFeed | null): Promise<IRssAction>;
+  getNewsFeed(feedKey: keyof TFeedsMap, offset?: number, composeWith?: IRssFeed | null): Promise<IRssAction>,
+  getPodcasts(): Promise<IRssAction>,
 };
 
 export default TLatestNewsDispatchProps;

@@ -5,16 +5,16 @@
 	max-width: 800px;
 	width: 100%;
 	margin: 0 auto;
-	flex-wrap: wrap;
-
+	
 	&.Full {
 		display: block;
 	}
-
+	
 	@media screen and (min-width: 600px) {
-		&.Teaser {
+		&.Teaser .NewsContainer {
 			display: flex;
-			justify-content: center;
+			flex-wrap: wrap;
+			justify-content: left;
 		}
 	}
 

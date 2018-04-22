@@ -5,6 +5,9 @@ import {
   ContactForm,
 } from '../Components/ContactForm';
 import {
+  ExternalPageUrls,
+} from '../Enums/ExternalPageUrls';
+import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
@@ -114,9 +117,12 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
 	            Comments?
 	          </h2>
 			      
-            <button className={_styles.ReadButton}>
+            <a
+              className={_styles.ReadButton}
+              href={ExternalPageUrls.Forum}
+            >
               Go to Read/Discuss
-            </button>
+            </a>
 	          
             <ContactForm />
 	        </div>

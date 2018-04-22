@@ -1,18 +1,19 @@
 @import '../Vars.less';
 
 .NewsItemPreview {
+	display: flex;
 	flex: 1;
 	flex-shrink: 0;
-	//width: 100%;
-	margin:0 @space;
+	position: relative;
+	margin: 0 @space;
 	margin-bottom: @space-lg;
+	min-width: 200px;
 	overflow: hidden;
 	text-align: left;
-	box-sizing:border-box;
-	min-width: 200px;
-	display: flex;
-
+	box-sizing: border-box;
+	
 	@media screen and (min-width: 600px) {
+		max-width: 267px;
 		margin-left: @space-sm;
 		margin-right: @space-sm;
 	}
@@ -29,6 +30,7 @@
 			flex-direction: column;
 			color: @deep-purple;
 			border-color: @deep-purple;
+
 			@media screen and (min-width: 600px) {
 				&:hover {
 					div :global(.HeroImage) {
@@ -77,7 +79,7 @@
 			width: 100%;
 			max-height: 230px;
 			padding: 10px;
-			padding-top:0;
+			padding-top: 0;
 			flex: 1;
 			flex-grow: 1;
 			box-sizing: border-box;
@@ -96,7 +98,8 @@
 			:global(.AuthoringInfo) {
 				margin: 5px 0;
 				font-size: 14px;
-				font-weight: bold;
+				font-family: 'Lato Bold', 'Lato Subset', sans-serif;
+				font-weight: 700;
 				color: @blue;
 			}
 

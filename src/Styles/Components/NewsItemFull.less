@@ -9,15 +9,6 @@
   margin-bottom: 60px;
   text-align: left;
 
-  &:not(:last-of-type)::after {
-    position: relative;
-    display: block;
-    text-align: center;
-    font-size: 25pt;
-    color: @dark-purple;
-    content: '●';
-  }
-
   h3 a {
     text-decoration: none;
 
@@ -61,6 +52,7 @@
   
       :global(.Headline) {
         margin: 0;
+        margin-bottom: @space;
         text-align: center;
         font-size: @h1;
 
@@ -71,6 +63,7 @@
     
       :global(.AuthoringInfo) {
         margin: 0;
+        margin-bottom: @space;
         font-size: @larger;
         color: @light-blue;
         text-align: center;

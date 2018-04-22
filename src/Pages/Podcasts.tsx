@@ -1,9 +1,9 @@
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
-/*import {
+import {
   FeedDetailLevels,
-} from '../Enums/FeedDetailLevels';*/
+} from '../Enums/FeedDetailLevels';
 import {
   getFeed,
 } from '../Modules/getFeed';
@@ -19,9 +19,9 @@ import {
 import {
   isNode,
 } from '../Modules/isNode';
-/*import {
+import {
   ConnectedLatestPodcasts,
-} from '../Components/LatestPodcasts';*/
+} from '../Components/LatestPodcasts';
 import {
   PodcastItemFull,
 } from '../Components/PodcastItemFull';
@@ -143,7 +143,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
           </div>,
 
           /* Display previews of all podcasts. */
-          /*<div
+          <div
             className={_styles.Content}
             key="keyThree"
           >
@@ -151,7 +151,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
               detailLevel={FeedDetailLevels.Teaser}
               key="keyTwo"
             />
-          </div>,*/
+          </div>,
         ];
       } else {
         children = 'No podcasts yet. Sorry!';
