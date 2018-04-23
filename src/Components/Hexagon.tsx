@@ -1,11 +1,12 @@
 import {
   THexagonProps,
 } from '../TypeAliases/THexagonProps';
+
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/Hexagon.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/Hexagon.less';
+const styles = _styles || {};
 
 const gold = '#dab239';
 const deepPurple = '#343358'
@@ -19,13 +20,12 @@ width="240px" height="240px" viewBox="0 0 240 240" enable-background="new 0 0 24
 export class Hexagon extends React.PureComponent<THexagonProps> {
   render() {
     const className = this.props.className ? ` ${this.props.className}` : '';
-    const imageColor = className == ' active' ? gold : deepPurple;
+    const imageColor = className === ' active' ? gold : deepPurple;
     const formattedSource = hexagonImage.replace('{color}', `"${imageColor}"`)
     const imgSrc = `data:image/svg+xml;utf8,${formattedSource}`
 
-    console.log(className)
     return (
-      <div className={`${_styles.Hexagon} Hexagon${className}`}>
+      <div className={`${styles.Hexagon} Hexagon${className}`}>
         <img src={imgSrc} />
         <h3>{this.props.children}</h3>
       </div>

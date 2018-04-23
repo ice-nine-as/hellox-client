@@ -5,6 +5,9 @@ import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
 import {
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
   AllHtmlEntities,
 } from 'html-entities';
 import {
@@ -13,6 +16,9 @@ import {
 import {
   isNode,
 } from '../Modules/isNode';
+import {
+  ITeamMembers,
+} from '../Interfaces/ITeamMembers';
 import {
   connect,
   MapStateToProps,
@@ -37,14 +43,12 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/About.less';
-import { FeedKeys } from '../Enums/FeedKeys';
-import { ITeamMembers } from '../Interfaces/ITeamMembers';
 const styles = _styles || {};
 
 export const strings = {
   LOAD_ERROR:
     'An error was encountered in loading the team members feed. Sorry!',
-}
+};
 
 export class About extends React.Component<TPageProps & TAboutStoreProps & TAboutDispatchProps, { error: string, }> {
   constructor(props: any, context?: any) {
