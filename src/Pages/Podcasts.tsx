@@ -127,7 +127,7 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
             key="sub"
           >
             <h3>
-              Subscribe on
+              SUBSCRIBE ON
             </h3>
             
             <p>
@@ -136,7 +136,19 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
 
             <p>
               {/*Google Play &bull; Spotify &bull; */}
-              <a href="https://www.blubrry.com/feeds/hello_x.xml">
+              <a
+                className={_styles.SubscribeLink}
+                href="https://www.subscribeonandroid.com/www.blubrry.com/feeds/hello_x.xml"
+              >
+                Android
+              </a>
+
+              &bull;
+
+              <a
+                className={_styles.SubscribeLink}
+                href="https://www.blubrry.com/feeds/hello_x.xml"
+              >
                 RSS
               </a>
             </p>
