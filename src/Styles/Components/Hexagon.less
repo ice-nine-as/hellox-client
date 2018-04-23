@@ -1,85 +1,41 @@
 @import '../Vars.less';
 
 @size:50px;
-@height: @size/1.8;
-@marginSize:@size/3.4;
-
 @largeSize:80px;
-@largeHeight: @size/1.2;
-@largeMarginSize:@size/2;
-
-
 
 .Hexagon {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   position: relative;
   width: @size; 
-  height: @height;
-  background: @deep-purple;
-  font-size: @h2;
+  height: @size;
 
+  & img{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+  }
+
+  & h3{
+    z-index: 1;
+    position: relative;
+    font-size: @h3;
+    text-align: center;
+    vertical-align: middle;
+    left:0;
+    right:0;
+  }
   
   @media screen and (min-width:600px){  
     width: @largeSize;
-    height: @largeHeight;
-  }
+    height: @largeSize;
 
-  &:hover {
-    background: @gold;
-    color: @deep-purple;
-  }
-
-  &::before,
-  &::after
-  {
-    content: "";
-    position: absolute;
-    width: 0;
-    border-left: @size/2 solid transparent;
-    border-right: @size/2 solid transparent;
-    @media screen and (min-width:600px){  
-      border-left: @largeSize/2 solid transparent;
-      border-right: @largeSize/2 solid transparent;
-    }
-  }
-
-  &::before {
-    bottom: 100%;
-    border-bottom: @marginSize solid @deep-purple;
-    @media screen and (min-width:600px) {
-      border-bottom: @largeMarginSize solid @deep-purple;
-    }
-  }
-
-  &::after {
-    left: 0;
-    top: 100%;
-    border-top: @marginSize solid @deep-purple;
-    @media screen and (min-width:600px) {
-      border-top: @largeMarginSize solid @deep-purple;
-    }
-  }
-
-  &:global(.active), &:hover {
-    color: white;
-    background: @gold;
-
-    &::before {
-      border-bottom: @marginSize solid @gold;
-      
-    @media screen and (min-width:600px) {
-      border-bottom: @largeMarginSize solid @gold;
-    }
-    }
-
-    &::after {
-      border-top: @marginSize solid @gold;
-            
-    @media screen and (min-width:600px) {
-      border-top: @largeMarginSize solid @gold;
-    }
+    & h3{
+      font-size: @h2;
     }
   }
 }
