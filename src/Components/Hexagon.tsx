@@ -8,8 +8,8 @@ import * as React from 'react';
 import _styles from '../Styles/Components/Hexagon.less';
 const styles = _styles || {};
 
-const gold = '#dab239';
-const deepPurple = '#343358'
+const gold = '%23dab239';
+const deepPurple = '%23343358'
 
 const hexagonImage = `<svg version="1.1" id="dat-hexagon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 width="240px" height="240px" viewBox="0 0 240 240" enable-background="new 0 0 240 240" xml:space="preserve">
