@@ -112,7 +112,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
 
     const creativeTeamMembers = ((error) => {
       if (error) {
-        return error;
+        return strings.LOAD_ERROR;
       } else {
         if (!teamMembers || !Array.isArray(teamMembers.creativeTeam)) {
           return strings.LOAD_ERROR;
@@ -126,7 +126,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
 
     const ice9Members = ((error) => {
       if (error) {
-        return error;
+        return strings.LOAD_ERROR;
       } else {
         if (!teamMembers || !Array.isArray(teamMembers.ice9)) {
           return strings.LOAD_ERROR;
@@ -140,7 +140,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
 
     const scienceTeamMembers = ((error) => {
       if (error) {
-        return error;
+        return strings.LOAD_ERROR;
       } else {
         if (!teamMembers || !Array.isArray(teamMembers.scienceTeam)) {
           return strings.LOAD_ERROR;

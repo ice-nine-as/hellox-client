@@ -69,7 +69,20 @@ import * as React from 'react';
 import _styles from '../Styles/Pages/Write.less';
 const styles = _styles || {};
 
-export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & TWriteDispatchProps> {
+export const strings = {
+  LOAD_ERROR:
+    'Sorry, an error was encountered loading the story generator metadata!',
+};
+
+export class Write extends React.Component<TPageProps & TWriteStoreProps & TWriteDispatchProps, { error: string, }> {
+  constructor(props: any, context?: any) {
+    super(props, context);
+  
+    this.state = {
+      error: '',
+    };
+  }
+
   doLoad() {
     const {
       feeds,
@@ -107,9 +120,15 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
 
     Promise.all(partPromises).then((actions) => {
       (actions as Array<IRssAction>).forEach((action) => {
+        if (!action) {
+          this.setState({ error: strings.LOAD_ERROR, });
+          return;
+        }
+
         if (!action.value ||
           !action.value.items ||
-          !action.value.items.length) {
+          !action.value.items.length)
+        {
           return;
         }
 
@@ -125,6 +144,7 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
         })();
 
         if (!obj) {
+          this.setState({ error: strings.LOAD_ERROR, });
           return;
         }
 
@@ -132,7 +152,10 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
           obj :
           null;
         if (template && action.feedKey) {
-          this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
+          this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template).then(
+            () => {},
+            () => this.setState({ error: strings.LOAD_ERROR, })
+          );
         }
       });
     });
@@ -225,9 +248,12 @@ export class Write extends React.PureComponent<TPageProps & TWriteStoreProps & T
             </div>
           </div>
         </div>
+
         {
-          /* It's not clear why, but rendering this as JSX breaks big-time. */
-          React.createElement(ConnectedStoryGenerator)
+          this.state.error ?
+            <div style={{ textAlign: 'center', }}>{this.state.error}</div> :
+            /* It's not clear why, but rendering this as JSX breaks big-time. */
+            React.createElement(ConnectedStoryGenerator)
         }
       </div>
     );
