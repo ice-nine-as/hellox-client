@@ -123,9 +123,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
         if (!action || !action.value) {
           this.setState({ error: strings.LOAD_ERROR, });
           return;
-        }
-
-        if (!action.value.items || !action.value.items.length) {
+        } else if (!action.value.items || !action.value.items.length) {
           return;
         }
 
@@ -150,6 +148,8 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
           null;
         if (template && action.feedKey) {
           this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
+        } else {
+          this.setState({ error: strings.LOAD_ERROR, });
         }
       });
     });
