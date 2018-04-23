@@ -32,8 +32,8 @@ import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
 /*import {
-  QuoteIcon,
-} from '../Components/Icon/QuoteIcon';*/
+  ConnectedQuoteDisplay,
+} from '../Components/QuoteDisplay';*/
 import {
   connect,
 } from 'react-redux';
@@ -193,16 +193,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             </NavLink>
           </div>
 
-          {/*<div className={styles.QuoteContainer}>
-            <div className={styles.QuoteIconContainer}>
-              <QuoteIcon dontLazyLoad={true} />
-            </div>
-
-            <span className={`${styles.Quote} light`}>
-              What is the loop of Creation? How is there something from
-              nothing?
-            </span>
-          </div>*/}
+          {/*<ConnectedQuoteDisplay />*/}
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>

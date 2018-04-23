@@ -26,8 +26,8 @@ export const strings = {
     'isLanguage type guard.',
 
   TYPE_INVALID:
-    'The type argument provided to getFeed was neither "newsItem" nor ' +
-    '"podcast" nor "storyTemplate".',
+    'The type argument provided to getFeed was not "newsItem", ' +
+    '"podcast", "quote", or "storyTemplate".',
 
   FEEDS_INVALID:
     'The feeds argument provided to getFeed was not an object.',
@@ -50,7 +50,7 @@ export const getFeed = ({
   detailLevel,
   storyPart,
 }: {
-  type:         'newsItem' | 'podcast' | 'storyTemplate',
+  type:         'newsItem' | 'podcast' | 'quote' | 'storyTemplate',
   language:     Languages,
   feeds:        TFeedsMap,
   detailLevel?: FeedDetailLevels,
@@ -66,6 +66,7 @@ export const getFeed = ({
     throw new Error(strings.LANGUAGE_INVALID);
   } else if (type !== 'newsItem' &&
              type !== 'podcast' &&
+             type !== 'quote' &&
              type !== 'storyTemplate')
   {
     throw new Error(strings.TYPE_INVALID);
@@ -89,6 +90,8 @@ export const getFeed = ({
     }
   } else if (type === 'podcast') {
     feedKey = FeedKeys.Podcast;
+  } else if (type === 'quote') {
+    feedKey = FeedKeys.Quotes;
   } else {
     /* Story template */
     const _storyPart = storyPart as string;
