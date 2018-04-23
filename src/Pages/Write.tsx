@@ -149,7 +149,6 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
           obj :
           null;
         if (template && action.feedKey) {
-          debugger;
           this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
         }
       });
