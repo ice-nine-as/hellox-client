@@ -11,6 +11,9 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
+  IPodcastPost,
+} from '../Interfaces/IPodcastPost';
+import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
 import {
@@ -28,9 +31,9 @@ import {
 import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
-import {
+/*import {
   QuoteIcon,
-} from '../Components/Icon/QuoteIcon';
+} from '../Components/Icon/QuoteIcon';*/
 import {
   connect,
 } from 'react-redux';
@@ -40,6 +43,9 @@ import {
 import {
   THomePageProps,
 } from '../TypeAliases/THomePageProps';
+import {
+  TPageProps,
+} from '../TypeAliases/TPageProps';
 import {
   WriteLinkAction,
 } from '../Actions/Link/WriteLinkAction';
@@ -51,8 +57,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
-import { TPageProps } from '../TypeAliases/TPageProps';
-import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
@@ -189,7 +193,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             </NavLink>
           </div>
 
-          <div className={styles.QuoteContainer}>
+          {/*<div className={styles.QuoteContainer}>
             <div className={styles.QuoteIconContainer}>
               <QuoteIcon dontLazyLoad={true} />
             </div>
@@ -198,7 +202,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               What is the loop of Creation? How is there something from
               nothing?
             </span>
-          </div>
+          </div>*/}
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>

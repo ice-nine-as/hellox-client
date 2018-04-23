@@ -54,7 +54,20 @@ import * as React from 'react';
 import styles from '../Styles/Pages/Podcasts.less';
 const _styles = styles || {};
 
-export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps> {
+export const strings = {
+  LOAD_ERROR:
+    'Sorry, an error was encountered loading the podcasts!',
+};
+
+export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps, { error: string, }> {
+  constructor(props: any, context?: any) {
+    super(props, context);
+
+    this.state = {
+      error: '',
+    };
+  }
+
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
   doLoad() {
@@ -73,17 +86,11 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
       language,
     });
 
-    try {
-      if (!feed) {
-        this.props.getPodcastFeed(key);
-      } else if (feed.items && feed.items.length < 3) {
-        /* A single article has been loaded through an Article page. We won't
-        * bother to guess where it is in the feed. */
-        this.props.getPodcastFeed(key, 0, feed);
-      }
-    } catch (e) {
-      console.error('Problem encountered in Podcasts.doLoad.');
-      console.error(e);
+    if (!feed) {
+      this.props.getPodcastFeed(key).then(
+        () => {},
+        () => this.setState({ error: strings.LOAD_ERROR, }) 
+      );
     }
   }
 
@@ -110,7 +117,9 @@ export class Podcasts extends React.PureComponent<TPageProps & TPodcastsStorePro
       language,
     });
 
-    if (!feed) {
+    if (this.state.error) {
+      children = this.state.error;
+    } else if (!feed) {
       children = 'Podcast loading...';
     } else if (feed.items) {
       if (feed.items.length) {

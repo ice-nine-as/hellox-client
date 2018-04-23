@@ -34,27 +34,46 @@ import styles from '../Styles/Pages/Podcast.less';
 import { PodcastItemFull } from '../Components/PodcastItemFull';
 import { isNode } from '../Modules/isNode';
 import { IPodcastPost } from '../Interfaces/IPodcastPost';
+import { getFeed } from '../Modules/getFeed';
 /*import { FeedDetailLevels } from '../Enums/FeedDetailLevels';*/
 const _styles = styles || {};
 
-export class Podcast extends React.PureComponent<TPageProps & TPodcastStoreProps & TPodcastDispatchProps> {
+export const strings = {
+  LOAD_ERROR:
+    'Sorry, an error was encountered loading the podcasts!',
+};
+
+export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & TPodcastDispatchProps, { error: string, }> {
+  constructor(props: any, context?: any) {
+    super(props, context);
+
+    this.state = {
+      error: '',
+    };
+  }
+
+  /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
+   * number of attempts? */
   doLoad() {
     const {
-      feeds: {
-        Podcast: feed,
-      },
-
-      getPodcasts,
-      location: {
-        payload,
-      },
+      feeds,
+      language,
     } = this.props;
 
-    const id = payload && (payload as any).id ? (payload as any).id.toString() : null;
-    if (!id) {
-      return;
-    } else if (!feed) {
-      getPodcasts();
+    /* Loads the relevant feed based on language and detail level. */
+    const {
+      feed,
+    } = getFeed({
+      type: 'podcast',
+      feeds,
+      language,
+    });
+
+    if (!feed) {
+      this.props.getPodcasts().then(
+        () => {},
+        () => this.setState({ error: strings.LOAD_ERROR, }) 
+      );
     }
   }
 
@@ -66,38 +85,48 @@ export class Podcast extends React.PureComponent<TPageProps & TPodcastStoreProps
 
   render() {
     const {
-      feeds: {
-        Podcast: feed,
-      },
-
+      feeds,
+      language,
       location: {
         payload,
       },
     } = this.props;
 
+    const {
+      feed,
+    } = getFeed({
+      type: 'podcast',
+      feeds,
+      language,
+    });
+
     const id = payload && (payload as any).id ?
       (payload as any).id.toString() :
       null;
 
-    const item = (() => {
-      if (!feed || !feed.items) {
-        return null;
+    const child = (() => {
+      if (this.state.error) {
+        return this.state.error;
+      } else if (!feed || !feed.items) {
+        return 'Sorry, this podcast couldn\'t be found.';
       } else {
-        return feed.items.filter((item) => {
+        const item = feed.items.filter((item) => {
           return item &&
                  item.guid &&
                  id === item.guid.split('/').filter((aa) => aa).slice(-1)[0];
         })[0] as IPodcastPost;
+
+        if (item) {
+          return <PodcastItemFull item={item} />;
+        } else {
+          return 'Sorry, this podcast couldn\'t be found.';
+        }
       }
     })();
 
     return (
       <div className={`${_styles.Podcast} ${_styles.Page}`}>
-        {
-          item ?
-            <PodcastItemFull item={item} /> :
-            'Sorry, this podcast couldn\'t be found.'
-        }
+        {child}
 
         {/*
           <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
