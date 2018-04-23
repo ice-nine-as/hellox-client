@@ -120,15 +120,12 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
 
     Promise.all(partPromises).then((actions) => {
       (actions as Array<IRssAction>).forEach((action) => {
-        if (!action) {
+        if (!action || !action.value) {
           this.setState({ error: strings.LOAD_ERROR, });
           return;
         }
 
-        if (!action.value ||
-          !action.value.items ||
-          !action.value.items.length)
-        {
+        if (!action.value.items || !action.value.items.length) {
           return;
         }
 
@@ -152,10 +149,8 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
           obj :
           null;
         if (template && action.feedKey) {
-          this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template).then(
-            () => {},
-            () => this.setState({ error: strings.LOAD_ERROR, })
-          );
+          debugger;
+          this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
         }
       });
     });
