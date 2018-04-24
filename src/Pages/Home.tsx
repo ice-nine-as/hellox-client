@@ -54,13 +54,26 @@ import {
 } from '../Components/Icon/WriteIcon';
 
 import * as React from 'react';
+const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
+import { createRssThunk } from '../Actions/Creators/createRssThunk';
+import { FeedKeys } from '../Enums/FeedKeys';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
+  doLoad() {
+    this.props.loadPodcasts().then(() => {}, () => {});
+  }
+
   render() {
+    const newsPlaceholder = (
+      <div className={styles.BeforeNewsLoaded}>
+        News is loading...
+      </div>
+    );
+
     return (
       <article className={`${styles.Home} ${styles.Page}`}>
         <section className={`${styles.Section} ${styles.First} light`}>
@@ -80,7 +93,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               <div className={`${styles.LinkBox} ${styles.Podcast}`}>
                 <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
                   PODCAST #{
-                      this.props.feeds.Podcast ?
+                      this.props.feeds.Podcast && Array.isArray(this.props.feeds.Podcast.items) ?
                         (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
                         '-'
                     }
@@ -136,7 +149,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
                 <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
                   {
-                    this.props.feeds.Podcast ?
+                    this.props.feeds.Podcast && Array.isArray(this.props.feeds.Podcast.items) ?
                       (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
                       '-'
                   }
@@ -202,7 +215,12 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           </h2>
 
           <div className={`${styles.NewsWrapper}`}>
-            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+            <LazyLoad
+              offset={200}
+              placeholder={newsPlaceholder}
+            >
+              <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+            </LazyLoad>
           </div>
         </section>
       </article>
@@ -219,6 +237,17 @@ ownProps: TPageProps) =>
   feeds,
 });
 
-export const ConnectedHome = connect(mapStateToProps)(Home);
+export const mapDispatchToProps = (dispatch: Function) => ({
+  loadPodcasts() {
+    const thunk = createRssThunk({
+      /* TODO: change to canonical, language-aware getFeed form. */
+      feedKey: FeedKeys.Podcast,
+    });
+
+    return dispatch(thunk);
+  }
+});
+
+export const ConnectedHome = connect(mapStateToProps, mapDispatchToProps)(Home);
 
 export default ConnectedHome;

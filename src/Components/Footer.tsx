@@ -8,7 +8,7 @@ import {
   SiteMap,
 } from './SiteMap';
 import {
-  //SponsorIcons,
+  SponsorIcons,
 } from './SponsorIcons';
 import {
   TFooterProps,
@@ -18,6 +18,7 @@ import {
 } from './Icon/TwitterIcon';
 
 import * as React from 'react';
+const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import styles from '../Styles/Components/Footer.less';
@@ -60,7 +61,9 @@ export class Footer extends React.PureComponent<TFooterProps> {
         </div>
 
         <div className={`${_styles.VerticalHalf} ${_styles.Second}`}>
-          {/*<SponsorIcons />*/'Sponsor icons go here'}
+          <LazyLoad offset={800} placeholder={<div style={{ height: '200px' }}></div>}>
+            <SponsorIcons />
+          </LazyLoad>
         </div>
       </div>
     );

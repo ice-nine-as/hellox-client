@@ -5,6 +5,9 @@ import {
   FrittOrdIcon,
 } from './Icon/Sponsors/FrittOrdIcon';
 import {
+  InnovationNorwayIcon,
+} from './Icon/Sponsors/InnovationNorwayIcon';
+import {
   KommuneIcon,
 } from './Icon/Sponsors/KommuneIcon';
 import {
@@ -38,6 +41,7 @@ export class SponsorIcons extends React.PureComponent {
       <div className={styles.SponsorIcons}>
         <FramIcon />
         <FrittOrdIcon />
+        <InnovationNorwayIcon />
         <KommuneIcon />
         <KulturradIcon />
         <NnkmIcon />
