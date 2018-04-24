@@ -75,7 +75,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
   componentDidMount() {
     if (!isNode()) {
-
+      this.doLoad();
     }
   }
 
