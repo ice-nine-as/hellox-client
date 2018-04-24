@@ -1,7 +1,13 @@
 .SponsorIcons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
+
+  @media screen and (min-width: 600px) {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
 
 :global(.Icon) {
