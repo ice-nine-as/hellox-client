@@ -60,11 +60,23 @@ const LazyLoad = require('react-lazy-load').default;
 import _styles from '../Styles/Pages/Home.less';
 import { createRssThunk } from '../Actions/Creators/createRssThunk';
 import { FeedKeys } from '../Enums/FeedKeys';
+import { isNode } from '../Modules/isNode';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   doLoad() {
-    this.props.loadPodcasts().then(() => {}, () => {});
+    if (!this.props.feeds.Podcast ||
+        !this.props.feeds.Podcast.items ||
+        !this.props.feeds.Podcast.items.length)
+    {
+      this.props.loadPodcasts().then(() => {}, () => {});
+    }
+  }
+
+  componentDidMount() {
+    if (!isNode()) {
+
+    }
   }
 
   render() {
