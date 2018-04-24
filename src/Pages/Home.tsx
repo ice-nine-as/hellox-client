@@ -228,8 +228,9 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
           <div className={`${styles.NewsWrapper}`}>
             <LazyLoad
-              offset={200}
+              offset={240}
               placeholder={newsPlaceholder}
+              throttle={50}
             >
               <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
             </LazyLoad>
