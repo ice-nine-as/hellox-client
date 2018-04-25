@@ -82,11 +82,11 @@ export async function configureServerStore(
   const controller = new AbortController();
   const { signal, } = controller;
 
-  /* Only allow 333ms for the fetch to complete. This allows us to mediate
+  /* Only allow 500ms for the fetch to complete. This allows us to mediate
    * between AWS interior network performance (way faster than user requests)
    * and time to first byte (critical, gets ruined if a fetch takes too
    * long). */
-  const fetchTTL = 333;
+  const fetchTTL = 500;
   const timeoutId = setTimeout(() => {
     try {
       controller.abort();
