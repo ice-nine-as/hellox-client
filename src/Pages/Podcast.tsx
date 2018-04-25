@@ -107,8 +107,8 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
     const child = (() => {
       if (this.state.error) {
         return this.state.error;
-      } else if (!feed || !feed.items) {
-        return 'Sorry, this podcast couldn\'t be found.';
+      } else if (!feed) {
+        return <p className={styles.Message}>Podcast loading...</p>;
       } else {
         const item = feed.items.filter((item) => {
           return item &&
@@ -119,7 +119,7 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
         if (item) {
           return <PodcastItemFull item={item} />;
         } else {
-          return 'Sorry, this podcast couldn\'t be found.';
+          return <p className={styles.Message}>Sorry, this podcast couldn't be found.</p>;
         }
       }
     })();

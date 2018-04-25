@@ -51,8 +51,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Podcasts.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/Podcasts.less';
+const styles = _styles || {};
 
 export const strings = {
   LOAD_ERROR:
@@ -107,8 +107,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
       language,
     } = this.props;
 
-    let children: any = null;
-
+    
     const {
       feed,
     } = getFeed({
@@ -116,11 +115,12 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
       feeds,
       language,
     });
-
+    
+    let children: React.ReactNode = null;
     if (this.state.error) {
       children = this.state.error;
     } else if (!feed) {
-      children = 'Podcast loading...';
+      children = <p className={styles.Message}>Podcast loading...</p>;
     } else if (feed.items) {
       if (feed.items.length) {
         /* TODO: add type guards for podcast posts? */
@@ -132,7 +132,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
           />,
 
           <div
-            className={_styles.SubscribeWrapper}
+            className={styles.SubscribeWrapper}
             key="sub"
           >
             <h3>
@@ -146,7 +146,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             <p>
               {/*Google Play &bull; Spotify &bull; */}
               <a
-                className={_styles.SubscribeLink}
+                className={styles.SubscribeLink}
                 href="https://www.subscribeonandroid.com/www.blubrry.com/feeds/hello_x.xml"
               >
                 Android
@@ -155,7 +155,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
               &bull;
 
               <a
-                className={_styles.SubscribeLink}
+                className={styles.SubscribeLink}
                 href="https://www.blubrry.com/feeds/hello_x.xml"
               >
                 RSS
@@ -165,7 +165,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
 
           /* Display previews of all podcasts. */
           /*<div
-            className={_styles.Content}
+            className={styles.Content}
             key="keyThree"
           >
             <ConnectedLatestPodcasts
@@ -175,18 +175,20 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
           </div>*/,
         ];
       } else {
-        children = 'No podcasts yet. Sorry!';
+        children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
       }
+    } else {
+      children = <p className={styles.Message}>Unknown error.</p>;
     }
 
     return (
-      <div className={`${_styles.Podcasts} ${_styles.Page}`}>
-        {children}
+      <div className={`${styles.Podcasts} ${styles.Page}`}>
+        <div className={styles.Wrapper}>{children}</div>
 
         <VoiceMemoForm />
 
-        {/*<div className={`${_styles.LeaveAMessageWrapper} ${_styles.SubscribeWrapper}`}>
-          <div className={`${_styles.LeaveAMessage}`}>
+        {/*<div className={`${styles.LeaveAMessageWrapper} ${styles.SubscribeWrapper}`}>
+          <div className={`${styles.LeaveAMessage}`}>
             <h4>
               Leave a message
             </h4>
@@ -197,8 +199,8 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
               Do you have any ideas or...
             </p>
 
-            <div className={_styles.RecordButton}>
-              <div className={_styles.RecordButtonDot}></div>
+            <div className={styles.RecordButton}>
+              <div className={styles.RecordButtonDot}></div>
 
               <p>
                 START RECORDING

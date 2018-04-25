@@ -62,7 +62,7 @@ app.use((req, res, next) => {
     /* Only cache the service worker for 5 seconds. */
     res.setHeader('Cache-Control', 'max-age=5');
   } else if (/\.(js|css)$/.test(req.path) ||
-             /\/fonts\/.+\.woff2?/.test(req.path))
+             /\.woff2?$/.test(req.path))
   {
     /* Cache all scripts, styles, and fonts for one year. */
     res.setHeader('Cache-Control', 'max-age=31536000');

@@ -16,7 +16,6 @@ const _styles = styles || {};
 
 export class Answer extends React.PureComponent<IAnswerProps> {
   render() {
-    
     const element = (() => {
       const props: { [key: string]: any } = {
         className:    _styles.AnswerInput,
@@ -24,7 +23,7 @@ export class Answer extends React.PureComponent<IAnswerProps> {
         placeholder:  'Click to type',
         required:     true,
       };
-      
+
       if (this.props.storyState === StoryStates.Complete) {
         /* Do not allow the answers to be changed after the story is marked
         * Complete. */
