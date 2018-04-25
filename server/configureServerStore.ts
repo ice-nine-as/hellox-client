@@ -86,8 +86,8 @@ export async function configureServerStore(
    * between AWS interior network performance (way faster than user requests)
    * and time to first byte (critical, gets ruined if a fetch takes too
    * long). */
-  const fetchTTL = 250;
-  setTimeout(controller.abort, fetchTTL);
+  //const fetchTTL = 250;
+  //setTimeout(controller.abort, fetchTTL);
 
   if (type === PageIdentifiers.Archives) {
     /* Pre-load news feed for Archives page. */
