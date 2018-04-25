@@ -73,28 +73,30 @@ export const createRssThunk: TRssFeedGetter = ({
    * promise. */
   return async (dispatch: Dispatch<{}>): Promise<IRssAction> => {
     const maybeOffsetObj = offsetIsValid && !idValid ? { offset, } : {};
+    const maybeSignalObj = signal ? { signal, } : {};
     const argObj = {
       ...maybeOffsetObj,
+      ...maybeSignalObj,
       feedKey: feedKey as keyof TFeedsMap,
       id,
-      signal,
       urlArg,
     };
 
-    const feed = await (async () => {
-      let tmp;
-      try {
-        tmp = await downloadFeed(argObj);
-      } catch (e) {
+    let feed;
+    try {
+      feed = await downloadFeed(argObj);
+    } catch (e) {
+      if (e.name !== 'AbortError') {
+        console.error(e);
         throw new Error(strings.FEED_RESPONSE_INVALID);
       }
 
-      if (!tmp || !isRssFeed(tmp)) {
-        throw new Error(strings.FEED_RESPONSE_INVALID);
-      }
+      return Promise.reject(e);
+    }
 
-      return tmp;
-    })();
+    if (!feed || !isRssFeed(feed)) {
+      throw new Error(strings.FEED_RESPONSE_INVALID);
+    }
 
     let finalFeedObj: IRssFeed | null = null;
     if (composeWith && isRssFeed(composeWith)) {

@@ -100,13 +100,15 @@ export const downloadFeed = async ({
   return new Promise<IRssFeed>(async (resolve, reject) => {
     let res;
     try {
+      const maybeSignalObj = signal ? { signal, } : {};
       res = await fetch(fullUrl, {
+        ...maybeSignalObj, // allows aborting
         cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'omit',
         method:      'GET', // *GET, PUT, DELETE, etc.
-        signal, // allows aborting
       });
     } catch (e) {
+      /* Do not log if the fetch has been halted. */
       console.error(`Fetch failed for ${fullUrl} request. Signal was ` +
                     `${signal && signal.aborted ? 'aborted' : 'not aborted'}.`);
       reject(e);

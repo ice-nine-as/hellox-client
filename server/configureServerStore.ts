@@ -86,8 +86,14 @@ export async function configureServerStore(
    * between AWS interior network performance (way faster than user requests)
    * and time to first byte (critical, gets ruined if a fetch takes too
    * long). */
-  //const fetchTTL = 250;
-  //setTimeout(controller.abort, fetchTTL);
+  const fetchTTL = 250;
+  const timeoutId = setTimeout(() => {
+    try {
+      controller.abort();
+    } catch (e) {
+      console.error(e);
+    }
+  }, fetchTTL);
 
   if (type === PageIdentifiers.Archives) {
     /* Pre-load news feed for Archives page. */
@@ -97,8 +103,10 @@ export async function configureServerStore(
         signal,
       }));
     } catch (e) {
-      console.error('Error encountered fetching articles.');
-      console.error(e);
+      if (e.name !== 'AbortError') {
+        console.error('Error encountered fetching articles.');
+        console.error(e);
+      }
     }
   }  else if (type === PageIdentifiers.Home) {
     try {
@@ -109,8 +117,10 @@ export async function configureServerStore(
         })),
       ]);
     } catch (e) {
-      console.error('Error fetching ');
-      console.error(e);
+      if (e.name !== 'AbortError') {
+        console.error('Error fetching article teasers.');
+        console.error(e);
+      }
     }
   } else if (type === PageIdentifiers.Write) {
     /* Pre-load same-language story generator templates. */
@@ -168,10 +178,14 @@ export async function configureServerStore(
         ]);
       }
     } catch (e) {
-      console.error('Error encountered fetching story templates.');
-      console.error(e);
+      if (e.name !== 'AbortError') {
+        console.error('Error encountered fetching story templates.');
+        console.error(e);
+      }
     }
   }
+
+  clearTimeout(timeoutId);
 
   const status = location.type === NOT_FOUND ? 404 : 200;
   res.status(status);
