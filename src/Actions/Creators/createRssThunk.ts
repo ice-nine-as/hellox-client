@@ -49,9 +49,10 @@ export const strings = {
 export const createRssThunk: TRssFeedGetter = ({
   composeWith = null,
   feedKey,
-  id          = null,
-  offset      = null,
-  urlArg      = null,
+  id = null,
+  offset = null,
+  signal,
+  urlArg = null,
 }) => {
   if (!isFeedKey(feedKey)) {
     throw new Error(strings.FEED_KEY_INVALID);
@@ -76,6 +77,7 @@ export const createRssThunk: TRssFeedGetter = ({
       ...maybeOffsetObj,
       feedKey: feedKey as keyof TFeedsMap,
       id,
+      signal,
       urlArg,
     };
 

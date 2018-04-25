@@ -1,16 +1,16 @@
 import {
   configureClientStore,
 } from '../src/Modules/configureClientStore';
-/*import {
+import {
   createRssThunk,
-} from '../src/Actions/Creators/createRssThunk';*/
+} from '../src/Actions/Creators/createRssThunk';
 import {
   Request,
   Response,
 } from 'express';
-/*import {
+import {
   FeedKeys,
-} from '../src/Enums/FeedKeys';*/
+} from '../src/Enums/FeedKeys';
 import {
   getRoutesMap,
 } from '../src/Modules/getRoutesMap';
@@ -39,9 +39,10 @@ export async function configureServerStore(
   req: Request,
   res: Response,
   routesMap = getRoutesMap(),
-  history = null) {
+  history = null)
+{
   const _history = history || createMemoryHistory({
-    initialEntries: [req.path,],
+    initialEntries: [ req.path, ],
   });
 
   const language = (() => {
@@ -78,87 +79,98 @@ export async function configureServerStore(
     return null;
   }
 
+  const controller = new AbortController();
+  const { signal, } = controller;
+
+  /* Only allow 250ms for the fetch to complete. This allows us to mediate
+   * between AWS interior network performance (way faster than user requests)
+   * and time to first byte (critical, gets ruined if a fetch takes too
+   * long). */
+  const fetchTTL = 250;
+  setTimeout(controller.abort, fetchTTL);
+
   if (type === PageIdentifiers.Archives) {
     /* Pre-load news feed for Archives page. */
-    /*try {
-      await store.dispatch(createRssThunk({ feedKey: FeedKeys.NewsFull, }));
+    try {
+      await store.dispatch(createRssThunk({
+        feedKey: FeedKeys.NewsFull,
+        signal,
+      }));
     } catch (e) {
       console.error('Error encountered fetching articles.');
       console.error(e);
-    }*/
-  } else if (type === PageIdentifiers.Podcasts) {
-    /* Pre-load news feed for Podcasts page.
+    }
+  }  else if (type === PageIdentifiers.Home) {
     try {
-      await store.dispatch(createRssThunk({ feedKey: FeedKeys.Podcast, }));
-    } catch (e) {
-      console.error('Error encountered fetching podcasts.');
-      console.error(e);
-    }*/
-  } else if (type === PageIdentifiers.Home) {
-    /*try {
       await Promise.all([
         store.dispatch(createRssThunk({
-          feedKey: FeedKeys.Podcast,
-        })),
-
-        store.dispatch(createRssThunk({
           feedKey: FeedKeys.NewsTeasers,
+          signal,
         })),
       ]);
     } catch (e) {
       console.error('Error fetching ');
       console.error(e);
-    }*/
+    }
   } else if (type === PageIdentifiers.Write) {
     /* Pre-load same-language story generator templates. */
-    /*try {
+    try {
       if (language === Languages.Norwegian) {
         await Promise.all([
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateNoPartA,
+            signal,
           })),
 
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateNoPartB,
+            signal,
           })),
           
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateNoPartC,
+            signal,
           })),
         ]);
       } else if (language === Languages.Russian) {
         await Promise.all([
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateRuPartA,
+            signal,
           })),
 
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateRuPartB,
+            signal,
           })),
           
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateRuPartC,
+            signal,
           })),
         ]);
       } else {
         await Promise.all([
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateEnPartA,
+            signal,
           })),
 
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateEnPartB,
+            signal,
           })),
           
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateEnPartC,
+            signal,
           })),
         ]);
       }
     } catch (e) {
       console.error('Error encountered fetching story templates.');
       console.error(e);
-    }*/
+    }
   }
 
   const status = location.type === NOT_FOUND ? 404 : 200;

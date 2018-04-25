@@ -8,6 +8,9 @@ import {
   AllHtmlEntities,
 } from 'html-entities';*/
 import {
+  IPodcastFeed,
+} from '../Interfaces/IPodcastFeed';
+import {
   IRssFeed,
 } from '../Interfaces/IRssFeed';
 /*import {
@@ -21,10 +24,10 @@ import {
   // @ts-ignore
   default as FeedParser,
 } from 'feedparser';
-import { IPodcastFeed } from '../Interfaces/IPodcastFeed';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+require('abortcontroller-polyfill/dist/polyfill-patch-fetch');
 
 export const strings = {
   URL_INVALID:
@@ -47,11 +50,13 @@ export const downloadFeed = async ({
   feedKey,
   id,
   offset,
+  signal,
   urlArg,
 }: {
   feedKey: keyof TFeedsMap,
   id?:     string | null | undefined,
   offset?: number | null | undefined,
+  signal?: AbortSignal,
   urlArg?: string | null | undefined,
 }): Promise<IRssFeed> =>
 {
@@ -93,19 +98,19 @@ export const downloadFeed = async ({
     url;
     
   return new Promise<IRssFeed>(async (resolve, reject) => {
-    const res = await (async () => {
-      try {
-        return await fetch(fullUrl, {
-          cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'omit',
-          method:      'GET', // *GET, PUT, DELETE, etc.
-        });
-      } catch (e) {
-        console.error('RSS feed fetch failed.');
-        reject(e);
-        return null;
-      }
-    })();
+    let res;
+    try {
+      res = await fetch(fullUrl, {
+        cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'omit',
+        method:      'GET', // *GET, PUT, DELETE, etc.
+        signal, // allows aborting
+      });
+    } catch (e) {
+      console.error(`Fetch failed for ${fullUrl} request. Signal was ` +
+                    `${signal && signal.aborted ? 'aborted' : 'not aborted'}.`);
+      reject(e);
+    }
 
     if (!res) {
       return;
