@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/VoiceMemoForm.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/VoiceMemoForm.less';
+const styles = _styles || {};
 
 export class VoiceMemoForm extends React.PureComponent {
   render() {
     return (
-      <div id={_styles.VoiceMemoForm}>
+      <div id={styles.VoiceMemoForm}>
         <iframe
           src="https://www.speakpipe.com/widget/inline/mvzh4wzb2lvfzokadte7rxqlrg0xicwd"
           // @ts-ignore

@@ -86,8 +86,12 @@ export const createRssThunk: TRssFeedGetter = ({
     try {
       feed = await downloadFeed(argObj);
     } catch (e) {
-      console.error(e);
-      throw new Error(strings.FEED_RESPONSE_INVALID);
+      if (e.name !== 'AbortError') {
+        console.error(e);
+        throw new Error(strings.FEED_RESPONSE_INVALID);
+      }
+
+      return Promise.reject(e);
     }
 
     if (!feed || !isRssFeed(feed)) {

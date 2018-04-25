@@ -103,8 +103,10 @@ export async function configureServerStore(
         signal,
       }));
     } catch (e) {
-      console.error('Error encountered fetching articles.');
-      console.error(e);
+      if (e.name !== 'AbortError') {
+        console.error('Error encountered fetching articles.');
+        console.error(e);
+      }
     }
   }  else if (type === PageIdentifiers.Home) {
     try {
@@ -115,8 +117,10 @@ export async function configureServerStore(
         })),
       ]);
     } catch (e) {
-      console.error('Error fetching ');
-      console.error(e);
+      if (e.name !== 'AbortError') {
+        console.error('Error fetching article teasers.');
+        console.error(e);
+      }
     }
   } else if (type === PageIdentifiers.Write) {
     /* Pre-load same-language story generator templates. */
@@ -174,8 +178,10 @@ export async function configureServerStore(
         ]);
       }
     } catch (e) {
-      console.error('Error encountered fetching story templates.');
-      console.error(e);
+      if (e.name !== 'AbortError') {
+        console.error('Error encountered fetching story templates.');
+        console.error(e);
+      }
     }
   }
 
