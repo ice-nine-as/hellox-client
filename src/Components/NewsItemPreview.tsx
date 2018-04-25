@@ -12,12 +12,18 @@ export class NewsItemPreview extends React.PureComponent<TNewsItemPreviewProps> 
 	}
 
 	render() {
+		const {
+			item: {
+				description,
+			}
+		} = this.props;
+
+		const html = this.getPreparedHtml(description);
+
 		return (
 			<div
 				className={styles.NewsItemPreview}
-				dangerouslySetInnerHTML={this.getPreparedHtml(
-					this.props.item.description
-				)}
+				dangerouslySetInnerHTML={html}
 			></div>
 		);
 	}
