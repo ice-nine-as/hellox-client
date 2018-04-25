@@ -97,6 +97,7 @@
   },
   "dependencies": {
     "@types/glob": "^5.0.35",
+    "abortcontroller-polyfill": "^1.1.9",
     "body-parser": "^1.18.2",
     "es6-promise": "^4.2.4",
     "express-sslify": "^1.2.0",

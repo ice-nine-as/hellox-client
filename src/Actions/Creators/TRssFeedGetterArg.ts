@@ -6,11 +6,12 @@ import {
 } from '../../TypeAliases/TFeedsMap';
 
 export type TRssFeedGetterArg = {
-  composeWith?: IRssFeed | null;
-  feedKey:      keyof TFeedsMap;
-  id?:          string | null;
-  offset?:      number | null;
-  urlArg?:      string | null;
+  composeWith?: IRssFeed | null,
+  feedKey:      keyof TFeedsMap,
+  id?:          string | null,
+  offset?:      number | null,
+  signal?:      AbortSignal,
+  urlArg?:      string | null,
 };
 
 export default TRssFeedGetterArg;

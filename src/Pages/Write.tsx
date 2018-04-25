@@ -23,9 +23,6 @@ import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
-  isFeedTemplate,
-} from '../StoryGenerator/TypeGuards/isFeedTemplate';
-import {
   isNode,
 } from '../Modules/isNode';
 import {
@@ -89,12 +86,53 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
       language,
     } = this.props;
 
+    const parts = [ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>;
+
+    const setTemplate = (str: string, feedKey: keyof TFeedsMap) => {
+      const template: IFeedTemplate | null = (() => {
+        try {
+          return JSON.parse(str);
+        } catch (e) {
+          console.error('Failed to download story template:');
+          console.error(e);
+          return null;
+        }
+      })();
+
+      if (template && feedKey) {
+        this.props.setStoryTemplate(feedKeyToTemplateKey(feedKey), template);
+      } else {
+        this.setState({ error: strings.LOAD_ERROR, });
+      }
+    }
+
     /* Weird error below -- keeps complaining about null not being a member of
      * keyof TFeedsMap, which doesn't make much sense to me. */
     // @ts-ignore
-    const missingKeys: Array<keyof TFeedsMap> = ([ 'A', /*'B', 'C',*/ ] as Array<StoryGeneratorParts>)
-      .map<keyof TFeedsMap | null>((storyPart) => {
-        /* Loads the relevant feed based on language and detail level. */
+    const missingKeys: Array<keyof TFeedsMap> = parts.map<keyof TFeedsMap | null>((storyPart) => {
+      /* Loads the relevant feed based on language and detail level. */
+      const {
+        feed,
+        key,
+      } = getFeed({
+        feeds,
+        language,
+        storyPart,
+        type: 'storyTemplate',
+      });
+
+      if (feed) {
+        /* Return null if the feed already exists so it's not refetched. */
+        return null;
+      } else {
+        return key;
+      }
+    }).filter((aa: keyof TFeedsMap | null) => aa !== null);
+
+    if (missingKeys.length < parts.length) {
+      /* We now know there are already parts loaded, and we have to turn them
+       * into StoryTemplate objects. */
+      parts.forEach((storyPart) => {
         const {
           feed,
           key,
@@ -105,14 +143,13 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
           type: 'storyTemplate',
         });
 
-        if (feed) {
-          /* Return null if the feed already exists so it's not refetched. */
-          return null;
-        } else {
-          return key;
+        if (feed && feed.items && feed.items.length) {
+          setTemplate(feed.items[0].description, key);
         }
-      }).filter((aa: keyof TFeedsMap | null) => aa !== null);
+      });
+    }
 
+    /* Load the ones that don't already exist. */
     const partPromises = missingKeys.map((key: keyof TFeedsMap) => {
       return this.props.getStoryTemplate(key)
         .catch((reason) => console.error(reason));
@@ -128,29 +165,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
         }
 
         const str = action.value.items[0].description;
-        const obj: object | null = (() => {
-          try {
-            return JSON.parse(str);
-          } catch (e) {
-            console.error('Failed to download story template:');
-            console.error(e);
-            return null;
-          }
-        })();
-
-        if (!obj) {
-          this.setState({ error: strings.LOAD_ERROR, });
-          return;
-        }
-
-        const template: IFeedTemplate | null = isFeedTemplate(obj) ?
-          obj :
-          null;
-        if (template && action.feedKey) {
-          this.props.setStoryTemplate(feedKeyToTemplateKey(action.feedKey), template);
-        } else {
-          this.setState({ error: strings.LOAD_ERROR, });
-        }
+        setTemplate(str, action.feedKey as keyof TFeedsMap);
       });
     });
   }

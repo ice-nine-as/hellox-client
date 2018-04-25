@@ -4,13 +4,16 @@ import {
 import {
   StoryGeneratorTemplateKeys,
 } from '../Enums/StoryGeneratorTemplateKeys';
+import {
+  TFeedsMap,
+} from '../../TypeAliases/TFeedsMap';
 
 export const strings = {
   FEED_KEY_INVALID:
     'The feedKey argument was not one of the story template keys.',
 };
 
-export const feedKeyToTemplateKey = (feedKey: FeedKeys): StoryGeneratorTemplateKeys => {
+export const feedKeyToTemplateKey = (feedKey: keyof TFeedsMap): StoryGeneratorTemplateKeys => {
   if (feedKey === FeedKeys.StoryTemplateEnPartA) {
     return StoryGeneratorTemplateKeys.EnPartA;
   } else if (feedKey === FeedKeys.StoryTemplateEnPartB) {

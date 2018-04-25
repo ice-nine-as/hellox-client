@@ -82,7 +82,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
       /* Do not render the 404 page for failed code, image, and font lookups,
       * or for codefiles of which we already know the location. Doing so wastes
       * huge amounts of time and process. */
-      const re = /(\.(js|css)(\.map)?$)|\.(jpg|png|svg|woff2)|__webpack_hmr$/;
+      const re = /((\.(js|css))|(\.map)|\.(jpg|jpeg|png|svg|webp|woff2?)|__webpack_hmr)$/;
       if (re.test(req.url)) {
         console.error(`Object at ${req.url} not found.`);
         res.status(404);
