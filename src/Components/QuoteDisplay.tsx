@@ -1,18 +1,35 @@
-/*import {
+import {
+  connect, MapStateToProps,
+} from 'react-redux';
+import {
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
+import {
   getFeed,
 } from '../Modules/getFeed';
 import {
-  QuoteIcon,
-} from './Icon/QuoteIcon';
+  isNode,
+} from '../Modules/isNode';
 import {
-  TQuoteDisplayProps,
-} from '../TypeAliases/TQuoteDisplayProps';
+  QuoteDisplayer,
+} from './QuoteDisplayer';
+import {
+  TFeedsMap,
+} from '../TypeAliases/TFeedsMap';
+import {
+  TQuoteDisplayDispatchProps,
+} from '../TypeAliases/TQuoteDisplayDispatchProps';
+import {
+  TQuoteDisplayStoreProps,
+} from '../TypeAliases/TQuoteDisplayStoreProps';
+import {
+  TStoreProps,
+} from '../TypeAliases/TStoreProps';
 
 import * as React from 'react';
 
 // @ts-ignore
-import _styles from '../Styles/Components/QuoteDisplay';
-import { connect } from 'react-redux';
+import _styles from '../Styles/Components/QuoteDisplay.less';
 const styles = _styles || {};
 
 export const strings = {
@@ -20,7 +37,7 @@ export const strings = {
     'An error was encountered in loading the team members feed. Sorry!',
 };
 
-export class QuoteDisplay extends React.Component<TQuoteDisplayProps, { error: string, }> {
+export class QuoteDisplay extends React.Component<TQuoteDisplayStoreProps & TQuoteDisplayDispatchProps, { error: string, }> {
   constructor(props: any, context?: any) {
     super(props, context);
 
@@ -31,9 +48,9 @@ export class QuoteDisplay extends React.Component<TQuoteDisplayProps, { error: s
 
   doLoad() {
     const {
-      feeds: {
-        TeamMembers: teamMembersFeed,
-      },
+      getQuotesFeed,
+      feeds,
+      language,
     } = this.props;
 
     const rejector = (reason: Error) => {
@@ -43,15 +60,17 @@ export class QuoteDisplay extends React.Component<TQuoteDisplayProps, { error: s
       });
     };
 
-    if (!teamMembersFeed) {
-      this.props.getTeamMembersFeed()
-        .then(
-          // Resolve
-          () => {},
+    const {
+      feed,
+      key,
+    } = getFeed({
+      feeds,
+      language,
+      type: 'quote',
+    });
 
-          // Reject
-          (reason) => rejector(reason)
-        );
+    if (!feed) {
+      getQuotesFeed(key).then(() => {}, (reason) => rejector(reason));
     }
   }
 
@@ -61,37 +80,63 @@ export class QuoteDisplay extends React.Component<TQuoteDisplayProps, { error: s
     }
   }
 
-
   render() {
     const {
       feeds,
       language,
     } = this.props;
 
-    const feed = getFeed({
+    const {
+      error,
+    } = this.state;
+
+    const {
+      feed,
+    } = getFeed({
       feeds,
       language,
       type: 'quote',
-    }).feed;
+    });
 
-    const quotes = feed && feed.items
+    const quotes = feed && feed.items && feed.items[0] ?
+      JSON.parse(feed.items[0].description) :
+      null;
+
+    let child;
+    if (error) {
+      child = 'Error loading quote feed.';
+    } else if (!quotes) {
+      child = null;
+    } else {
+      child = <QuoteDisplayer quotes={quotes} />;
+    }
 
     return (
-      <div className={styles.QuoteContainer}>
-        <div className={styles.QuoteIconContainer}>
-          <QuoteIcon dontLazyLoad={true} />
-        </div>
-
-        <span className={`${styles.Quote} light`}>
-          {
-            <QuoteDisplayer quotes={} />
-          }
-        </span>
+      <div className={styles.QuoteDisplay}>
+        {child}
       </div>
-    )
+    );
   }
 }
 
-export const ConnectedQuoteDisplay = connect(mapStateToProps, mapDispatchToProps);
+export const mapStateToProps: MapStateToProps<TQuoteDisplayStoreProps, {}, TStoreProps> = ({
+  feeds,
+  language,
+}) => ({
+  feeds,
+  language,
+});
 
-export default QuoteDisplay;*/
+export const mapDispatchToProps = (dispatch: Function) => ({
+  getQuotesFeed(key: keyof TFeedsMap) {
+    const thunk = createRssThunk({
+      feedKey: key,
+    });
+
+    return dispatch(thunk);
+  },
+})
+
+export const ConnectedQuoteDisplay = connect(mapStateToProps, mapDispatchToProps)(QuoteDisplay);
+
+export default QuoteDisplay;

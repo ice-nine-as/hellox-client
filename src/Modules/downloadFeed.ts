@@ -108,7 +108,6 @@ export const downloadFeed = async ({
         method:      'GET', // *GET, PUT, DELETE, etc.
       });
     } catch (e) {
-      /* Do not log if the fetch has been halted. */
       console.error(`Fetch failed for ${fullUrl} request. Signal was ` +
                     `${signal && signal.aborted ? 'aborted' : 'not aborted'}.`);
       reject(e);
