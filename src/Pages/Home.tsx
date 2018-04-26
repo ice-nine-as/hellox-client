@@ -31,9 +31,9 @@ import {
 import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
-/*import {
+import {
   ConnectedQuoteDisplay,
-} from '../Components/QuoteDisplay';*/
+} from '../Components/QuoteDisplay';
 import {
   connect,
 } from 'react-redux';
@@ -218,7 +218,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             </NavLink>
           </div>
 
-          {/*<ConnectedQuoteDisplay />*/}
+          <ConnectedQuoteDisplay />
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>

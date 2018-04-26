@@ -14,7 +14,7 @@ export const strings = {
 
   TITLE_INVALID:
     'The title property of the argument passed to isRssFeed was not a ' +
-    'string, or was empty.',
+    'string.',
 
   DESCRIPTION_INVALID:
     'The description property of the argument passed to isRssFeed was not a ' +
@@ -35,7 +35,7 @@ export const isRssFeed = (maybe: any): maybe is IRssFeed => {
     return false;
   }
 
-  if (typeof maybe.title !== 'string' || maybe.title.length === 0) {
+  if (typeof maybe.title !== 'string') {
     console.log(strings.TITLE_INVALID);
     return false;
   }

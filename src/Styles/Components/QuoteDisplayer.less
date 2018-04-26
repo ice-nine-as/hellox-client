@@ -1,0 +1,35 @@
+@import '../Vars.less';
+
+.QuoteContainer {
+  position: relative;
+  margin-top: @space-lg;
+  color: @white;
+
+  .QuoteIconContainer {
+    position: relative;
+    width: 40px;
+    margin-left: auto;
+    margin-right: auto;
+
+    :global(.Icon) img {
+      max-width: 100%;
+    }
+  }
+
+  .Quote {
+    display: inline-block;
+    margin-top: @space;
+    font-family: 'Lato Light', 'Lato Subset', sans-serif;
+    font-weight: 300;
+    font-size: @h4 + 1;
+    transition: 2s opacity;
+    opacity: 0;
+  }
+  
+  .Attribution {
+    font-family: 'Lato Light', 'Lato Subset', sans-serif;
+    font-weight: 300;
+    margin-bottom: 0;
+    font-size: @h4;
+  }
+}
