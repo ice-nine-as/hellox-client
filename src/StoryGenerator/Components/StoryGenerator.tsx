@@ -76,11 +76,7 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
     });
 
     if (!key || !template) {
-      return (
-        <p className={_styles.Loading} style={{ textAlign: 'center', }}>
-          Now loading...
-        </p>
-      );
+      return null;
     }
 
     const titleMap = {} as {

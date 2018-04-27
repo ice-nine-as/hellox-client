@@ -42,15 +42,20 @@ export class LanguageButton extends React.PureComponent<TLanguageButtonOwnProps 
       '';
 
     const activeClass = this.props.active ?
-      ` ${_styles.Active}` :
+      ` ${_styles.Active} active` :
       '';
 
     const capitalizedButtonLanguage =
       this.props.buttonLanguage[0].toUpperCase() +
       this.props.buttonLanguage.slice(1);
+
+    const userClass =
+      this.props.className ?
+        ` ${this.props.className}` :
+        '';
     return (
       <button
-        className={`${_styles.LanguageButton} ${languageClass}${activeClass}`}
+        className={`${_styles.LanguageButton} ${languageClass}${activeClass}${userClass}`}
         onClick={() => this.props.switchLanguage(this.props.buttonLanguage)}
       >
         {capitalizedButtonLanguage}

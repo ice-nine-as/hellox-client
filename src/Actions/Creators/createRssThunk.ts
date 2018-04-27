@@ -44,6 +44,10 @@ export const strings = {
   FEED_RESPONSE_INVALID:
     'The response from the downloadFeed function was null, or did not meet ' +
     'the isRssFeed type guard.',
+
+  EMPTY_FEED_ERROR:
+    'The response from the downloadFeed function produced a feed with no ' +
+    'items.',
 };
 
 export const createRssThunk: TRssFeedGetter = ({
@@ -122,6 +126,10 @@ export const createRssThunk: TRssFeedGetter = ({
         /* Add the number of items in the received feed to the offset. */
         finalFeedObj.currentOffset = realOffset! + finalFeedObj.items.length;
       }
+    }
+  
+    if (finalFeedObj.items.length === 0) {
+      return Promise.reject(strings.EMPTY_FEED_ERROR);
     }
 
     return dispatch(createRssAction(RssAction, feedKey, finalFeedObj));
