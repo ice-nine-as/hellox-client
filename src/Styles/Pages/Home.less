@@ -219,12 +219,13 @@
 
 				.Link {
 					&.About {
+						position: relative;
 						display: inline-block;
 						padding: @space-sm @space-lg;
 						color: @purple;
 						text-decoration: none;
 
-						&:hover {
+						&:hover, &:active {
 							background-color: white;
 							color: @light-purple;
 							transition: color @button-transition-duration;
