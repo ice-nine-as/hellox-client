@@ -205,7 +205,10 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     const newsItems = (() => {
       if (!feed) {
         return (
-          <p key="___key" style={{ textAlign: 'center', margin: '0 auto', }}>
+          <p
+            className={styles.Message}
+            key="___key"
+          >
             News is loading...
           </p>
         );

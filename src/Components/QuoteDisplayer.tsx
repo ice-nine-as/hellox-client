@@ -18,6 +18,7 @@ import _styles from '../Styles/Components/QuoteDisplayer.less';
 const styles = _styles || {};
 
 export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuoteDisplayerState> {
+  attributionElem: HTMLParagraphElement | null = null;
   quoteElem: HTMLParagraphElement | null = null;
 
   state = {
@@ -25,32 +26,40 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
   };
 
   render() {
-    if (!isNode()) {
-      const {
-        quotes,
-        quotes: {
-          length,
-        },
-      } = this.props;
-  
-      const {
-        currentIndex,
-      } = this.state;
+    const {
+      quotes,
+      quotes: {
+        length,
+      },
+    } = this.props;
 
+    const {
+      currentIndex,
+    } = this.state;
+
+    if (!isNode() && length > 1) {
       const ONE_SECOND = 1000;
       const ANIMATION_TIME = ONE_SECOND * 8;
 
-      /* Set a microtask to add the opacity class. */
+      /* Set a microtask to add the opacity. */
       setTimeout(() => {
         if (this.quoteElem) {
           this.quoteElem.style.opacity = '1';
         }
+
+        if (this.attributionElem) {
+          this.attributionElem.style.opacity = '1';
+        }
       });
 
-      /* One second before the end, start to fade out. */
+      /* Two seconds before the end, start to fade out. */
       setTimeout(() => {
         if (this.quoteElem) {
           this.quoteElem.style.opacity = '0';
+        }
+
+        if (this.attributionElem) {
+          this.attributionElem.style.opacity = '0';
         }
       }, ANIMATION_TIME - ONE_SECOND * 2);
 
@@ -60,14 +69,6 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
         });
       }, ANIMATION_TIME);
     }
-
-    const {
-      quotes,
-    } = this.props;
-
-    const {
-      currentIndex,
-    } = this.state;
 
     let child = null;
     if (quotes && currentIndex >= 0) {
@@ -96,6 +97,7 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
           <p
             className={styles.Attribution}
             key={3}
+            ref={(ref) => this.attributionElem = ref}
           >
             {attribution || null}
           </p>
@@ -104,9 +106,7 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
     }
 
     return (
-      <div
-        className={styles.QuoteContainer}
-      >
+      <div className={styles.QuoteContainer}>
         {child}
       </div>
     )

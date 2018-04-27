@@ -236,6 +236,58 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             </LazyLoad>
           </div>
         </section>
+
+        {/* Mailchimp */}
+        {/*<link href="https://cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css" />
+
+        <div
+          id="mc_embed_signup"
+          style={{
+            background: '#fff',
+            clear: 'left',
+            font: '14px "Lato Regular", "Lato Subset", sans-serif',
+          }}
+        >
+          <form
+            action="https://ice-9.us16.list-manage.com/subscribe/post?u=df70196a51c2b6c343aa52c4e&amp;id=74777a8f7e"
+            method="post"
+            id="mc-embedded-subscribe-form"
+            name="mc-embedded-subscribe-form"
+            className="validate"
+            target="_blank"
+            noValidate
+            >
+            <div id="mc_embed_signup_scroll">
+              <label htmlFor="mce-EMAIL">
+                Join our newsletter to get monthly updates from us
+              </label>
+              
+              <input
+                type="email"
+                value=""
+                name="EMAIL"
+                className="email"
+                id="mce-EMAIL"
+                placeholder="email address"
+                required
+              />
+              
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '-5000px',
+                }}
+                aria-hidden="true"
+              >
+                <input type="text" name="b_df70196a51c2b6c343aa52c4e_74777a8f7e" tabIndex={-1} value="" />
+              </div>
+            
+              <div className="clear">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" className="button" />
+              </div>
+            </div>
+          </form>
+        </div>*/}
       </article>
     );
   }

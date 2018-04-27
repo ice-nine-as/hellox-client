@@ -112,3 +112,24 @@ li {
 .HeroAnimation {
   width: 100%;
 }
+
+.LanguageButtonContainer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: @space + 5;
+  text-align: center;
+
+  .LanguageButton {
+    color: black;
+    font-size: @h3;
+
+    :active, &:global(.active) {
+      color: @red;
+    }
+  }
+}
+
+.Message {
+  padding: @space;
+  text-align: center;
+}
