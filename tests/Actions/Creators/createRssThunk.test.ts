@@ -68,7 +68,7 @@ describe('createRssThunk unit tests.', () => {
 
   it('Returns a function which returns a promise.', () => {
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsFullEn,
+      feedKey: FeedKeys.NewsFull,
     });
 
     expect('then' in func(jest.fn())).toBe(true);
@@ -81,7 +81,7 @@ describe('createRssThunk unit tests.', () => {
     downloadFeed.mockImplementationOnce(() => false);
 
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsFullRu,
+      feedKey: FeedKeys.NewsFull,
     });
 
     await expect(func(jest.fn())).rejects.toEqual(new Error(strings.FEED_RESPONSE_INVALID));
@@ -94,7 +94,7 @@ describe('createRssThunk unit tests.', () => {
     isRssFeed.mockImplementationOnce(() => false);
 
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsFullRu,
+      feedKey: FeedKeys.NewsFull,
     });
 
     await expect(func(jest.fn())).rejects.toEqual(new Error(strings.FEED_RESPONSE_INVALID));
@@ -109,7 +109,7 @@ describe('createRssThunk unit tests.', () => {
     }));
 
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsFullRu,
+      feedKey: FeedKeys.NewsFull,
     });
 
     const mockFn = jest.fn();
@@ -119,7 +119,7 @@ describe('createRssThunk unit tests.', () => {
     expect(mockFn.mock.calls).toEqual([
       [
         {
-          feedKey: FeedKeys.NewsFullRu,
+          feedKey: FeedKeys.NewsFull,
           type: AppActionTypes.Rss,
           value: {
             currentOffset: 1,
@@ -140,7 +140,7 @@ it('Adds an offset of 0 to the resultant feed when the id argument prop is set.'
   }));
 
   const func = createRssThunk({
-    feedKey: FeedKeys.NewsFullRu,
+    feedKey: FeedKeys.NewsFull,
     id: '1',
   });
 
@@ -151,7 +151,7 @@ it('Adds an offset of 0 to the resultant feed when the id argument prop is set.'
   expect(mockFn.mock.calls).toEqual([
     [
       {
-        feedKey: FeedKeys.NewsFullRu,
+        feedKey: FeedKeys.NewsFull,
         type: AppActionTypes.Rss,
         value: {
           currentOffset: 0,
@@ -171,7 +171,7 @@ it('Adds computed offsets to a provided, valid offset argument prop.', async () 
   }));
   
   const func = createRssThunk({
-    feedKey: FeedKeys.NewsTeasersEn,
+    feedKey: FeedKeys.NewsTeasers,
     offset: 2,
   });
 
@@ -183,7 +183,7 @@ it('Adds computed offsets to a provided, valid offset argument prop.', async () 
     [
       {
         type: AppActionTypes.Rss,
-        feedKey: FeedKeys.NewsTeasersEn,
+        feedKey: FeedKeys.NewsTeasers,
         value: {
           currentOffset: 3,
           items,
@@ -198,7 +198,7 @@ it('Composes feeds when a valid composeWith argument prop is provided, and combi
   const itemsTwo = [ Symbol('testTwo'), ];
 
   const composeWith = {
-    feedKey: FeedKeys.NewsTeasersNo,
+    feedKey: FeedKeys.NewsTeasers,
     items: itemsOne,
     currentOffset: 1,
   };
@@ -217,7 +217,7 @@ it('Composes feeds when a valid composeWith argument prop is provided, and combi
   // @ts-ignore
   const func = createRssThunk({
     composeWith,
-    feedKey: FeedKeys.NewsTeasersEn,
+    feedKey: FeedKeys.NewsTeasers,
   });
 
   // @ts-ignore
@@ -236,7 +236,7 @@ it('Composes feeds when a valid composeWith argument prop is provided, and combi
     [
       {
         type: AppActionTypes.Rss,
-        feedKey: FeedKeys.NewsTeasersEn,
+        feedKey: FeedKeys.NewsTeasers,
         value: {
           currentOffset: 2,
           items: itemsOne.concat(itemsTwo),
@@ -255,7 +255,9 @@ describe('createRssThunk integration tests.', () => {
     // @ts-ignore
     downloadFeed.mockClear();
     // @ts-ignore
-    downloadFeed.mockImplementation(() => true);
+    downloadFeed.mockImplementation(() => ({
+      items: [ 1, 2, 3, ],
+    }));
     // @ts-ignore
     isFeedKey.mockClear();
     // @ts-ignore
@@ -267,13 +269,8 @@ describe('createRssThunk integration tests.', () => {
   });
 
   it('Returns a Promise that produces an action which meets the isAction type guard.', async () => {
-    // @ts-ignore
-    downloadFeed.mockImplementationOnce(() => ({
-      items: [],
-    }));
-    
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsTeasersEn,
+      feedKey: FeedKeys.NewsTeasers,
     });
 
     const action = await func(jest.fn((aa) => aa));
@@ -281,13 +278,8 @@ describe('createRssThunk integration tests.', () => {
   });
 
   it('Returns a Promise that produces an action which meets the isAppAction type guard.', async () => {
-    // @ts-ignore
-    downloadFeed.mockImplementationOnce(() => ({
-      items: [],
-    }));
-    
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsTeasersEn,
+      feedKey: FeedKeys.NewsTeasers,
     });
 
     const action = await func(jest.fn((aa) => aa));
@@ -295,13 +287,8 @@ describe('createRssThunk integration tests.', () => {
   });
 
   it('Returns a Promise that produces an action which meets the isRssAction type guard.', async () => {
-    // @ts-ignore
-    downloadFeed.mockImplementationOnce(() => ({
-      items: [],
-    }));
-    
     const func = createRssThunk({
-      feedKey: FeedKeys.NewsTeasersEn,
+      feedKey: FeedKeys.NewsTeasers,
     });
 
     const action = await func(jest.fn((aa) => aa));

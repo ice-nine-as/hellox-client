@@ -127,7 +127,7 @@ export const createRssThunk: TRssFeedGetter = ({
         finalFeedObj.currentOffset = realOffset! + finalFeedObj.items.length;
       }
     }
-  
+
     if (finalFeedObj.items.length === 0) {
       return Promise.reject(strings.EMPTY_FEED_ERROR);
     }
