@@ -30,23 +30,33 @@ to start a hot-reloading development server which will automatically reflect the
 
 to run a production version of the app. Both of these servers will be running locally on port `3000`. To view them, navigate your browser to `localhost:3000`.
 
-In order to run a high-performance version of the website on the production server, use:
+In order to run a high-performance, HTTP2 version of the website on the production server, use:
 
 `npm run start-h2`
 
-Note that this requires a `letsencrypt` installation on the server, and voluming or symlinking of the keys into a virtual private/ directory within the project folder. Currently, this is accomplished through Docker's VOLUME command.
+Note that this requires a `letsencrypt` installation on the server, and voluming or symlinking of the keys into a virtual private/ directory within the project folder. Currently, this is accomplished through Docker's runtime voluming `-v` argument.
+
+## E-mail
+Amazon SES is used to send copies of users' generated and edited stories to them. The credentials for this are AWS credentials, *not* SMTP credentials, and the `node-ses` package is used to simplify querying the SES endpoints. Critical note: while the server for the web client is located in Frankfurt, SES is not available in that zone. It is instead located in the closest European zone in Ireland. These credentials must be included in `server/credentials/email-credentials.json`. In production, these are stored in `/etc/hellox-credentials/` and volumed into `/etc/hellox-client/server/credentials/` with the Docker runtime voluming argument, `-v`.
+
+Formspree is used for simple contact form e-mails.
+
+## Google Drive integration
+
+As designed by the client, a Google Sheet is used to contain all the submitted user-generated stories. The `googleapis` package is used to automate this process, and the necessary credentials are stored in `server/credentials/google-sheets-credentials.json`. Like the e-mail credentials, these are volumed into the Docker container at runtime from `/etc/hellox-credentials/`.
 
 ## Updating the server
-Using the X50 key (issued by AWS), ssh into the webpage server. Pull any changes with `git pull`.
 
-If the Docker container is already running (you can check this with `docker ps`), use `gulp dockerRebuild`. If it is not running, use `gulp dockerStart && gulp dockerRun`.
+Using the helloX key (issued by AWS), `ssh` into the web server. Pull any changes with `git pull`.
+
+If the Docker container is already running (you can check this with `docker ps`), use `gulp dockerRebuild`. If it is not running, use `gulp dockerClean && gulp dockerStart && gulp dockerRun`.
 
 It will take several minutes for the container to spin up again, and for the build infrastructure to complete AOT compilation.
 
 ## Continuous Integration
 The Hello X client uses Travis CI for continuous integration of testing. (Note, however, that it does *not* use continuous delivery. This would be easy to add but has little value at present.) Changes should be committed on a non-master branch,
 then a pull request should be made to pull them into the `master` branch. You may need to wait 5-10 minutes and/or refresh before the result of the Travis test run appears on the pull request page. If the tests pass, pull the changes into
-`master`; if not, cancel the pull requests, add new commits fixing the errors, and repeat the aforementioned steps. Do *not*, except in the most dire circumstances, pull into `master` if tests are failing. 
+`master`; if not, add new commits fixing the errors, and repeat the aforementioned steps. Do *not*, except in the most dire circumstances, pull into `master` if tests are failing. 
 
 ## Branch structure
 
