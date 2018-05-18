@@ -14,21 +14,45 @@ import * as React from 'react';
 import _styles from '../Styles/Components/CompletedStory.less';
 const styles = _styles || {};
 
-export class CompletedStory extends React.PureComponent<TCompletedStoryProps> {
+export class CompletedStory extends React.PureComponent<TCompletedStoryProps, { editedText: string | null, }> {
+  state = { editedText: null, };
+
   render() {
-    const storyText = this.props.storyTemplate === null ?
-      'Sorry, there\'s been an error.' :
-      new StoryTemplate(this.props.storyTemplate).getCompleteStory();
+    const {
+      editedText,
+    } = this.state;
+
+    const storyText = (() => {
+      if (typeof editedText === 'string') {
+        return editedText;
+      } else if (this.props.storyTemplate === null) {
+        return 'Sorry, there\'s been an error.';
+      } else {
+        return new StoryTemplate(this.props.storyTemplate).getCompleteStory();
+      }
+    })();
 
     return (
       <div className={styles.CompletedStory}>
-        <div className={styles.Instructions}><p className={styles.InstructionText}>Click in the text box below to edit your story</p></div>
+        <div className={styles.Instructions}>
+          <p className={styles.InstructionText}>
+            Click in the text box below to edit your story
+          </p>
+        </div>
+
         <div className={styles.EditorWrapper}>
           <textarea
             className={`${styles.Editor} light`}
-            defaultValue={storyText}
+            onChange={(e) => {
+              this.setState({
+                editedText: e.currentTarget.value,
+              });
+            }}
+
+            value={storyText}
           />
         </div>
+
         <div className={styles.formWrapper}>
           <p>
             Fill out the fields below and click the Submit My Story button
