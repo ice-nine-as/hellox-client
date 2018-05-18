@@ -107,8 +107,8 @@ app.post('/story-generator-mailer', (req, res) => {
     console.error(e);
     res.status(500);
     res.write(
-      `Sorry, there was a problem submitting the generated story.<br>
-      ${storyMarkup}`);
+      `Sorry, there was a problem submitting the generated story.\n
+      ${storyMarkup.replace(/<br>/g, '\n')}`);
     res.end();
   };
 
@@ -152,11 +152,12 @@ app.post('/story-generator-mailer', (req, res) => {
         <br>
         hello X director of chaos`,
     };
-  
+
     const carbonCopy = req.body.carbonCopy;
-    const replyTo = req.body.replyTo;
-    if (carbonCopy && replyTo) {
-      sesArgs.cc = replyTo;
+    const email = req.body.email;
+    if (carbonCopy && email) {
+      sesArgs.to = email;
+      sesArgs.cc = 'helloX@ice-9.no';
     }
 
     // Give SES the details and let it construct the message for you.
