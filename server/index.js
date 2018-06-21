@@ -177,7 +177,7 @@ app.post('/story-generator-mailer', (req, res) => {
 });
 
 /* Google Analytics ownership endpoint */
-app.post('/story-generator-mailer', (req, res) => {
+app.post('/google2121db82d9189338.html', (req, res) => {
   res.write('google-site-verification: google2121db82d9189338.html');
   res.end();
 });
