@@ -36,7 +36,8 @@ export class CompletedStory extends React.PureComponent<TCompletedStoryProps, { 
       <div className={styles.CompletedStory}>
         <div className={styles.Instructions}>
           <p className={styles.InstructionText}>
-            Click in the text box below to edit your story
+            Here is your story scene. Feel free to edit and add to this text
+            in any way you like.
           </p>
         </div>
 

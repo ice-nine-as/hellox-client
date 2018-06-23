@@ -95,7 +95,7 @@ export const navBarItems = Object.freeze([
     href={ExternalPageUrls.Forum}
     key={reactKey += 1}
   >
-    Read &amp; Discuss
+    Meet
   </a>,
 
   <NavLink
