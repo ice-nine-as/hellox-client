@@ -19,12 +19,14 @@ const {
   readFileSync,
 } = require('fs');
 
-const nodeSES = require('node-ses');
-
 const {
   dirname,
   resolve,
 } = require('path');
+
+const {
+  publishToEmail,
+} = require('./publishToEmail');
 
 const {
   publishToGoogleSheet,
@@ -94,8 +96,6 @@ app.use(bodyParser.urlencoded({ extended: true, }));
 /* Mail endpoint for story generator */
 app.post('/story-generator-mailer', (req, res) => {
   /* Cross-reference with StorySubmissionForm component. */
-
-  const storyMarkup = ((req.body || {}).story || '').replace(/\n/g, '<br>');
   
   const handleSheetsError = (e) => {
     console.error('Problem publishing generated story to Google Sheets.');
@@ -108,7 +108,7 @@ app.post('/story-generator-mailer', (req, res) => {
     res.status(500);
     res.write(
       `Sorry, there was a problem submitting the generated story.\n
-      ${storyMarkup.replace(/<br>/g, '\n')}`);
+      ${req.body.story}`);
     res.end();
   };
 
@@ -119,61 +119,18 @@ app.post('/story-generator-mailer', (req, res) => {
   }
 
   try {
-    /* Should be copied locally for dev, or volumed in with Docker for prod. */
-    const credentials = require('./credentials/email-credentials.json');
-
-    const client = nodeSES.createClient({
-      amazon: 'https://email.eu-west-1.amazonaws.com',
-      key:    credentials.username,
-      secret: credentials.password,
-    });
-
-    const sesArgs = {
-      to:      'helloX@ice-9.no',
-      from:    'helloX@ice-9.no',
-      subject: `Here's your story, ${req.body.name}!`,
-      message: `Thanks for contributing to the current X story cycle!<br>
-        <br>
-        Your input will be read and discussed by the hello X creative team and will help us create the next questions and scenes for current cycle of X stories. This means your ideas help create new characters, scenes, and storylines for this year’s short stories which will be the basis of improvised writers’ jams, live performances, interactive mobile story experiences and books.<br> 
-        <br>
-        More ideas, questions, or comments? Your contributions are what it’s all about, so join the artists and scientists of hello X, and other people like yourself, by going to the Read & Discuss page at https://forum.hellox.me. Hear the behind-the-scenes discussions at the Ice-9 story laboratory by listening to the hello X podcast at <a href="https://www.helloX.me/podcasts/">https://www.helloX.me/podcasts/</a>.<br>
-        <br>
-        Here’s your story so far.<br> 
-        <br>
-        ${storyMarkup}<br> 
-        <br>
-        If you want to continue X’s story, send us your writing or even just ideas at <a href="mailto:helloX@ice-9.no">helloX@ice-9.no</a>, or write to the wider hello X community at <a href="https://forum.hellox.me">https://forum.hellox.me</a>.<br> 
-        <br>
-        We will send you an invitation when a new part of the story is open for contributions. You can write us here if you do not want to be contacted further.<br> 
-        <br>
-        Thanks again,<br> 
-        <br>
-        Christine Cynn<br>
-        <br>
-        hello X director of chaos`,
-    };
-
-    const carbonCopy = req.body.carbonCopy;
-    const email = req.body.email;
-    if (carbonCopy && email) {
-      sesArgs.to = email;
-      sesArgs.cc = 'helloX@ice-9.no';
-    }
-
-    // Give SES the details and let it construct the message for you.
-    client.sendEmail(sesArgs, (err, data) => {
-      if (err) {
-        handleEmailError(err);
-        return;
-      }
-
-      /* Redirect to the home page. */
-      res.redirect('/');
-      res.end();
-    });
+    publishToEmail(
+      req.body.name,
+      req.body.email,
+      req.body.carbonCopy,
+      req.body.story);
   } catch (e) {
     handleEmailError(e);
   }
+
+  /* Redirect to the home page. */
+  res.redirect('/');
+  res.end();
 });
 
 let isBuilt = false;
