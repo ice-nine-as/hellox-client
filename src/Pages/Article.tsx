@@ -121,7 +121,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
               className={_styles.ReadButton}
               href={ExternalPageUrls.Forum}
             >
-              Go to Read/Discuss
+              Go to Meet
             </a>
 	          
             <ContactForm />

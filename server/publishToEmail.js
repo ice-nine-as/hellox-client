@@ -18,7 +18,7 @@ function publishToEmail(name, email, carbonCopy, story) {
       `Thanks for contributing to the current X story cycle!
 
       Your input will be read and discussed by the hello X creative team and will help us create the next questions and scenes for current cycle of X stories. This means your ideas help create new characters, scenes, and storylines for this year’s short stories which will be the basis of improvised writers’ jams, live performances, interactive mobile story experiences and books. 
-      More ideas, questions, or comments? Your contributions are what it’s all about, so join the artists and scientists of hello X, and other people like yourself, by going to the Read & Discuss page at https://forum.hellox.me. Hear the behind-the-scenes discussions at the Ice-9 story laboratory by listening to the hello X podcast at <a href="https://www.helloX.me/podcasts/">https://www.helloX.me/podcasts/</a>.
+      More ideas, questions, or comments? Your contributions are what it’s all about, so join the artists and scientists of hello X, and other people like yourself, by going to the Meet page at https://forum.hellox.me. Hear the behind-the-scenes discussions at the Ice-9 story laboratory by listening to the hello X podcast at <a href="https://www.helloX.me/podcasts/">https://www.helloX.me/podcasts/</a>.
 
       Here’s your story so far. 
 
