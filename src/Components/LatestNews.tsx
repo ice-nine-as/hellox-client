@@ -82,7 +82,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       language,
     } = this.props;
 
-    if (!feeds.Podcast) {
+    if (!feeds[FeedKeys.Podcast]) {
       try {
         await this.props.getPodcasts();
       } catch (e) {

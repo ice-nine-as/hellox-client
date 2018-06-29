@@ -183,12 +183,13 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
 
             <p className={styles.OpeningParagraph}>
               You can contribute to the first cycle of X short stories
-              by going to the WRITE page. Listen to the PODCASTS to meet
-              scientists, artists, and other special gusests, review your
+              by going to the <a href="/write">WRITE</a> page. Listen to
+              the <a href="/podcasts">PODCASTS</a> to
+              meet scientists, artists, and other special gusests, review your
               contributions, and dig into the present day stories that
-              inform our evolving visions of X. Go to
-              <a href="//forum.hellox.me">MEET</a>
-              to read featured story ideas, debate issues with our creative
+              inform our evolving visions of X.
+              Go to <a href="//forum.hellox.me">MEET</a> to read featured
+              story ideas, debate issues with our creative
               and scientific teams, and propose new story games. This is a
               laboratory with live experiments, and lots of potential
               surprises, so subscribe to the hello X NEWSLETTER to keep

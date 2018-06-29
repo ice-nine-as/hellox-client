@@ -5,14 +5,26 @@ import {
   createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
+import {
   ExternalPageUrls,
 } from '../Enums/ExternalPageUrls';
 import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
   IPodcastPost,
 } from '../Interfaces/IPodcastPost';
+import {
+  isNode,
+} from '../Modules/isNode';
+import {
+  ConnectedLatestForumPosts,
+} from '../Components/LatestForumPosts';
 import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
@@ -58,9 +70,6 @@ const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
-import { createRssThunk } from '../Actions/Creators/createRssThunk';
-import { FeedKeys } from '../Enums/FeedKeys';
-import { isNode } from '../Modules/isNode';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
@@ -80,6 +89,12 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   }
 
   render() {
+    const forumPlaceholder = (
+      <div className={styles.BeforeForumPostsLoaded}>
+        Forum posts are loading...
+      </div>
+    )
+
     const newsPlaceholder = (
       <div className={styles.BeforeNewsLoaded}>
         News is loading...
@@ -222,11 +237,25 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>
+          <h2 className={`${styles.LatestForumPostsTitle} light`}>
+            Latest forum posts
+          </h2>
+
+          <div className={styles.LatestForumPostsWrapper}>
+            <LazyLoad
+              offset={240}
+              placeholder={forumPlaceholder}
+              throttle={50}
+            >
+              <ConnectedLatestForumPosts />
+            </LazyLoad>
+          </div>
+
           <h2 className={`${styles.LatestNewsTitle} light`}>
             What's up?
           </h2>
 
-          <div className={`${styles.NewsWrapper}`}>
+          <div className={styles.NewsWrapper}>
             <LazyLoad
               offset={240}
               placeholder={newsPlaceholder}
