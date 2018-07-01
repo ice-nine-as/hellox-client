@@ -2,8 +2,8 @@ import {
   ILatestForumPostsAction,
 } from '../App/ILatestForumPostsAction';
 import {
-  ILatestForumPostsFeed,
-} from '../../Interfaces/ILatestForumPostsFeed';
+  ILatestForumTopicsFeed,
+} from '../../Interfaces/ILatestForumTopicsFeed';
 import {
   isLatestForumPostsAction,
 } from '../../TypeGuards/isLatestForumPostsAction';
@@ -19,7 +19,7 @@ export const strings = {
 
 export const createLatestForumPostsAction: TActionCreator<ILatestForumPostsAction> = (
   latestForumPostsAction: Readonly<ILatestForumPostsAction>,
-  value: ILatestForumPostsFeed | null,
+  value: ILatestForumTopicsFeed | null,
 ): ILatestForumPostsAction =>
 {
   if (!isLatestForumPostsAction(latestForumPostsAction)) {

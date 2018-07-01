@@ -1,9 +1,9 @@
 import {
-  ILatestForumPostsFeed,
-} from '../Interfaces/ILatestForumPostsFeed';
+  ILatestForumTopicsFeed,
+} from '../Interfaces/ILatestForumTopicsFeed';
 
 export type TLatestForumPostsStoreProps = {
-  latestForumPosts: ILatestForumPostsFeed | null;
+  latestForumTopics: ILatestForumTopicsFeed | null;
 };
 
 export default TLatestForumPostsStoreProps;

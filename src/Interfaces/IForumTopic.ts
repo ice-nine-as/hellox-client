@@ -2,6 +2,7 @@ export interface IForumTopic {
   id: number;
   title: string;
   fancy_title: string;
+  slug: string;
   posts_count: number;
   reply_count: number;
   highest_post_number: number;
@@ -12,8 +13,10 @@ export interface IForumTopic {
   bumped_at: Date;
   unseen: boolean;
   pinned: boolean;
+  
   /* null as of 07/18. */
   unpinned: any;
+  
   excerpt: string;
   visible: boolean;
   closed: boolean;
@@ -29,12 +32,15 @@ export interface IForumTopic {
   last_poster_username: string;
   category_id: number;
   pinned_globally: boolean;
+  
   /* null as of 07/18. */
   featured_link: any;
+  
   posters: Array<{
     extras: string | null;
     description: string;
     user_id: number;
+    
     /* null as of 07/18. */
     primary_group_id: any;
   }>;

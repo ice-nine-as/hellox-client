@@ -38,7 +38,7 @@ export const createLatestForumPostsThunk = ({
   return async (dispatch: Dispatch<{}>): Promise<ILatestForumPostsAction> => {
     let feed;
     try {
-      const res = await fetch('https://forum.hellox.me/latest.json');
+      const res = await fetch('//forum.hellox.me/posts.json');
       try {
         const data = await res.json();
         feed = data;
@@ -59,7 +59,7 @@ export const createLatestForumPostsThunk = ({
       throw new Error(strings.FEED_RESPONSE_MALFORMED);
     }
 
-    if (feed.topic_list.topics.length === 0) {
+    if (!feed.latest_posts.length) {
       return Promise.reject(strings.EMPTY_FEED_ERROR);
     }
 

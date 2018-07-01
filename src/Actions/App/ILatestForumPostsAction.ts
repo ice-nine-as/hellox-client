@@ -5,12 +5,12 @@ import {
   IAppAction,
 } from './IAppAction';
 import {
-  ILatestForumPostsFeed,
-} from '../../Interfaces/ILatestForumPostsFeed';
+  ILatestForumTopicsFeed,
+} from '../../Interfaces/ILatestForumTopicsFeed';
 
 export interface ILatestForumPostsAction extends IAppAction {
   readonly type:  AppActionTypes.LatestForumPosts;
-  readonly value: ILatestForumPostsFeed | null;
+  readonly value: ILatestForumTopicsFeed | null;
 }
 
 export default ILatestForumPostsAction;

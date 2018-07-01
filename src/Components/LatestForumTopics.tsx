@@ -55,11 +55,11 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
   componentDidMount() {
     if (!isNode()) {
       const {
-        latestForumPosts,
+        latestForumTopics,
       } = this.props;
 
       /* Only autoload if the feed has never been fetched. */
-      if (!latestForumPosts) {
+      if (!latestForumTopics) {
         this.doLoad();
       }
     }
@@ -68,19 +68,20 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
   render() {
     let reactKey = -1;
     const {
-      latestForumPosts,
+      latestForumTopics,
     } = this.props;
-
+    
     const topics = (() => {
-      if (latestForumPosts &&
-          latestForumPosts.topic_list &&
-          latestForumPosts.topic_list.topics)
+      if (latestForumTopics &&
+          latestForumTopics.topic_list &&
+          latestForumTopics.topic_list.topics)
       {
-        return latestForumPosts.topic_list.topics;
+        return latestForumTopics.topic_list.topics;
       }
 
       return null;
     })();
+
 
     const latestPosts = (() => {
       if (!topics) {
@@ -89,19 +90,48 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
             className={styles.Message}
             key="___key"
           >
-            Latest forum posts are loading...
+            Latest forum topics are loading...
           </p>
         );
       } else if (topics.length) {
-        return topics.map((item: IForumTopic) => {
-          <li className="test">
-            {item.title}
-          </li>
-        });
+        console.log(...topics);
+        return topics.sort((aa, bb) => {
+          if (aa.last_posted_at > bb.last_posted_at) {
+            return -1;
+          } else if (bb.last_posted_at > aa.last_posted_at) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }).slice(0, 3)
+          .map((item: IForumTopic, index: number) => (
+            <li
+              className="test"
+              key={index}  
+            >
+              <a href={`//forum.hellox.me/t/${item.slug}/${item.id}`}>
+                <img
+                  src={item.image_url}
+                />
+
+                {item.title}
+
+                <div>
+                  <time>
+                    {item.last_posted_at}
+                  </time>
+                </div>
+
+                <p>
+                  {item.excerpt || 'Read more on the forum!'}
+                </p>
+              </a>
+            </li>
+          ));
       } else {
         return (
           <p key="____key" style={{ textAlign: 'center', margin: '0 auto', }}>
-            Sorry, no forum posts yet!
+            Sorry, no forum topics yet!
           </p>
         );
       }
@@ -128,10 +158,10 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
 }
 
 export const mapStateToProps: MapStateToProps<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps, TLatestForumPostsOwnProps, TStoreProps> = ({
-  latestForumPosts,
+  latestForumTopics,
 }, ownProps) => ({
   ...ownProps,
-  latestForumPosts,
+  latestForumTopics,
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
