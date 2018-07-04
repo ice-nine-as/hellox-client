@@ -183,7 +183,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             >
               <div className={`${styles.LinkBox} ${styles.Read}`}>
                 <h2 className={`${styles.LinkTitle} ${styles.Read}`}>
-                  READ
+                  MEET
                 </h2>
 
                 <h3 className={`${styles.LinkSubtitle} ${styles.Read}`}>
