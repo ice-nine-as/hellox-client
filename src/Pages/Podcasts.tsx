@@ -1,9 +1,9 @@
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
-/*import {
+import {
   FeedDetailLevels,
-} from '../Enums/FeedDetailLevels';*/
+} from '../Enums/FeedDetailLevels';
 import {
   getFeed,
 } from '../Modules/getFeed';
@@ -19,9 +19,9 @@ import {
 import {
   isNode,
 } from '../Modules/isNode';
-/*import {
+import {
   ConnectedLatestPodcasts,
-} from '../Components/LatestPodcasts';*/
+} from '../Components/LatestPodcasts';
 import {
   PodcastItemFull,
 } from '../Components/PodcastItemFull';
@@ -164,7 +164,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
           </div>,
 
           /* Display previews of all podcasts. */
-          /*<div
+          <div
             className={styles.Content}
             key="keyThree"
           >
@@ -172,7 +172,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
               detailLevel={FeedDetailLevels.Teaser}
               key="keyTwo"
             />
-          </div>*/,
+          </div>,
         ];
       } else {
         children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
@@ -183,35 +183,11 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
 
     return (
       <div className={`${styles.Podcasts} ${styles.Page}`}>
-        <div className={styles.Wrapper}>{children}</div>
+        <div className={styles.Wrapper}>
+          {children}
+        </div>
 
         <VoiceMemoForm />
-
-        {/*<div className={`${styles.LeaveAMessageWrapper} ${styles.SubscribeWrapper}`}>
-          <div className={`${styles.LeaveAMessage}`}>
-            <h4>
-              Leave a message
-            </h4>
-
-            <p>
-              We would love to hear from you!
-              <br />
-              Do you have any ideas or...
-            </p>
-
-            <div className={styles.RecordButton}>
-              <div className={styles.RecordButtonDot}></div>
-
-              <p>
-                START RECORDING
-              </p>
-            </div>
-
-            <p>
-              Note: Your message won't be sent until you press "Send"
-            </p>
-          </div>
-        </div>*/}
       </div>
     );
   }

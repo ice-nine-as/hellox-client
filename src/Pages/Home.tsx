@@ -64,12 +64,15 @@ import { isNode } from '../Modules/isNode';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
-  doLoad() {
-    if (!this.props.feeds.Podcast ||
-        !this.props.feeds.Podcast.items ||
-        !this.props.feeds.Podcast.items.length)
-    {
-      this.props.loadPodcasts().then(() => {}, () => {});
+  async doLoad() {
+    const {
+      feeds,
+    } = this.props;
+
+    const feed = feeds.Podcast;
+
+    if (!feed || !feed.items || !feed.items.length) {
+      this.props.loadPodcasts();
     }
   }
 
@@ -80,6 +83,12 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   }
 
   render() {
+    const {
+      feeds,
+    } = this.props;
+
+    const podcastFeed = feeds.Podcast;
+
     const newsPlaceholder = (
       <div className={styles.BeforeNewsLoaded}>
         News is loading...
@@ -105,16 +114,16 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               <div className={`${styles.LinkBox} ${styles.Podcast}`}>
                 <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
                   PODCAST #{
-                      this.props.feeds.Podcast && Array.isArray(this.props.feeds.Podcast.items) ?
-                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
+                      podcastFeed && Array.isArray(podcastFeed.items) ?
+                        (podcastFeed.items[0] as IPodcastPost)['itunes:episode']['#'] :
                         '-'
                     }
                 </h2>
 
                 <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
                   {
-                    this.props.feeds.Podcast ?
-                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
+                    podcastFeed && Array.isArray(podcastFeed.items) ?
+                      (podcastFeed.items[0] as IPodcastPost).title || '-' :
                       '-'
                   }
                 </h3>
@@ -154,7 +163,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
                 <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
                   PODCAST #{
                       this.props.feeds.Podcast ?
-                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
+                        (this.props.feeds.Podcast.items[0] as IPodcastPost)['itunes:episode']['#'] :
                         '-'
                     }
                 </h2>
@@ -162,7 +171,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
                 <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
                   {
                     this.props.feeds.Podcast && Array.isArray(this.props.feeds.Podcast.items) ?
-                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
+                      (this.props.feeds.Podcast.items[0] as IPodcastPost).title || '-' :
                       '-'
                   }
                 </h3>
