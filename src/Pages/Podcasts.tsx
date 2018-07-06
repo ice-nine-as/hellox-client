@@ -196,7 +196,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
                 className={styles.SubscribeLink}
                 href="https://soundcloud.com/hello_x"
               >
-                Soundcloud 
+                SoundCloud 
               </a>
 
               &bull;
