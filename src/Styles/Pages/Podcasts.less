@@ -6,10 +6,15 @@
 	background-color: white;
 	color: @dark-purple;
 
+	.Title {
+		margin: 30px auto;
+		font-size: @h1;
+	}
+
 	.Content {
 		max-width: @pageMaxWidth;
 		width: 100%;
-		margin: 0 auto;
+		margin: 40px auto 0 auto;
 	}
 
 	.HeroImage {
@@ -39,67 +44,9 @@
 		margin-left: 5px;
 		margin-right: 5px;
 		color: @white;
-	}
-
-	.LeaveAMessageWrapper {
-		background-color: @gold;
-		padding: @space-sm;
-		padding-top: @space-lg;
-		padding-bottom: @space-lg;
-		margin: 0;
-
-		.LeaveAMessage {
-			background-color: white;
-			color: @blue;
-			padding: @space;
-			max-width: 300px;
-			margin: 0 auto;
-
-			h4 {
-				color: @deep-purple;
-				font-size: @h4;
-				margin-top: @space-sm;
-				margin-bottom: @space-sm;
-			}
-
-			p {
-				font-family: 'Lato Light', 'Lato Subset', sans-serif;
-				font-size: @p;
-				margin: 0;
-				margin-top: @space-sm;
-				margin-bottom: @space-sm;
-			}
-			.RecordButton {
-				font-family: 'Lato Light', 'Lato Subset', sans-serif;
-				display: inline-flex;
-				justify-content: center;
-				align-items: center;
-				background-color: @deep-purple;
-				color: white;
-				padding: @space-sm+5 @space;
-				p {
-					margin: 0;
-				}
-				&:hover {
-					background-color: @deep-purple-active;
-					cursor: pointer;
-				}
-				&:active {
-					transform: translateY(1px);
-				}
-
-				@media screen and (min-width:600px) {
-					padding: @space-sm+5 @space-lg;
-				}
-
-				.RecordButtonDot {
-					width: 20px;
-					height: 20px;
-					border-radius: 50%;
-					background-color: @gold;
-					margin-right: @space;
-				}
-			}
+		
+		&:hover {
+			color: @red;
 		}
 	}
 }

@@ -70,6 +70,7 @@
 					margin-top: 0px;
 					font-size: @h3;
 				}
+
 				@media screen and (max-width: 370px) {
 					margin-top: 0;
 					margin-bottom: @space-sm;
@@ -84,26 +85,16 @@
 				width: 100%;
 				flex-direction: row;
 				max-width: 900px;
+				
 				@media screen and (min-width: 600px) {
 					margin: 0 auto;
 					margin-top: @space-lg;
 					margin-bottom: @space-xlg;
 					justify-content: space-between;
 				}
-
 			}
 
-			.Link {
-				position: relative;
-				display: block;
-				color: white;
-				text-decoration: none;
-				overflow: hidden;
-				flex-shrink: 0;
-				flex-grow: 1;
-				flex: 1;
-				min-width: 100px;
-
+			.LinkBox {
 				&.Podcast {
 					@media screen and (min-width: 600px) {
 						display: none;
@@ -116,6 +107,36 @@
 						display: block;
 					}
 				}
+			}
+
+			:global(.Icon) {
+				height: 70px;
+				margin-left: auto;
+				margin-right: auto;
+
+				@media screen and (max-width: 370px) {
+					height: 50px;
+				}
+
+				@media screen and (min-height: 800px) {
+					height: 100px;
+				}
+
+				& img {
+					height: 100%;
+				}
+			}
+
+			.Link {
+				position: relative;
+				display: block;
+				color: white;
+				text-decoration: none;
+				overflow: hidden;
+				flex-shrink: 0;
+				flex-grow: 1;
+				flex: 1;
+				min-width: 100px;
 
 				&:nth-child(1) {
 					flex-basis: 100%;
@@ -174,24 +195,6 @@
 			.LinkContainer {
 				position: relative;
 				display: inline-block;
-
-				:global(.Icon) {
-					height: 70px;
-					margin-left: auto;
-					margin-right: auto;
-
-					@media screen and (max-width: 370px) {
-						height: 50px;
-					}
-
-					@media screen and (min-height: 800px) {
-						height: 100px;
-					}
-
-					& img{
-						height:100%;
-					}
-				}
 			}
 		}
 
