@@ -208,7 +208,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
                 RSS
               </a>
             </p>
-          </div>,
+          </div>
         </div>
 
         <VoiceMemoForm />
