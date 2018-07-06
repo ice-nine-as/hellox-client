@@ -67,12 +67,13 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   async doLoad() {
     const {
       feeds,
+      loadPodcasts,
     } = this.props;
 
     const feed = feeds.Podcast;
 
     if (!feed || !feed.items || !feed.items.length) {
-      this.props.loadPodcasts();
+      loadPodcasts();
     }
   }
 
