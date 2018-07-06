@@ -8,9 +8,6 @@ import {
   getFeed,
 } from '../Modules/getFeed';
 import {
-  IPodcastPost,
-} from '../Interfaces/IPodcastPost';
-import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
@@ -22,9 +19,6 @@ import {
 import {
   ConnectedLatestPodcasts,
 } from '../Components/LatestPodcasts';
-import {
-  PodcastItemFull,
-} from '../Components/PodcastItemFull';
 import {
   connect,
   MapStateToProps,
@@ -107,6 +101,9 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
       language,
     } = this.props;
 
+    const {
+      error,
+    } = this.state;
     
     const {
       feed,
@@ -117,19 +114,46 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     });
     
     let children: React.ReactNode = null;
-    if (this.state.error) {
-      children = this.state.error;
+    if (error) {
+      children = error;
     } else if (!feed) {
-      children = <p className={styles.Message}>Podcast loading...</p>;
+      children = <p className={styles.Message}>Podcasts loading...</p>;
     } else if (feed.items) {
       if (feed.items.length) {
         /* TODO: add type guards for podcast posts? */
-        children = [
-          /* Display the first podcast in full. */
+        children = (
+          /* Display the first podcast in full.
           <PodcastItemFull
             item={feed.items[0] as IPodcastPost}
             key="keyOne"
-          />,
+          />,*/
+
+          /* Display previews of all podcasts. */
+          <div
+            className={styles.Content}
+            key="keyThree"
+          >
+            <ConnectedLatestPodcasts
+              detailLevel={FeedDetailLevels.Teaser}
+              key="keyTwo"
+            />
+          </div>
+        );
+      } else {
+        children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
+      }
+    } else {
+      children = <p className={styles.Message}>Unknown error.</p>;
+    }
+
+    return (
+      <div className={`${styles.Podcasts} ${styles.Page}`}>
+        <h1 className={styles.Title}>
+          Podcasts
+        </h1>
+
+        <div className={styles.Wrapper}>
+          {children}
 
           <div
             className={styles.SubscribeWrapper}
@@ -140,16 +164,39 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             </h3>
             
             <p>
-              {/*Apple Podcasts &bull; RadioPublic*/}
+              <a
+                className={styles.SubscribeLink}
+                href="https://itunes.apple.com/no/podcast/hello-x/id1380756324&ls=1"
+              >
+                Apple Podcasts
+              </a>
+
+              &bull;
+              
+              <a
+                className={styles.SubscribeLink}
+                href="https://www.subscribeonandroid.com/www.blubrry.com/feeds/hello_x.xml"
+              >
+                Android
+              </a>
+
+              &bull;
+
+              <a
+                className={styles.SubscribeLink}
+                href="https://www.stitcher.com/podcast/ice9/hello-x"
+              >
+                Stitcher
+              </a>
             </p>
 
             <p>
               {/*Google Play &bull; Spotify &bull; */}
               <a
                 className={styles.SubscribeLink}
-                href="https://www.subscribeonandroid.com/www.blubrry.com/feeds/hello_x.xml"
+                href="https://soundcloud.com/hello_x"
               >
-                Android
+                Soundcloud 
               </a>
 
               &bull;
@@ -162,29 +209,6 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
               </a>
             </p>
           </div>,
-
-          /* Display previews of all podcasts. */
-          <div
-            className={styles.Content}
-            key="keyThree"
-          >
-            <ConnectedLatestPodcasts
-              detailLevel={FeedDetailLevels.Teaser}
-              key="keyTwo"
-            />
-          </div>,
-        ];
-      } else {
-        children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
-      }
-    } else {
-      children = <p className={styles.Message}>Unknown error.</p>;
-    }
-
-    return (
-      <div className={`${styles.Podcasts} ${styles.Page}`}>
-        <div className={styles.Wrapper}>
-          {children}
         </div>
 
         <VoiceMemoForm />

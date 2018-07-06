@@ -49,7 +49,6 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 			item: {
 				description,
 				guid,
-
 				'itunes:image': {
 					'#': itunesImageSrc,
 				},
