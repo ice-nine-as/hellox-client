@@ -43,14 +43,14 @@ export const strings = {
     'The storyPart argument prop was not A, B, or C.',
 };
 
-export const getFeed = ({
+export const pickFeed = ({
   type,
   language,
   feeds,
   detailLevel,
   storyPart,
 }: {
-  type:         'newsItem' | 'podcast' | 'quote' | 'storyTemplate',
+  type:         'newsItem' | 'podcast' | 'quote' | 'storyTemplate' | 'forumTopics',
   language:     Languages,
   feeds:        TFeedsMap,
   detailLevel?: FeedDetailLevels,
@@ -67,7 +67,8 @@ export const getFeed = ({
   } else if (type !== 'newsItem' &&
              type !== 'podcast' &&
              type !== 'quote' &&
-             type !== 'storyTemplate')
+             type !== 'storyTemplate' &&
+             type !== 'forumTopics')
   {
     throw new Error(strings.TYPE_INVALID);
   } else if (!feeds || typeof feeds !== 'object') {
@@ -92,6 +93,8 @@ export const getFeed = ({
     feedKey = FeedKeys.Podcast;
   } else if (type === 'quote') {
     feedKey = FeedKeys.Quotes;
+  } else if (type === 'forumTopics') {
+    feedKey = FeedKeys.ForumTopics;
   } else {
     /* Story template */
     const _storyPart = storyPart as string;
@@ -130,4 +133,4 @@ export const getFeed = ({
   };
 };
 
-export default getFeed;
+export default pickFeed;

@@ -3,7 +3,7 @@ import {
 } from './Components/App';
 import {
   configureClientStore,
-} from './Modules/configureClientStore';
+} from './Functions/configureClientStore';
 import {
   createBrowserHistory,
 } from 'history';

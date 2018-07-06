@@ -1,13 +1,15 @@
 import {
   composeFeeds,
-} from '../Modules/composeFeeds';
+} from '../Functions/composeFeeds';
 import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
-import { FeedKeys } from '../Enums/FeedKeys';
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
@@ -19,7 +21,7 @@ import {
 } from '../Interfaces/IRssFeed';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   LoadMoreButton,
 } from './LoadMoreButton';
@@ -94,7 +96,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     const {
       feed,
       key,
-    } = getFeed({
+    } = pickFeed({
       type: 'newsItem',
       detailLevel,
       feeds,
@@ -169,7 +171,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       /* Loads the relevant feed based on language and detail level. */
       const {
         feed,
-      } = getFeed({
+      } = pickFeed({
         type: 'newsItem',
         detailLevel,
         feeds,
@@ -194,7 +196,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
 
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       type: 'newsItem',
       language,
       feeds,

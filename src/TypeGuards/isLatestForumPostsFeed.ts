@@ -1,8 +1,8 @@
 import {
-  ILatestForumPostsFeed,
+  ILatestForumTopicsFeed,
 } from '../Interfaces/ILatestForumPostsFeed';
 
-export function isLatestForumPostsFeed(maybe: any): maybe is ILatestForumPostsFeed {
+export function isLatestForumPostsFeed(maybe: any): maybe is ILatestForumTopicsFeed {
   if (typeof maybe !== 'object' || maybe === null) {
     return false;
   }

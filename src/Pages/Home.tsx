@@ -21,10 +21,10 @@ import {
 } from '../Interfaces/IPodcastPost';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   ConnectedLatestForumPosts,
-} from '../Components/LatestForumPosts';
+} from '../Components/LatestForumTopics';
 import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
@@ -35,8 +35,8 @@ import {
   LogoStates,
 } from '../Enums/LogoStates';
 import {
-  NavLink,
-} from 'redux-first-router-link';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   PodcastIcon,
 } from '../Components/Icon/PodcastIcon';
@@ -52,6 +52,9 @@ import {
 import {
   ReadDiscussIcon,
 } from '../Components/Icon/ReadDiscussIcon';
+import {
+  NavLink,
+} from 'redux-first-router-link';
 import {
   THomePageProps,
 } from '../TypeAliases/THomePageProps';
@@ -74,11 +77,22 @@ const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   doLoad() {
-    if (!this.props.feeds.Podcast ||
-        !this.props.feeds.Podcast.items ||
-        !this.props.feeds.Podcast.items.length)
-    {
-      this.props.loadPodcasts().then(() => {}, () => {});
+    const {
+      feeds,
+      language,
+      loadPodcasts,
+    } = this.props;
+
+    const {
+      feed,
+    } = pickFeed({
+      type: 'podcast',
+      feeds,
+      language,
+    });
+
+    if (!feed || !feed.items || !feed.items.length) {
+      loadPodcasts();
     }
   }
 
@@ -237,11 +251,11 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>
-          <h2 className={`${styles.LatestForumPostsTitle} light`}>
+          <h2 className={styles.ForumTopicsTitle}>
             Latest forum posts
           </h2>
 
-          <div className={styles.LatestForumPostsWrapper}>
+          <div className={styles.ForumTopicsWrapper}>
             <LazyLoad
               offset={240}
               placeholder={forumPlaceholder}
@@ -251,7 +265,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             </LazyLoad>
           </div>
 
-          <h2 className={`${styles.LatestNewsTitle} light`}>
+          <h2 className={styles.LatestNewsTitle}>
             What's up?
           </h2>
 
@@ -272,11 +286,13 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
 export const mapStateToProps = ({
   feeds,
+  language,
 }: THomePageProps,
 ownProps: TPageProps) =>
 ({
   ...ownProps,
   feeds,
+  language,
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({

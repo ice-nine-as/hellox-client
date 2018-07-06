@@ -5,8 +5,8 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';*/
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   IPodcastPost,
 } from '../Interfaces/IPodcastPost';
@@ -18,7 +18,7 @@ import {
 } from '../Interfaces/IRssFeed';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 /*import {
   ConnectedLatestPodcasts,
 } from '../Components/LatestPodcasts';*/
@@ -80,7 +80,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     const {
       feed,
       key,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,
@@ -110,7 +110,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,

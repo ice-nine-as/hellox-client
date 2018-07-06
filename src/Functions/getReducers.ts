@@ -1,6 +1,6 @@
 import {
   getAppReducers,
-} from '../Modules/getAppReducers';
+} from '../Functions/getAppReducers';
 import {
   getRootReducer as getStoryGeneratorRootReducer,
 } from '../StoryGenerator/Modules/getRootReducer';

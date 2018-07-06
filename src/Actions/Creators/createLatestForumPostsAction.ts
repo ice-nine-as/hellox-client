@@ -1,3 +1,5 @@
+/* For forum.hellox.me/latest.json. Deprecated in favor of latest.rss. */
+
 import {
   ILatestForumPostsAction,
 } from '../App/ILatestForumPostsAction';

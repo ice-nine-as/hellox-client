@@ -1,9 +1,13 @@
 import {
-  ILatestForumTopicsFeed,
-} from '../Interfaces/ILatestForumTopicsFeed';
+  Languages,
+} from '../Enums/Languages';
+import {
+  TFeedsMap,
+} from './TFeedsMap';
 
 export type TLatestForumPostsStoreProps = {
-  latestForumTopics: ILatestForumTopicsFeed | null;
+  feeds:    TFeedsMap;
+  language: Languages;
 };
 
 export default TLatestForumPostsStoreProps;

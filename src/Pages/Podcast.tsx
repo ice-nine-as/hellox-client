@@ -2,18 +2,33 @@ import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
 import {
+  FeedDetailLevels,
+} from '../Enums/FeedDetailLevels';
+import {
   FeedKeys,
 } from '../Enums/FeedKeys';
+import {
+  pickFeed,
+} from '../Functions/pickFeed';
+import {
+  IPodcastPost,
+} from '../Interfaces/IPodcastPost';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
+  isNode,
+} from '../Functions/isNode';
+import {
+  PodcastItemFull,
+} from '../Components/PodcastItemFull';
+import {
   connect,
   MapStateToProps,
 } from 'react-redux';
-/*import {
+import {
   ConnectedLatestPodcasts,
-} from '../Components/LatestPodcasts';*/
+} from '../Components/LatestPodcasts';
 import {
   TPageProps
 } from '../TypeAliases/TPageProps';
@@ -31,11 +46,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Pages/Podcast.less';
-import { PodcastItemFull } from '../Components/PodcastItemFull';
-import { isNode } from '../Modules/isNode';
-import { IPodcastPost } from '../Interfaces/IPodcastPost';
-import { getFeed } from '../Modules/getFeed';
-/*import { FeedDetailLevels } from '../Enums/FeedDetailLevels';*/
 const _styles = styles || {};
 
 export const strings = {
@@ -63,7 +73,7 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
     /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,
@@ -94,7 +104,7 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
 
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,
@@ -128,9 +138,7 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
       <div className={`${_styles.Podcast} ${_styles.Page}`}>
         {child}
 
-        {/*
-          <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
-        */}
+        <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
       </div>
     );
   }

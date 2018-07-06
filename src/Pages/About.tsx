@@ -15,7 +15,7 @@ import {
 } from '../Enums/ImageUrls';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   ITeamMembers,
 } from '../Interfaces/ITeamMembers';

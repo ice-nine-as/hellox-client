@@ -1,15 +1,21 @@
 import {
-  createLatestForumPostsThunk,
-} from '../Actions/Creators/createLatestForumPostsThunk';
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
 import {
-  IForumTopic,
-} from '../Interfaces/IForumTopic';
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
+  ForumTopicPreview,
+} from './ForumTopicPreview';
 import {
   ILatestForumPostsAction,
 } from '../Actions/App/ILatestForumPostsAction';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
+import {
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   connect,
   MapStateToProps,
@@ -30,10 +36,10 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import _styles from '../Styles/Components/LatestForumPosts.less';
+import _styles from '../Styles/Components/LatestForumTopics.less';
 const styles = _styles || {};
 
-export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps, { error: string, }> {
+export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps, { error: string, }> {
   constructor(props: any, context?: any) {
     super(props, context);
 
@@ -46,45 +52,50 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
 
   async doLoad() {
     const {
+      feeds,
       fetchLatestForumPosts,
+      language,
     } = this.props;
 
-    return fetchLatestForumPosts();
+    const {
+      feed,
+    } = pickFeed({
+      type: 'forumTopics',
+      feeds,
+      language,
+    });
+
+    /* Only autoload if the feed has never been fetched. */
+    if (!feed) {
+      fetchLatestForumPosts();
+    }
   }
 
   componentDidMount() {
+    /* Do not fetch on the server. If fetching is done, it's taken care of
+     * elsewhere. */
     if (!isNode()) {
-      const {
-        latestForumTopics,
-      } = this.props;
-
-      /* Only autoload if the feed has never been fetched. */
-      if (!latestForumTopics) {
-        this.doLoad();
-      }
+      this.doLoad();
     }
   }
 
   render() {
     let reactKey = -1;
     const {
-      latestForumTopics,
+      feeds,
+      language,
     } = this.props;
-    
-    const topics = (() => {
-      if (latestForumTopics &&
-          latestForumTopics.topic_list &&
-          latestForumTopics.topic_list.topics)
-      {
-        return latestForumTopics.topic_list.topics;
-      }
 
-      return null;
-    })();
+    const {
+      feed,
+    } = pickFeed({
+      type: 'forumTopics',
+      feeds,
+      language,
+    });
 
-
-    const latestPosts = (() => {
-      if (!topics) {
+    const latestTopics = (() => {
+      if (!feed) {
         return (
           <p
             className={styles.Message}
@@ -93,40 +104,12 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
             Latest forum topics are loading...
           </p>
         );
-      } else if (topics.length) {
-        console.log(...topics);
-        return topics.sort((aa, bb) => {
-          if (aa.last_posted_at > bb.last_posted_at) {
-            return -1;
-          } else if (bb.last_posted_at > aa.last_posted_at) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }).slice(0, 3)
-          .map((item: IForumTopic, index: number) => (
-            <li
-              className="test"
-              key={index}  
-            >
-              <a href={`//forum.hellox.me/t/${item.slug}/${item.id}`}>
-                <img
-                  src={item.image_url}
-                />
-
-                {item.title}
-
-                <div>
-                  <time>
-                    {item.last_posted_at}
-                  </time>
-                </div>
-
-                <p>
-                  {item.excerpt || 'Read more on the forum!'}
-                </p>
-              </a>
-            </li>
+      } else if (feed.items.length) {
+        return feed.items.slice(0, 3).map((item, index) => (
+            <ForumTopicPreview
+              item={item}
+              key={index}
+            />
           ));
       } else {
         return (
@@ -139,17 +122,15 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
 
     return (
       <div
-        className={styles.LatestForumPosts}
+        className={styles.LatestForumTopics}
         key={reactKey += 1}
       >
-        <div className={styles.NewsContainer}>
+        <div className={styles.ForumTopicsContainer}>
           {
             this.state.error ?
               /* Display the error if loading fails. */
               <div style={{ textAlign: 'center', margin: '0 auto', }}>{this.state.error}</div> :
-              <ul>
-                {latestPosts}
-              </ul>
+              latestTopics
           }
         </div>
       </div>
@@ -158,21 +139,24 @@ export class LatestForumPosts extends React.Component<TLatestForumPostsOwnProps 
 }
 
 export const mapStateToProps: MapStateToProps<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps, TLatestForumPostsOwnProps, TStoreProps> = ({
-  latestForumTopics,
+  feeds,
+  language,
 }, ownProps) => ({
   ...ownProps,
-  latestForumTopics,
+  feeds,
+  language,
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
   fetchLatestForumPosts(): Promise<ILatestForumPostsAction> {
-    const controller = new AbortController();
-    const { signal } = controller;
-    const thunk = createLatestForumPostsThunk({ signal });
+    const thunk = createRssThunk({
+      feedKey: FeedKeys.ForumTopics,
+    });
+  
     return dispatch(thunk);
   },
 });
 
-export const ConnectedLatestForumPosts = connect(mapStateToProps, mapDispatchToProps)(LatestForumPosts);
+export const ConnectedLatestForumPosts = connect(mapStateToProps, mapDispatchToProps)(LatestForumTopics);
 
-export default LatestForumPosts;
+export default LatestForumTopics;
