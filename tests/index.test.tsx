@@ -1,7 +1,7 @@
-jest.mock('../src/Modules/configureClientStore');
+jest.mock('../src/Functions/configureClientStore');
 import {
   configureClientStore,
-} from '../src/Modules/configureClientStore';
+} from '../src/Functions/configureClientStore';
 (configureClientStore as Mock).mockImplementation(() => ({ store: {}, }));
 
 jest.mock('history');
@@ -25,7 +25,7 @@ import {
 
 import * as React from 'react';
 import { Store } from 'react-redux';
-import { TAppProps } from '../src/TypeAliases/TAppProps';
+import { TStoreProps } from '../src/TypeAliases/TStoreProps';
 
 type Mock = jest.Mock;
 
@@ -70,7 +70,7 @@ describe('render unit tests.', () => {
     const mockSelector = jest.fn(() => rootSym);
     document.querySelector = mockSelector;
     
-    render(<ProviderContainer store={{} as Store<TAppProps>} />);
+    render(<ProviderContainer store={{} as Store<TStoreProps>} />);
     expect((hydrate as Mock).mock.calls).toEqual([
       [
         <ProviderContainer store={{} as any} />,
