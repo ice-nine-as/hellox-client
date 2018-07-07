@@ -73,6 +73,7 @@ const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
+import { PodcastLinkAction } from '../Actions/Link/PodcastLinkAction';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
