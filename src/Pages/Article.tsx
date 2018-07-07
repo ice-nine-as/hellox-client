@@ -11,11 +11,11 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
-  getFeedItem,
-} from '../Modules/getFeedItem';
+  pickFeedItem,
+} from '../Functions/pickFeedItem';
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
@@ -65,7 +65,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     /* Loads the relevant feed based on language and detail level. */
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       detailLevel: FeedDetailLevels.Full,
       feeds,
       language,
@@ -73,7 +73,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     });
 
     const id = (payload as any).id.toString();
-    if (!feed || !getFeedItem(id, feed)) {
+    if (!feed || !pickFeedItem(id, feed)) {
       getArticle(id, feeds, language);
     }
   }
@@ -94,14 +94,14 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     const id = (payload as any).id.toString();
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       detailLevel: FeedDetailLevels.Full,
       feeds,
       language,
       type: 'newsItem',
     });
 
-    const item = feed ? getFeedItem(id, feed) : null;
+    const item = feed ? pickFeedItem(id, feed) : null;
 
     return (
       <div className={`${_styles.Page}`}>
@@ -155,7 +155,7 @@ export const mapDispatchToProps = (dispatch: Function) => ({
     const {
       feed,
       key,
-    } = getFeed({
+    } = pickFeed({
       detailLevel: FeedDetailLevels.Full,
       feeds,
       language,

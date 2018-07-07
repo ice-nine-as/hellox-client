@@ -1,4 +1,7 @@
 export enum FeedKeys {
+  /* Stores topic metadata and excerpts. */
+  ForumTopics          = 'ForumTopics',
+
   /* Stores whole articles. */
   NewsFull             = 'NewsFull',
   

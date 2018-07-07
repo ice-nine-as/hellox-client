@@ -1,9 +1,9 @@
 import {
   composeFeeds,
-} from '../../Modules/composeFeeds';
+} from '../../Functions/composeFeeds';
 import {
   downloadFeed,
-} from '../../Modules/downloadFeed';
+} from '../../Functions/downloadFeed';
 import {
   IRssAction,
 } from '../App/IRssAction';

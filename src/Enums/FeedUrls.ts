@@ -1,4 +1,6 @@
 export enum FeedUrls {
+  ForumTopics          = 'https://forum.hellox.me/latest.rss',
+
   NewsFull             = 'https://cms.hellox.me/feeds/news-feed-full.xml',
 
   /* These are *not* usable as URLs without replacing the node segment: :id. */

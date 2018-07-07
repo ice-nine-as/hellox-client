@@ -8,8 +8,8 @@ import {
   getAttrFromFeedTemplate,
 } from '../StoryGenerator/Modules/getAttrFromFeedTemplate';
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   IFeedTemplate,
 } from '../StoryGenerator/Interfaces/IFeedTemplate';
@@ -24,7 +24,7 @@ import {
 } from '../Actions/App/IRssAction';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   ConnectedLanguageButton,
 } from '../Components/LanguageButton';
@@ -123,7 +123,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
       const {
         feed,
         key,
-      } = getFeed({
+      } = pickFeed({
         feeds,
         language,
         storyPart,
@@ -145,7 +145,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
         const {
           feed,
           key,
-        } = getFeed({
+        } = pickFeed({
           feeds,
           language,
           storyPart,

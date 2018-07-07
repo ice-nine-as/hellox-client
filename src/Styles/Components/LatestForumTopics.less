@@ -1,0 +1,38 @@
+@import '../Vars.less';
+
+@import './LoadMoreButton.less';
+
+.LatestForumTopics {
+	display: block;
+	width: 100%;
+	max-width: 800px;
+	min-height: @preloadedNewsHeight - 75;
+	margin: 0 auto 50px auto;
+
+	@media screen and (min-width: 600px) {
+		.ForumTopicsContainer {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: left;
+		}
+	}
+
+	.Title {
+		display: block;
+	}
+
+	.NoMoreTopics {
+		padding: 0 50px;
+		margin: 0 auto;
+	}
+
+	.Message {
+		margin: 0 auto;
+		font-size: @h3;
+		text-align: center;
+	}
+
+	.LoadMoreContainer {
+		margin: 0 auto;
+	}
+}

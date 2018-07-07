@@ -24,7 +24,7 @@ import {
 } from '../TypeGuards/isPageIdentifier';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   LoadingAppAction,
 } from '../Actions/App/LoadingAppAction';

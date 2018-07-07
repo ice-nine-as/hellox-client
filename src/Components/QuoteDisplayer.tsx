@@ -1,6 +1,6 @@
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   QuoteIcon,
 } from './Icon/QuoteIcon';

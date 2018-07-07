@@ -1,6 +1,6 @@
 import {
   configureClientStore,
-} from '../src/Modules/configureClientStore';
+} from '../src/Functions/configureClientStore';
 import {
   createRssThunk,
 } from '../src/Actions/Creators/createRssThunk';
@@ -13,7 +13,7 @@ import {
 } from '../src/Enums/FeedKeys';
 import {
   getRoutesMap,
-} from '../src/Modules/getRoutesMap';
+} from '../src/Functions/getRoutesMap';
 import {
   createMemoryHistory,
 } from 'history';
@@ -113,6 +113,11 @@ export async function configureServerStore(
       await Promise.all([
         store.dispatch(createRssThunk({
           feedKey: FeedKeys.NewsTeasers,
+          signal,
+        })),
+
+        store.dispatch(createRssThunk({
+          feedKey: FeedKeys.ForumTopics,
           signal,
         })),
       ]);
