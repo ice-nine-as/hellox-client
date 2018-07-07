@@ -191,7 +191,6 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             </p>
 
             <p>
-              {/*Google Play &bull; Spotify &bull; */}
               <a
                 className={styles.SubscribeLink}
                 href="https://soundcloud.com/hello_x"
