@@ -1,11 +1,11 @@
 import {
   getAppReducers,
-} from '../../src/Modules/getAppReducers';
-jest.mock('../../src/Modules/getAppReducers');
+} from '../../src/Functions/getAppReducers';
+jest.mock('../../src/Functions/getAppReducers');
 
 import {
   getReducers,
-} from '../../src/Modules/getReducers';
+} from '../../src/Functions/getReducers';
 
 type Mock = jest.Mock;
 

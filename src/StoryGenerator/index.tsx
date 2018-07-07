@@ -6,17 +6,8 @@ export {
   IStoryGeneratorAction,
 } from './Actions/IStoryGeneratorAction';
 export {
-  MaxAnswerLengthAction,
-} from './Actions/MaxAnswerLengthAction';
-export {
   StoryTemplateAction,
 } from './Actions/StoryTemplateAction';
-export {
-  QuestionsAction,
-} from './Actions/QuestionsAction';
-export {
-  StateAction,
-} from './Actions/StateAction';
 
 /* Components */
 export {
@@ -40,9 +31,6 @@ export {
 export {
   QuestionStates,
 } from './Enums/QuestionStates';
-export {
-  QuestionTypes,
-} from './Enums/QuestionTypes';
 export {
   StoryGeneratorActionTypes,
 } from './Enums/StoryGeneratorActionTypes';
@@ -78,20 +66,6 @@ export {
   makeStoryGeneratorAction,
 } from './Modules/makeStoryGeneratorAction';
 
-/* Reducers */
-export {
-  maxAnswerLengthReducer,
-} from './Reducers/maxAnswerLengthReducer';
-export {
-  proseTemplateReducer,
-} from './Reducers/proseTemplateReducer';
-export {
-  questionsReducer,
-} from './Reducers/questionsReducer';
-export {
-  stateReducer,
-} from './Reducers/stateReducer';
-
 /* TypeAliases */
 export {
   TCompletedStoryProps,
@@ -105,9 +79,6 @@ export {
 export {
   TStoryGeneratorDispatchProps,
 } from './TypeAliases/TStoryGeneratorDispatchProps';
-export {
-  TStoryGeneratorOwnProps,
-} from './TypeAliases/TStoryGeneratorOwnProps';
 export {
   TSubstitutionKey,
 } from './TypeAliases/TSubstitutionKey';

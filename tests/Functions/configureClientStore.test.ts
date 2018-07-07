@@ -1,17 +1,17 @@
 import {
   configureClientStore,
-} from '../../src/Modules/configureClientStore';
+} from '../../src/Functions/configureClientStore';
 
 /* Mocked */
 import {
   getReducers,
-} from '../../src/Modules/getReducers';
-jest.mock('../../src/Modules/getReducers');
+} from '../../src/Functions/getReducers';
+jest.mock('../../src/Functions/getReducers');
 
 import {
   getRoutesMap,
-} from '../../src/Modules/getRoutesMap';
-jest.mock('../../src/Modules/getRoutesMap');
+} from '../../src/Functions/getRoutesMap';
+jest.mock('../../src/Functions/getRoutesMap');
 
 import {
   applyMiddleware,

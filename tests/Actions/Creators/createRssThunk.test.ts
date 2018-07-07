@@ -18,13 +18,13 @@ import {
 /* Mocked */
 import {
   composeFeeds,
-} from '../../../src/Modules/composeFeeds';
-jest.mock('../../../src/Modules/composeFeeds');
+} from '../../../src/Functions/composeFeeds';
+jest.mock('../../../src/Functions/composeFeeds');
 
 import {
   downloadFeed,
-} from '../../../src/Modules/downloadFeed';
-jest.mock('../../../src/Modules/downloadFeed');
+} from '../../../src/Functions/downloadFeed';
+jest.mock('../../../src/Functions/downloadFeed');
 
 import {
   isFeedKey,
