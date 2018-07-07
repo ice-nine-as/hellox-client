@@ -5,14 +5,26 @@ import {
   createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
+import {
   ExternalPageUrls,
 } from '../Enums/ExternalPageUrls';
 import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
+  FeedKeys,
+} from '../Enums/FeedKeys';
+import {
   IPodcastPost,
 } from '../Interfaces/IPodcastPost';
+import {
+  isNode,
+} from '../Functions/isNode';
+import {
+  ConnectedLatestForumTopics,
+} from '../Components/LatestForumTopics';
 import {
   ConnectedLatestNews,
 } from '../Components/LatestNews';
@@ -23,8 +35,8 @@ import {
   LogoStates,
 } from '../Enums/LogoStates';
 import {
-  NavLink,
-} from 'redux-first-router-link';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   PodcastIcon,
 } from '../Components/Icon/PodcastIcon';
@@ -40,6 +52,9 @@ import {
 import {
   ReadDiscussIcon,
 } from '../Components/Icon/ReadDiscussIcon';
+import {
+  NavLink,
+} from 'redux-first-router-link';
 import {
   THomePageProps,
 } from '../TypeAliases/THomePageProps';
@@ -58,20 +73,24 @@ const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
-import { createRssThunk } from '../Actions/Creators/createRssThunk';
-import { FeedKeys } from '../Enums/FeedKeys';
-import { isNode } from '../Modules/isNode';
 import { PodcastLinkAction } from '../Actions/Link/PodcastLinkAction';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
-  async doLoad() {
+  doLoad() {
     const {
       feeds,
+      language,
       loadPodcasts,
     } = this.props;
 
-    const feed = feeds.Podcast;
+    const {
+      feed,
+    } = pickFeed({
+      type: 'podcast',
+      feeds,
+      language,
+    });
 
     if (!feed || !feed.items || !feed.items.length) {
       loadPodcasts();
@@ -90,6 +109,12 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
     } = this.props;
 
     const podcastFeed = feeds.Podcast;
+    
+    const forumPlaceholder = (
+      <div className={styles.BeforeForumPostsLoaded}>
+        Forum posts are loading...
+      </div>
+    );
 
     const newsPlaceholder = (
       <div className={styles.BeforeNewsLoaded}>
@@ -236,11 +261,25 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>
-          <h2 className={`${styles.LatestNewsTitle} light`}>
+          <h2 className={styles.ForumTopicsTitle}>
+            Latest forum topics
+          </h2>
+
+          <div className={styles.ForumTopicsWrapper}>
+            <LazyLoad
+              offset={240}
+              placeholder={forumPlaceholder}
+              throttle={50}
+            >
+              <ConnectedLatestForumTopics />
+            </LazyLoad>
+          </div>
+
+          <h2 className={styles.LatestNewsTitle}>
             What's up?
           </h2>
 
-          <div className={`${styles.NewsWrapper}`}>
+          <div className={styles.NewsWrapper}>
             <LazyLoad
               offset={240}
               placeholder={newsPlaceholder}
@@ -257,11 +296,13 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
 export const mapStateToProps = ({
   feeds,
+  language,
 }: THomePageProps,
 ownProps: TPageProps) =>
 ({
   ...ownProps,
   feeds,
+  language,
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({

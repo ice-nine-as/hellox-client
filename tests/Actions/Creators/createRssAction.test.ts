@@ -48,7 +48,7 @@ describe('createRssAction unit tests.', () => {
   });
 
   it('Has the correct type.', () => {
-    expect(createRssAction(RssAction, FeedKeys.NewsFullEn, null).type).toBe(AppActionTypes.Rss);
+    expect(createRssAction(RssAction, FeedKeys.NewsFull, null).type).toBe(AppActionTypes.Rss);
   });
 
   it('Assigns the correct value.', () => {
@@ -102,6 +102,4 @@ describe('DoneAppAction integration tests.', () => {
   it('Meets the isAppAction type guard.', () => {
     expect(isAppAction(createRssAction(RssAction, {}))).toBe(true);
   });
-
-  it('Meets the is')
 });

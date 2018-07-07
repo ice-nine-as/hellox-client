@@ -10,13 +10,13 @@ import {
 
 export const strings = {
   ID_INVALID:
-    'The id argument provided to getFeedItem was not a string, or was empty.',
+    'The id argument provided to pickFeedItem was not a string, or was empty.',
 
   FEED_INVALID:
     'The feed argument did not meet the isRssFeed type guard.',
 };
 
-export const getFeedItem = (
+export const pickFeedItem = (
   id:   string,
   feed: IRssFeed | null): IRssPost | null =>
 {
@@ -33,4 +33,4 @@ export const getFeedItem = (
   return feed.items.find((item) => item.guid === id) || null;
 };
 
-export default getFeedItem;
+export default pickFeedItem;

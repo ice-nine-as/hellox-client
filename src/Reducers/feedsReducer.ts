@@ -20,6 +20,8 @@ import {
 export const getKeyObj = (key: keyof TFeedsMap) => ({ key, });
 
 export const feedsReducer: TReducer<TFeedsMap, IRssAction> = combineReducers({
+  [FeedKeys.ForumTopics]:          feedReducer.bind(getKeyObj(FeedKeys.ForumTopics)),
+
   [FeedKeys.NewsFull]:             feedReducer.bind(getKeyObj(FeedKeys.NewsFull)),
   [FeedKeys.NewsTeasers]:          feedReducer.bind(getKeyObj(FeedKeys.NewsTeasers)),
   [FeedKeys.NewsTitles]:           feedReducer.bind(getKeyObj(FeedKeys.NewsTitles)),

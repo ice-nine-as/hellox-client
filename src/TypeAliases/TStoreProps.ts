@@ -1,4 +1,7 @@
 import {
+  ILatestForumTopicsFeed,
+} from '../Interfaces/ILatestForumTopicsFeed';
+import {
   Languages,
 } from '../Enums/Languages';
 import {
@@ -9,13 +12,14 @@ import {
 } from './TFeedsMap';
 
 export type TStoreProps = {
-  done:          boolean;
-  error:         boolean;
-  hamburgerOpen: boolean;
-  language:      Languages;
-  loading:       boolean;
-  location:      LocationState;
-  feeds:         TFeedsMap;
+  done:              boolean;
+  error:             boolean;
+  hamburgerOpen:     boolean;
+  language:          Languages;
+  latestForumTopics: ILatestForumTopicsFeed | null;
+  loading:           boolean;
+  location:          LocationState;
+  feeds:             TFeedsMap;
 };
 
 export default TStoreProps;

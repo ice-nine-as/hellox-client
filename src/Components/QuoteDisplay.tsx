@@ -5,11 +5,11 @@ import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   QuoteDisplayer,
 } from './QuoteDisplayer';
@@ -63,7 +63,7 @@ export class QuoteDisplay extends React.Component<TQuoteDisplayStoreProps & TQuo
     const {
       feed,
       key,
-    } = getFeed({
+    } = pickFeed({
       feeds,
       language,
       type: 'quote',
@@ -92,7 +92,7 @@ export class QuoteDisplay extends React.Component<TQuoteDisplayStoreProps & TQuo
 
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       feeds,
       language,
       type: 'quote',

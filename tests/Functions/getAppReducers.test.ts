@@ -6,7 +6,7 @@ import {
 } from '../../src/Reducers/errorReducer';
 import {
   getAppReducers,
-} from '../../src/Modules/getAppReducers';
+} from '../../src/Functions/getAppReducers';
 import {
   loadingReducer,
 } from '../../src/Reducers/loadingReducer';

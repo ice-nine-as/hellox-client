@@ -1,6 +1,6 @@
 import {
   getRoutesMap,
-} from '../../src/Modules/getRoutesMap';
+} from '../../src/Functions/getRoutesMap';
 import {
   PageIdentifiers,
 } from '../../src/Enums/PageIdentifiers';

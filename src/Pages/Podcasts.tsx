@@ -5,8 +5,8 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
@@ -15,7 +15,7 @@ import {
 } from '../Interfaces/IRssFeed';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   ConnectedLatestPodcasts,
 } from '../Components/LatestPodcasts';
@@ -74,7 +74,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     const {
       feed,
       key,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,
@@ -107,7 +107,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,
@@ -191,7 +191,6 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             </p>
 
             <p>
-              {/*Google Play &bull; Spotify &bull; */}
               <a
                 className={styles.SubscribeLink}
                 href="https://soundcloud.com/hello_x"

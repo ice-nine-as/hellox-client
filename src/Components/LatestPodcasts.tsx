@@ -2,11 +2,14 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  getFeed,
-} from '../Modules/getFeed';
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
+import {
+  IPodcastPost,
+} from '../Interfaces/IPodcastPost';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
@@ -15,7 +18,7 @@ import {
 } from '../Interfaces/IRssFeed';
 import {
   isNode,
-} from '../Modules/isNode';
+} from '../Functions/isNode';
 import {
   PodcastItemFull,
 } from './PodcastItemFull';
@@ -46,7 +49,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import styles from '../Styles/Components/LatestPodcasts.less';
-import { IPodcastPost } from '../Interfaces/IPodcastPost';
 const _styles = styles || {};
 
 
@@ -63,7 +65,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
     const {
       feed,
       key,
-    } = getFeed({
+    } = pickFeed({
       type: 'podcast',
       feeds,
       language,
@@ -84,6 +86,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
   }
 
   componentDidMount() {
+    /* Never fetch in components on the server. */
     if (!isNode()) {
       this.doLoad();
     }
@@ -99,7 +102,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
 
     const {
       feed,
-    } = getFeed({
+    } = pickFeed({
       detailLevel,
       feeds,
       language,
