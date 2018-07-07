@@ -23,7 +23,7 @@ import {
   isNode,
 } from '../Functions/isNode';
 import {
-  ConnectedLatestForumPosts,
+  ConnectedLatestForumTopics,
 } from '../Components/LatestForumTopics';
 import {
   ConnectedLatestNews,
@@ -252,7 +252,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
         <section className={`${styles.Section} ${styles.Third}`}>
           <h2 className={styles.ForumTopicsTitle}>
-            Latest forum posts
+            Latest forum topics
           </h2>
 
           <div className={styles.ForumTopicsWrapper}>
@@ -261,7 +261,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               placeholder={forumPlaceholder}
               throttle={50}
             >
-              <ConnectedLatestForumPosts />
+              <ConnectedLatestForumTopics />
             </LazyLoad>
           </div>
 

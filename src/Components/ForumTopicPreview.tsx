@@ -39,6 +39,11 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
           if (_img) {
             _img.src = img.src;
           }
+        } else {
+          const _img = document.getElementById(randId);
+          if (_img) {
+            _img.classList.add('temp');
+          }
         }
       });
     }

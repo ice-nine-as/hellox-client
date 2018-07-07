@@ -27,6 +27,9 @@ import {
   TLatestForumPostsOwnProps,
 } from '../TypeAliases/TLatestForumPostsOwnProps';
 import {
+  TLatestForumPostsState,
+} from '../TypeAliases/TLatestForumPostsState';
+import {
   TLatestForumPostsStoreProps,
 } from '../TypeAliases/TLatestForumPostsStoreProps';
 import {
@@ -39,15 +42,16 @@ import * as React from 'react';
 import _styles from '../Styles/Components/LatestForumTopics.less';
 const styles = _styles || {};
 
-export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps, { error: string, }> {
+export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps, TLatestForumPostsState> {
   constructor(props: any, context?: any) {
     super(props, context);
 
     this.state = {
-      error: '',
+      offset: 0,
     };
 
     this.doLoad = this.doLoad.bind(this);
+    this.doMoreTopics = this.doMoreTopics.bind(this);
   }
 
   async doLoad() {
@@ -87,6 +91,10 @@ export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps
     } = this.props;
 
     const {
+      offset,
+    } = this.state;
+
+    const {
       feed,
     } = pickFeed({
       type: 'forumTopics',
@@ -105,12 +113,38 @@ export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps
           </p>
         );
       } else if (feed.items.length) {
-        return feed.items.slice(0, 3).map((item, index) => (
+        const items = feed.items.slice(0, offset + 3).map((item, index) => (
             <ForumTopicPreview
               item={item}
               key={index}
             />
           ));
+          
+        if (offset >= feed.items.length) {
+          return items.concat([
+            <p
+              className={styles.NoMoreTopics}
+              key={'key1'}
+            >
+              No more recent forum topics. Check out
+              the <a href="//forum.hellox.me">forum</a> to see older topics.
+            </p>
+          ]);
+        } else {
+          return items.concat([
+            <div
+              className={styles.LoadMoreContainer}
+              key={'key2'}
+            >
+              <button
+                className={`${styles.Button} light`}
+                onClick={this.doMoreTopics}
+              >
+                MORE TOPICS
+              </button>
+            </div>,
+          ]);
+        }
       } else {
         return (
           <p key="____key" style={{ textAlign: 'center', margin: '0 auto', }}>
@@ -126,15 +160,20 @@ export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps
         key={reactKey += 1}
       >
         <div className={styles.ForumTopicsContainer}>
-          {
-            this.state.error ?
-              /* Display the error if loading fails. */
-              <div style={{ textAlign: 'center', margin: '0 auto', }}>{this.state.error}</div> :
-              latestTopics
-          }
+          {latestTopics}
         </div>
       </div>
     );
+  }
+
+  doMoreTopics() {
+    const {
+      offset,
+    } = this.state;
+
+    this.setState({
+      offset: offset + 3,
+    });
   }
 }
 
@@ -157,6 +196,6 @@ export const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export const ConnectedLatestForumPosts = connect(mapStateToProps, mapDispatchToProps)(LatestForumTopics);
+export const ConnectedLatestForumTopics = connect(mapStateToProps, mapDispatchToProps)(LatestForumTopics);
 
 export default LatestForumTopics;
