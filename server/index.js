@@ -133,6 +133,12 @@ app.post('/story-generator-mailer', (req, res) => {
   res.end();
 });
 
+/* Google Analytics ownership endpoint */
+app.get('/google2121db82d9189338.html', (req, res) => {
+  res.write('google-site-verification: google2121db82d9189338.html');
+  res.end();
+});
+
 let isBuilt = false;
 
 /* Directory with keys in it. Currently volumed with Docker from the host

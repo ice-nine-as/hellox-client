@@ -103,17 +103,56 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   }
 
   render() {
+    const {
+      feeds,
+    } = this.props;
+
+    const podcastFeed = feeds.Podcast;
+    
     const forumPlaceholder = (
       <div className={styles.BeforeForumPostsLoaded}>
         Forum posts are loading...
       </div>
-    )
+    );
 
     const newsPlaceholder = (
       <div className={styles.BeforeNewsLoaded}>
         News is loading...
       </div>
     );
+
+    const latestPodcast =
+      podcastFeed &&
+      Array.isArray(podcastFeed.items) &&
+      podcastFeed.items[0] &&
+      podcastFeed.items[0].guid ?
+        <NavLink
+          className={`${styles.Link} ${styles.SinglePodcastLink}`}
+          to={createLinkAction(PodcastLinkAction, {
+            id: podcastFeed.items[0].guid.split('/').filter((aa) => aa).slice(-1)[0],
+          })}
+        >
+          <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
+            PODCAST #{(podcastFeed.items[0] as IPodcastPost)['itunes:episode']['#']}
+          </h2>
+
+          <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
+            {(podcastFeed.items[0] as IPodcastPost).title}
+          </h3>
+          
+          <PodcastIcon dontLazyLoad={true} />
+        </NavLink> :
+        <div className={`${styles.Link} ${styles.SinglePodcastLink} ${styles.UntilLoaded}`}>
+          <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
+            PODCAST #-
+          </h2>
+
+          <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
+            -
+          </h3>
+          
+          <PodcastIcon dontLazyLoad={true} />
+        </div>;
 
     return (
       <article className={`${styles.Home} ${styles.Page}`}>
@@ -127,36 +166,20 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           </h1>
 
           <div className={styles.AllLinksContainer}>
-            <NavLink
-              className={`${styles.Link} ${styles.Podcast}`}
-              to={createLinkAction(PodcastsLinkAction)}
-            >
-              <div className={`${styles.LinkBox} ${styles.Podcast}`}>
-                <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-                  PODCAST #{
-                      this.props.feeds.Podcast && Array.isArray(this.props.feeds.Podcast.items) ?
-                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
-                        '-'
-                    }
-                </h2>
+            <div className={`${styles.LinkBox} ${styles.Podcast}`}>
+              {latestPodcast}
 
-                <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
-                  {
-                    this.props.feeds.Podcast ?
-                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
-                      '-'
-                  }
-                </h3>
-
-                <div className={styles.LinkContainer}>
-                  <PodcastIcon dontLazyLoad={true} />
-
+              <div className={styles.LinkContainer}>
+                <NavLink
+                  className={`${styles.Link} ${styles.Podcast2}`}
+                  to={createLinkAction(PodcastsLinkAction)}
+                >
                   <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
                     More podcasts
                   </h3>
-                </div>
+                </NavLink>
               </div>
-            </NavLink>
+            </div>
 
             <NavLink
               className={`${styles.Link} ${styles.Write}`}
@@ -166,45 +189,31 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
                 <h2 className={`${styles.LinkTitle} ${styles.Write}`}>
                   WRITE
                 </h2>
+
                 <h3 className={`${styles.LinkSubtitle} ${styles.Write}`}>
                   Add your vision
                 </h3>
+                
                 <div className={styles.LinkContainer}>
                   <WriteIcon dontLazyLoad={true} />
                 </div>
               </div>
             </NavLink>
 
-            <NavLink
-              className={`${styles.Link} ${styles.Podcast2}`}
-              to={createLinkAction(PodcastsLinkAction)}
-            >
-              <div className={`${styles.LinkBox} ${styles.Podcast}`}>
-                <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-                  PODCAST #{
-                      this.props.feeds.Podcast ?
-                        (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost)['itunes:episode']['#'] :
-                        '-'
-                    }
-                </h2>
+            <div className={`${styles.LinkBox} ${styles.Podcast2}`}>
+              {latestPodcast}
 
-                <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
-                  {
-                    this.props.feeds.Podcast && Array.isArray(this.props.feeds.Podcast.items) ?
-                      (this.props.feeds.Podcast.items.slice(-1)[0] as IPodcastPost).title || '-' :
-                      '-'
-                  }
-                </h3>
-
-                <div className={styles.LinkContainer}>
-                  <PodcastIcon dontLazyLoad={true} />
-
+              <div className={styles.LinkContainer}>
+                <NavLink
+                  className={`${styles.Link} ${styles.Podcast2}`}
+                  to={createLinkAction(PodcastsLinkAction)}
+                >
                   <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
                     More podcasts
                   </h3>
-                </div>
+                </NavLink>
               </div>
-            </NavLink>
+            </div>
 
             <a
               className={`${styles.Link} ${styles.Read}`}
@@ -212,7 +221,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             >
               <div className={`${styles.LinkBox} ${styles.Read}`}>
                 <h2 className={`${styles.LinkTitle} ${styles.Read}`}>
-                  READ
+                  MEET
                 </h2>
 
                 <h3 className={`${styles.LinkSubtitle} ${styles.Read}`}>

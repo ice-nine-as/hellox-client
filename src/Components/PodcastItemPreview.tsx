@@ -49,7 +49,6 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 			item: {
 				description,
 				guid,
-
 				'itunes:image': {
 					'#': itunesImageSrc,
 				},
@@ -91,11 +90,11 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 								</span>
 							</p>
 
-							<p
+							<div
 								className="Summary"
 								dangerouslySetInnerHTML={this.getPreparedHtml(description || 'No title provided.')}
 							>
-							</p>
+							</div>
 						</div>
 
 						<div className="SpacerBar"></div>

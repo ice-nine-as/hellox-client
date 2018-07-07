@@ -1,15 +1,12 @@
 import {
   createRssThunk,
 } from '../Actions/Creators/createRssThunk';
-/*import {
+import {
   FeedDetailLevels,
-} from '../Enums/FeedDetailLevels';*/
+} from '../Enums/FeedDetailLevels';
 import {
   pickFeed,
 } from '../Functions/pickFeed';
-import {
-  IPodcastPost,
-} from '../Interfaces/IPodcastPost';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
@@ -19,12 +16,9 @@ import {
 import {
   isNode,
 } from '../Functions/isNode';
-/*import {
-  ConnectedLatestPodcasts,
-} from '../Components/LatestPodcasts';*/
 import {
-  PodcastItemFull,
-} from '../Components/PodcastItemFull';
+  ConnectedLatestPodcasts,
+} from '../Components/LatestPodcasts';
 import {
   connect,
   MapStateToProps,
@@ -107,6 +101,9 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
       language,
     } = this.props;
 
+    const {
+      error,
+    } = this.state;
     
     const {
       feed,
@@ -117,19 +114,46 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     });
     
     let children: React.ReactNode = null;
-    if (this.state.error) {
-      children = this.state.error;
+    if (error) {
+      children = error;
     } else if (!feed) {
-      children = <p className={styles.Message}>Podcast loading...</p>;
+      children = <p className={styles.Message}>Podcasts loading...</p>;
     } else if (feed.items) {
       if (feed.items.length) {
         /* TODO: add type guards for podcast posts? */
-        children = [
-          /* Display the first podcast in full. */
+        children = (
+          /* Display the first podcast in full.
           <PodcastItemFull
             item={feed.items[0] as IPodcastPost}
             key="keyOne"
-          />,
+          />,*/
+
+          /* Display previews of all podcasts. */
+          <div
+            className={styles.Content}
+            key="keyThree"
+          >
+            <ConnectedLatestPodcasts
+              detailLevel={FeedDetailLevels.Teaser}
+              key="keyTwo"
+            />
+          </div>
+        );
+      } else {
+        children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
+      }
+    } else {
+      children = <p className={styles.Message}>Unknown error.</p>;
+    }
+
+    return (
+      <div className={`${styles.Podcasts} ${styles.Page}`}>
+        <h1 className={styles.Title}>
+          Podcasts
+        </h1>
+
+        <div className={styles.Wrapper}>
+          {children}
 
           <div
             className={styles.SubscribeWrapper}
@@ -140,11 +164,15 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             </h3>
             
             <p>
-              {/*Apple Podcasts &bull; RadioPublic*/}
-            </p>
+              <a
+                className={styles.SubscribeLink}
+                href="https://itunes.apple.com/no/podcast/hello-x/id1380756324&ls=1"
+              >
+                Apple Podcasts
+              </a>
 
-            <p>
-              {/*Google Play &bull; Spotify &bull; */}
+              &bull;
+              
               <a
                 className={styles.SubscribeLink}
                 href="https://www.subscribeonandroid.com/www.blubrry.com/feeds/hello_x.xml"
@@ -156,62 +184,33 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
 
               <a
                 className={styles.SubscribeLink}
+                href="https://www.stitcher.com/podcast/ice9/hello-x"
+              >
+                Stitcher
+              </a>
+            </p>
+
+            <p>
+              <a
+                className={styles.SubscribeLink}
+                href="https://soundcloud.com/hello_x"
+              >
+                SoundCloud 
+              </a>
+
+              &bull;
+
+              <a
+                className={styles.SubscribeLink}
                 href="https://www.blubrry.com/feeds/hello_x.xml"
               >
                 RSS
               </a>
             </p>
-          </div>,
-
-          /* Display previews of all podcasts. */
-          /*<div
-            className={styles.Content}
-            key="keyThree"
-          >
-            <ConnectedLatestPodcasts
-              detailLevel={FeedDetailLevels.Teaser}
-              key="keyTwo"
-            />
-          </div>*/,
-        ];
-      } else {
-        children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
-      }
-    } else {
-      children = <p className={styles.Message}>Unknown error.</p>;
-    }
-
-    return (
-      <div className={`${styles.Podcasts} ${styles.Page}`}>
-        <div className={styles.Wrapper}>{children}</div>
+          </div>
+        </div>
 
         <VoiceMemoForm />
-
-        {/*<div className={`${styles.LeaveAMessageWrapper} ${styles.SubscribeWrapper}`}>
-          <div className={`${styles.LeaveAMessage}`}>
-            <h4>
-              Leave a message
-            </h4>
-
-            <p>
-              We would love to hear from you!
-              <br />
-              Do you have any ideas or...
-            </p>
-
-            <div className={styles.RecordButton}>
-              <div className={styles.RecordButtonDot}></div>
-
-              <p>
-                START RECORDING
-              </p>
-            </div>
-
-            <p>
-              Note: Your message won't be sent until you press "Send"
-            </p>
-          </div>
-        </div>*/}
       </div>
     );
   }

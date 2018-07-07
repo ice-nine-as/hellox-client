@@ -29,18 +29,19 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 				pubDate,
 				title,
 			},
+
+			item,
 		} = this.props;
 
-		const correctedUrl = /* Add https. */ `https${url/* Remove http. */.slice(4)}`;
+		const correctedPodcastUrl = /* Add https. */ `https${url/* Remove http. */.slice(4)}`;
+		const correctedImageUrl = item['itunes:image']['#'].replace("'", "\\'").replace('"', '\\"');
 
 		return (
 			<div className={styles.PodcastItemFull}>
 				<div
 					className={styles.ImageWrapper}
 					style={{
-						backgroundImage: `url('${this.props.item[
-							'itunes:image'
-						]['#']}')`,
+						backgroundImage: `url(${correctedImageUrl})`,
 					}}
 				></div>
 
@@ -58,7 +59,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 							<iframe
 								className={styles.PodcastIframe}
 								scrolling="no"
-								src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedUrl)}`}
+								src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedPodcastUrl)}`}
 							></iframe> :
 							'Embed failed.'
 					}
