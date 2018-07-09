@@ -45,8 +45,9 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Podcast.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/Podcast.less';
+import { PodcastSubscriptionLinks } from '../Components/PodcastSubscriptionLinks';
+const styles = _styles || {};
 
 export const strings = {
   LOAD_ERROR:
@@ -114,12 +115,15 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
       (payload as any).id.toString() :
       null;
 
+    let loaded = false;
     const child = (() => {
       if (this.state.error) {
         return this.state.error;
       } else if (!feed) {
         return <p className={styles.Message}>Podcast loading...</p>;
       } else {
+        loaded = true;
+
         const item = feed.items.filter((item) => {
           return item &&
                  item.guid &&
@@ -135,10 +139,24 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
     })();
 
     return (
-      <div className={`${_styles.Podcast} ${_styles.Page}`}>
+      <div className={`${styles.Podcast} ${styles.Page}`}>
         {child}
 
-        <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
+        {
+          loaded ?
+            [
+              <PodcastSubscriptionLinks key={1} />,
+  
+              <div className={styles.MorePodcastsContainer} key={2}>
+                <h2 className={styles.MorePodcastsTitle}>
+                  More Podcasts
+                </h2>
+
+                <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
+              </div>
+            ] :
+            null
+        }
       </div>
     );
   }

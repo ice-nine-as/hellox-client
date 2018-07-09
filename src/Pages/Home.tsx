@@ -74,6 +74,7 @@ const LazyLoad = require('react-lazy-load').default;
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
 import { PodcastLinkAction } from '../Actions/Link/PodcastLinkAction';
+import { PodcastSubscriptionLinks } from '../Components/PodcastSubscriptionLinks';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
@@ -222,22 +223,26 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           </div>
 
           <div className={`${styles.LinkBox} ${styles.Podcast}`}>
-              {latestPodcast}
+            {latestPodcast}
 
-              <div className={styles.LinkContainer}>
-                <NavLink
-                  className={styles.Link}
-                  to={createLinkAction(PodcastsLinkAction)}
-                >
-                  <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
-                    More podcasts
-                  </h3>
-                </NavLink>
-              </div>
+            <div className={styles.LinkContainer}>
+              <NavLink
+                className={styles.Link}
+                to={createLinkAction(PodcastsLinkAction)}
+              >
+                <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
+                  More podcasts
+                </h3>
+              </NavLink>
             </div>
+          </div>
         </section>
 
         <section className={`${styles.Section} ${styles.Second} light`}>
+          <div className={styles.PodcastSubscriptionWrapper}>
+            <PodcastSubscriptionLinks />
+          </div>
+
           <p className={styles.ExplainerParagraph}>
             hello X is a story laboratory where you can collaborate with
             artists, scientists, and kids to create stories about X, a woman
