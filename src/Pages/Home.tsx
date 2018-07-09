@@ -167,21 +167,6 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           </h1>
 
           <div className={styles.AllLinksContainer}>
-            <div className={`${styles.LinkBox} ${styles.Podcast}`}>
-              {latestPodcast}
-
-              <div className={styles.LinkContainer}>
-                <NavLink
-                  className={`${styles.Link} ${styles.Podcast2}`}
-                  to={createLinkAction(PodcastsLinkAction)}
-                >
-                  <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
-                    More podcasts
-                  </h3>
-                </NavLink>
-              </div>
-            </div>
-
             <NavLink
               className={`${styles.Link} ${styles.Write}`}
               to={createLinkAction(WriteLinkAction)}
@@ -206,7 +191,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
               <div className={styles.LinkContainer}>
                 <NavLink
-                  className={`${styles.Link} ${styles.Podcast2}`}
+                  className={styles.Link}
                   to={createLinkAction(PodcastsLinkAction)}
                 >
                   <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
@@ -235,6 +220,21 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               </div>
             </a>
           </div>
+
+          <div className={`${styles.LinkBox} ${styles.Podcast}`}>
+              {latestPodcast}
+
+              <div className={styles.LinkContainer}>
+                <NavLink
+                  className={styles.Link}
+                  to={createLinkAction(PodcastsLinkAction)}
+                >
+                  <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
+                    More podcasts
+                  </h3>
+                </NavLink>
+              </div>
+            </div>
         </section>
 
         <section className={`${styles.Section} ${styles.Second} light`}>

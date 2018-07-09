@@ -85,7 +85,7 @@ describe('render unit tests.', () => {
     const hydrateSym = Symbol('hydrate');
     (hydrate as Mock).mockImplementation(() => hydrateSym);
 
-    expect(render(<ProviderContainer store={{} as Store<TAppProps>} />))
+    expect(render(<ProviderContainer store={{} as Store<TStoreProps>} />))
       .toEqual(hydrateSym);
   });
 });
