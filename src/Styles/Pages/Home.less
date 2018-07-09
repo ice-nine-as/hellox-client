@@ -192,8 +192,17 @@
 		}
 
 		&.Second {
+			padding-left: 0;
+			padding-right: 0;
+			padding-top: 0;
 			background: @gold;
 			color: @purple;
+
+			.PodcastSubscriptionWrapper {
+				position: relative;
+				top: -@headerHeight;
+				width: 100%;
+			}
 
 			.ExplainerParagraph {
 				position: relative;

@@ -5,9 +5,6 @@ import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  pickFeed,
-} from '../Functions/pickFeed';
-import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
@@ -19,6 +16,12 @@ import {
 import {
   ConnectedLatestPodcasts,
 } from '../Components/LatestPodcasts';
+import {
+  pickFeed,
+} from '../Functions/pickFeed';
+import {
+  PodcastSubscriptionLinks,
+} from '../Components/PodcastSubscriptionLinks';
 import {
   connect,
   MapStateToProps,
@@ -159,54 +162,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             className={styles.SubscribeWrapper}
             key="sub"
           >
-            <h3>
-              SUBSCRIBE ON
-            </h3>
-            
-            <p>
-              <a
-                className={styles.SubscribeLink}
-                href="https://itunes.apple.com/no/podcast/hello-x/id1380756324&ls=1"
-              >
-                Apple Podcasts
-              </a>
-
-              &bull;
-              
-              <a
-                className={styles.SubscribeLink}
-                href="https://www.subscribeonandroid.com/www.blubrry.com/feeds/hello_x.xml"
-              >
-                Android
-              </a>
-
-              &bull;
-
-              <a
-                className={styles.SubscribeLink}
-                href="https://www.stitcher.com/podcast/ice9/hello-x"
-              >
-                Stitcher
-              </a>
-            </p>
-
-            <p>
-              <a
-                className={styles.SubscribeLink}
-                href="https://soundcloud.com/hello_x"
-              >
-                SoundCloud 
-              </a>
-
-              &bull;
-
-              <a
-                className={styles.SubscribeLink}
-                href="https://www.blubrry.com/feeds/hello_x.xml"
-              >
-                RSS
-              </a>
-            </p>
+            <PodcastSubscriptionLinks />
           </div>
         </div>
 
