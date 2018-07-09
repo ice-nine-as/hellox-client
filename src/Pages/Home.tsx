@@ -243,26 +243,28 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
             <PodcastSubscriptionLinks />
           </div>
 
-          <p className={styles.ExplainerParagraph}>
-            hello X is a story laboratory where you can collaborate with
-            artists, scientists, and kids to create stories about X, a woman
-            living in the Arctic in 2068. The key question of this story
-            cycle asks how the food of tomorrow may be shaped by our habits and
-            choices today.
-          </p>
+          <div className={styles.ContentWrapper}>
+            <p className={styles.ExplainerParagraph}>
+              hello X is a story laboratory where you can collaborate with
+              artists, scientists, and kids to create stories about X, a woman
+              living in the Arctic in 2068. The key question of this story
+              cycle asks how the food of tomorrow may be shaped by our habits and
+              choices today.
+            </p>
 
-          <div className={`${styles.LinkContainer} ${styles.About}`}>
-            <NavLink
-              className={`${styles.Link} ${styles.About}`}
-              to={createLinkAction(AboutLinkAction)}
-            >
-              <span className={`${styles.LinkText}`}>
-                READ MORE
-              </span>
-            </NavLink>
+            <div className={`${styles.LinkContainer} ${styles.About}`}>
+              <NavLink
+                className={`${styles.Link} ${styles.About}`}
+                to={createLinkAction(AboutLinkAction)}
+              >
+                <span className={`${styles.LinkText}`}>
+                  READ MORE
+                </span>
+              </NavLink>
+            </div>
+
+            <ConnectedQuoteDisplay />
           </div>
-
-          <ConnectedQuoteDisplay />
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>
