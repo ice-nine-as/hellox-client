@@ -159,10 +159,14 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
     return (
       <div className={`${styles.About} ${styles.Page}`}>
         <div className={`${styles.Content}`}>
-          <img
-            className={styles.HeroImage}
-            src={ImageUrls.AboutHero}
-          />
+          <div className={styles.HeroImageContainer}>
+            <img
+              className={styles.Image}
+              src={ImageUrls.AboutHero}
+            />
+
+            <div className={styles.Border}></div>
+          </div>
 
           <div className={styles.Body}>
             <h2 className={styles.Header}>
@@ -185,7 +189,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
               You can contribute to the first cycle of X short stories
               by going to the <a href="/write">WRITE</a> page. Listen to
               the <a href="/podcasts">PODCASTS</a> to
-              meet scientists, artists, and other special gusests, review your
+              meet scientists, artists, and other special guests, review your
               contributions, and dig into the present day stories that
               inform our evolving visions of X.
               Go to <a href="//forum.hellox.me">MEET</a> to read featured

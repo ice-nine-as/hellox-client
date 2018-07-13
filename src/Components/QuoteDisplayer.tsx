@@ -37,12 +37,26 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
       currentIndex,
     } = this.state;
 
+    /* Do not execute if the element is no longer in the document. */
+    const testValidity = () => {
+      return Boolean(
+        this.attributionElem &&
+        document.contains(this.attributionElem) &&
+        this.quoteElem &&
+        document.contains(this.quoteElem)
+      );
+    }
+
     if (!isNode() && length > 1) {
       const ONE_SECOND = 1000;
       const ANIMATION_TIME = ONE_SECOND * 8;
 
       /* Set a microtask to add the opacity. */
       setTimeout(() => {
+        if (!testValidity()) {
+          return;
+        }
+
         if (this.quoteElem) {
           this.quoteElem.style.opacity = '1';
         }
@@ -54,6 +68,10 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
 
       /* Two seconds before the end, start to fade out. */
       setTimeout(() => {
+        if (!testValidity()) {
+          return;
+        }
+
         if (this.quoteElem) {
           this.quoteElem.style.opacity = '0';
         }
@@ -63,7 +81,12 @@ export class QuoteDisplayer extends React.Component<TQuoteDisplayerProps, TQuote
         }
       }, ANIMATION_TIME - ONE_SECOND * 2);
 
+      /* Mutate the index, starting over at 0 once the end has been reached. */
       setTimeout(() => {
+        if (!testValidity()) {
+          return;
+        }
+
         this.setState({
           currentIndex: quotes && (currentIndex < length - 1) ? currentIndex + 1 : 0,
         });

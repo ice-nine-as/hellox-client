@@ -6,7 +6,6 @@
 	flex: 1;
 	flex-shrink: 0;
 	position: relative;
-	margin: 0 @space;
 	margin-bottom: @space-lg;
 	min-width: 200px;
 	overflow: hidden;
@@ -96,6 +95,9 @@
 		box-sizing: border-box;
 		overflow-y: hidden;
 
+		/* Do not allow items like links to grab focus from the monolithic link. */
+		pointer-events: none;
+
 		@media screen and (min-width: 600px) {
 			border: 1px solid @teal;
 		}
@@ -122,6 +124,12 @@
 
 			p {
 				margin: 0;
+			}
+
+			& * {
+				/* Override all font styling in forum excerpts. */
+				font-weight: 300 !important;
+				font-family: 'Lato Light', 'Lato Subset', sans-serif !important;
 			}
 		}
 

@@ -2,12 +2,23 @@
 @import '../Page.less';
 
 .Loading {
-  min-height: 100%;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+  min-height: calc(100vh ~"-" @headerHeight);
+  padding: @space-lg;
+  box-sizing: border-box;
+
   background: @light-purple;
-  padding:@space-lg;
 
   .Message {
     color: inherit;
+    font-size: @h1;
+    text-align: center;
   }
 
   .Icon {
@@ -22,11 +33,11 @@
 }
 
 @keyframes loadingIconSpin {
-  0% {
+  from {
     transform: rotate(0deg);
   }
 
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }

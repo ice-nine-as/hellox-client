@@ -20,21 +20,25 @@
   }
 }
 
-.MediaContainer {
+.HeroImageContainer {
   position: relative;
   width: 100%;
-  max-width: @pageMaxWidth;
+  padding-top: 56.25%;
+  background: rgb(48, 96, 136);
+  box-sizing: border-box;
 
-  @media screen and (min-width: 1050px) {
-    min-height: 590px;
+  .Image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 
-  margin: 0 auto;
-  border-bottom: solid 5px @teal;
-
-  img {
-    margin-bottom: -5px;
+  .Border {
+    position: absolute;
     width: 100%;
+    bottom: 0;
+    border-top: 6px solid @light-blue;
   }
 }
 

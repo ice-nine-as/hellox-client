@@ -18,7 +18,6 @@ import {
 } from './Icon/TwitterIcon';
 
 import * as React from 'react';
-const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import styles from '../Styles/Components/Footer.less';
@@ -116,9 +115,9 @@ export class Footer extends React.PureComponent<TFooterProps> {
             </form>
           </div>
 
-          <LazyLoad offset={800} placeholder={<div style={{ height: '200px' }}></div>}>
+          <div className={styles.SponsorIconsWrapper}>
             <SponsorIcons />
-          </LazyLoad>
+          </div>
         </div>
       </div>
     );
