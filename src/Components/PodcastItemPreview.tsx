@@ -2,6 +2,9 @@ import {
 	createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+	getFormattedDate,
+} from '../Functions/getFormattedDate';
+import {
 	NavLink,
 } from 'redux-first-router-link';
 import {
@@ -19,25 +22,6 @@ const styles = _styles || {};
 
 // @ts-ignore
 import _newsItemStyles from '../Styles/Components/NewsItemPreview.less';
-
-export function getFormattedDate(date: Date) {
-	const month = [
-		'Jan',
-		'Feb',
-		'Mar',
-		'Apr',
-		'May',
-		'Jun',
-		'Jul',
-		'Aug',
-		'Sep',
-		'Oct',
-		'Nov',
-		'Dec',
-	];
-
-	return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}`;
-}
 
 export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewProps> {
 	getPreparedHtml(str: string): {__html: string} {
