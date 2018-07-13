@@ -135,7 +135,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           })}
         >
           <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-            PODCAST #{((podcastFeed.items[0] as IPodcastPost)['itunes:episode'] || {})['#']}
+            PODCAST #{((podcastFeed.items[0] as IPodcastPost)['itunes:episode'] || {})['#'] || '-'}
           </h2>
 
           <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>

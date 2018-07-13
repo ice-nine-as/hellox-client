@@ -100,8 +100,8 @@ export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & 
               if (React.isValidElement(child)) {
                 const _child = child as React.ReactElement<any>;
                 return React.cloneElement(_child, {
-                  onClick: () => this.linkAction(child),
-                })
+                  onClick: () => this.linkAction(_child),
+                });
               } else {
                 return child;
               }

@@ -66,7 +66,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 						<div className="HeroImageContainer">
 							<img
 								className="HeroImage"
-								src={(itunesImage || {})['#']}
+								src={(itunesImage || {})['#'] || 'https://assets.blubrry.com/coverart/orig/560393-151377.jpg'}
 							/>
 						</div>
 
