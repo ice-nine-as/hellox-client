@@ -3,7 +3,7 @@ import {
 } from '../Actions/App/IAppAction';
 
 export type THamburgerMenuDispatchProps = {
-  toggleHamburgerMenu: (state: boolean) => IAppAction;
+  setHamburgerMenuOpenStatus: (state: boolean) => IAppAction;
 };
 
 export default THamburgerMenuDispatchProps;

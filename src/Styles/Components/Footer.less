@@ -43,14 +43,12 @@ a {
 
   &.Second {
     background: @teal;
-    padding-top: 0;
-    padding-bottom: @space;
-
-    /* For the sponsor icons */
-    :global(.LazyLoad) {
-      padding: @space 0;
-    }
+    padding: 0 0 @space 0;
   }
+}
+
+.SponsorIconsWrapper {
+  margin-top: @space;
 }
 
 .HorizontalHalf {
@@ -151,7 +149,6 @@ a {
       font-weight: 300;
       cursor: pointer;
       transition: color @button-transition-duration, background-color @button-transition-duration;
-
 
       &:hover, &:active {
         background-color: @white;

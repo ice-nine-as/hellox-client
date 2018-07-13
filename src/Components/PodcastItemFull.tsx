@@ -34,7 +34,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 		} = this.props;
 
 		const correctedPodcastUrl = /* Add https. */ `https${url/* Remove http. */.slice(4)}`;
-		const correctedImageUrl = item['itunes:image']['#'].replace("'", "\\'").replace('"', '\\"');
+		const correctedImageUrl = ((item['itunes:image'] || {})['#'] || '').replace("'", "\\'").replace('"', '\\"');
 
 		return (
 			<div className={styles.PodcastItemFull}>

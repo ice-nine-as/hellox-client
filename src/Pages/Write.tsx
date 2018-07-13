@@ -8,9 +8,6 @@ import {
   getAttrFromFeedTemplate,
 } from '../StoryGenerator/Modules/getAttrFromFeedTemplate';
 import {
-  pickFeed,
-} from '../Functions/pickFeed';
-import {
   IFeedTemplate,
 } from '../StoryGenerator/Interfaces/IFeedTemplate';
 import {
@@ -34,6 +31,9 @@ import {
 import {
   makeStoryGeneratorAction,
 } from '../StoryGenerator/Modules/makeStoryGeneratorAction';
+import {
+  pickFeed,
+} from '../Functions/pickFeed';
 import {
   connect,
   MapStateToProps,
@@ -81,13 +81,9 @@ export const strings = {
  * (react-intl, probably). */
 
 export class Write extends React.Component<TPageProps & TWriteStoreProps & TWriteDispatchProps, { error: string, }> {
-  constructor(props: any, context?: any) {
-    super(props, context);
-  
-    this.state = {
-      error: '',
-    };
-  }
+  state = {
+    error: '',
+  };
 
   doLoad() {
     const {
@@ -202,12 +198,13 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
 
     return (
       <div className={`${styles.Write} ${styles.Page}`}>
-        <div className={styles.MediaContainer}>
+        <div className={styles.HeroImageContainer}>
           <img
-            className={styles.HeroAnimation}
+            className={styles.Image}
             src={ImageUrls.WriteHeroAnimation}
-          >
-          </img>
+          />
+
+          <div className={styles.Border}></div>
         </div>
 
         <div className={styles.LanguageButtonContainer}>

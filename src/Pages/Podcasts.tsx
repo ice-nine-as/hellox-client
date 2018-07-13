@@ -124,7 +124,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     } else if (feed.items) {
       if (feed.items.length) {
         /* TODO: add type guards for podcast posts? */
-        children = (
+        children = [
           /* Display the first podcast in full.
           <PodcastItemFull
             item={feed.items[0] as IPodcastPost}
@@ -141,7 +141,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
               key="keyTwo"
             />
           </div>
-        );
+        ];
       } else {
         children = <p className={styles.Message}>No podcasts yet. Sorry!</p>;
       }

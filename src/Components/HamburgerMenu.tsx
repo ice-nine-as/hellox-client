@@ -19,28 +19,73 @@ import {
 import {
   THamburgerMenuOwnProps,
 } from '../TypeAliases/THamburgerMenuOwnProps';
+import {
+  THamburgerMenuStateProps,
+} from '../TypeAliases/THamburgerMenuStateProps';
+
 
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/HamburgerMenu.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/HamburgerMenu.less';
+const styles = _styles || {};
 
-export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & THamburgerMenuDispatchProps> {
+export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & THamburgerMenuStateProps & THamburgerMenuDispatchProps> {
+  constructor(props: any, context?: any) {
+    super(props, context);
+
+    this.linkAction = this.linkAction.bind(this);
+  }
+
+  /* Hide the hamburger menu when the user navigates to the current page. */
+  linkAction(child: React.ReactElement<any>) {
+    const {
+      hamburgerOpen,
+      setHamburgerMenuOpenStatus,
+    } = this.props;
+
+    if (
+      hamburgerOpen &&
+      child.props &&
+      // @ts-ignore
+      child.props.to.type === location.type)
+    {
+      setHamburgerMenuOpenStatus(false);
+    }
+  }
+
   render() {
-    const children = React.Children.toArray(this.props.children);
-    const stateClass = this.props.hamburgerOpen === true ? ' open' : '';
+    const {
+      children: propChildren,
+      hamburgerOpen,
+      setHamburgerMenuOpenStatus,
+    } = this.props;
+
+    const children = React.Children.toArray(propChildren);
+    const stateClass = hamburgerOpen === true ? ' open' : '';
 
     return (
-      <div className={_styles.HamburgerMenu}>
-        <div className={_styles.HamburgerMenuLogo}>
-          {children[0]}
+      <div className={styles.HamburgerMenu}>
+        <div className={styles.HamburgerMenuLogo}>
+          {
+            (() => {
+              const child = children[0];
+              if (React.isValidElement(child)) {
+                const _child = child as React.ReactElement<any>;
+                return React.cloneElement(_child, {
+                  onClick: () => this.linkAction(_child),
+                })
+              } else {
+                return child;
+              }
+            })()
+          }
         </div>
 
-        <div className={_styles.HamburgerMenuActual}>
+        <div className={styles.HamburgerMenuActual}>
           <button
-            className={_styles.HamburgerMenuIcon}
-            onClick={() => this.props.toggleHamburgerMenu(this.props.hamburgerOpen)}
+            className={styles.HamburgerMenuIcon}
+            onClick={() => setHamburgerMenuOpenStatus(!hamburgerOpen)}
           >
             <img
               alt="Hamburger menu button."
@@ -49,9 +94,18 @@ export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & 
           </button>
 
           <div
-            className={`${_styles.HamburgerMenuContents}${stateClass}`}
+            className={`${styles.HamburgerMenuContents}${stateClass}`}
           >
-            {children.slice(1)}
+            {React.Children.map(children.slice(1), (child) => {
+              if (React.isValidElement(child)) {
+                const _child = child as React.ReactElement<any>;
+                return React.cloneElement(_child, {
+                  onClick: () => this.linkAction(child),
+                })
+              } else {
+                return child;
+              }
+            })}
           </div>
         </div>
       </div>
@@ -67,9 +121,9 @@ const mapStateToProps = ({
   hamburgerOpen,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<{}>) => ({
-  toggleHamburgerMenu(state: boolean) {
-    return dispatch(createAppAction(HamburgerOpenAction, !state));
+export const mapDispatchToProps = (dispatch: Dispatch<{}>) => ({
+  setHamburgerMenuOpenStatus(isOpen: boolean) {
+    return dispatch(createAppAction(HamburgerOpenAction, isOpen));
   },
 });
 

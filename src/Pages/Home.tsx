@@ -135,7 +135,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           })}
         >
           <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-            PODCAST #{(podcastFeed.items[0] as IPodcastPost)['itunes:episode']['#']}
+            PODCAST #{((podcastFeed.items[0] as IPodcastPost)['itunes:episode'] || {})['#']}
           </h2>
 
           <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
@@ -220,20 +220,20 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
                 </div>
               </div>
             </a>
-          </div>
 
-          <div className={`${styles.LinkBox} ${styles.Podcast}`}>
-            {latestPodcast}
+            <div className={`${styles.LinkBox} ${styles.Podcast}`}>
+              {latestPodcast}
 
-            <div className={styles.LinkContainer}>
-              <NavLink
-                className={styles.Link}
-                to={createLinkAction(PodcastsLinkAction)}
-              >
-                <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
-                  More podcasts
-                </h3>
-              </NavLink>
+              <div className={styles.LinkContainer}>
+                <NavLink
+                  className={styles.Link}
+                  to={createLinkAction(PodcastsLinkAction)}
+                >
+                  <h3 className={`${styles.LinkSubtitle} ${styles.MorePodcasts}`}>
+                    More podcasts
+                  </h3>
+                </NavLink>
+              </div>
             </div>
           </div>
         </section>
@@ -281,6 +281,8 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               <ConnectedLatestForumTopics />
             </LazyLoad>
           </div>
+
+          <hr className={styles.HorizontalRule} />
 
           <h2 className={styles.LatestNewsTitle}>
             What's up?
