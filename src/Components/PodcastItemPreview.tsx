@@ -2,6 +2,12 @@ import {
 	createLinkAction,
 } from '../Actions/Creators/createLinkAction';
 import {
+	getFormattedDate,
+} from '../Functions/getFormattedDate';
+import {
+	ImageUrls,
+} from '../Enums/ImageUrls';
+import {
 	NavLink,
 } from 'redux-first-router-link';
 import {
@@ -20,27 +26,8 @@ const styles = _styles || {};
 // @ts-ignore
 import _newsItemStyles from '../Styles/Components/NewsItemPreview.less';
 
-export function getFormattedDate(date: Date) {
-	const month = [
-		'Jan',
-		'Feb',
-		'Mar',
-		'Apr',
-		'May',
-		'Jun',
-		'Jul',
-		'Aug',
-		'Sep',
-		'Oct',
-		'Nov',
-		'Dec',
-	];
-
-	return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}`;
-}
-
 export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewProps> {
-	getPreparedHtml(str: string): {__html: string} {
+	getPreparedHtml(str: string): { __html: string } {
 		return { __html: str, };
 	}
 
@@ -55,7 +42,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 			},
 		} = this.props;
 
-		const id = guid.split('/').filter((aa) => aa).slice(-1)[0];
+		const id = (guid || '').split('/').filter((aa) => aa).slice(-1)[0];
 		return (
 			<div className={styles.PodcastItemPreview}>
 				<div className="ArticleTeaser">
@@ -65,8 +52,8 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 					>
 						<div className="HeroImageContainer">
 							<img
+								src={(itunesImage || {})['#'] || ImageUrls.DefaultPodcastImage}
 								className="HeroImage"
-								src={(itunesImage || {})['#'] || 'https://assets.blubrry.com/coverart/orig/560393-151377.jpg'}
 							/>
 						</div>
 
