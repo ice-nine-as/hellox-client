@@ -5,6 +5,9 @@ import {
 	getFormattedDate,
 } from '../Functions/getFormattedDate';
 import {
+	ImageUrls,
+} from '../Enums/ImageUrls';
+import {
 	NavLink,
 } from 'redux-first-router-link';
 import {
@@ -39,7 +42,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 			},
 		} = this.props;
 
-		const id = guid.split('/').filter((aa) => aa).slice(-1)[0];
+		const id = (guid || '').split('/').filter((aa) => aa).slice(-1)[0];
 		return (
 			<div className={styles.PodcastItemPreview}>
 				<div className="ArticleTeaser">
@@ -49,8 +52,8 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 					>
 						<div className="HeroImageContainer">
 							<img
+								src={(itunesImage || {})['#'] || ImageUrls.DefaultPodcastImage}
 								className="HeroImage"
-								src={(itunesImage || {})['#'] || 'https://assets.blubrry.com/coverart/orig/560393-151377.jpg'}
 							/>
 						</div>
 
