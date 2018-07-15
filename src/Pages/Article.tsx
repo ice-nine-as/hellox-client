@@ -5,29 +5,32 @@ import {
   ContactForm,
 } from '../Components/ContactForm';
 import {
+  createRssThunk,
+} from '../Actions/Creators/createRssThunk';
+import {
   ExternalPageUrls,
 } from '../Enums/ExternalPageUrls';
 import {
   FeedDetailLevels,
 } from '../Enums/FeedDetailLevels';
 import {
-  pickFeed,
-} from '../Functions/pickFeed';
-import {
-  pickFeedItem,
-} from '../Functions/pickFeedItem';
-import {
-  createRssThunk,
-} from '../Actions/Creators/createRssThunk';
-import {
   IRssAction,
 } from '../Actions/App/IRssAction';
+import {
+  isNode,
+} from '../Functions/isNode';
 import {
   Languages,
 } from '../Enums/Languages';
 import {
   NewsItemFull,
 } from '../Components/NewsItemFull';
+import {
+  pickFeed,
+} from '../Functions/pickFeed';
+import {
+  pickFeedItem,
+} from '../Functions/pickFeedItem';
 import {
   connect,
   MapStateToProps,
@@ -48,33 +51,35 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/Article.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/Article.less';
+const styles = _styles || {};
 
 export class Article extends React.Component<TArticleStoreProps & TArticleDispatchProps> {
   doLoad() {
-    const {
-      feeds,
-      getArticle,
-      language,
-      location: {
-        payload,
-      },
-    } = this.props;
-
-    /* Loads the relevant feed based on language and detail level. */
-    const {
-      feed,
-    } = pickFeed({
-      detailLevel: FeedDetailLevels.Full,
-      feeds,
-      language,
-      type: 'newsItem',
-    });
-
-    const id = (payload as any).id.toString();
-    if (!feed || !pickFeedItem(id, feed)) {
-      getArticle(id, feeds, language);
+    if (!isNode()) {
+      const {
+        feeds,
+        getArticle,
+        language,
+        location: {
+          payload,
+        },
+      } = this.props;
+  
+      /* Loads the relevant feed based on language and detail level. */
+      const {
+        feed,
+      } = pickFeed({
+        detailLevel: FeedDetailLevels.Full,
+        feeds,
+        language,
+        type: 'newsItem',
+      });
+  
+      const id = (payload as any).id.toString();
+      if (!feed || !pickFeedItem(id, feed)) {
+        getArticle(id, feeds, language);
+      }
     }
   }
 
@@ -104,21 +109,21 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
     const item = feed ? pickFeedItem(id, feed) : null;
 
     return (
-      <div className={`${_styles.Page}`}>
-		    <div className={_styles.Article}>
+      <div className={`${styles.Page}`}>
+		    <div className={styles.Article}>
           {
             item ?
                 <NewsItemFull item={item} /> :
                 'Article is loading...'
           }
 
-	        <div className={`${_styles.Container} ${_styles.Contact}`}>
-	          <h2 className={`${_styles.Header} ${_styles.Contact} light`}>
+	        <div className={`${styles.Container} ${styles.Contact}`}>
+	          <h2 className={`${styles.Header} ${styles.Contact} light`}>
 	            Comments?
 	          </h2>
 			      
             <a
-              className={_styles.ReadButton}
+              className={styles.ReadButton}
               href={ExternalPageUrls.Forum}
             >
               Go to Meet
@@ -127,8 +132,8 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
             <ContactForm />
 	        </div>
 			
-          <div className={`${_styles.LatestNews}`}>
-	          <h2 className={`${_styles.Header}`}>
+          <div className={`${styles.LatestNews}`}>
+	          <h2 className={`${styles.Header}`}>
 	            What's up?
 	          </h2>
 	        
