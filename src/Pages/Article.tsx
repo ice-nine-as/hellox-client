@@ -96,7 +96,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
       },
     } = this.props;
 
-    const id = (payload as any).id.toString();
+    const id = String((payload as any || {}).id);
     const {
       feed,
     } = pickFeed({
