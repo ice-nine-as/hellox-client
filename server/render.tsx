@@ -73,8 +73,8 @@ const serverDirPath = resolve(projectDirPath, 'server');
 const fontLoaderPath = resolve(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
-export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
-  const x50Response = async (
+export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
+  const helloXResponse = async (
     req: Request,
     res: Response,
     next: NextFunction) => {
@@ -227,7 +227,7 @@ export const x50Render = ({ clientStats }: { clientStats: Stats }) => {
     }
   }
 
-  return x50Response;
+  return helloXResponse;
 }
 
-export default x50Render;
+export default helloXRender;

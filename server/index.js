@@ -215,7 +215,7 @@ if (dev) {
 } else {
   webpack([ clientConfigProd, serverConfigProd, ]).run((err, stats) => {
     const clientStats = stats.toJson().children[0];
-    const render = require('../dist/server/main.js').x50Render;
+    const render = require('../dist/server/main.js').helloXRender;
 
     app.use(publicPath, expressStaticGzip(outputPath));
     app.use(render({ clientStats, }));

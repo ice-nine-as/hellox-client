@@ -51,7 +51,7 @@ const copyManifest = async () => {
   );
 
   console.log('Copied manifest to dist/client.');
-  console.log('copyManifest task complete');
+  console.log('copyManifest task complete.');
 };
 
 module.exports.copyManifest = copyManifest;
@@ -85,10 +85,15 @@ module.exports.dockerKill = dockerKill;
 
 const dockerRebuild = async () => {
   await dockerKill();
+  await dockerUp();
+  console.log('dockerRebuild task complete.');
+};
+
+const dockerUp = async () => {
   await dockerClean();
   await dockerBuild();
   await dockerRun();
-  console.log('dockerRebuild task complete.');
+  console.log('dockerUp task complete.');
 };
 
 module.exports.dockerRebuild = dockerRebuild;
