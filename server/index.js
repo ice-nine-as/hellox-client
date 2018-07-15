@@ -106,33 +106,73 @@ app.post('/story-generator-mailer', (req, res) => {
     console.error('Problem e-mailing generated story.');
     console.error(e);
     res.status(500);
+    res.setHeader('content-type', 'content-type: text/plain; charset=utf-8');
     res.write(
-      `Sorry, there was a problem submitting the generated story.\n
-      ${req.body.story}`);
+      `<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <title>Hello X E-mail error</title>
+        </head>
+
+        <body>
+          <h3>
+            Sorry, there was a problem e-mailing the generated story.
+          </h3>
+
+          <p>
+            We've enclosed a copy of it below, in case you were expecting an e-mail.
+          </p>
+
+          <p>
+            Or go back to the <strong><a href="/">homepage</a></strong>.
+          </p>
+
+          <h4>
+            Your story
+          </h4>
+
+          <p>
+            ${req.body.story.replace(/\n/g, '<br>')}
+          </p>
+        </body>`);
+
     res.end();
   };
 
-  try {
-    publishToGoogleSheet(req.body.name, req.body.email, req.body.story);
-  } catch (e) {
-    handleSheetsError(e);
-    return;
-  }
+  const sheetProm = publishToGoogleSheet(
+    req.body.name,
+    req.body.email,
+    req.body.story);
 
-  try {
-    publishToEmail(
-      req.body.name,
-      req.body.email,
-      req.body.carbonCopy,
-      req.body.story);
-  } catch (e) {
-    handleEmailError(e);
-    return;
-  }
+  sheetProm.then(
+    () => {},
+    handleSheetsError,
+  );
 
-  /* Redirect to the home page. */
-  res.redirect('/');
-  res.end();
+  const emailProm = publishToEmail(
+    req.body.name,
+    req.body.email,
+    req.body.carbonCopy,
+    req.body.story);
+
+  emailProm.then(
+    () => {},
+    handleEmailError,
+  );
+
+  Promise.all([
+    sheetProm,
+    emailProm,
+  ]).then(
+    () => {
+      /* Redirect to the home page. */
+      res.redirect('/');
+      res.end();
+    },
+
+    /* Log all errors not already caught. */
+    console.log.bind(console),
+  );
 });
 
 /* Google Analytics ownership endpoint */

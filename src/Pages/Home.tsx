@@ -41,8 +41,14 @@ import {
   PodcastIcon,
 } from '../Components/Icon/PodcastIcon';
 import {
+  PodcastLinkAction,
+} from '../Actions/Link/PodcastLinkAction';
+import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
+import {
+  PodcastSubscriptionLinks,
+} from '../Components/PodcastSubscriptionLinks';
 import {
   ConnectedQuoteDisplay,
 } from '../Components/QuoteDisplay';
@@ -73,35 +79,33 @@ const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
-import { PodcastLinkAction } from '../Actions/Link/PodcastLinkAction';
-import { PodcastSubscriptionLinks } from '../Components/PodcastSubscriptionLinks';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   doLoad() {
-    const {
-      feeds,
-      language,
-      loadPodcasts,
-    } = this.props;
-
-    const {
-      feed,
-    } = pickFeed({
-      type: 'podcast',
-      feeds,
-      language,
-    });
-
-    if (!feed || !feed.items || !feed.items.length) {
-      loadPodcasts();
+    if (!isNode()) {
+      const {
+        feeds,
+        language,
+        loadPodcasts,
+      } = this.props;
+  
+      const {
+        feed,
+      } = pickFeed({
+        type: 'podcast',
+        feeds,
+        language,
+      });
+  
+      if (!feed || !feed.items || !feed.items.length) {
+        loadPodcasts();
+      }
     }
   }
 
   componentDidMount() {
-    if (!isNode()) {
-      this.doLoad();
-    }
+    this.doLoad();
   }
 
   render() {
