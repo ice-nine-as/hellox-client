@@ -76,7 +76,7 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
         type: 'newsItem',
       });
   
-      const id = (payload as any).id.toString();
+      const id = String((payload as any || {}).id);
       if (!feed || !pickFeedItem(id, feed)) {
         getArticle(id, feeds, language);
       }
