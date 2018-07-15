@@ -40,13 +40,18 @@ function publishToEmail(name, email, carbonCopy, story) {
     sesArgs.cc = 'helloX@ice-9.no';
   }
 
-  /* Give SES the details and let it construct the message for you. */
-  client.sendEmail(sesArgs, (err, data, res) => {
-    if (err) {
-      console.log(err, data, res);
-      throw err;
-    }
-  });
+  return new Promise((resolve, reject) => {
+    /* Give SES the details and let it construct the message for you. */
+    client.sendEmail(sesArgs, (err, data, res) => {
+      if (err) {
+        console.log(err, data, res);
+        reject(err);
+      }
+
+      resolve();
+    });
+  })
+
 }
 
 module.exports = {
