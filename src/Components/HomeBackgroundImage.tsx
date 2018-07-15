@@ -4,7 +4,7 @@ import * as React from 'react';
 import styles from '../Styles/Components/HomeBackgroundImage.less';
 const _styles = styles || {};
 
-export const homeBackgroundRootUrl = 'https://s3.amazonaws.com/x50/images/home-background/';
+export const homeBackgroundRootUrl = 'NOT_CURRENTLY_USED';
 
 /* Do NOT add a slash between the end of homeBackgroundRootUrl and the image
  * name. This will break the link. */
