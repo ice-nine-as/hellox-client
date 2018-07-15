@@ -169,9 +169,6 @@ app.post('/story-generator-mailer', (req, res) => {
       res.redirect('/');
       res.end();
     },
-
-    /* Log all errors not already caught. */
-    console.log.bind(console),
   );
 });
 
