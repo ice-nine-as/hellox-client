@@ -116,6 +116,7 @@ app.post('/story-generator-mailer', (req, res) => {
     publishToGoogleSheet(req.body.name, req.body.email, req.body.story);
   } catch (e) {
     handleSheetsError(e);
+    return;
   }
 
   try {
@@ -126,6 +127,7 @@ app.post('/story-generator-mailer', (req, res) => {
       req.body.story);
   } catch (e) {
     handleEmailError(e);
+    return;
   }
 
   /* Redirect to the home page. */

@@ -41,16 +41,12 @@ function publishToEmail(name, email, carbonCopy, story) {
   }
 
   /* Give SES the details and let it construct the message for you. */
-  try {
-    client.sendEmail(sesArgs, (err, data, res) => {
-      if (err) {
-        console.log(err, data, res);
-        throw err;
-      }
-    });
-  } catch (e) {
-    console.log('Unknown error:', e);
-  }
+  client.sendEmail(sesArgs, (err, data, res) => {
+    if (err) {
+      console.log(err, data, res);
+      throw err;
+    }
+  });
 }
 
 module.exports = {
