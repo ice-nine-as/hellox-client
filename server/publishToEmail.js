@@ -44,7 +44,6 @@ function publishToEmail(name, email, carbonCopy, story) {
     /* Give SES the details and let it construct the message for you. */
     client.sendEmail(sesArgs, (err, data, res) => {
       if (err) {
-        console.log(err, data, res);
         reject(err);
       }
 
