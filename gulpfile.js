@@ -89,6 +89,8 @@ const dockerRebuild = async () => {
   console.log('dockerRebuild task complete.');
 };
 
+module.exports.dockerRebuild = dockerRebuild;
+
 const dockerUp = async () => {
   await dockerClean();
   await dockerBuild();
@@ -96,7 +98,7 @@ const dockerUp = async () => {
   console.log('dockerUp task complete.');
 };
 
-module.exports.dockerRebuild = dockerRebuild;
+module.exports.dockerUp = dockerUp;
 
 const dockerStart = async () => {
   console.log(`Starting ${containerName} container.`);
