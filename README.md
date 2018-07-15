@@ -43,13 +43,13 @@ Formspree is used for simple contact form e-mails.
 
 ## Google Drive integration
 
-As designed by the client, a Google Sheet is used to contain all the submitted user-generated stories. The `googleapis` package is used to automate this process, and the necessary credentials are stored in `server/credentials/google-sheets-credentials.json`. Like the e-mail credentials, these are volumed into the Docker container at runtime from `/etc/hellox-credentials/`.
+As designed by the client, a Google Sheet is used to contain all the submitted user-generated stories. The `googleapis` package is used to automate this process, and the necessary credentials are stored within the running container in the `server/credentials/google-sheets-credentials.json` directory. Like the e-mail credentials, these are volumed into the Docker container at runtime from `/etc/hellox-credentials/`.
 
 ## Updating the server
 
-Using the helloX key (issued by AWS), `ssh` into the web server. Pull any changes with `git pull`.
+Using the helloX key (issued by AWS, named `helloX.pem`), `ssh` into the webpage server. `cd` to the project directory (`/etc/hellox-client/` at present). Pull any changes with `git pull`.
 
-If the Docker container is already running (you can check this with `docker ps`), use `gulp dockerRebuild`. If it is not running, use `gulp dockerClean && gulp dockerStart && gulp dockerRun`.
+If the Docker container is already running (you can check this with `docker ps`), use `gulp dockerRebuild`. If it is not running, use `gulp dockerUp`.
 
 It will take several minutes for the container to spin up again, and for the build infrastructure to complete AOT compilation.
 
@@ -64,7 +64,7 @@ There are only three branches currently in use in the X50 repository: `master`, 
 
 ## Project structure
 
-All the significant code in the X50 app is server-side Node/client-side ES5. Non-server code is written in ESNext with ES Modules. The project is served through `Express`, it is written in `Typescript` and `React` (with `JSX`), and it uses `Webpack` and `Babel` to bundle and transpile code such that it can run on all recent devices with Javascript capabilities. The `universal-react-component` package is also used to take simultaneous advantage of code-splitting (reducing the time, process, and space expenditures associated with each request) and server-side rendering (enabling the app to work more natively on phones as a Progressive Web App, and ensuring that semantic content is loaded and read by web crawlers for SEO purposes).
+The project is served through `Express`, it is written in `Typescript` and `React` (with `JSX`), and it uses `Webpack` and `Babel` to bundle and transpile code such that it can run on all recent devices with Javascript capabilities. The `universal-react-component` package, and several other packages from the `universal-react` ecosystem, are used to take simultaneous advantage of code-splitting (reducing the time, process, and space expenditures associated with each request) and server-side rendering (enabling the app to work more natively on phones as a Progressive Web App, and ensuring that semantic content is loaded and read by web crawlers for SEO purposes).
 
 ## Pull requests
 
