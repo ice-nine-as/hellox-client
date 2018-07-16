@@ -119,7 +119,7 @@ export async function configureServerStore(
     } catch (e) {
       rssFetchFailed = true;
       if (e.name !== 'AbortError') {
-        console.error('Error fetching article teasers.');
+        console.error('Error fetching one of the feeds for the home page.');
         console.error(e);
       }
     }
@@ -133,7 +133,7 @@ export async function configureServerStore(
     } catch (e) {
       rssFetchFailed = true;
       if (e.name !== 'AbortError') {
-        console.error('Error encountered fetching articles.');
+        console.error('Error encountered fetching team members feed.');
         console.error(e);
       }
     }
