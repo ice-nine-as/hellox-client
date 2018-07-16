@@ -30,12 +30,6 @@ const {
   dirname,
   join,
 } = require('path');
-const {
-  publishToEmail,
-} = require('./publishToEmail');
-const {
-  publishToGoogleSheet,
-} = require('./publishToGoogleSheet');
 
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');

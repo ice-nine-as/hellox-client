@@ -60,6 +60,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 								className={styles.PodcastIframe}
 								scrolling="no"
 								src={`https://player.blubrry.com/?media_url=${encodeURIComponent(url)}`}
+								title="The iframe for the Blubrry podcast player."
 							></iframe> :
 							'Embed failed.'
 					}

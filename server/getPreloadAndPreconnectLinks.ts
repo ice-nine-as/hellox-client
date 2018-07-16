@@ -51,7 +51,9 @@ export function getPreloadAndPreconnectLinks(location: LocationState, rssFetchFa
             `<link rel="preload" href="https://cms.hellox.me/feeds/podcast-feed.xml" as="fetch" crossorigin>\n` :
             '' +
 
-            `<link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com" crossorigin>\n` +
+            `<link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com" crossorigin>
+             <link rel="preconnect" href="https://www.speakpipe.com" crossorigin>
+             <link rel="preconnect" href="https://fonts.googleapis.com crossorigin>\n` +
              baseLinks;
   } else if (type === PageIdentifiers.Write) {
     return rssFetchFailed ?
