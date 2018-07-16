@@ -15,6 +15,7 @@ export class VoiceMemoForm extends React.PureComponent {
           width="100%"
           height="180"
           frameBorder="0"
+          title="The iframe for the Speakpipe voice memo widget."
         >
         </iframe>
         <script

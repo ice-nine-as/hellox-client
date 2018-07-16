@@ -4,6 +4,12 @@ const {
 const {
   handleSpreadsheetUploadError,
 } = require('../handleSpreadsheetUploadError');
+const {
+  publishToEmail,
+} = require('./publishToEmail');
+const {
+  publishToGoogleSheet,
+} = require('./publishToGoogleSheet');
 
 exports = module.exports = {
   getStoryGeneratorMailerMiddleware() {
