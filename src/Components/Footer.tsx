@@ -93,8 +93,14 @@ export class Footer extends React.PureComponent<TFooterProps> {
                   }}
                   aria-hidden="true"
                 >
+                  {/* Fake label to avoid lowering SEO scores. */}
+                  <label htmlFor="b_df70196a51c2b6c343aa52c4e_74777a8f7e" hidden style={{ display: 'none' }}>
+                    Unused
+                  </label>
+
                   {/* Fake input to fool bots. */}
                   <input
+                    id="b_df70196a51c2b6c343aa52c4e_74777a8f7e"
                     type="text"
                     name="b_df70196a51c2b6c343aa52c4e_74777a8f7e"
                     tabIndex={-1}
