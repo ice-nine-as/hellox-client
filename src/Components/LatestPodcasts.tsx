@@ -48,8 +48,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/LatestPodcasts.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/LatestPodcasts.less';
+const styles = _styles || {};
 
 
 export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps & TLatestPodcastsStoreProps & TLatestPodcastsDispatchProps> {
@@ -132,7 +132,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
 
     return (
       <div
-        className={`${_styles.LatestPodcasts} ${_styles[this.props.detailLevel]}`}
+        className={`${styles.LatestPodcasts} ${styles[this.props.detailLevel]}`}
         key={key += 1}
       >
         {podcastItems}

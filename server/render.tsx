@@ -13,13 +13,13 @@ import {
   readFile,
 } from 'fs';
 import {
-  PageIdentifiers,
-} from '../src/Enums/PageIdentifiers';
+  getPageTitle,
+} from './getPageTitle';
 import {
-  PageTitles,
-} from '../src/Enums/PageTitles';
+  getPreloadAndPreconnectLinks,
+} from './getPreloadAndPreconnectLinks';
 import {
-  resolve,
+  join,
 } from 'path';
 import {
   ProviderContainer,
@@ -58,6 +58,7 @@ const isHttp2: () => boolean = require('./isHttp2');
 
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
+import { getMetaDescription } from './getMetaDescription';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -67,10 +68,13 @@ export const strings = {
 
 const readFileProm = promisify(readFile);
 
-const projectDirPath = resolve(__dirname, '..', '..');
-const serverDirPath = resolve(projectDirPath, 'server');
+const projectDirPath = join(__dirname, '..', '..');
+const serverDirPath  = join(projectDirPath, 'server');
 
-const fontLoaderPath = resolve(serverDirPath, 'fontLoader.js');
+const webpSnifferPath = join(serverDirPath, 'webpSniffer.js');
+let webpSnifferElement: string | null = null;
+
+const fontLoaderPath = join(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
 export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
@@ -82,7 +86,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       /* Do not render the 404 page for failed code, image, and font lookups,
       * or for codefiles of which we already know the location. Doing so wastes
       * huge amounts of time and process. */
-      const re = /((\.(js|css))|(\.map)|\.(jpg|jpeg|png|svg|webp|woff2?)|__webpack_hmr)$/;
+      const re = /((\.(js|css))|(\.map)|\.(jpg|jpeg|png|svg|webp|ttf|woff|woff2?)|__webpack_hmr)$/;
       if (re.test(req.url)) {
         console.error(`Object at ${req.url} not found.`);
         res.status(404);
@@ -92,8 +96,11 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       }
 
       let store: Store<TStoreProps> | null;
+      let rssFetchFailed = false;
       try {
-        store = await configureServerStore(req, res);
+        const storeObj = await configureServerStore(req, res);
+        store = storeObj!.store;
+        rssFetchFailed = storeObj!.rssFetchFailed;
       } catch (e) {
         console.error(
           strings.CONFIGURE_SERVER_STORE_FAILED,
@@ -110,12 +117,13 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         return;
       }
 
-      const state = store.getState();
-      const stateStr = JSON.stringify(state);
-      const openTag = '<script id="reduxState">';
-      const varDef = 'window.REDUX_STATE = ';
-      const closeTag = '</script>';
-      const reduxScript = openTag + varDef + stateStr + closeTag;
+      const state       = store.getState();
+      const stateStr    = JSON.stringify(state);
+      const openTag     = '<script id="reduxState">';
+      const varDef      =   `window.REDUX_STATE = ${stateStr};`;
+      const closeTag    = '</script>';
+      const reduxScript = openTag + varDef + closeTag;
+
       const providerContainer = (
         <ProviderContainer store={store}>
           <ConnectedApp />
@@ -132,9 +140,8 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         stylesheets,
       } = flushChunks(clientStats, {
         chunkNames,
-        outputPath: resolve(projectDirPath, 'dist', 'client'),
+        outputPath: join(projectDirPath, 'dist', 'client'),
       });
-
 
       if (isHttp2()) {
         try {
@@ -164,6 +171,16 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
 
+      if (!webpSnifferElement) {
+        try {
+          const webpSniffer = await readFileProm(webpSnifferPath);
+          webpSnifferElement =
+            `<script id="webpSniffer">
+              ${webpSniffer}  
+            </script>`
+        } catch (e) { }
+      }
+
       if (!fontLoaderElement) {
         try {
           const fontLoader = await readFileProm(fontLoaderPath);
@@ -181,18 +198,19 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="theme-color" content="rgb(234, 80, 80)">
+            ${getMetaDescription(state.location)}
             <link rel="manifest" href="/static/manifest.json">
-            <title>Hello X - ${PageTitles[state.location.type as PageIdentifiers] || '?'}</title>
+            ${getPreloadAndPreconnectLinks(state.location, rssFetchFailed)}
+            <title>${getPageTitle(state.location)}</title>
+            ${webpSnifferElement}
             ${ambientStyleElement}
             ${css}
-            <!-- Global site tag (gtag.js) - Google Analytics -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121190776-1"></script>
             <script>
-              window.dataLayer = window.dataLayer || [];
+              window.dataLayer=window.dataLayer||[];
               function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'UA-121190776-1');
+              gtag('js',new Date());
+              gtag('config','UA-121190776-1');
             </script>
           </head>
           <body>

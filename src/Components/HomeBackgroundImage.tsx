@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/HomeBackgroundImage.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/HomeBackgroundImage.less';
+const styles = _styles || {};
 
 export const homeBackgroundRootUrl = 'NOT_CURRENTLY_USED';
 
@@ -11,7 +11,7 @@ export const homeBackgroundRootUrl = 'NOT_CURRENTLY_USED';
 export class HomeBackgroundImage extends React.PureComponent {
   render() {
     return (
-      <picture className={_styles.HomeBackgroundImage}>
+      <picture className={styles.HomeBackgroundImage}>
         <source
           media="(max-aspect-ratio: 1/1)"
           srcSet=

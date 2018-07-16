@@ -1,6 +1,8 @@
 @import '../Vars.less';
 @import '../Page.less';
 
+@import '../Mixins/ButtonHover.less';
+
 .Home {
 	position: relative;
 	display: block;
@@ -21,7 +23,10 @@
 		background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.jpg);
 
 		/* WEBP, smaller */
-		//background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.webp);
+		:global(.webp) & {
+			background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_final_1000px_wide_960.webp);
+		}
+
 		background-position: center center;
 		background-size: cover;
 
@@ -32,7 +37,9 @@
 			background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.jpg);
 
 			/* WEBP, larger */
-			//background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.webp);
+			:global(.webp) & {
+				background-image: url(https://s3.eu-central-1.amazonaws.com/hellox/images/background_cropping_FINAL_short.webp);
+			}
 		}
 
 		@media screen and (min-height: 800px) {
@@ -137,14 +144,8 @@
 			flex-grow: 1;
 			flex: 1;
 			min-width: 100px;
-
-			@media screen and (min-width: 600px) {
-				&:hover,
-				&:active {
-					color: @red;
-					transition: color @button-transition-duration;;
-				}
-			}
+			
+			.ButtonHover;
 		}
 
 		.LinkTitle {

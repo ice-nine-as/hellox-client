@@ -56,35 +56,35 @@ const styles = _styles || {};
 
 export class Article extends React.Component<TArticleStoreProps & TArticleDispatchProps> {
   doLoad() {
-    if (!isNode()) {
-      const {
-        feeds,
-        getArticle,
-        language,
-        location: {
-          payload,
-        },
-      } = this.props;
-  
-      /* Loads the relevant feed based on language and detail level. */
-      const {
-        feed,
-      } = pickFeed({
-        detailLevel: FeedDetailLevels.Full,
-        feeds,
-        language,
-        type: 'newsItem',
-      });
-  
-      const id = String((payload as any || {}).id);
-      if (!feed || !pickFeedItem(id, feed)) {
-        getArticle(id, feeds, language);
-      }
+    const {
+      feeds,
+      getArticle,
+      language,
+      location: {
+        payload,
+      },
+    } = this.props;
+
+    /* Loads the relevant feed based on language and detail level. */
+    const {
+      feed,
+    } = pickFeed({
+      detailLevel: FeedDetailLevels.Full,
+      feeds,
+      language,
+      type: 'newsItem',
+    });
+
+    const id = String((payload as any || {}).id);
+    if (!feed || !pickFeedItem(id, feed)) {
+      getArticle(id, feeds, language);
     }
   }
 
   componentDidMount() {
-    this.doLoad();
+    if (!isNode()) {    
+      this.doLoad();
+    }
   }
 
   render() {

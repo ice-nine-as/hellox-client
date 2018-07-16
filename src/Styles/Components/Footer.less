@@ -1,5 +1,7 @@
 @import '../Vars.less';
 
+@import '../Mixins/ButtonHover.less';
+
 .Footer {
   position: relative;
   left: 0;
@@ -9,19 +11,16 @@
 }
 
 a {
-  text-decoration: none;
-  color:inherit;
+  .ButtonHover;
 
-  &:hover {
-    color: @red;
-    transition: color @button-transition-duration;
-  }
+  text-decoration: none;
+  color: inherit;
 }
 
 .Header {
   display: block;
   font-size: @larger;
-  color: @light-purple;
+  color: @extra-light-purple;
   margin: 0;
 }
 
@@ -61,7 +60,7 @@ a {
     padding-right: 1%;
     justify-content: space-between;
 
-      @media screen and (min-width: 600px) {
+    @media screen and (min-width: 600px) {
       text-align: left;
       margin-right: @space-elg;
     }
@@ -144,7 +143,7 @@ a {
       position: relative;
       background-color: @gold;
       border: 1px solid @dark-purple;
-      color: @white;
+      color: @black;
       font-family: 'Lato Light', 'Lato Subset', sans-serif;
       font-weight: 300;
       cursor: pointer;

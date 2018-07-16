@@ -152,3 +152,5 @@ export const serverPush = async ({
     stream.end(file);
   });
 };
+
+export default serverPush;
