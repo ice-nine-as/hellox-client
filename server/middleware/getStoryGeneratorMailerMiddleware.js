@@ -34,7 +34,7 @@ exports = module.exports = {
 
       emailProm.then(
         () => {},
-        (e) => handleEmailSendingError(e, res),
+        (e) => handleEmailSendingError(e, req, res),
       );
 
       Promise.all([

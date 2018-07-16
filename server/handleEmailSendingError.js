@@ -1,5 +1,5 @@
 exports = module.exports = {
-  handleEmailSendingError(e, res) {
+  handleEmailSendingError(e, req, res) {
     console.error('Problem e-mailing generated story.');
     console.error(e);
     res.status(500);
