@@ -107,6 +107,11 @@ export async function configureServerStore(
         })),
 
         store.dispatch(createRssThunk({
+          feedKey: FeedKeys.Podcast,
+          signal,
+        })),
+
+        store.dispatch(createRssThunk({
           feedKey: FeedKeys.ForumTopics,
           signal,
         })),
