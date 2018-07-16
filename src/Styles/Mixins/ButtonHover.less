@@ -1,0 +1,8 @@
+@import '../Vars.less';
+
+.ButtonHover {
+  &:hover, &:active, &:global(.active) {
+    color: @red;
+    transition: color @button-transition-duration;
+  }
+}
