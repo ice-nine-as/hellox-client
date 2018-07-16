@@ -43,7 +43,8 @@ const nodeSpdyOptions = {
 });*/
 
 const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
-  response: { 
+  response: {
+    'cache-control': 'max-age: 31536000',
     'content-type': 'application/javascript',
     'content-encoding': 'gzip',
   },
@@ -51,6 +52,7 @@ const nodeSpdyJsOptions = Object.assign({}, nodeSpdyOptions, {
 
 const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
   response: {
+    'cache-control': 'max-age: 31536000',
     'content-type': 'text/css',
     'content-encoding': 'gzip',
   },
@@ -58,6 +60,7 @@ const nodeSpdyCssOptions = Object.assign({}, nodeSpdyOptions, {
 
 const nodeSpdyFontOptions = Object.assign({}, nodeSpdyOptions, {
   response: {
+    'cache-control': 'max-age: 31536000',
     'content-type': 'font/woff2',
   },
 });
