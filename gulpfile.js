@@ -16,8 +16,9 @@ const {
   promisify,
 } = require('util');
 
-const imageName     = 'icenineas/hellox-client';
-const containerName = 'hellox-client';
+const imageName       = 'icenineas/hellox-client';
+const containerName   = 'hellox-client';
+const containerMemory = '700m';
 
 const clean = async () => {
   console.log('Cleaning build directories.');
@@ -136,6 +137,8 @@ const dockerRun = async () => {
                         /* Volume in credentials for e-mail and Drive Sheets
                          * publishing. */
                         '-v /etc/hellox-credentials/:/etc/hellox-client/server/credentials/ ' +
+                        /* Prevent the container from taking the whole of the host machine's memory. */
+                        `--memory=${containerMemory} ` +
                         /* Run the icenineas/hellox-client image. */
                         'icenineas/hellox-client');
 
