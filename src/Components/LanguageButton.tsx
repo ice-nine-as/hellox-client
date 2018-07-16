@@ -32,17 +32,17 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/LanguageButton.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/LanguageButton.less';
+const styles = _styles || {};
 
 export class LanguageButton extends React.PureComponent<TLanguageButtonOwnProps & TLanguageButtonStoreProps & TLanguageButtonDispatchProps> {
   render() {
-    const languageClass = _styles[this.props.language] ?
-      _styles[this.props.language] :
+    const languageClass = styles[this.props.language] ?
+      styles[this.props.language] :
       '';
 
     const activeClass = this.props.active ?
-      ` ${_styles.Active} active` :
+      ` ${styles.Active} active` :
       '';
 
     const capitalizedButtonLanguage =
@@ -55,7 +55,7 @@ export class LanguageButton extends React.PureComponent<TLanguageButtonOwnProps 
         '';
     return (
       <button
-        className={`${_styles.LanguageButton} ${languageClass}${activeClass}${userClass}`}
+        className={`${styles.LanguageButton} ${languageClass}${activeClass}${userClass}`}
         onClick={() => this.props.switchLanguage(this.props.buttonLanguage)}
       >
         {capitalizedButtonLanguage}

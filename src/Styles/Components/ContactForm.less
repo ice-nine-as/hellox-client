@@ -8,107 +8,129 @@
 	margin-right: auto;
 	border: 1px solid @teal;
 	background: @white;
+}
 
-	.Label,
-	.Input {
-		position: relative;
-		display: block;
-		box-sizing: border-box;
+.Label,
+.Input {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+}
+
+.Label {
+	text-align: left;
+	margin-bottom: 4px;
+
+	.Name {
+		color: inherit;
 	}
 
-	.Label {
-		text-align: left;
-		margin-bottom: 4px;
+	.ReplyTo {
+		color: inherit;
 	}
 
-	.Input {
-		width: 100%;
-		padding: @space-sm;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: @space;
-		border: 1px solid @teal;
-		font-size: @p;
+	.Message {
+		color: inherit;
 	}
+}
 
-	.Textarea {
-		height: 100px;
-		font-family: 'Lato Regular';		
-		@media screen and (min-width: 600px) {
-			height: 200px;
+#NameInput {
+	color: inherit;
+}
+
+#ReplyToInput {
+	color: inherit;
+}
+
+.Input {
+	width: 100%;
+	padding: @space-sm;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: @space;
+	border: 1px solid @teal;
+	font-size: @p;
+}
+
+.Textarea {
+	height: 100px;
+	font-family: 'Lato Regular';		
+	@media screen and (min-width: 600px) {
+		height: 200px;
+	}
+}
+
+.MessageInput {
+	display: block;
+}
+
+.Checkbox {
+	display: none;
+}
+
+.LabelBoxWrapper {
+	display: inline-block;
+	vertical-align: middle;
+
+	.LabelBox {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 14px;
+		height: 14px;
+		font-size: @small;
+		border: solid 1px black;
+		margin-right: @space-sm;
+		padding: 2px;
+		
+		p {
+			user-select: none;
+			padding-bottom: 2px;
+			visibility: hidden;
+			margin: 0;
 		}
 	}
+}
 
-	.MessageInput {
-		display: block;
+.CarbonCopyLabel {
+	user-select: none;
+}
+
+.Checkbox:checked + .CarbonCopyLabel {
+	& .LabelBoxWrapper .LabelBox p {
+		visibility: visible;
 	}
+}
 
-	.Checkbox {
-		display: none;
-	}
+.CarbonCopy {
+	float: left;
+	margin-right: 10px;
+}
 
-	.LabelBoxWrapper {
-		display: inline-block;
-		vertical-align: middle;
-		.LabelBox {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 14px;
-			height: 14px;
-			font-size: @small;
-			border: solid 1px black;
-			margin-right: @space-sm;
-			padding: 2px;
-			& p {
-				user-select: none;
-				padding-bottom: 2px;
-				visibility: hidden;
-				margin: 0;
-			}
+.Submit {
+	display: block;
+	padding: @space 0;
+	margin: @space auto;
+	border: none;
+	background: @gold;
+	color: @deep-purple;
+	width: 100%;
+	font-size: @tiny;
+	font-weight: 400;
+	letter-spacing: 1px;
+	cursor: pointer;
+	outline: none;
+
+	@media screen and (min-width: 600px) {
+		width: auto;
+		padding: @space-sm @space-lg;
+
+		&:hover {
+			color: white;
 		}
-	}
 
-	.CarbonCopyLabel {
-		user-select: none;
-	}
-
-	.Checkbox:checked + .CarbonCopyLabel {
-		& .LabelBoxWrapper .LabelBox p {
-			visibility: visible;
-		}
-	}
-
-	.CarbonCopy {
-		float: left;
-		margin-right: 10px;
-	}
-
-	.Submit {
-		display: block;
-		padding: @space 0;
-		margin: @space auto;
-		border: none;
-		background: @gold;
-		color: @deep-purple;
-		width: 100%;
-		font-size: @tiny;
-		font-weight: 400;
-		letter-spacing: 1px;
-		cursor: pointer;
-		outline: none;
-
-		@media screen and (min-width: 600px) {
-			width: auto;
-			padding: @space-sm @space-lg;
-
-			&:hover {
-				color: white;
-			}
-
-			&:active {
-				transform: translateY(1px);
-			}
+		&:active {
+			transform: translateY(1px);
 		}
 	}
 }

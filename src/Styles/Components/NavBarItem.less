@@ -1,4 +1,5 @@
 @import '../Vars.less';
+@import '../Mixins/ButtonHover.less';
 
 .NavBarItem {
   position: relative;
@@ -13,11 +14,8 @@
   &:visited {
     color: inherit;
   }
-
-  &:hover, &:active, :global(.active) {
-    color: @red;
-    transition: color @button-transition-duration;
-  }
+  
+  .ButtonHover;
 }
 
 .NavLinkHeaderIconLink {

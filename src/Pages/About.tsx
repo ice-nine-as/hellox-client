@@ -43,6 +43,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/About.less';
+import { ImageAltDescriptions } from '../Enums/ImageAltDescriptions';
 const styles = _styles || {};
 
 export const strings = {
@@ -98,23 +99,29 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
       },
     } = this.props;
 
-    const teamMembers: ITeamMembers | null = ((feed, error) => {
+    const {
+      error,
+    } = this.state;
+
+    const teamMembers: ITeamMembers | null = (() => {
       if (error) {
         return null;
       }
       
-      if (feed && Array.isArray(feed.items) && feed.items[0]) {
-        if (feed.items[0].description) {
+      if (teamMembersFeed && teamMembersFeed.items[0]) {
+        if (teamMembersFeed.items[0].description) {
           const ahe = new AllHtmlEntities();
-          const decodedDescription = ahe.decode(feed.items[0].description);
+          const decodedDescription =
+            ahe.decode(teamMembersFeed.items[0].description);
+  
           return JSON.parse(decodedDescription);
         }
       }
       
       return null;
-    })(teamMembersFeed, this.state.error);
+    })();
 
-    const creativeTeamMembers = ((error) => {
+    const creativeTeamMembers = (() => {
       if (error) {
         return strings.LOAD_ERROR;
       } else {
@@ -126,9 +133,9 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
           <TeamMembers members={teamMembers.creativeTeam} />
         );
       }
-    })(this.state.error);
+    })();
 
-    const ice9Members = ((error) => {
+    const ice9Members = (() => {
       if (error) {
         return strings.LOAD_ERROR;
       } else {
@@ -140,9 +147,9 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
           <TeamMembers members={teamMembers.ice9} />
         );
       }
-    })(this.state.error);
+    })();
 
-    const scienceTeamMembers = ((error) => {
+    const scienceTeamMembers = (() => {
       if (error) {
         return strings.LOAD_ERROR;
       } else {
@@ -154,13 +161,14 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
           <TeamMembers members={teamMembers.scienceTeam} />
         );
       }
-    })(this.state.error);
+    })();
 
     return (
       <div className={`${styles.About} ${styles.Page}`}>
         <div className={`${styles.Content}`}>
           <div className={styles.HeroImageContainer}>
             <img
+              alt={ImageAltDescriptions.AboutHero}
               className={styles.Image}
               src={ImageUrls.AboutHero}
             />
@@ -248,10 +256,18 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
             </h2>
 
             <figure className={styles.PictureContainer}>
-              <img
-                className={styles.AboutContentPicture}
-                src={ImageUrls.CoreTeamPicture}
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={ImageUrls.CoreTeamPictureWebP}
+                />
+
+                <img
+                  alt={ImageAltDescriptions.CoreTeamPicture}
+                  className={styles.AboutContentPicture}
+                  src={ImageUrls.CoreTeamPicture}
+                />
+              </picture>
 
               <figcaption className={styles.PictureAttribution}>
                 <p className={styles.AttributionSection}>
@@ -281,10 +297,18 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
             </h3>
 
             <figure className={styles.PictureContainer}>
-              <img
-                className={styles.AboutContentPicture}
-                src={ImageUrls.CreativeTeamPicture}
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={ImageUrls.CreativeTeamPictureWebP}
+                />
+
+                <img
+                  alt={ImageAltDescriptions.CreativeTeamPicture}
+                  className={styles.AboutContentPicture}
+                  src={ImageUrls.CreativeTeamPicture}
+                />
+              </picture>
 
               <figcaption className={styles.PictureAttribution}>
                 Illustration by Valentin Manz
@@ -305,10 +329,18 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
             </h3>
 
             <figure className={styles.PictureContainer}>
-              <img
-                className={styles.AboutContentPicture}
-                src={ImageUrls.ScienceTeamPicture}
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={ImageUrls.ScienceTeamPictureWebP}
+                />
+
+                <img
+                  alt={ImageAltDescriptions.ScienceTeamPicture}
+                  className={styles.AboutContentPicture}
+                  src={ImageUrls.ScienceTeamPicture}
+                />
+              </picture>
 
               <figcaption className={styles.PictureAttribution}>
                 Illustration by Valentin Manz

@@ -1,8 +1,14 @@
+@import '../Vars.less';
+
 .SiteMap {
   display: block;
+}
 
-  .Link {
-    display: inline-block;
-    margin-bottom: 5px;
+.Link {
+  display: inline-block;
+  margin-bottom: 5px;
+
+  &:global(.active) {
+    color: @light-red;
   }
 }

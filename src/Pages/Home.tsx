@@ -83,29 +83,29 @@ const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   doLoad() {
-    if (!isNode()) {
-      const {
-        feeds,
-        language,
-        loadPodcasts,
-      } = this.props;
-  
-      const {
-        feed,
-      } = pickFeed({
-        type: 'podcast',
-        feeds,
-        language,
-      });
-  
-      if (!feed || !feed.items || !feed.items.length) {
-        loadPodcasts();
-      }
+    const {
+      feeds,
+      language,
+      loadPodcasts,
+    } = this.props;
+
+    const {
+      feed,
+    } = pickFeed({
+      type: 'podcast',
+      feeds,
+      language,
+    });
+
+    if (!feed || !feed.items || !feed.items.length) {
+      loadPodcasts();
     }
   }
 
   componentDidMount() {
-    this.doLoad();
+    if (!isNode()) {    
+      this.doLoad();
+    }
   }
 
   render() {

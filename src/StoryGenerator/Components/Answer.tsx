@@ -11,14 +11,14 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/Answer.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/Answer.less';
+const styles = _styles || {};
 
 export class Answer extends React.PureComponent<IAnswerProps> {
   render() {
     const element = (() => {
       const props: { [key: string]: any } = {
-        className:    _styles.AnswerInput,
+        className:    styles.AnswerInput,
         defaultValue: this.props.text,
         placeholder:  'Click to type',
         required:     true,
@@ -66,7 +66,7 @@ export class Answer extends React.PureComponent<IAnswerProps> {
     })();
 
     return (
-      <div className={`Answer ${_styles.Answer}`}>
+      <div className={`Answer ${styles.Answer}`}>
         {element}
       </div>
     );

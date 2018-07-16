@@ -11,8 +11,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/InProgressStory.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/InProgressStory.less';
+const styles = _styles || {};
 
 export const strings = {
   CHILD_INVALID:
@@ -31,12 +31,12 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
     let key = -1;
 
     return (
-      <div className={`InProgressStory ${_styles.InProgressStory}`}>
+      <div className={`InProgressStory ${styles.InProgressStory}`}>
         {this.props.storyTemplate ?
           this.props.storyTemplate.questions.map((question, index) => {
             return (
               <div
-                className={_styles.QuestionContainer}
+                className={styles.QuestionContainer}
                 key={key += 1}
               >
                 <Question
@@ -56,7 +56,7 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
         }
 
         <button
-          className={`${_styles.Complete} condensed`}
+          className={`${styles.Complete} condensed`}
           onClick={this.complete}
         >
           GENERATE STORY

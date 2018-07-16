@@ -1,5 +1,7 @@
 @import '../Vars.less';
 
+@import '../Mixins/ButtonHover.less';
+
 .TeamMembers {
   display: flex;
   flex-wrap: wrap;
@@ -9,54 +11,60 @@
   @media screen and (min-width:600px){
     flex-direction: row;
   }
+}
 
-  .TeamMember {
-    box-sizing: border-box;
-    flex: 1;
-    margin-bottom: @space-lg;
+.TeamMember {
+  box-sizing: border-box;
+  flex: 1;
+  margin-bottom: @space-lg;
 
-    @media screen and (min-width:600px){
-      flex: 1 0 50%;
-    
-      &:nth-child(2n-1) {
-        padding-right: @space;
-      }
+  @media screen and (min-width:600px){
+    flex: 1 0 50%;
   
-      &:nth-child(2n) {
-        padding-left: @space;
-      }
+    &:nth-child(2n-1) {
+      padding-right: @space;
     }
-  } 
 
-  .MemberMargin {
-    margin-top: @space-xsm;
-    margin-bottom: @space-xsm;
-  }
-
-  .Name {
-    .MemberMargin;
-    font-size: @h3;
-  }
-
-  .Role {
-    .MemberMargin;
-    font-size: @larger;
-    font-weight: 300;
-  }
-
-  .Company {
-    .MemberMargin;
-    font-size: @larger;
-    font-weight: 300;
-  }
-
-  .Website {
-    .MemberMargin;
-    font-size: @larger;
-
-    &, a {
-      color: @light-blue;
-      text-decoration: none;
+    &:nth-child(2n) {
+      padding-left: @space;
     }
+  }
+} 
+
+.MemberMargin {
+  margin-top: @space-xsm;
+  margin-bottom: @space-xsm;
+}
+
+.Name {
+  .MemberMargin;
+  font-size: @h3;
+}
+
+.Role {
+  .MemberMargin;
+  font-size: @larger;
+  font-weight: 300;
+}
+
+.Company {
+  .MemberMargin;
+
+  font-size: @larger;
+  font-weight: 300;
+}
+
+.Website {
+  .MemberMargin;
+
+  font-size: @larger;
+
+  &, a {
+    color: @dark-blue;
+    text-decoration: none;
+  }
+
+  a {
+    .ButtonHover;
   }
 }

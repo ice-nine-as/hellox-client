@@ -20,37 +20,37 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/Footer.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/Footer.less';
+const styles = _styles || {};
 
 export class Footer extends React.PureComponent<TFooterProps> {
   render() {
     return (
-      <div className={`${_styles.Footer} Footer Page-${this.props.page}`}>
-        <div className={`${_styles.VerticalHalf} ${_styles.First}`}>
-          <div className={`${_styles.HorizontalHalf} ${_styles.Contact} light`}>
+      <div className={`${styles.Footer} Footer Page-${this.props.page}`}>
+        <div className={`${styles.VerticalHalf} ${styles.First}`}>
+          <div className={`${styles.HorizontalHalf} ${styles.Contact} light`}>
             <div>
-              <h3 className={`${_styles.Header}`}>
-                Contact us
+              <h3 className={`${styles.Header}`}>
+                <strong>Contact us</strong>
               </h3>
 
-              <p className={`${_styles.ContactPara} ${_styles.Email}`}>
+              <p className={`${styles.ContactPara} ${styles.Email}`}>
                 <a href="mailto:helloX@ice-9.no">
                   helloX@ice-9.no
                 </a>
               </p>
             </div>
 
-            <div className={_styles.IconsContainer}>
+            <div className={styles.IconsContainer}>
               <FacebookIcon />
               <TwitterIcon />
               <InstagramIcon />
             </div>
           </div>
 
-          <div className={`${_styles.HorizontalHalf} ${_styles.SiteMap}`}>
-            <h3 className={`${_styles.Header}`}>
-              Menu
+          <div className={`${styles.HorizontalHalf} ${styles.SiteMap}`}>
+            <h3 className={`${styles.Header}`}>
+              <strong>Menu</strong>
             </h3>
 
             <br />
@@ -59,7 +59,7 @@ export class Footer extends React.PureComponent<TFooterProps> {
           </div>
         </div>
 
-        <div className={`${_styles.VerticalHalf} ${_styles.Second}`}>
+        <div className={`${styles.VerticalHalf} ${styles.Second}`}>
           {/* Mailchimp */}
           <div id="mc_embed_signup">
             <form

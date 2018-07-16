@@ -1,4 +1,9 @@
-import {TNewsItemPreviewProps} from '../TypeAliases/TNewsItemPreviewProps';
+import {
+	getPreparedHtml,
+} from '../Functions/getPreparedHtml';
+import {
+	TNewsItemPreviewProps,
+} from '../TypeAliases/TNewsItemPreviewProps';
 
 import * as React from 'react';
 
@@ -7,10 +12,6 @@ import _styles from '../Styles/Components/NewsItemPreview.less';
 const styles = _styles || {};
 
 export class NewsItemPreview extends React.PureComponent<TNewsItemPreviewProps> {
-	getPreparedHtml(str: string): { __html: string, } {
-		return { __html: str, };
-	}
-
 	render() {
 		const {
 			item: {
@@ -18,7 +19,7 @@ export class NewsItemPreview extends React.PureComponent<TNewsItemPreviewProps> 
 			},
 		} = this.props;
 
-		const html = this.getPreparedHtml(description);
+		const html = getPreparedHtml(description);
 
 		return (
 			<div

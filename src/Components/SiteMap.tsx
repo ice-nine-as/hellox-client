@@ -23,15 +23,15 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/SiteMap.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/SiteMap.less';
+const styles = _styles || {};
 
 export class SiteMap extends React.PureComponent {
   render() {
     return (
-      <div className={_styles.SiteMap}>
+      <div className={styles.SiteMap}>
         <NavLink
-          className={_styles.Link}
+          className={styles.Link}
           to={createLinkAction(AboutLinkAction)}
         >
           ABOUT
@@ -40,7 +40,7 @@ export class SiteMap extends React.PureComponent {
         <br />
 
         <NavLink
-          className={_styles.Link}
+          className={styles.Link}
           to={createLinkAction(PodcastsLinkAction)}
         >
           PODCASTS
@@ -49,7 +49,7 @@ export class SiteMap extends React.PureComponent {
         <br />
 
         <NavLink
-          className={_styles.Link}
+          className={styles.Link}
           to={createLinkAction(WriteLinkAction)}
         >
           WRITE
@@ -58,7 +58,7 @@ export class SiteMap extends React.PureComponent {
         <br />
 
         <a
-          className={_styles.Link}
+          className={styles.Link}
           href={ExternalPageUrls.Forum}
         >
           READ
@@ -67,7 +67,7 @@ export class SiteMap extends React.PureComponent {
         <br />
 
         <NavLink
-          className={_styles.Link}
+          className={styles.Link}
           to={createLinkAction(ArchivesLinkAction)}
         >
           ARCHIVES

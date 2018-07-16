@@ -5,8 +5,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/ProgressWheel.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/ProgressWheel.less';
+const styles = _styles || {};
 
 export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
   render() {
@@ -30,15 +30,15 @@ export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
     }
 
     return (
-      <div className={_styles.ProgressWheel}>
-        <div className={_styles.Gray} />
+      <div className={styles.ProgressWheel}>
+        <div className={styles.Gray} />
         <div
-          className={_styles.Gold}
+          className={styles.Gold}
           style={{ ...goldStyles, }}
         >
         </div>
 
-        <span className={_styles.Text}>
+        <span className={styles.Text}>
           {this.props.current}/{this.props.max}
         </span>
       </div>
