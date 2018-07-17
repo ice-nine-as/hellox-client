@@ -33,8 +33,9 @@ export function getMetaDescription(location: LocationState): string {
     /* Allow search engines to construct their own snippets for fetched content. */
     description = '';
   } else if (type === PageIdentifiers.Podcasts) {
-    description = 'Listen to new and old podcasts about X, a woman born in ' +
-                  '2068, and our rapidly-changing ecological world.';
+    description = 'Listen to new and old podcasts about X, a young woman ' +
+                  'living in the year 2068, and our rapidly-changing ' +
+                  'ecological world.';
   } else if (type === PageIdentifiers.ServerError) {
     description = 'Whoops! Our servers encountered an error.';
   } else if (type === PageIdentifiers.Write) {

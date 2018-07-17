@@ -64,13 +64,13 @@ import _styles from '../Styles/Components/LatestNews.less';
 const styles = _styles || {};
 
 export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { error: string, loadMoreVisible: boolean, }> {
+  state = {
+    error: '',
+    loadMoreVisible: true,
+  };
+
   constructor(props: any, context?: any) {
     super(props, context);
-
-    this.state = {
-      error:           '',
-      loadMoreVisible: true,
-    };
 
     this.doLoad = this.doLoad.bind(this);
   }
@@ -105,68 +105,86 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
 
     /* Only autoload if the feed has never been fetched, or there is not a
      * full triple-stack of items already. */
-    if (!feed || !feed.items || (feed.items && feed.items.length < 3)) {
-      const rejector = (reason: Error) => {
-        console.error(reason);
-        this.setState({
-          error: 'An error was encountered in loading the news feed. Sorry!',
-        });
-      };
+    const rejector = (reason: Error) => {
+      console.error(reason);
+      this.setState({
+        error: 'An error was encountered in loading the news feed. Sorry!',
+      });
+    };
 
-      /* For some reason, possibly that we're only mutating a portion of a feed,
-      * the getNewsFeed method occasionally refuses to render new articles when
-      * a single article has been fetched beforehand. This is avoided through
-      * forceUpdate below. */
-      if (!feed) {
-        this.props.getNewsFeed(key)
-          .then(
-            /* Resolve */
-            () => this.forceUpdate(),
-
-            /* Reject */
-            (reason) => rejector(reason)
-          );
-      } else if (feed.currentOffset) {
-        const origFeedLength = feed.items.length;
-
-        /* We've already loaded a set of articles, so we need to use the offset. */
-        this.props.getNewsFeed(key, feed.currentOffset, feed)
-          .then(
-            /* Resolve */
-            (action) => {
-              if (action.value &&
-                  /* If less than three items were fetched, the tail has been reached. */
-                  action.value.items.length < origFeedLength + 3)
-              {
-                /* Feed is now at tail and the Load More button should be disabled. */
-                this.setState({
-                  loadMoreVisible: false,
-                });
-              } else {
-                this.forceUpdate();
-              }
-            },
-
-            /* Reject */
-            (reason) => {
-              rejector(reason);
-            }
-          )
-      } else {
-        this.props.getNewsFeed(key).then(
+    /* For some reason, possibly that we're only mutating a portion of a feed,
+    * the getNewsFeed method occasionally refuses to render new articles when
+    * a single article has been fetched beforehand. This is avoided through
+    * forceUpdate below. */
+    if (!feed) {
+      this.props.getNewsFeed(key)
+        .then(
           /* Resolve */
           () => this.forceUpdate(),
-        
+
           /* Reject */
           (reason) => rejector(reason)
         );
-      }
+    } else if (feed.currentOffset) {
+      const origFeedLength = feed.items.length;
+
+      /* We've already loaded a set of articles, so we need to use the offset. */
+      this.props.getNewsFeed(key, feed.currentOffset, feed)
+        .then(
+          /* Resolve */
+          (action) => {
+            if (action.value &&
+                /* If less than three items were fetched, the tail has been reached. */
+                action.value.items.length < origFeedLength + 3)
+            {
+              /* Feed is now at tail and the Load More button should be disabled. */
+              this.setState({
+                loadMoreVisible: false,
+              });
+            } else {
+              this.forceUpdate();
+            }
+          },
+
+          /* Reject */
+          (reason) => {
+            rejector(reason);
+          }
+        )
+    } else {
+      this.props.getNewsFeed(key).then(
+        /* Resolve */
+        () => this.forceUpdate(),
+      
+        /* Reject */
+        (reason) => rejector(reason)
+      );
     }
   }
 
   componentDidMount() {
     if (!isNode()) {
-      this.doLoad();
+      const {
+        detailLevel,
+        feeds,
+        language,
+      } = this.props;
+  
+      /* Loads the relevant feed based on language and detail level. */
+      const {
+        feed,
+      } = pickFeed({
+        type: 'newsItem',
+        detailLevel,
+        feeds,
+        language,
+      });
+
+      /* Only autoload if the feed has never been fetched, or there is not a
+       * full triple-stack of items already. */
+      if (!feed || (feed.items && feed.items.length < 3)) {
+        this.doLoad();
+      }
     }
   }
 

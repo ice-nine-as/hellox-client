@@ -32,7 +32,15 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
         const frag = document.createDocumentFragment();
         frag.appendChild(document.createElement('div'));
         frag.firstElementChild!.innerHTML = item.description;
-        const img = frag.querySelector('img');
+        const img = (() => {
+          /* Prioritize non-thumbnail images, but fall back to thumbnail images.
+           * Do not allow site icons (like Facebook icons). */
+          const _userProvidedImg: HTMLImageElement | null =
+            frag.querySelector('img:not(.thumbnail):not(.site-icon)');
+
+          return _userProvidedImg || frag.querySelector('img:not(.site-icon)') as HTMLImageElement;
+        })();
+  
         if (img && img.src) {
           /* Place it in the correct element. */
           const _img = document.getElementById(randId) as HTMLImageElement;
@@ -51,8 +59,6 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
     const title = (() => {
       const _title: string = (item as any)['rss:title']['#'];
       if (_title.length > maxTitleLen) {
-        /* TODO: add reduce function that attempts to produce a more natural summary,
-         * cutting off on the nearest full word rather than a single character. */
         return _title
           .split(/\s/)
           .filter((aa) => aa)
