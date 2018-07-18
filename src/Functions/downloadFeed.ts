@@ -106,6 +106,9 @@ export const downloadFeed = async ({
         cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'omit',
         method:      'GET', // *GET, PUT, DELETE, etc.
+        headers: {
+          'content-type': 'application/xml',
+        },
       });
     } catch (e) {
       console.error(`Fetch failed for ${fullUrl} request. Signal was ` +

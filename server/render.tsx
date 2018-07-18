@@ -118,6 +118,28 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         
       const promises: Array<Promise<any>> = [];
       const promMetas: Array<'configureStore' | 'serverPush' | 'webpSniffer' | 'fontLoader'> = [];
+      
+      /* Double cast is because TS complains with the normal cast. The res
+        * variable is definitely a SPDY response if isHttp2 returns true. */
+      const _res = res as any as ServerResponse;
+      if (isHttp2() && typeof _res.push === 'function') {
+        promises.push(new Promise<any>((resolve) => {
+          try {
+            serverPush({
+              /*req,*/
+              res: _res,
+              scripts,
+              stylesheets,
+            }).then(resolve, resolve);
+          } catch (e) {
+            console.error('There was an error pushing files:');
+            console.error(e);
+            resolve();
+          }
+        }));
+        
+        promMetas.push('serverPush');
+      }
 
       /* Configure the server-side, initial-state Redux store. */
       promises.push(new Promise<any>((resolve, reject) => {
@@ -137,30 +159,9 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
 
       promMetas.push('configureStore');
 
-      /* Double cast is because TS complains with the normal cast. The res
-      * variable is definitely a SPDY response if isHttp2 returns true. */
-     const _res = res as any as ServerResponse;
-     if (isHttp2() && typeof _res.push === 'function') {
-       promises.push(new Promise<any>((resolve) => {
-         try {
-           serverPush({
-              /*req,*/
-              res: _res,
-              scripts,
-              stylesheets,
-            }).then(resolve, resolve);
-          } catch (e) {
-            console.error('There was an error pushing files:');
-            console.error(e);
-            resolve();
-          }
-        }));
-        
-        promMetas.push('serverPush');
-      }
-      
+
       const ambientStyleElement =
-      `<style id="ambientStyle">${AmbientStyle}</style>`;
+        `<style id="ambientStyle">${AmbientStyle}</style>`;
       
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');

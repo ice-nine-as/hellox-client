@@ -12,10 +12,9 @@ export function getMetaDescription(location: LocationState): string {
   const type = location.type as PageIdentifiers;
   if (type === PageIdentifiers.Home) {
     description =
-      'hello X is a story laboratory to collectively imagine X, a young ' +
-      'woman 50 years into the future. The first season of hello X asks how ' +
-      'human impacts on the Arctic ecosystem might affect food webs and ' +
-      'food culture for X in 2068.';
+      'hello X is a story lab to imagine X, a young woman in 2068. This ' +
+      'season asks how human impacts on the Arctic ecosystem may affect ' +
+      'food and culture for X.';
   } else if (type === PageIdentifiers.About) {
     description =
       'Learn about the hello X multimedia project and each of the many people ' +
@@ -33,9 +32,9 @@ export function getMetaDescription(location: LocationState): string {
     /* Allow search engines to construct their own snippets for fetched content. */
     description = '';
   } else if (type === PageIdentifiers.Podcasts) {
-    description = 'Listen to new and old podcasts about X, a young woman ' +
-                  'living in the year 2068, and our rapidly-changing ' +
-                  'ecological world.';
+    description =
+      'Listen to new and old podcasts about X, a young woman living in the ' +
+      'year 2068, and our rapidly-changing ecological world.';
   } else if (type === PageIdentifiers.ServerError) {
     description = 'Whoops! Our servers encountered an error.';
   } else if (type === PageIdentifiers.Write) {
