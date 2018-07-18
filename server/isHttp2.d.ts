@@ -1,0 +1,1 @@
+export function isHttp2(): boolean;
