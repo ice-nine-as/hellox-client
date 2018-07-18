@@ -13,11 +13,17 @@ import {
   readFile,
 } from 'fs';
 import {
+  getMetaDescription,
+} from './getMetaDescription';
+import {
   getPageTitle,
 } from './getPageTitle';
 import {
   getPreloadAndPreconnectLinks,
 } from './getPreloadAndPreconnectLinks';
+import {
+  isHttp2,
+} from './isHttp2';
 import {
   join,
 } from 'path';
@@ -54,11 +60,9 @@ import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks from 'webpack-flush-chunks';
 
-const isHttp2: () => boolean = require('./isHttp2');
 
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
-import { getMetaDescription } from './getMetaDescription';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -142,14 +146,15 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         chunkNames,
         outputPath: join(projectDirPath, 'dist', 'client'),
       });
-
-      if (isHttp2()) {
+      
+      /* Double cast is because TS complains with the normal cast. The res
+       * variable is definitely a SPDY response if isHttp2 returns true. */
+      const _res = res as any as ServerResponse;
+      if (isHttp2() && typeof _res.push === 'function') {
         try {
           await serverPush({
             /*req,*/
-            /* Double cast is because TS complains with the normal cast. The res
-             * variable is definitely a SPDY response if isHttp2 returns true. */
-            res: res as any as ServerResponse,
+            res: _res,
             scripts,
             stylesheets,
           });
