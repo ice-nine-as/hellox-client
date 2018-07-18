@@ -192,15 +192,15 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       let rssFetchFailed = false;
       promMetas.forEach((promMeta, index) => {
         /* Unroll promises and perform necessary logic on each. */
-        if (promMeta === 'configureStore') {
+        if (promMeta[index] === 'configureStore') {
           store = (results[index] as any).store;
           rssFetchFailed = (results[index] as any).rssFetchFailed;
-        } else if (promMeta === 'webpSniffer') {
+        } else if (promMeta[index] === 'webpSniffer') {
           webpSnifferElement =
           `<script id="webpSniffer">
             ${results[index]}  
           </script>`;
-        } else if (promMeta === 'fontLoader') {
+        } else if (promMeta[index] === 'fontLoader') {
           fontLoaderElement =
           `<script async defer id="fontLoader">
           ${results[index]}
