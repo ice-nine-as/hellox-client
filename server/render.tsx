@@ -87,9 +87,8 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
     next: NextFunction) =>
   {
     try {
-      /* Do not render the 404 page or the redux store for non-page lookups,
-      * or for codefiles of which we already know the location. Doing so wastes
-      * huge amounts of time and process. */
+      /* Do not render the 404 page or the redux store for non-page lookups.
+       * Doing so wastes huge amounts of time and process. */
       const re = /\/[^./]+\/?$/;
       if (req.url !== '/' && !re.test(req.url)) {
         console.error(`Object at ${req.url} not found.`);
