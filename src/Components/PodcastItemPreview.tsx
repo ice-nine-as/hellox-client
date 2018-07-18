@@ -35,7 +35,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 			item: {
 				description,
 				guid,
-				'itunes:image': itunesImage,
+				itunesImage,
 				pubDate,
 				title,
 			},
@@ -51,7 +51,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 					>
 						<div className="HeroImageContainer">
 							<img
-								src={(itunesImage || {})['#'] || ImageUrls.DefaultPodcastImage}
+								src={itunesImage || ImageUrls.DefaultPodcastImage}
 								className="HeroImage"
 							/>
 						</div>

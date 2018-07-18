@@ -224,10 +224,10 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
         const finalFeed: IRssFeed = composeFeeds(feed, feeds.Podcast).feed!;
         return finalFeed.items.map((item) => {
           if (this.props.detailLevel === FeedDetailLevels.Full) {
-            if ('itunes:episode' in item) {
+            if ('itunesEpisode' in item) {
               return (
                 <PodcastItemFull
-                item={item}
+                  item={item}
                   key={reactKey += 1}
                 />
               );
@@ -240,7 +240,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
               );
             }
           } else {
-            if ('itunes:episode' in item) {
+            if ('itunesEpisode' in item) {
               return (
                 <PodcastItemPreview
                   item={item}

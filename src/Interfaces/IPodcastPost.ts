@@ -4,24 +4,20 @@ import {
 
 export interface IPodcastPost extends IRssPost {
   enclosures: Array<{
-    url: string,
-  }>,
+    url: string;
+  }>;
 
-  'itunes:episode': {
-    '#': string,
-  },
-
-  'itunes:image': {
-    '#': string,
-  },
+  itunesEpisode?: string;
+  itunesImage?:   string;
+  itunesSummary?: string;
 
   meta: {
     image: {
-      url: string,
-    },
-  },
+      url: string;
+    };
+  };
 
-  title: string,
+  title: string;
 }
 
 export default IPodcastPost;
