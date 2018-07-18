@@ -156,7 +156,7 @@ export const downloadFeed = async ({
         }
 
         if ('itunes:episode' in item && '#' in item['itunes:episode']) {
-          item.itunesEpisode = item['itunes:summary']['#'];
+          item.itunesEpisode = item['itunes:episode']['#'];
         }
 
         feed.items.push(item);
