@@ -150,12 +150,16 @@ export const downloadFeed = async ({
 
       while (item = stream.read()) {
         feed.title = item.meta.title;
-        if ('itunes:image' in item.meta && '@' in item.meta['itunes:image']) {
-          (feed as IPodcastFeed).itunesImage = item.meta['itunes:image']['@'].href;
+        if ('itunes:image' in item && '#' in item['itunes:image']) {
+          item.itunesImage = item['itunes:image']['#'];
         }
         
-        if ('itunes:summary' in item.meta && '@' in item.meta['itunes:summary']) {
-          (feed as IPodcastFeed).itunesSummary = item.meta['itunes:summary']['@'].href;
+        if ('itunes:summary' in item && '#' in item['itunes:summary']) {
+          item.itunesSummary = item['itunes:summary']['#'];
+        }
+
+        if ('itunes:episode' in item && '#' in item['itunes:episode']) {
+          item.itunesEpisode = item['itunes:summary']['#'];
         }
 
         feed.items.push(item);
