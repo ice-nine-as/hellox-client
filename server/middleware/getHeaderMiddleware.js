@@ -13,7 +13,7 @@ exports = module.exports = {
                  /\.woff2?$/.test(req.path))
       {
         /* Cache all scripts, styles, and fonts for one year. */
-        res.setHeader('Cache-Control', 'max-age=31536000');
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       } 
     
       /* Deny HTTP entirely. */
