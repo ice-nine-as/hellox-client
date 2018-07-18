@@ -190,21 +190,21 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
 
       let store: Store<TStoreProps> | null = null;
       let rssFetchFailed = false;
-      promMetas.forEach((promMeta, index) => {
+      results.forEach((result, index) => {
         /* Unroll promises and perform necessary logic on each. */
-        if (promMeta[index] === 'configureStore') {
-          store = (results[index] as any).store;
-          rssFetchFailed = (results[index] as any).rssFetchFailed;
-        } else if (promMeta[index] === 'webpSniffer') {
+        if (promMetas[index] === 'configureStore') {
+          store = (result as any).store;
+          rssFetchFailed = (result as any).rssFetchFailed;
+        } else if (promMetas[index] === 'webpSniffer') {
           webpSnifferElement =
-          `<script id="webpSniffer">
-            ${results[index]}  
-          </script>`;
-        } else if (promMeta[index] === 'fontLoader') {
+            `<script id="webpSniffer">
+              ${result}
+            </script>`;
+        } else if (promMetas[index] === 'fontLoader') {
           fontLoaderElement =
-          `<script async defer id="fontLoader">
-          ${results[index]}
-          </script>`;
+            `<script async defer id="fontLoader">
+              ${result}
+            </script>`;
         }
       });
 
