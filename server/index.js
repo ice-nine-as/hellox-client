@@ -1,7 +1,7 @@
 const dev = process.env.NODE_ENV === 'development';
 console.log(`\nIs dev?   ${dev}`);
 
-const h2 = require('./isHttp2')();
+const h2 = require('./isHttp2').isHttp2();
 console.log(`Is HTTP2? ${h2}\n`);
 
 console.log('Loading dependencies.');

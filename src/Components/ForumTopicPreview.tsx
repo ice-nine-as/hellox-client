@@ -38,7 +38,8 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
           const _userProvidedImg: HTMLImageElement | null =
             frag.querySelector('img:not(.thumbnail):not(.site-icon)');
 
-          return _userProvidedImg || frag.querySelector('img:not(.site-icon)') as HTMLImageElement;
+          return _userProvidedImg ||
+                 frag.querySelector('img:not(.site-icon)') as HTMLImageElement;
         })();
   
         if (img && img.src) {

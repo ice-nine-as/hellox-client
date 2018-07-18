@@ -13,11 +13,17 @@ import {
   readFile,
 } from 'fs';
 import {
+  getMetaDescription,
+} from './getMetaDescription';
+import {
   getPageTitle,
 } from './getPageTitle';
 import {
   getPreloadAndPreconnectLinks,
 } from './getPreloadAndPreconnectLinks';
+import {
+  isHttp2,
+} from './isHttp2';
 import {
   join,
 } from 'path';
@@ -54,11 +60,8 @@ import * as ReactDOMServer from 'react-dom/server';
 
 import flushChunks from 'webpack-flush-chunks';
 
-const isHttp2: () => boolean = require('./isHttp2');
-
 // @ts-ignore
 import AmbientStyle from '../src/Styles/AmbientStyle.css';
-import { getMetaDescription } from './getMetaDescription';
 
 export const strings = {
   CONFIGURE_SERVER_STORE_FAILED:
@@ -81,13 +84,13 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
   const helloXResponse = async (
     req: Request,
     res: Response,
-    next: NextFunction) => {
+    next: NextFunction) =>
+  {
     try {
-      /* Do not render the 404 page for failed code, image, and font lookups,
-      * or for codefiles of which we already know the location. Doing so wastes
-      * huge amounts of time and process. */
-      const re = /((\.(js|css))|(\.map)|\.(jpg|jpeg|png|svg|webp|ttf|woff|woff2?)|__webpack_hmr)$/;
-      if (re.test(req.url)) {
+      /* Do not render the 404 page or the redux store for non-page lookups.
+       * Doing so wastes huge amounts of time and process. */
+      const re = /\/[^./]+\/?$/;
+      if (req.url !== '/' && !re.test(req.url)) {
         console.error(`Object at ${req.url} not found.`);
         res.status(404);
         res.end();
@@ -95,42 +98,6 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         return;
       }
 
-      let store: Store<TStoreProps> | null;
-      let rssFetchFailed = false;
-      try {
-        const storeObj = await configureServerStore(req, res);
-        store = storeObj!.store;
-        rssFetchFailed = storeObj!.rssFetchFailed;
-      } catch (e) {
-        console.error(
-          strings.CONFIGURE_SERVER_STORE_FAILED,
-          '\n\nThe error was:\n',
-          e);
-
-        res.status(500);
-        res.end();
-        return;
-      }
-
-      if (!store) {
-        /* No store means redirect was already served. */
-        return;
-      }
-
-      const state       = store.getState();
-      const stateStr    = JSON.stringify(state);
-      const openTag     = '<script id="reduxState">';
-      const varDef      =   `window.REDUX_STATE = ${stateStr};`;
-      const closeTag    = '</script>';
-      const reduxScript = openTag + varDef + closeTag;
-
-      const providerContainer = (
-        <ProviderContainer store={store}>
-          <ConnectedApp />
-        </ProviderContainer>
-      );
-
-      const appStr = ReactDOMServer.renderToString(providerContainer);
       const chunkNames = flushChunkNames();
       const {
         css,
@@ -142,55 +109,125 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         chunkNames,
         outputPath: join(projectDirPath, 'dist', 'client'),
       });
-
-      if (isHttp2()) {
-        try {
-          await serverPush({
-            /*req,*/
-            /* Double cast is because TS complains with the normal cast. The res
-             * variable is definitely a SPDY response if isHttp2 returns true. */
-            res: res as any as ServerResponse,
-            scripts,
-            stylesheets,
-          });
-        } catch (e) {
-          console.error('There was an error pushing files:');
-          console.error(e);
-        }
-      }
-
-      const ambientStyleElement =
-        `<style id="ambientStyle">${AmbientStyle}</style>`;
-
+      
       console.log(
         ` PATH                        : ${req.path}\n`,
         `DYNAMIC CHUNK NAMES RENDERED: ${chunkNames.join(', ')}\n`,
         `SCRIPTS SERVED              : ${scripts.join(', ')}\n`,
         `STYLESHEETS SERVED          : ${stylesheets.join(', ')}`);
+        
+      const promises: Array<Promise<any>> = [];
+      const promMetas: Array<'configureStore' | 'serverPush' | 'webpSniffer' | 'fontLoader'> = [];
 
+      /* Configure the server-side, initial-state Redux store. */
+      promises.push(new Promise<any>((resolve, reject) => {
+        try {
+          configureServerStore(req, res).then((value) => resolve(value));
+        } catch (e) {
+          console.error(
+            strings.CONFIGURE_SERVER_STORE_FAILED,
+            '\n\nThe error was:\n',
+            e);
+  
+          res.status(500);
+          res.end();
+          reject();
+        }
+      }));
+
+      promMetas.push('configureStore');
+
+      /* Double cast is because TS complains with the normal cast. The res
+      * variable is definitely a SPDY response if isHttp2 returns true. */
+     const _res = res as any as ServerResponse;
+     if (isHttp2() && typeof _res.push === 'function') {
+       promises.push(new Promise<any>((resolve) => {
+         try {
+           serverPush({
+              /*req,*/
+              res: _res,
+              scripts,
+              stylesheets,
+            }).then(resolve, resolve);
+          } catch (e) {
+            console.error('There was an error pushing files:');
+            console.error(e);
+            resolve();
+          }
+        }));
+        
+        promMetas.push('serverPush');
+      }
+      
+      const ambientStyleElement =
+      `<style id="ambientStyle">${AmbientStyle}</style>`;
+      
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
-
+      
       if (!webpSnifferElement) {
-        try {
-          const webpSniffer = await readFileProm(webpSnifferPath);
+        promises.push(readFileProm(webpSnifferPath));
+        promMetas.push('webpSniffer');
+      }
+      
+      if (!fontLoaderElement) {
+        promises.push(readFileProm(fontLoaderPath));
+        promMetas.push('fontLoader');
+      }
+
+      let abort = false;
+      const allPromise = Promise.all<any>(promises);
+      allPromise.then(() => {}, (err) => {
+        console.error(err);
+        console.error('One or more critical promises failed in the render function.');
+        abort = false;
+      });
+
+      const results = await allPromise;
+      if (abort) {
+        return;
+      }
+
+      let store: Store<TStoreProps> | null = null;
+      let rssFetchFailed = false;
+      results.forEach((result, index) => {
+        /* Unroll promises and perform necessary logic on each. */
+        if (promMetas[index] === 'configureStore') {
+          store = (result as any).store;
+          rssFetchFailed = (result as any).rssFetchFailed;
+        } else if (promMetas[index] === 'webpSniffer') {
           webpSnifferElement =
             `<script id="webpSniffer">
-              ${webpSniffer}  
-            </script>`
-        } catch (e) { }
-      }
-
-      if (!fontLoaderElement) {
-        try {
-          const fontLoader = await readFileProm(fontLoaderPath);
+              ${result}
+            </script>`;
+        } else if (promMetas[index] === 'fontLoader') {
           fontLoaderElement =
             `<script async defer id="fontLoader">
-              ${fontLoader}
+              ${result}
             </script>`;
-        } catch (e) { }
+        }
+      });
+
+      /* No store means redirect was already served. */
+      if (!store) {
+        return;
       }
 
+      const state       = (store as Store<TStoreProps>).getState();
+      const stateStr    = JSON.stringify(state);
+      const openTag     = '<script id="reduxState">';
+      const varDef      =   `window.REDUX_STATE = ${stateStr};`;
+      const closeTag    = '</script>';
+      const reduxScript = openTag + varDef + closeTag;
+      
+      const providerContainer = (
+        <ProviderContainer store={store}>
+          <ConnectedApp />
+        </ProviderContainer>
+      );
+      
+      const appStr = ReactDOMServer.renderToString(providerContainer);
+      
       const responseStr =
         `<!DOCTYPE html>
         <html lang="${state.language || 'en'}">
