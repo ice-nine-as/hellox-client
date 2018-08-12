@@ -47,11 +47,7 @@ As designed by the client, a Google Sheet is used to contain all the submitted u
 
 ## Updating the server
 
-Using the helloX key (issued by AWS, named `helloX.pem`), `ssh` into the webpage server. `cd` to the project directory (`/etc/hellox-client/` at present). Pull any changes with `git pull`.
-
-If the Docker container is already running (you can check this with `docker ps`), use `gulp dockerRebuild`. If it is not running, use `gulp dockerUp`.
-
-It will take several minutes for the container to spin up again, and for the build infrastructure to complete AOT compilation.
+See `documentation/updating-the-webserver.md`.
 
 ## Continuous Integration
 The Hello X client uses Travis CI for continuous integration of testing. (Note, however, that it does *not* use continuous delivery. This would be easy to add but has little value at present.) Changes should be committed on a non-master branch,
