@@ -19,3 +19,5 @@ The [react-universal-component](https://github.com/faceyspacey/react-universal-c
 [node-ses](https://github.com/aheckmann/node-ses) is used to more easily automate sending e-mails through Amazon Simple E-mail Service.
 
 [googleapis](https://github.com/googleapis/googleapis) is used to more easily automate updating content on Google Drive.
+
+For more details on which external packages are used, check `package.json`.
