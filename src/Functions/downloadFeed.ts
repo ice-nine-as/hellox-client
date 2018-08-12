@@ -114,9 +114,7 @@ export const downloadFeed = async ({
 
     if (!res) {
       return;
-    }
-
-    if (res.status !== 200) {
+    } else if (res.status !== 200) {
       reject(new Error(`Problem fetching feed. Status is ${res.status}.`));
     }
 
@@ -137,7 +135,7 @@ export const downloadFeed = async ({
       }
     });
 
-    feedparser.on('readable', function () {
+    feedparser.on('readable', function read() {
       // @ts-ignore
       const __this = this;
       const stream = __this as FeedParser; // `this` is `feedparser`, which is a stream
