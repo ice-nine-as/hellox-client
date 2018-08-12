@@ -10,7 +10,7 @@ See `documentation/new-developers.md`.
 
 ## Project structure
 
-The project is served through `Express`, it is written in `Typescript` and `React` (with `JSX`), and it uses `Webpack` and `Babel` to bundle and transpile code such that it can run on all recent (>2013) devices with Javascript capabilities. The `universal-react-component` package, and several other packages from the `universal-react` ecosystem, are used to take simultaneous advantage of code-splitting (reducing the time, process, and space expenditures associated with each request) and server-side rendering (enabling the app to work more natively on phones as a progressive web app, and ensuring that semantic content is loaded and read by web crawlers for SEO purposes).
+See `documentation/project-structure.md`.
 
 ## Adding new webpages to the project
 
@@ -31,7 +31,7 @@ then a pull request should be made to pull them into the `master` branch. You ma
 
 ## Branch structure
 
-There are only three branches currently in use in the X50 repository: `master`, `dev`, and `documentation`. The `dev` branch is used for all pull requests related to code development, `documentation` is used for all pull requests related to documentation. Both branches are pulled into `master`, built and tested on the Travis continuous integration server, and published to AWS, assuming nothing fails, whereupon the changes are reflected in the live version of the app. If multiple developers are working on the project simultaneously, new branches should be created.
+There are only three branches currently in use in the helloX repository: `master`, `dev`, and `documentation`. The `dev` branch is used for all pull requests related to code development, `documentation` is used for all pull requests related to documentation. Both branches are pulled into `master`, built and tested on the Travis continuous integration server, and published to AWS, assuming nothing fails, whereupon the changes are reflected in the live version of the app. If multiple developers are working on the project simultaneously, new branches should be created.
 
 ## Pull requests
 
