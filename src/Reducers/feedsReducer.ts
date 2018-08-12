@@ -27,7 +27,7 @@ export const feedsReducer: TReducer<TFeedsMap, IRssAction> = combineReducers({
   [FeedKeys.NewsTitles]:           feedReducer.bind(getKeyObj(FeedKeys.NewsTitles)),
 
   [FeedKeys.Podcast]:              feedReducer.bind(getKeyObj(FeedKeys.Podcast)),
-  
+
   [FeedKeys.Quotes]:               feedReducer.bind(getKeyObj(FeedKeys.Quotes)),
 
   [FeedKeys.StoryTemplateEnPartA]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateEnPartA)),
