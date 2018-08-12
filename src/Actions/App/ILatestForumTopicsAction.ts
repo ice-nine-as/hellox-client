@@ -10,9 +10,9 @@ import {
   ILatestForumTopicsFeed,
 } from '../../Interfaces/ILatestForumTopicsFeed';
 
-export interface ILatestForumPostsAction extends IAppAction {
+export interface ILatestForumTopicsAction extends IAppAction {
   readonly type:  AppActionTypes.LatestForumPosts;
   readonly value: ILatestForumTopicsFeed | null;
 }
 
-export default ILatestForumPostsAction;
+export default ILatestForumTopicsAction;
