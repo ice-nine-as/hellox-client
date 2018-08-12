@@ -1,22 +1,7 @@
 @import '../Vars.less';
 
-@import './NewsItemPreview.less';
+@import '../Mixins/ArticlePreview.less';
 
 .PodcastItemPreview {
-	display: flex;
-	flex: 1;
-	flex-shrink: 0;
-	position: relative;
-	margin: 0 @space;
-	margin-bottom: @space-lg;
-	min-width: 200px;
-	overflow: hidden;
-	text-align: left;
-	box-sizing: border-box;
-	
-	@media screen and (min-width: 600px) {
-		max-width: 247px;
-		margin-left: @space-sm;
-		margin-right: @space-sm;
-	}
+  .ArticlePreview;
 }

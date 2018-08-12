@@ -16,6 +16,12 @@ import {
 import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
+/*import {
+  PrivacyPolicyLinkAction,
+} from '../Actions/Link/PrivacyPolicyLinkAction';
+import {
+  TermsOfServiceLinkAction,
+} from '../Actions/Link/TermsOfServiceLinkAction';*/
 import {
   WriteLinkAction,
 } from '../Actions/Link/WriteLinkAction';
@@ -72,6 +78,24 @@ export class SiteMap extends React.PureComponent {
         >
           ARCHIVES
         </NavLink>
+
+        <br />
+
+        {/*<NavLink
+          className={styles.Link}
+          to={createLinkAction(PrivacyPolicyLinkAction)}
+        >
+          PRIVACY POLICY
+        </NavLink>
+
+        <br />
+
+        <NavLink
+          className={styles.Link}
+          to={createLinkAction(TermsOfServiceLinkAction)}
+        >
+          TERMS OF SERVICE
+        </NavLink>*/}
       </div>
     );
   }

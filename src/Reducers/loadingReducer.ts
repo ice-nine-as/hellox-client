@@ -25,9 +25,10 @@ export const loadingReducer: TReducer<boolean, IAppAction> =
     throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isAppAction(action) &&
-    action.type === AppActionTypes.Loading &&
-    typeof action.value === 'boolean')
+  if (action &&
+      isAppAction(action) &&
+      action.type === AppActionTypes.Loading &&
+      typeof action.value === 'boolean')
   {
     return action.value;
   }

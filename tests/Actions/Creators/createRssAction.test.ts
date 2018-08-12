@@ -28,6 +28,11 @@ import {
 jest.mock('../../../src/TypeGuards/isFeedKey');
 
 import {
+  isRssAction,
+} from '../../../src/TypeGuards/isRssAction';
+jest.mock('../../../src/TypeGuards/isRssAction');
+
+import {
   isRssFeed,
 } from '../../../src/TypeGuards/isRssFeed';
 jest.mock('../../../src/TypeGuards/isRssFeed');
@@ -36,6 +41,11 @@ type Mock = jest.Mock;
 
 describe('createRssAction unit tests.', () => {
   beforeEach(() => {
+    // @ts-ignore
+    isRssAction.mockClear();
+    // @ts-ignore
+    isRssAction.mockImplementation(() => true);
+
     // @ts-ignore
     isFeedKey.mockClear();
     // @ts-ignore
@@ -65,10 +75,10 @@ describe('createRssAction unit tests.', () => {
     expect(func).toThrow();
   });
 
-  it('Throws if the RssAction argument does not meet the isLinkAction type guard.', () => {
+  it('Throws if the rssAction argument does not meet the isRssAction type guard.', () => {
     // @ts-ignore
-    const func = () => createRssAction();
-    expect(func).toThrow(strings.RSS_ACTION_INVALID);
+    isRssAction.mockImplementation(() => false);
+    expect(createRssAction).toThrow(strings.RSS_ACTION_INVALID);
   });
 
   it('Throws if the feedKey argument does not meet the isFeedKey type guard.', () => {
@@ -94,7 +104,7 @@ describe('createRssAction unit tests.', () => {
   });
 });
 
-describe('DoneAppAction integration tests.', () => {
+describe('createRssAction integration tests.', () => {
   it('Meets the isAction type guard.', () => {
     expect(isAction(createRssAction(RssAction, {}))).toBe(true);
   });

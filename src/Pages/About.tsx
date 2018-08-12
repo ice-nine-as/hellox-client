@@ -11,6 +11,9 @@ import {
   AllHtmlEntities,
 } from 'html-entities';
 import {
+  ImageAltDescriptions,
+} from '../Enums/ImageAltDescriptions';
+import {
   ImageUrls,
 } from '../Enums/ImageUrls';
 import {
@@ -43,7 +46,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/About.less';
-import { ImageAltDescriptions } from '../Enums/ImageAltDescriptions';
 const styles = _styles || {};
 
 export const strings = {
@@ -359,7 +361,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
             {scienceTeamMembers}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }

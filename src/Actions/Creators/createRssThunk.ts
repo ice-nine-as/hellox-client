@@ -78,13 +78,11 @@ export const createRssThunk: TRssFeedGetter = ({
   return async (dispatch: Dispatch<{}>): Promise<IRssAction> => {
     const maybeOffsetObj = offsetIsValid && !idValid ? { offset, } : {};
     const maybeSignalObj = signal ? { signal, } : {};
-    const argObj = {
-      ...maybeOffsetObj,
-      ...maybeSignalObj,
+    const argObj = Object.assign({}, maybeOffsetObj, maybeSignalObj, {
       feedKey: feedKey as keyof TFeedsMap,
       id,
       urlArg,
-    };
+    });
 
     let feed;
     try {
@@ -124,11 +122,11 @@ export const createRssThunk: TRssFeedGetter = ({
         finalFeedObj.currentOffset = 0;
       } else {
         /* Add the number of items in the received feed to the offset. */
-        finalFeedObj.currentOffset = realOffset! + finalFeedObj.items.length;
+        finalFeedObj.currentOffset = realOffset! + (finalFeedObj.items ? finalFeedObj.items.length : 0);
       }
     }
 
-    if (finalFeedObj.items.length === 0) {
+    if (!finalFeedObj.items || !finalFeedObj.items.length) {
       return Promise.reject(strings.EMPTY_FEED_ERROR);
     }
 

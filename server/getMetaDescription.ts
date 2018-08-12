@@ -35,8 +35,16 @@ export function getMetaDescription(location: LocationState): string {
     description =
       'Listen to new and old podcasts about X, a young woman living in the ' +
       'year 2068, and our rapidly-changing ecological world.';
+  } else if (type === PageIdentifiers.PrivacyPolicy) {
+    description =
+      'The privacy policy for the Hello X website, explaining how and where ' +
+      'your data is used.';
   } else if (type === PageIdentifiers.ServerError) {
     description = 'Whoops! Our servers encountered an error.';
+  } else if (type === PageIdentifiers.TermsOfService) {
+    description =
+      'A list of the terms of service for accessing and using the Hello X ' +
+      'websites.';
   } else if (type === PageIdentifiers.Write) {
     description =
       'Take part in the hello X narrative by writing your own stories with ' +

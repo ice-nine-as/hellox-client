@@ -163,7 +163,16 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
     return (
       <article className={`${styles.Home} ${styles.Page}`}>
         <section className={`${styles.Section} ${styles.First} light`}>
-          <div className={styles.LogoContainer}>
+          <div
+            className={styles.LogoContainer}
+            style={{
+              /* Needed to stop logo from taking up entire page on first load,
+               * before critical path CSS is loaded. */
+              maxWidth: '250px',
+
+              margin: '0 auto',
+            }}
+          >
             <Logo state={LogoStates.Normal} />
           </div>
 

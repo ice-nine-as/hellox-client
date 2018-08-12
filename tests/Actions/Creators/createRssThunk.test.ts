@@ -37,12 +37,17 @@ import {
 import { AppActionTypes } from '../../../src/Enums/AppActionTypes';
 jest.mock('../../../src/TypeGuards/isRssFeed');
 
+type Mock = jest.Mock;
+
 describe('createRssThunk unit tests.', () => {
   beforeEach(() => {
     // @ts-ignore
     downloadFeed.mockClear();
     // @ts-ignore
-    downloadFeed.mockImplementation(() => true);
+    downloadFeed.mockImplementation(() => ({
+      items: [ 1, 2, 3, ],
+    }));
+
     // @ts-ignore
     isFeedKey.mockClear();
     // @ts-ignore
@@ -125,126 +130,257 @@ describe('createRssThunk unit tests.', () => {
             currentOffset: 1,
             items,
           },
+        },
+      ],
+    ]);
+  });
+
+  it('Passes a signal object to downloadFeed to enable promise cancellation.', async () => {
+    const sym = Symbol('test');
+
+    // @ts-ignore
+    const func = createRssThunk({
+      feedKey: FeedKeys.NewsFull,
+      signal: sym,
+    });
+
+    (downloadFeed as Mock).mockImplementationOnce(() => ({
+      items: [ Symbol('test'), ],
+    }));
+
+    const mockFn = jest.fn();
+
+    await func(mockFn);
+
+    expect((downloadFeed as Mock).mock.calls).toEqual([
+      [
+        {
+          feedKey: FeedKeys.NewsFull,
+          id: null,
+          signal: sym,
+          urlArg: null,
+        },
+      ]
+    ]);
+  });
+
+  it('Rejects when downloadFeed throws, logging the original error if the error is not named AbortError.', async () => {
+    (downloadFeed as Mock).mockImplementationOnce(() => { throw new Error('test'); });
+    const func = createRssThunk({
+      feedKey: FeedKeys.ForumTopics,
+    });
+
+    const error = console.error;
+    console.error = jest.fn();
+
+    expect(func(jest.fn())).rejects.toEqual(new Error(strings.FEED_RESPONSE_INVALID));
+    expect((console.error as Mock).mock.calls).toEqual([
+      [ new Error('test'), ],
+    ]);
+
+    console.error = error;
+  });
+
+  it('Rejects when downloadFeed throws, without logging the original error if the error is named AbortError.', async () => {
+    (downloadFeed as Mock).mockImplementationOnce(() => {
+      const error = new Error('test');
+      error.name = 'AbortError';
+      throw error;
+    });
+
+    const func = createRssThunk({
+      feedKey: FeedKeys.ForumTopics,
+    });
+
+    const error = console.error;
+    console.error = jest.fn();
+
+    expect(func(jest.fn())).rejects.toEqual(new Error('test'));
+    expect((console.error as Mock).mock.calls).toEqual([]);
+
+    console.error = error;
+  });
+
+  it('Adds an offset of 0 to the resultant feed when the id argument prop is set.', async () => {
+    const items = [ Symbol('test'), ];
+  
+    // @ts-ignore
+    downloadFeed.mockImplementationOnce(() => ({
+      items,
+    }));
+  
+    const func = createRssThunk({
+      feedKey: FeedKeys.NewsFull,
+      id: '1',
+    });
+  
+    const mockFn = jest.fn();
+  
+    await func(mockFn);
+  
+    expect(mockFn.mock.calls).toEqual([
+      [
+        {
+          feedKey: FeedKeys.NewsFull,
+          type: AppActionTypes.Rss,
+          value: {
+            currentOffset: 0,
+            items,
+          },
         }
       ],
     ]);
   });
-});
-
-it('Adds an offset of 0 to the resultant feed when the id argument prop is set.', async () => {
-  const items = [ Symbol('test'), ];
-
-  // @ts-ignore
-  downloadFeed.mockImplementationOnce(() => ({
-    items,
-  }));
-
-  const func = createRssThunk({
-    feedKey: FeedKeys.NewsFull,
-    id: '1',
-  });
-
-  const mockFn = jest.fn();
-
-  await func(mockFn);
-
-  expect(mockFn.mock.calls).toEqual([
-    [
-      {
-        feedKey: FeedKeys.NewsFull,
-        type: AppActionTypes.Rss,
-        value: {
-          currentOffset: 0,
-          items,
-        },
-      }
-    ],
-  ]);
-});
-
-it('Adds computed offsets to a provided, valid offset argument prop.', async () => {
-  const items = [ Symbol('test'), ];
-
-  // @ts-ignore
-  downloadFeed.mockImplementationOnce(() => ({
-    items,
-  }));
   
-  const func = createRssThunk({
-    feedKey: FeedKeys.NewsTeasers,
-    offset: 2,
-  });
-
-  const mockFn = jest.fn();
-
-  await func(mockFn);
-
-  expect(mockFn.mock.calls).toEqual([
-    [
-      {
-        type: AppActionTypes.Rss,
-        feedKey: FeedKeys.NewsTeasers,
-        value: {
-          currentOffset: 3,
-          items,
-        },
-      }
-    ],
-  ]);
-});
-
-it('Composes feeds when a valid composeWith argument prop is provided, and combines offsets.', async () => {
-  const itemsOne = [ Symbol('test'), ];
-  const itemsTwo = [ Symbol('testTwo'), ];
-
-  const composeWith = {
-    feedKey: FeedKeys.NewsTeasers,
-    items: itemsOne,
-    currentOffset: 1,
-  };
-
-  // @ts-ignore
-  downloadFeed.mockImplementationOnce(() => ({
-    items: itemsTwo,
-  }));
-
-  // Bug? Not sure why these are necessary.
-  // @ts-ignore
-  isFeedKey.mockImplementation(() => true);
-  // @ts-ignore
-  isRssFeed.mockImplementation(() => true);
+  it('Adds computed offsets to a provided, valid offset argument prop.', async () => {
+    const items = [ Symbol('test'), ];
   
-  // @ts-ignore
-  const func = createRssThunk({
-    composeWith,
-    feedKey: FeedKeys.NewsTeasers,
+    // @ts-ignore
+    downloadFeed.mockImplementationOnce(() => ({
+      items,
+    }));
+    
+    const func = createRssThunk({
+      feedKey: FeedKeys.NewsTeasers,
+      offset: 2,
+    });
+  
+    const mockFn = jest.fn();
+  
+    await func(mockFn);
+  
+    expect(mockFn.mock.calls).toEqual([
+      [
+        {
+          type: AppActionTypes.Rss,
+          feedKey: FeedKeys.NewsTeasers,
+          value: {
+            currentOffset: 3,
+            items,
+          },
+        }
+      ],
+    ]);
+  });
+  
+  it('Composes feeds when a valid composeWith argument prop is provided, and combines offsets.', async () => {
+    const itemsOne = [ Symbol('test'), ];
+    const itemsTwo = [ Symbol('testTwo'), ];
+  
+    const composeWith = {
+      feedKey: FeedKeys.NewsTeasers,
+      items: itemsOne,
+      currentOffset: 1,
+    };
+  
+    // @ts-ignore
+    downloadFeed.mockImplementationOnce(() => ({
+      items: itemsTwo,
+    }));
+  
+    // Bug? Not sure why these are necessary.
+    // @ts-ignore
+    isFeedKey.mockImplementation(() => true);
+    // @ts-ignore
+    isRssFeed.mockImplementation(() => true);
+    
+    // @ts-ignore
+    const func = createRssThunk({
+      composeWith,
+      feedKey: FeedKeys.NewsTeasers,
+    });
+  
+    // @ts-ignore
+    composeFeeds.mockImplementationOnce((aa, bb) => ({
+      duplicates: 0,
+      feed: {
+        items: itemsOne.concat(itemsTwo),
+      },
+    }));
+  
+    const mockFn = jest.fn();
+  
+    await func(mockFn);
+  
+    expect(mockFn.mock.calls).toEqual([
+      [
+        {
+          type: AppActionTypes.Rss,
+          feedKey: FeedKeys.NewsTeasers,
+          value: {
+            currentOffset: 2,
+            items: itemsOne.concat(itemsTwo),
+          },
+        }
+      ],
+    ]);
   });
 
-  // @ts-ignore
-  composeFeeds.mockImplementationOnce((aa, bb) => ({
-    duplicates: 0,
-    feed: {
-      items: itemsOne.concat(itemsTwo),
-    },
-  }));
+  it('Does not adjust the offset when composing if the id argument is not valid.', async () => {
+    const itemsOne = [ Symbol('test'), ];
+    const itemsTwo = [ Symbol('testTwo'), ];
+  
+    const composeWith = {
+      feedKey: FeedKeys.NewsTeasers,
+      items: itemsOne,
+      currentOffset: 1,
+    };
+  
+    // @ts-ignore
+    downloadFeed.mockImplementationOnce(() => ({
+      items: itemsTwo,
+    }));
+  
+    // Bug? Not sure why these are necessary.
+    // @ts-ignore
+    isFeedKey.mockImplementation(() => true);
+    // @ts-ignore
+    isRssFeed.mockImplementation(() => true);
+    
+    // @ts-ignore
+    const func = createRssThunk({
+      composeWith,
+      id: 'foo',
+      feedKey: FeedKeys.NewsTeasers,
+    });
+  
+    // @ts-ignore
+    composeFeeds.mockImplementationOnce((aa, bb) => ({
+      duplicates: 0,
+      feed: {
+        items: itemsOne.concat(itemsTwo),
+      },
+    }));
+  
+    const mockFn = jest.fn();
+  
+    await func(mockFn);
+  
+    expect(mockFn.mock.calls).toEqual([
+      [
+        {
+          type: AppActionTypes.Rss,
+          feedKey: FeedKeys.NewsTeasers,
+          value: {
+            items: itemsOne.concat(itemsTwo),
+          },
+        }
+      ],
+    ]);
+  });
 
-  const mockFn = jest.fn();
+  it('Rejects if the final feed object has no items prop or the prop is empty.', async () => {
+    // @ts-ignore
+    downloadFeed.mockImplementationOnce(() => ({}));
+    
+    const func = createRssThunk({
+      feedKey: FeedKeys.NewsTeasers,
+    });
 
-  await func(mockFn);
-
-  expect(mockFn.mock.calls).toEqual([
-    [
-      {
-        type: AppActionTypes.Rss,
-        feedKey: FeedKeys.NewsTeasers,
-        value: {
-          currentOffset: 2,
-          items: itemsOne.concat(itemsTwo),
-        },
-      }
-    ],
-  ]);
+    expect(func(jest.fn())).rejects.toEqual(new Error(strings.EMPTY_FEED_ERROR));
+  });
 });
+
 
 describe('createRssThunk integration tests.', () => {
   beforeEach(() => {

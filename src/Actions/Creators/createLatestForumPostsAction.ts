@@ -1,4 +1,4 @@
-/* For forum.hellox.me/latest.json. Deprecated in favor of latest.rss. */
+/* For forum.hellox.me/latest.json. Deprecated in favor of downloadFeed using /latest.rss. */
 
 import {
   ILatestForumPostsAction,
