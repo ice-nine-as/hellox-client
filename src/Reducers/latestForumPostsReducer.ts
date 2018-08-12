@@ -2,8 +2,8 @@ import {
   AppActionTypes,
 } from '../Enums/AppActionTypes';
 import {
-  ILatestForumPostsAction,
-} from '../Actions/App/ILatestForumPostsAction';
+  ILatestForumTopicsAction,
+} from '../Actions/App/ILatestForumTopicsAction';
 import {
   ILatestForumTopicsFeed,
 } from '../Interfaces/ILatestForumTopicsFeed';
@@ -23,9 +23,9 @@ export const strings = {
     'function did not meet the isLatestForumPostsFeed type guard.',
 };
 
-export const latestForumPostsReducer: TReducer<ILatestForumTopicsFeed | null, ILatestForumPostsAction> =
+export const latestForumPostsReducer: TReducer<ILatestForumTopicsFeed | null, ILatestForumTopicsAction> =
   (previousState: ILatestForumTopicsFeed | null = null,
-    action: ILatestForumPostsAction): ILatestForumTopicsFeed | null =>
+    action: ILatestForumTopicsAction): ILatestForumTopicsFeed | null =>
 {
   if (previousState !== null && !isLatestForumPostsFeed(previousState)) {
     throw new Error(strings.PREVIOUS_STATE_INVALID);
