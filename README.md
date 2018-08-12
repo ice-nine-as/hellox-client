@@ -8,19 +8,29 @@ The primary code repository for developing and staging the Hello X multimedia ar
 
 See `documentation/new-developers.md`.
 
-## E-mail
+## Project structure
 
-Amazon SES is used to send copies of users' generated and edited stories to them. The credentials for this are AWS credentials, *not* SMTP credentials, and the `node-ses` package is used to simplify querying the SES endpoints. Critical note: while the server for the web client is located in Frankfurt, SES is not available in that zone. It is instead located in the closest European zone in Ireland. These credentials must be included in `server/credentials/email-credentials.json`. In production, these are stored in `/etc/hellox-credentials/` and volumed into `/etc/hellox-client/server/credentials/` with the Docker runtime voluming argument, `-v`.
+The project is served through `Express`, it is written in `Typescript` and `React` (with `JSX`), and it uses `Webpack` and `Babel` to bundle and transpile code such that it can run on all recent (>2013) devices with Javascript capabilities. The `universal-react-component` package, and several other packages from the `universal-react` ecosystem, are used to take simultaneous advantage of code-splitting (reducing the time, process, and space expenditures associated with each request) and server-side rendering (enabling the app to work more natively on phones as a progressive web app, and ensuring that semantic content is loaded and read by web crawlers for SEO purposes).
 
-Formspree is used for simple contact form e-mails.
+## Adding new webpages to the project
 
-## Google Drive integration
+See `documentation/adding-new-pages.md`.
+
+## Updating the webserver
+
+See `documentation/updating-the-webserver.md`.
+
+## External integrations
+
+[Blubrry](https://www.blubrry.com/) is used to host each podcast episode. These podcasts are syndicated by multiple other podcast networks, including Apple Podcasts, Android Podcasts, and SoundCloud.
+
+Amazon SES is used to send copies of users' generated and edited stories to them. The credentials for this are AWS credentials, *not* SMTP credentials, and the `node-ses` package is used to simplify querying the SES endpoints. These credentials must be included in `server/credentials/email-credentials.json`. In production, these are stored in `/etc/hellox-credentials/` and volumed into `/etc/hellox-client/server/credentials/` with the Docker runtime voluming argument, `-v`. Critical note: while the server for the web client is located in Frankfurt, SES is not available in that zone. It is instead located in the closest European zone in Ireland.
 
 As designed by the client, a Google Sheet is used to contain all the submitted user-generated stories. The `googleapis` package is used to automate this process, and the necessary credentials are stored within the running container in the `server/credentials/google-sheets-credentials.json` directory. Like the e-mail credentials, these are volumed into the Docker container at runtime from `/etc/hellox-credentials/`.
 
-## Updating the server
+[Formspree](https://formspree.io/) is used for simple contact form e-mails.
 
-See `documentation/updating-the-webserver.md`.
+[Speakpipe](https://speakpipe.com) is used for simple voice memos.
 
 ## Continuous Integration
 
@@ -29,11 +39,7 @@ then a pull request should be made to pull them into the `master` branch. You ma
 
 ## Branch structure
 
-There are only three branches currently in use in the X50 repository: `master`, `dev`, and `documentation`. The `dev` branch is used for all pull requests related to code development, `documentation` is used for all pull requests related to documentation. Both branches are pulled into `master`, built and tested on the Travis continuous integration server, and published to AWS, assuming nothing fails, whereupon the changes are reflected in the live version of the app.
-
-## Project structure
-
-The project is served through `Express`, it is written in `Typescript` and `React` (with `JSX`), and it uses `Webpack` and `Babel` to bundle and transpile code such that it can run on all recent devices with Javascript capabilities. The `universal-react-component` package, and several other packages from the `universal-react` ecosystem, are used to take simultaneous advantage of code-splitting (reducing the time, process, and space expenditures associated with each request) and server-side rendering (enabling the app to work more natively on phones as a progressive web app, and ensuring that semantic content is loaded and read by web crawlers for SEO purposes).
+There are only three branches currently in use in the X50 repository: `master`, `dev`, and `documentation`. The `dev` branch is used for all pull requests related to code development, `documentation` is used for all pull requests related to documentation. Both branches are pulled into `master`, built and tested on the Travis continuous integration server, and published to AWS, assuming nothing fails, whereupon the changes are reflected in the live version of the app. If multiple developers are working on the project simultaneously, new branches should be created.
 
 ## Pull requests
 
