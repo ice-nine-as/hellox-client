@@ -35,9 +35,10 @@ export const feedReducer: TReducer<IRssFeed | null, IRssAction> = function (
     throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isRssAction(action) &&
-    __this &&
-    __this.key === action.feedKey)
+  if (action &&
+      isRssAction(action) &&
+      __this &&
+      __this.key === action.feedKey)
   {
     return action.value;
   }

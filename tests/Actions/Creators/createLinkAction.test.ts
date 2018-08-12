@@ -58,7 +58,7 @@ describe('createLinkAction unit tests.', () => {
   });
 });
 
-describe('DoneAppAction integration tests.', () => {
+describe('createLinkAction integration tests.', () => {
   it('Meets the isAction type guard.', () => {
     expect(isAction(createLinkAction(AboutLinkAction, {}))).toBe(true);
   });

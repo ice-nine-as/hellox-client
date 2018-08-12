@@ -145,7 +145,12 @@
 			flex: 1;
 			min-width: 100px;
 			
-			.ButtonHover;
+      .ButtonHover;
+
+      /* Prevent `undefined` classes. */
+      &.SinglePodcastLink, &.Read, &.UntilLoaded, &.Write {
+        color: inherit;
+      }
 		}
 
 		.LinkTitle {
@@ -292,7 +297,7 @@
 }
 
 .HorizontalRule {
-
+  color: inherit;
 }
 
 :global(.LazyLoad) {

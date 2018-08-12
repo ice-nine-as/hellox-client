@@ -28,7 +28,7 @@ export const languageReducer: TReducer<Languages, ILanguageAction> =
     throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isLanguageAction(action)) {
+  if (action && isLanguageAction(action)) {
     return action.value;
   }
   

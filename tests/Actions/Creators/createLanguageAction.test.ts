@@ -53,7 +53,7 @@ describe('createLanguageAction unit tests.', () => {
   });
 });
 
-describe('DoneAppAction integration tests.', () => {
+describe('createLanguageAction integration tests.', () => {
   it('Meets the isAction type guard.', () => {
     expect(isAction(createLanguageAction(LanguageAction, Languages.Russian))).toBe(true);
   });

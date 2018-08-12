@@ -40,10 +40,9 @@ export function configureClientStore(
     thunk,
   } = connectRoutes(history, routesMap);
 
-  const rootReducer = combineReducers<TStoreProps>({
-    ...getReducers(),
+  const rootReducer = combineReducers<TStoreProps>(Object.assign({}, getReducers(), {
     location: locationReducer,
-  });
+  }));
 
   const middlewares = applyMiddleware(thunkMiddleware, middleware);
   const enhancers   = composeWithDevTools(enhancer, middlewares);

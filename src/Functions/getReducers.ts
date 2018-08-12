@@ -12,10 +12,9 @@ import {
 } from '../TypeAliases/TReducersMap';
 
 export function getReducers(): TReducersMap<any, IAction> {
-  return {
-    ...getAppReducers(),
+  return Object.assign({}, getAppReducers(), {
     storyGenerator: getStoryGeneratorRootReducer(),
-  };
+  });
 }
 
 export default getReducers;

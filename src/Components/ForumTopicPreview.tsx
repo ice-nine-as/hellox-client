@@ -21,8 +21,13 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
       maxTitleLength,
     } = this.props;
 
-    const maxTitleLen = maxTitleLength && maxTitleLength > 1 && maxTitleLength % 1 === 0 ?
-      maxTitleLength :
+    const maxTitleLengthIsInteger =
+      maxTitleLength &&
+      maxTitleLength > 1 &&
+      maxTitleLength % 1 === 0;
+
+    const maxTitleLen: number = maxTitleLengthIsInteger ?
+      maxTitleLength! :
       40;
 
     const randId = Math.round(Math.random() * Math.pow(10, 20)).toString(16);
@@ -92,36 +97,42 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
 
     return (
       <div className={styles.ForumTopicPreview}>
-        <div className={styles.ForumTopicTeaser}>
+        <div className="ArticleTeaser">
           <a
-            className={styles.Link}
+            className="Link"
             href={item.link}>
 
-            <div className={styles.HeroImageContainer}>
+            <div className="HeroImageContainer">
               <img
-                className={styles.HeroImage}
+                className="HeroImage"
                 id={randId}
                 src='data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAzMC4wNiI+PGRlZnM+PHN0eWxlPi5jbHMtMSwuY2xzLTJ7ZmlsbDojZmZmO30uY2xzLTJ7ZmlsbC1ydWxlOmV2ZW5vZGQ7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5IZWxsb1hfTWluaV9sb2dvQXJ0Ym9hcmQgMTwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTMsMzAsMCwyMi41NHYtMTVMMTMsMCwyNiw3LjUzdjE1Wk0xLjY2LDIxLjU4LDEzLDI4LjEzbDExLjM0LTYuNTVWOC40OEwxMywxLjk0LDEuNjYsOC40OFoiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTYuMzIgOC40OCAxMy4yOCAxNC4xNCAxMi43MiAxNC4xNCA5LjY5IDguNDggNy44NiA4LjQ4IDExLjM0IDE0LjggNy42MSAyMS41OCA5LjQ2IDIxLjU4IDEyLjc0IDE1LjQzIDEzLjI0IDE1LjQzIDE2LjU1IDIxLjU4IDE4LjM5IDIxLjU4IDE0LjY0IDE0LjggMTguMTQgOC40OCAxNi4zMiA4LjQ4Ii8+PC9zdmc+'
               />
             </div>
 
-            <div className={styles.Main}>
-              <h3 className={styles.Headline}>
+            <div className="Main">
+              <h3 className="Headline">
                 {title}
               </h3>
 
-              <div className={styles.AuthoringInfo}>
-                <time className={styles.Date}>{dateStr}</time>
-                <span className={styles.Bullet}> · </span>
-                <span className={styles.Author}>{author}</span>
+              <div className="AuthoringInfo">
+                <time className="Date">
+                  {dateStr}
+                </time>
+                
+                <span className="Bullet"> · </span>
+                
+                <span className="Author">
+                  {author}
+                </span>
               </div>
 
               <div
-                className={styles.Summary}
+                className="Summary"
                 dangerouslySetInnerHTML={{ __html: item.description, }}
               ></div>
 
-              <div className={styles.SpacerBar}></div>
+              <div className="SpacerBar"></div>
             </div>
           </a>
         </div>

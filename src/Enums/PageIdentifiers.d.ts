@@ -6,8 +6,10 @@ export enum PageIdentifiers {
   NotFound               = 'NotFound',
   Podcast                = 'Podcast',
   Podcasts               = 'Podcasts',
+  PrivacyPolicy          = 'PrivacyPolicy',
   ServerError            = 'ServerError',
   StoryTemplateValidator = 'StoryTemplateValidator',
+  TermsOfService         = 'TermsOfService',
   Write                  = 'Write',
 }
 
