@@ -3,7 +3,7 @@ import {
 } from '../Enums/AppActionTypes';
 import {
   ILatestForumTopicsAction,
-} from '../Actions/App/ILatestForumPostsAction';
+} from '../Actions/App/ILatestForumTopicsAction';
 import {
   ILatestForumTopicsFeed,
 } from '../Interfaces/ILatestForumTopicsFeed';
