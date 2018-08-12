@@ -5,27 +5,27 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/StorySubmissionForm.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/StorySubmissionForm.less';
+const styles = _styles || {};
 
 export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFormProps> {
   render() {
     return (
       <form
         action="/story-generator-mailer"
-        className={_styles.StorySubmissionForm}
+        className={styles.StorySubmissionForm}
         method="POST"
       >
         <label
-          className={`${_styles.NameLabel} ${_styles.Label}`}
-          htmlFor={_styles.NameInput}
+          className={`${styles.NameLabel} ${styles.Label}`}
+          htmlFor={styles.NameInput}
         >
           Name or alias*
         </label>
 
         <input
-          className={_styles.Input}
-          id={_styles.NameInput}
+          className={styles.Input}
+          id={styles.NameInput}
           name="name"
           placeholder="Type here"
           required={true}
@@ -33,33 +33,33 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         />
 
         <label
-          className={`${_styles.ReplyToLabel} ${_styles.Label}`}
-          htmlFor={_styles.ReplyToInput}
+          className={`${styles.ReplyToLabel} ${styles.Label}`}
+          htmlFor={styles.ReplyToInput}
         >
           E-mail address
         </label>
 
         <input
-          className={_styles.Input}
-          id={_styles.ReplyToInput}
+          className={styles.Input}
+          id={styles.ReplyToInput}
           name="email"
           placeholder="Type here"
           type="email"
         />
 
         <input
-          className={`${_styles.CarbonCopy} ${_styles.Input} ${_styles.Checkbox}`}
-          id={_styles.CarbonCopy}
+          className={`${styles.CarbonCopy} ${styles.Input} ${styles.Checkbox}`}
+          id={styles.CarbonCopy}
           name="carbonCopy"
           type="checkbox"
         />
 
         <label
-          className={`${_styles.CarbonCopyLabel} ${_styles.Label}`}
-          htmlFor={_styles.CarbonCopy}
+          className={`${styles.CarbonCopyLabel} ${styles.Label}`}
+          htmlFor={styles.CarbonCopy}
         >
-          <div className={`${_styles.LabelBoxWrapper}`}>
-            <div className={`${_styles.LabelBox}`}>
+          <div className={`${styles.LabelBoxWrapper}`}>
+            <div className={`${styles.LabelBox}`}>
               <p>✓</p>
             </div>
           </div>
@@ -68,7 +68,7 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
         </label>
 
         <input
-          className={`${_styles.Submit} light`}
+          className={`${styles.Submit} light`}
           type="submit"
           value="Submit Story"
         />

@@ -1,38 +1,36 @@
 const dev = process.env.NODE_ENV === 'development';
 console.log(`\nIs dev?   ${dev}`);
 
-const h2 = require('./isHttp2')();
+const h2 = require('./isHttp2').isHttp2();
 console.log(`Is HTTP2? ${h2}\n`);
 
 console.log('Loading dependencies.');
 
-const bodyParser        = require('body-parser');
+const {
+  applyMiddlewares,
+} = require('./middleware/applyMiddlewares');
+
 const clientConfigDev   = require('../webpack/client.dev');
 const clientConfigProd  = require('../webpack/client.prod');
 const express           = require('express');
 const enforce           = require('express-sslify');
 const expressStaticGzip = require('express-static-gzip');
-const gulp              = require('gulp');
 
 const {
   readFile,
   readFileSync,
 } = require('fs');
+const {
+  getSpdyOptions,
+} = require('./getSpdyOptions');
+
+const gulp = require('gulp');
 
 const {
   dirname,
-  resolve,
+  join,
 } = require('path');
 
-const {
-  publishToEmail,
-} = require('./publishToEmail');
-
-const {
-  publishToGoogleSheet,
-} = require('./publishToGoogleSheet');
-
-const serveFavicon               = require('serve-favicon');
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
 const serverConfigProd           = require('../webpack/server.prod');
@@ -43,122 +41,17 @@ const webpackHotMiddleware       = require('webpack-hot-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 require('isomorphic-fetch');
 
-console.log('Dependencies loaded.\n');
+console.log('Dependencies loaded.');
 
-const publicPath  = clientConfigDev.output.publicPath;
-const outputPath  = clientConfigDev.output.path;
-const projectPath = resolve(__dirname, '..');
-const imagesPath  = resolve(projectPath, 'images');
-const fontsPath   = resolve(projectPath, 'fonts');
+const publicPath = clientConfigDev.output.publicPath;
+const outputPath = clientConfigDev.output.path;
 
 const app = express();
 
-/* Header middleware. */
-app.use((req, res, next) => {
-  /* Give the service worker root scope. */
-  res.setHeader('Service-Worker-Allowed', '/');
-
-  if (req.path === '/') {
-    res.setHeader('Cache-Control', 'no-cache');
-  } else if (req.path === '/static/sw.js') {
-    /* Only cache the service worker for 5 seconds. */
-    res.setHeader('Cache-Control', 'max-age=5');
-  } else if (/\.(js|css)$/.test(req.path) ||
-             /\.woff2?$/.test(req.path))
-  {
-    /* Cache all scripts, styles, and fonts for one year. */
-    res.setHeader('Cache-Control', 'max-age=31536000');
-  } 
-
-  /* Deny HTTP entirely. */
-  res.setHeader('Strict-Transport-Security',
-                'max-age=31536000 ; includeSubDomains');
-
-  /* Deny all iframes/iframing of the site. */
-  res.setHeader('X-Frame-Options', 'deny');
-
-  /* Block all detected XSS attacks entirely. */
-  res.setHeader('X-XSS-Protection', '1; mode=block');
-
-  /* Execute the next middleware. */
-  next();
-});
-
-/* Favicon middleware. */
-app.use(serveFavicon(resolve(imagesPath, 'favicon-96x96.png')));
-
-/* Fonts static file middleware. */
-app.use('/fonts', express.static(resolve(fontsPath)));
-
-/* Form parser middleware. */
-app.use(bodyParser.urlencoded({ extended: true, }));
-
-/* Mail endpoint for story generator */
-app.post('/story-generator-mailer', (req, res) => {
-  /* Cross-reference with StorySubmissionForm component. */
-  
-  const handleSheetsError = (e) => {
-    console.error('Problem publishing generated story to Google Sheets.');
-    console.error(e);
-  };
-
-  const handleEmailError = (e) => {
-    console.error('Problem e-mailing generated story.');
-    console.error(e);
-    res.status(500);
-    res.write(
-      `Sorry, there was a problem submitting the generated story.\n
-      ${req.body.story}`);
-    res.end();
-  };
-
-  try {
-    publishToGoogleSheet(req.body.name, req.body.email, req.body.story);
-  } catch (e) {
-    handleSheetsError(e);
-  }
-
-  try {
-    publishToEmail(
-      req.body.name,
-      req.body.email,
-      req.body.carbonCopy,
-      req.body.story);
-  } catch (e) {
-    handleEmailError(e);
-  }
-
-  /* Redirect to the home page. */
-  res.redirect('/');
-  res.end();
-});
-
-/* Google Analytics ownership endpoint */
-app.get('/google2121db82d9189338.html', (req, res) => {
-  res.write('google-site-verification: google2121db82d9189338.html');
-  res.end();
-});
+/* Apply all middlewares to the server. */
+applyMiddlewares(app);
 
 let isBuilt = false;
-
-/* Directory with keys in it. Currently volumed with Docker from the host
- * filesystem. */
-const letsEncryptDir = resolve(projectPath, 'private', 'live', 'hellox.me');
-
-const getSpdyOptions = () => ({
-  cert: readFileSync(resolve(letsEncryptDir, 'fullchain.pem')),
-  key:  readFileSync(resolve(letsEncryptDir, 'privkey.pem')),
-  spdy: {
-    protocols: [
-      'h2',
-      'spdy/3.1',
-      'spdy/3',
-      'spdy/2',
-      'http/1.1',
-      'http/1.0',
-    ],
-  },
-});
 
 const PRIMARY_PORT   = 3000;
 const SECONDARY_PORT = 3001;
@@ -193,7 +86,6 @@ function done() {
     return server;
   })();
 }
-
 
 if (dev) {
   const compiler = webpack([ clientConfigDev, serverConfigDev, ]);

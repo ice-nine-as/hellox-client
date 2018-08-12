@@ -55,8 +55,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/StoryGenerator.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/StoryGenerator.less';
+const styles = _styles || {};
 
 export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProps & TStoryGeneratorDispatchProps> {
   render() {
@@ -127,10 +127,10 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
     }
 
     return (
-      <div className={_styles.StoryGenerator}>
-        <div className={_styles.InProgressWrapper}>
-          <div className={_styles.Content}>
-            <div className={_styles.InnerContent}>
+      <div className={styles.StoryGenerator}>
+        <div className={styles.InProgressWrapper}>
+          <div className={styles.Content}>
+            <div className={styles.InnerContent}>
               <StoryPartSelector
                 currentPart={this.props.currentPart}
                 setCurrentPart={this.props.setCurrentPart}

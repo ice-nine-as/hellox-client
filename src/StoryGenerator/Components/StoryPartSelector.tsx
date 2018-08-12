@@ -11,8 +11,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/StoryPartSelector.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/StoryPartSelector.less';
+const styles = _styles || {};
 
 export class StoryPartSelector extends React.PureComponent<TStoryPartSelectorProps> {
   render() {
@@ -29,47 +29,47 @@ export class StoryPartSelector extends React.PureComponent<TStoryPartSelectorPro
       '';
 
     return (
-      <div className={_styles.StoryPartSelector}>
-        <div className={_styles.SelectorContainer}>
+      <div className={styles.StoryPartSelector}>
+        <div className={styles.SelectorContainer}>
           <button
-            className={`${_styles.PartSelector} ${_styles.A}`}
+            className={`${styles.PartSelector} ${styles.A}`}
             onClick={() => this.props.setCurrentPart(StoryGeneratorParts.A)}
           >
             <Hexagon className={isAActive}>
                 A
             </Hexagon>
 
-            <span className={_styles.Title}>
+            <span className={styles.Title}>
               {this.props.titleMap.A}
             </span>
           </button>
         </div>
 
-          <div className={_styles.SelectorContainer}>
+          <div className={styles.SelectorContainer}>
             <button
-              className={`${_styles.PartSelector} ${_styles.B}`}
+              className={`${styles.PartSelector} ${styles.B}`}
               onClick={() => this.props.setCurrentPart(StoryGeneratorParts.B)}
             >
               <Hexagon className={isBActive}>
                   B
               </Hexagon>
 
-              <span className={_styles.Title}>
+              <span className={styles.Title}>
                 {this.props.titleMap.B}
               </span>
             </button>
           </div>
 
-        <div className={_styles.SelectorContainer}>
+        <div className={styles.SelectorContainer}>
           <button
-            className={`${_styles.PartSelector} ${_styles.C}`}
+            className={`${styles.PartSelector} ${styles.C}`}
             onClick={() => this.props.setCurrentPart(StoryGeneratorParts.C)}
           >
             <Hexagon className={isCActive}>
               C
             </Hexagon>
 
-            <span className={_styles.Title}>
+            <span className={styles.Title}>
               {this.props.titleMap.C}
             </span>
           </button>

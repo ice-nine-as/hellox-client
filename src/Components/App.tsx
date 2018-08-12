@@ -63,8 +63,8 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Components/App.less';
-const _styles = styles || {};
+import _styles from '../Styles/Components/App.less';
+const styles = _styles || {};
 
 export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps> {
   constructor(props: TAppStoreProps & TAppDispatchProps) {
@@ -85,11 +85,11 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
     const realPage = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
 
     return (
-      <div className={`${_styles.App} Page-${page}`}>
+      <div className={`${styles.App} Page-${page}`}>
         <Header page={realPage} />
 
         <div
-          className={_styles.PageContainer}
+          className={styles.PageContainer}
           onClick={() => {
             /* Close hamburger menu when any location on page is clicked. */
             if (this.props.hamburgerOpen === true) {

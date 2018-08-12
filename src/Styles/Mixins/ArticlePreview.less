@@ -1,0 +1,126 @@
+@import '../Vars.less';
+
+@import './SpacerBar.less';
+
+.ArticlePreview { 
+  display: flex;
+	flex: 1;
+	flex-shrink: 0;
+	position: relative;
+	margin: 0 @space;
+	margin-bottom: @space-lg;
+	min-width: 200px;
+	overflow: hidden;
+	text-align: left;
+	box-sizing: border-box;
+
+	@media screen and (min-width: 600px) {
+		max-width: 247px;
+		margin-left: @space-sm;
+		margin-right: @space-sm;
+	}
+
+  :global(.ArticleTeaser) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    :global(.Link) {
+      display: flex;
+      text-decoration: none;
+      flex: 1;
+      flex-direction: column;
+      color: @deep-purple;
+      border-color: @deep-purple;
+
+      @media screen and (min-width: 600px) {
+        &:hover {
+          div :global(.HeroImage) {
+            color: @deep-purple-active;
+            border-color: @deep-purple-active;
+          }
+
+          :global(.Main) {
+            border-color: @deep-purple-active;
+            
+            :global(.Headline) {
+              color: @deep-purple-active;
+            }
+          }
+        }
+      }
+    }
+
+    :global(.field-label) {
+      display: none;
+    }
+
+    :global(.HeroImageContainer) {
+      position: relative;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+
+      @media screen and (min-width: 600px) {
+        height: 150px;
+      }
+
+      :global(.HeroImage) {
+        width: 100%;
+        height: 100%;
+        border-bottom: 6px solid @teal;
+
+        @media screen and (min-width: 600px) {
+          object-fit: cover;
+          object-position: center; /* Center the image within the element */
+        }
+      }
+    }
+
+    :global(.Main) {
+      width: 100%;
+      max-height: 230px;
+      padding: 10px;
+      padding-top: 0;
+      flex: 1;
+      flex-grow: 1;
+      box-sizing: border-box;
+      overflow-y: hidden;
+
+      @media screen and (min-width: 600px) {
+        border: 1px solid @teal;
+      }
+
+      :global(.Headline) {
+        font-size: 30px;
+        font-family: 'Lato Light', 'Lato Subset', sans-serif;
+        margin: 10px 0;
+      }
+
+      :global(.AuthoringInfo) {
+        margin: 5px 0;
+        font-size: 14px;
+        font-family: 'Lato Bold', 'Lato Subset', sans-serif;
+        font-weight: 700;
+        color: @blue;
+      }
+
+      :global(.Summary) {
+        font-size: 18px;
+        font-family: 'Lato Light', 'Lato Subset', sans-serif;
+        font-weight: 300;
+        //height: 100px;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      /* Images can screw up the layout somehow, and we don't want them there
+      * anyway. */
+      img {
+        display: none;
+      }
+    }
+  }
+}

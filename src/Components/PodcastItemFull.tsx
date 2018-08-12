@@ -2,6 +2,9 @@ import {
 	getFormattedDate,
 } from '../Functions/getFormattedDate';
 import {
+	getPreparedHtml,
+} from '../Functions/getPreparedHtml';
+import {
 	TPodcastItemFullProps,
 } from '../TypeAliases/TPodcastItemFullProps';
 
@@ -12,10 +15,6 @@ import _styles from '../Styles/Components/PodcastItemFull.less';
 const styles = _styles || {};
 
 export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> {
-	getPreparedHtml(str: string): { __html: string } {
-		return { __html: str };
-	}
-
 	render() {
 		const {
 			item: {
@@ -33,8 +32,9 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 			item,
 		} = this.props;
 
-		const correctedPodcastUrl = /* Add https. */ `https${url/* Remove http. */.slice(4)}`;
-		const correctedImageUrl = ((item['itunes:image'] || {})['#'] || '').replace("'", "\\'").replace('"', '\\"');
+		/* Escape all quote marks in the image URL. If this is not done, the
+		 * browser will refuse to load the image. */
+		const correctedImageUrl = (item.itunesImage || '').replace("'", "\\'").replace('"', '\\"');
 
 		return (
 			<div className={styles.PodcastItemFull}>
@@ -59,7 +59,8 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 							<iframe
 								className={styles.PodcastIframe}
 								scrolling="no"
-								src={`https://player.blubrry.com/?media_url=${encodeURIComponent(correctedPodcastUrl)}`}
+								src={`https://player.blubrry.com/?media_url=${encodeURIComponent(url)}`}
+								title="The iframe for the Blubrry podcast player."
 							></iframe> :
 							'Embed failed.'
 					}
@@ -67,7 +68,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 
 				<p
 					className={styles.Summary}
-					dangerouslySetInnerHTML={this.getPreparedHtml(description)}
+					dangerouslySetInnerHTML={getPreparedHtml(description)}
 				></p>
 			</div>
 		);

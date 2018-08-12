@@ -1,0 +1,44 @@
+@import '../Vars.less';
+
+.LegalPage {
+  position: relative;
+  display: block;
+  top: 0;
+  background: @deep-purple;
+  color: @purple;
+
+  .Content {
+    max-width: @pageMaxWidth;
+    padding: 25px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: @white;
+  }
+
+  .Header {
+    margin-top: 0;
+  }
+
+  h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
+  p {
+    margin: 10px auto;
+  }
+
+  ol, ul {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  li:first-of-type {
+    margin-top: 8px;
+  }
+}

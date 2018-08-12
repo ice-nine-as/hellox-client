@@ -64,13 +64,13 @@ import _styles from '../Styles/Components/LatestNews.less';
 const styles = _styles || {};
 
 export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { error: string, loadMoreVisible: boolean, }> {
+  state = {
+    error: '',
+    loadMoreVisible: true,
+  };
+
   constructor(props: any, context?: any) {
     super(props, context);
-
-    this.state = {
-      error:           '',
-      loadMoreVisible: true,
-    };
 
     this.doLoad = this.doLoad.bind(this);
   }
@@ -103,6 +103,8 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       language,
     });
 
+    /* Only autoload if the feed has never been fetched, or there is not a
+     * full triple-stack of items already. */
     const rejector = (reason: Error) => {
       console.error(reason);
       this.setState({
@@ -222,10 +224,10 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
         const finalFeed: IRssFeed = composeFeeds(feed, feeds.Podcast).feed!;
         return finalFeed.items.map((item) => {
           if (this.props.detailLevel === FeedDetailLevels.Full) {
-            if ('itunes:episode' in item) {
+            if ('itunesEpisode' in item) {
               return (
                 <PodcastItemFull
-                item={item}
+                  item={item}
                   key={reactKey += 1}
                 />
               );
@@ -238,7 +240,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
               );
             }
           } else {
-            if ('itunes:episode' in item) {
+            if ('itunesEpisode' in item) {
               return (
                 <PodcastItemPreview
                   item={item}

@@ -4,7 +4,9 @@ import {
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
-import { isRssFeed } from './isRssFeed';
+import {
+  isRssFeed,
+} from './isRssFeed';
 
 export function isRssAction(maybe: any): maybe is IRssAction {
   return typeof maybe === 'object' &&

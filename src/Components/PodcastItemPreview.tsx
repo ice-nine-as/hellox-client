@@ -5,6 +5,9 @@ import {
 	getFormattedDate,
 } from '../Functions/getFormattedDate';
 import {
+	getPreparedHtml,
+} from '../Functions/getPreparedHtml';
+import {
 	ImageUrls,
 } from '../Enums/ImageUrls';
 import {
@@ -27,16 +30,12 @@ const styles = _styles || {};
 import _newsItemStyles from '../Styles/Components/NewsItemPreview.less';
 
 export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewProps> {
-	getPreparedHtml(str: string): { __html: string } {
-		return { __html: str, };
-	}
-
 	render() {
 		const {
 			item: {
 				description,
 				guid,
-				'itunes:image': itunesImage,
+				itunesImage,
 				pubDate,
 				title,
 			},
@@ -52,7 +51,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 					>
 						<div className="HeroImageContainer">
 							<img
-								src={(itunesImage || {})['#'] || ImageUrls.DefaultPodcastImage}
+								src={itunesImage || ImageUrls.DefaultPodcastImage}
 								className="HeroImage"
 							/>
 						</div>
@@ -76,7 +75,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 
 							<div
 								className="Summary"
-								dangerouslySetInnerHTML={this.getPreparedHtml(description || 'No title provided.')}
+								dangerouslySetInnerHTML={getPreparedHtml(description || 'No title provided.')}
 							>
 							</div>
 						</div>

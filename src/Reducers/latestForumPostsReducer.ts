@@ -31,7 +31,8 @@ export const latestForumPostsReducer: TReducer<ILatestForumTopicsFeed | null, IL
     throw new Error(strings.PREVIOUS_STATE_INVALID);
   }
 
-  if (isAppAction(action) &&
+  if (action &&
+      isAppAction(action) &&
       action.type === AppActionTypes.LatestForumPosts &&
       isLatestForumPostsFeed(action.value))
   {

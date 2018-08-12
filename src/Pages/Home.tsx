@@ -41,8 +41,14 @@ import {
   PodcastIcon,
 } from '../Components/Icon/PodcastIcon';
 import {
+  PodcastLinkAction,
+} from '../Actions/Link/PodcastLinkAction';
+import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
+import {
+  PodcastSubscriptionLinks,
+} from '../Components/PodcastSubscriptionLinks';
 import {
   ConnectedQuoteDisplay,
 } from '../Components/QuoteDisplay';
@@ -73,8 +79,6 @@ const LazyLoad = require('react-lazy-load').default;
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Home.less';
-import { PodcastLinkAction } from '../Actions/Link/PodcastLinkAction';
-import { PodcastSubscriptionLinks } from '../Components/PodcastSubscriptionLinks';
 const styles = _styles || {};
 
 export class Home extends React.PureComponent<TPageProps & THomePageProps> {
@@ -99,7 +103,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
   }
 
   componentDidMount() {
-    if (!isNode()) {
+    if (!isNode()) {    
       this.doLoad();
     }
   }
@@ -135,7 +139,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
           })}
         >
           <h2 className={`${styles.LinkTitle} ${styles.Podcast}`}>
-            PODCAST #{((podcastFeed.items[0] as IPodcastPost)['itunes:episode'] || {})['#'] || '-'}
+            PODCAST #{(podcastFeed.items[0] as IPodcastPost).itunesEpisode || '-'}
           </h2>
 
           <h3 className={`${styles.LinkSubtitle} ${styles.Podcast}`}>
@@ -159,7 +163,16 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
     return (
       <article className={`${styles.Home} ${styles.Page}`}>
         <section className={`${styles.Section} ${styles.First} light`}>
-          <div className={styles.LogoContainer}>
+          <div
+            className={styles.LogoContainer}
+            style={{
+              /* Needed to stop logo from taking up entire page on first load,
+               * before critical path CSS is loaded. */
+              maxWidth: '250px',
+
+              margin: '0 auto',
+            }}
+          >
             <Logo state={LogoStates.Normal} />
           </div>
 

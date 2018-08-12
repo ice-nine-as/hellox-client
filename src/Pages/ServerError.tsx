@@ -5,13 +5,13 @@ import {
 import * as React from 'react';
 
 // @ts-ignore
-import styles from '../Styles/Pages/ServerError.less';
-const _styles = styles || {};
+import _styles from '../Styles/Pages/ServerError.less';
+const styles = _styles || {};
 
 export class ServerError extends React.PureComponent<TPageProps> {
   render() {
     return (
-      <div className={`${_styles.ServerError} ${_styles.Page}`}>
+      <div className={`${styles.ServerError} ${styles.Page}`}>
         Unknown error. Sorry for the trouble!
       </div>
     );

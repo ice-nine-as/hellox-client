@@ -1,5 +1,7 @@
 @import '../Vars.less';
 
+@import '../Mixins/ButtonHover.less';
+
 .Footer {
   position: relative;
   left: 0;
@@ -9,19 +11,16 @@
 }
 
 a {
-  text-decoration: none;
-  color:inherit;
+  .ButtonHover;
 
-  &:hover {
-    color: @red;
-    transition: color @button-transition-duration;
-  }
+  text-decoration: none;
+  color: inherit;
 }
 
 .Header {
   display: block;
   font-size: @larger;
-  color: @light-purple;
+  color: @extra-light-purple;
   margin: 0;
 }
 
@@ -61,7 +60,7 @@ a {
     padding-right: 1%;
     justify-content: space-between;
 
-      @media screen and (min-width: 600px) {
+    @media screen and (min-width: 600px) {
       text-align: left;
       margin-right: @space-elg;
     }
@@ -114,50 +113,6 @@ a {
     @media screen and (min-width: 600px) {
       text-align: left;
       vertical-align: top;
-    }
-  }
-}
-
-/* Mailchimp styling */
-:global(#mc_embed_signup) {
-  color: @dark-purple;
-  background-color: @white;
-  padding: @space-lg 0;
-  font-family: 'Lato Regular', 'Lato Subset', sans-serif;
-
-  label, input {
-    margin: @space-sm 0;
-  }
-
-  label {
-    display: block;
-  }
-
-  input {
-    width: 90%;
-    max-width: 400px;
-    font-size: @h4;
-    padding: @space-sm;
-    box-sizing: border-box;
-
-    &:global(.button) {
-      position: relative;
-      background-color: @gold;
-      border: 1px solid @dark-purple;
-      color: @white;
-      font-family: 'Lato Light', 'Lato Subset', sans-serif;
-      font-weight: 300;
-      cursor: pointer;
-      transition: color @button-transition-duration, background-color @button-transition-duration;
-
-      &:hover, &:active {
-        background-color: @white;
-        color: @blue;
-      }
-
-      &:active {
-        top: 1px;
-      }
     }
   }
 }

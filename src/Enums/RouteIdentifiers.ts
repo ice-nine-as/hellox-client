@@ -6,8 +6,10 @@ export enum RouteIdentifiers {
   NotFound               = '/notFound/',
   Podcast                = '/podcast/:id/',
   Podcasts               = '/podcasts/',
+  PrivacyPolicy          = '/privacyPolicy/',
   ServerError            = '/serverError/',
   StoryTemplateValidator = '/storyTemplateValidator/',
+  TermsOfService         = '/termsOfService/',
   Write                  = '/write/',
 }
 
