@@ -35,6 +35,6 @@ The CMS site is intended to be entirely team-focused, and nothing hosted on that
 
 Note that the news feed items have a custom paging module which allows an offset URL argument to be provided, e.g. https://cms.hellox.me/feeds/news-feed-teaser.xml?offset=3.
 
-There is a single additional endpoint, https://cms.hellox.me/feeds/podcast-feed.xml, which relies on a very simple custom module which merely downloads an RSS feed from the Blubrry podcast host's endpoint and forwards it to the requester. This is done because, when these systems were originally developed and configured, Blubrry had not configured their CORS rules such that external requests could be performed, and server-side requests are not bound by CORS.
+There is a single additional endpoint, https://cms.hellox.me/feeds/podcast-feed.xml, which relies on a very simple custom module which merely downloads an RSS feed from the Blubrry podcast host's endpoint and forwards it to the requester. This was done because, when these systems were originally developed and configured, Blubrry had not configured their CORS rules such that external requests could be performed, and server-side requests are not bound by CORS.
 
 The Discourse forum is intended to be viewed and used as a normal web page by customers, but is also syndicated into a widget on the front page. There is only a single [endpoint](https://forum.hellox.me/latest.rss) we use at present.
