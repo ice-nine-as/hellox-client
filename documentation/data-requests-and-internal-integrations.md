@@ -11,27 +11,27 @@ There are three primary services, in addition to the webserver, that are owned a
 The CMS site is intended to be entirely team-focused, and nothing hosted on that site will be shown to customers on that site. Rather, each piece of content on the CMS is syndicated through a series of RSS feeds. These feeds are as follows:
 
 * News feed
-  * Full articles
-    * Hosted at https://cms.hellox.me/feeds/news-feed-full.xml and https://cms.hellox.me/feeds/%/news-feed-full-single.xml, where `%` denotes the node ID of the news item.
-    * Syndicated at https://hellox.me/article/:id, where `:id` denotes the node ID of the news item, and https://hellox.me/archives.
-  * Article titles
-    * Hosted at https://cms.hellox.me/feeds/news-feed-title.xml
-    * Currently unsyndicated anywhere on the website
-  * Teaser synopses
-    * Hosted at https://cms.hellox.me/feeds/news-feed-teaser.xml
-    * Syndicated at https://hellox.me, https://hellox.me/article/:id, and https://hellox.me/archives.
+    * Full articles
+        * Hosted at https://cms.hellox.me/feeds/news-feed-full.xml and https://cms.hellox.me/feeds/%/news-feed-full-single.xml, where `%` denotes the node ID of the news item.
+        * Syndicated at https://hellox.me/article/:id, where `:id` denotes the node ID of the news item, and https://hellox.me/archives.
+    * Article titles
+        * Hosted at https://cms.hellox.me/feeds/news-feed-title.xml
+        * Currently unsyndicated anywhere on the website
+    * Teaser synopses
+        * Hosted at https://cms.hellox.me/feeds/news-feed-teaser.xml
+        * Syndicated at https://hellox.me, https://hellox.me/article/:id, and https://hellox.me/archives.
 * Story templates for the story generator
-  * Hosted at https://cms.hellox.me/feeds/%/%/story-template-feed.xml, where the first `%` denotes the language of the content (en, nb, ru), and the second denotes the story part (A, B, C)
-  * Syndicated at https://hellox.me/write
+    * Hosted at https://cms.hellox.me/feeds/%/%/story-template-feed.xml, where the first `%` denotes the language of the content (en, nb, ru), and the second denotes the story part (A, B, C)
+    * Syndicated at https://hellox.me/write
 * Team members
-  * Hosted at https://cms.hellox.me/feeds/team-members-feed.xml
-  * Syndicated at https://hellox.me/about
+    * Hosted at https://cms.hellox.me/feeds/team-members-feed.xml
+    * Syndicated at https://hellox.me/about
 * Quotes
-  * Hosted at https://cms.hellox.me/feeds/quotes-feed.xml
-  * Syndicated at https://hellox.me
+    * Hosted at https://cms.hellox.me/feeds/quotes-feed.xml
+    * Syndicated at https://hellox.me
 * Story template validator (not shown in diagram, not intended to be customer-facing)
-  * Hosted at https://cms.hellox.me/feeds/%/story-template-validator.xml. where `%` denotes the node ID of the story template to be validated.
-  * Syndicated at https://hellox.me/storyTemplateValidator
+    * Hosted at https://cms.hellox.me/feeds/%/story-template-validator.xml. where `%` denotes the node ID of the story template to be validated.
+    * Syndicated at https://hellox.me/storyTemplateValidator
 
 Note that the news feed items have a custom paging module which allows an offset URL argument to be provided, e.g. https://cms.hellox.me/feeds/news-feed-teaser.xml?offset=3.
 
