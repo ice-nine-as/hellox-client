@@ -8,6 +8,6 @@ As designed by the client, a Google Sheet is used to contain all the submitted u
 
 [Formspree](https://formspree.io) is used for simple contact form e-mails.
 
-[Speakpipe](https://speakpipe.com) is used for simple voice memos.
+[SpeakPipe](https://speakpipe.com) is used for simple voice memos.
 
-Note that this does not cover the first-party integrations between the [`Drupal` CMS](https://cms.hellox.me) and the [`Discourse` forum](https://forum.hellox.me). Further information about these is located in the corporate Google Drive and at their [respective](https://github.com/ice-nine-as/hellox-cms) [repositories](https://github.com/ice-nine-as/hellox-forum).
+Note that this does not cover the first-party, internal integrations between the [`Drupal` CMS](https://cms.hellox.me) and the [`Discourse` forum](https://forum.hellox.me). Further information about these is located at `documentation/data-requests-and-internal-integrations.md`, in the corporate Google Drive, and at these separate projects' [respective](https://github.com/ice-nine-as/hellox-cms) [repositories](https://github.com/ice-nine-as/hellox-forum).
