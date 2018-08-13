@@ -6,7 +6,7 @@
 2. `cd` to the project directory (`/etc/hellox-client/` at present).
 3. Pull changes with `git pull`. Ensure that the `master` branch is being used.
 4. If the Docker container is already running (you can check this with `docker ps`), use `gulp dockerRebuild`. If it is not running, use `gulp dockerUp`. It will take several minutes for the the build to complete and the website to be usable again.
-5. Check `docker logs hellox-client` and ensure that it contains the lines `HTTP->HTTPS redirector enabled @ http://localhost:3001.` and `BUILD COMPLETE -- Listening @ http://localhost:3000.`.
+5. Check `docker logs hellox-client` and ensure that it contains the lines `HTTP->HTTPS redirector enabled @ http://localhost:3001` and `BUILD COMPLETE -- Listening @ http://localhost:3000`.
     * If these lines are missing, the build either may not have completed, or something may have gone wrong, in which case you should inspect the logs for error messages.
     * If the `BUILD COMPLETE` message appears but the `HTTP->HTTPS redirector` message does not, the website may not be running in HTTPS/HTTP2 mode, or the redirector may not have been activated. Ensure that the `Dockerfile` and/or relevant npm/gulp task is setting the environment variables `NODE_ENV` to `production` and `H2` to `true`.
     * If the log output is especially long, consider piping the output to a text reader like `less` or `more`, e.g. `docker logs hellox-client | less`.
