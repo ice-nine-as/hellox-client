@@ -6,7 +6,7 @@
 
 ## Overview
 
-There are three primary services, in addition to the webserver, that are owned and administered by Ice 9. [CMS server](cms.hellox.me), a server running Drupal 7, which is used to allow content authors a simple storage interface and rich editing experience, a [server running a Discourse forum](forum.hellox.me), and a the PostgreSQL database server, hosting on Amazon's Relational Database Service, which stores non-file data for both of the aforementioned services.
+There are three primary services, in addition to the webserver, that are owned and administered by Ice 9. A [CMS server](cms.hellox.me), a server running Drupal 7, which provides content authors a simple storage interface and rich editing experience, a [server running a Discourse forum](forum.hellox.me), which allows team members and customers a public arena in which to converse and plot future directions of the project, and a PostgreSQL database server, hosted on Amazon's Relational Database Service, which stores non-file data for both of the aforementioned services.
 
 The CMS site is intended to be entirely team-focused, and nothing hosted on that site will be shown to customers on that site. Rather, each piece of content on the CMS is syndicated through a series of RSS feeds. These feeds are as follows:
 
