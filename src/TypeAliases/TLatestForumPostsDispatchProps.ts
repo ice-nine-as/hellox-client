@@ -1,9 +1,9 @@
 import {
-  ILatestForumPostsAction,
-} from '../Actions/App/ILatestForumPostsAction';
+  ILatestForumTopicsAction,
+} from '../Actions/App/ILatestForumTopicsAction';
 
 export type TLatestForumPostsDispatchProps = {
-  fetchLatestForumPosts(): Promise<ILatestForumPostsAction>;
+  fetchLatestForumPosts(): Promise<ILatestForumTopicsAction>;
 };
 
 export default TLatestForumPostsDispatchProps;

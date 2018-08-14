@@ -8,8 +8,8 @@ import {
   ForumTopicPreview,
 } from './ForumTopicPreview';
 import {
-  ILatestForumPostsAction,
-} from '../Actions/App/ILatestForumPostsAction';
+  ILatestForumTopicsAction,
+} from '../Actions/App/ILatestForumTopicsAction';
 import {
   isNode,
 } from '../Functions/isNode';
@@ -187,7 +187,7 @@ export const mapStateToProps: MapStateToProps<TLatestForumPostsOwnProps & TLates
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
-  fetchLatestForumPosts(): Promise<ILatestForumPostsAction> {
+  fetchLatestForumPosts(): Promise<ILatestForumTopicsAction> {
     const thunk = createRssThunk({
       feedKey: FeedKeys.ForumTopics,
     });
