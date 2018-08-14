@@ -99,14 +99,14 @@ Those making modifications made to the Hello X codebase should endeavor to write
     * Use trailing commas in all object initializations.
 * Arrays
     * Use trailing commas in all array initializations.
-    * Use `Array.from` to convert array-like objects (e.g. `NodeList`s) into arrays before usage.
+    * Use `Array.from` to convert array-like objects (e.g. `NodeList`) into arrays before usage.
     * Prioritize immutable arrays. Use `Array.from` and `array.concat` to construct new arrays from existing immutable arrays. 
 * Functions
     * Arrow functions
         * ```javascript
           (aa) => {
             console.log('foo');
-          }
+          };
           ```
         * Use wherever possible.
         * Parenthesize arguments even when there is a single argument. This simplifies refactoring.
@@ -153,8 +153,13 @@ Those making modifications made to the Hello X codebase should endeavor to write
       bux="bar"
     >
       <div className="quux"></div>
+
+      <span>
+        buzz
+      </span>
     </Foo>
     ```
   * Prioritize JSX over usages of `React.createElement`.
   * Put each element — opening bracket/component name, prop, closing bracket, children, closing tag — on a separate line.
   * The whole element may be put on a single line if it has has one or zero props and no children. 
+  * Use double quotes for string literal prop assignments.
