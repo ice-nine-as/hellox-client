@@ -39,10 +39,10 @@ Those making modifications made to the Hello X codebase should endeavor to write
           import * from 'bar';
           ```
         * Should be avoided wherever possible. Default imports have arbitrary names disconnected from the definition in the module from which they are imported. This increases the risk of identifiers rotting and remaining an old name which is no longer illustrative or correct.
-        *  There are times where you'll need to use default imports (`import * as React from 'react') and that's okay.
+        *  There are times where you'll need to use default imports (`import * as React from 'react'`) and that's okay.
 * Require
     * Always use `const` for required modules or properties.
-    * Do not mutate required modules or properties except where absolutely necessary. Use `Object.assign` to clone objects, and foo.bind to clone functions.
+    * Do not mutate required modules or properties except where absolutely necessary. Use `Object.assign` to clone objects, and `function.bind` to clone functions.
     * Named imports
         * ```javascript
           const {
@@ -74,8 +74,8 @@ Those making modifications made to the Hello X codebase should endeavor to write
             * Don't feel compelled to do this if you don't already have a (notional) `a` variable defined.
         * Method names
             * ```javascript
-              const a = {
-                foo() {
+              const foo = {
+                bar() {
                   console.log('bar');
                 },
               };
@@ -146,3 +146,15 @@ Those making modifications made to the Hello X codebase should endeavor to write
     * Try to use code blocks rather than expressions. This makes it easier to refactor code to include logging or debugger statements.
 * Switch statements
     * Don't ever use them. Use `if-else` blocks instead.
+* JSX
+  * ```xml
+    <Foo
+      bar={baz}
+      bux="bar"
+    >
+      <div className="quux"></div>
+    </Foo>
+    ```
+  * Prioritize JSX over usages of `React.createElement`.
+  * Put each element — opening bracket/component name, prop, closing bracket, children, closing tag — on a separate line.
+  * The whole element may be put on a single line if it has has one or zero props and no children. 
