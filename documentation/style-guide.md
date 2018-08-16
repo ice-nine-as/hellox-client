@@ -17,8 +17,13 @@
     8. [Arrays](#ts-js-jsx-arrays)
     9. [Functions](#ts-js-jsx-functions)
     10. [Loops](#ts-js-jsx-loops)
-    10. [Switch statements](#ts-js-jsx-switch-statements)
-    10. [JSX](#ts-js-jsx-jsx)
+    11. [Switch statements](#ts-js-jsx-switch-statements)
+    12. [JSX](#ts-js-jsx-jsx)
+4. [CSS and LESS](#css-less)
+    1. [Spacing](#css-less-spacing)
+    2. [Selectors](#css-less-selectors)
+    3. [Declarations](#css-less-declarations)
+    4. [Media queries](#css-less-media-queries)
 
 <a name="introduction"></a>
 ## Introduction
@@ -86,13 +91,13 @@ Those making modifications made to the Hello X codebase should endeavor to write
           ```
 <a name="ts-js-jsx-strings"></a>
 * Strings
+    * ```javascript
+      const one = 'foo';
+      const two = 'bar';
+      const together = `${one} ${two}`;
+      ```
      * Use single quotes (`'`) rather than double quotes (`"`).
      * Use template strings rather than concatenating strings.
-        * ```javascript
-          const one = 'foo';
-          const two = 'bar';
-          const together = `${one} ${two}`;
-          ```
 <a name="ts-js-jsx-objects"></a>
 * Objects
     * Use ES6 shorthands where possible.
@@ -200,3 +205,36 @@ Those making modifications made to the Hello X codebase should endeavor to write
   * Put each element — opening bracket/component name, prop, closing bracket, children, closing tag — on a separate line.
   * The whole element may be put on a single line if it has has one or zero props and no children. 
   * Use double quotes for string literal prop assignments.
+
+<a name="css-less"></a>
+## CSS/LESS
+<a name="css-less-spacing"></a>
+* Spacing
+    * Two spaces per indentation.
+<a name="css-less-selectors"></a>
+* Selectors
+    * ```css
+      .foo {
+      }
+      ```
+    * Space between selector and opening bracket.
+    * Opening bracket on same line as selector.
+    * Closing bracket alone on its own line.
+<a name="css-less-declarations"></a>
+* Declarations
+    * ```css
+      bar: baz;
+      ```
+    * Colon immediately after property.
+    * Space between colon and property value.
+    * Semicolon immediately after property value.
+<a name="css-less-media-queries"></a>
+* Media queries
+    * ```css
+      @media screen and (max-width: 1000px) {
+      }
+      ```
+    * Space between logical operator and parenthesized media feature.
+    * Space between last type or feature and opening bracket.
+    * Opening bracket on same line as types and features.
+    * Closing bracket alone on its own line.
