@@ -14,11 +14,12 @@ import {
 import * as React from 'react';
 
 /* Registers service worker. */
-import {
-  applyUpdate,
-  install,
-} from 'offline-plugin/runtime';
 if (process.env.NODE_ENV === 'production') {
+  const {
+    applyUpdate,
+    install,
+  } = require('offline-plugin/runtime');
+
   // istanbul ignore next
   install({
     onUpdating() {

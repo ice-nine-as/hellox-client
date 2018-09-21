@@ -18,12 +18,11 @@ export class MailChimpSignup extends React.PureComponent {
         >
           <div id="mc_embed_signup_scroll">
             <label htmlFor="mce-EMAIL">
-              Join our newsletter to get monthly updates from us
+              Join our news/letter to get monthly updates from us
             </label>
 
             <input
               type="email"
-              value=""
               name="EMAIL"
               className="email"
               id="mce-EMAIL"

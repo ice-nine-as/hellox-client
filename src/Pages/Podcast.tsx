@@ -23,6 +23,9 @@ import {
   PodcastItemFull,
 } from '../Components/PodcastItemFull';
 import {
+  PodcastSubscriptionWidget,
+} from '../Components/PodcastSubscriptionWidget';
+import {
   connect,
   MapStateToProps,
 } from 'react-redux';
@@ -46,7 +49,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Podcast.less';
-import { PodcastSubscriptionLinks } from '../Components/PodcastSubscriptionLinks';
 const styles = _styles || {};
 
 export const strings = {
@@ -145,7 +147,7 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
         {
           loaded ?
             [
-              <PodcastSubscriptionLinks key={1} />,
+              <PodcastSubscriptionWidget key={1} />,
   
               <div className={styles.MorePodcastsContainer} key={2}>
                 <h2 className={styles.MorePodcastsTitle}>

@@ -47,8 +47,8 @@ import {
   PodcastsLinkAction,
 } from '../Actions/Link/PodcastsLinkAction';
 import {
-  PodcastSubscriptionLinks,
-} from '../Components/PodcastSubscriptionLinks';
+  PodcastSubscriptionWidget,
+} from '../Components/PodcastSubscriptionWidget';
 import {
   ConnectedQuoteDisplay,
 } from '../Components/QuoteDisplay';
@@ -253,7 +253,7 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
 
         <section className={`${styles.Section} ${styles.Second} light`}>
           <div className={styles.PodcastSubscriptionWrapper}>
-            <PodcastSubscriptionLinks />
+            <PodcastSubscriptionWidget />
           </div>
 
           <div className={styles.ContentWrapper}>

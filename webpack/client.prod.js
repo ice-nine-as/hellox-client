@@ -7,7 +7,6 @@ const {
 } = require('../src/Enums/PageIdentifiers');
 const { resolve, }      = require('path');
 const OfflinePlugin     = require('offline-plugin');
-const { promisify, }    = require('util');
 const webpack           = require('webpack');
 
 const uglifyOptions = {

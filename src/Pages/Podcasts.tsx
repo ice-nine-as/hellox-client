@@ -20,8 +20,8 @@ import {
   pickFeed,
 } from '../Functions/pickFeed';
 import {
-  PodcastSubscriptionLinks,
-} from '../Components/PodcastSubscriptionLinks';
+  PodcastSubscriptionWidget,
+} from '../Components/PodcastSubscriptionWidget';
 import {
   connect,
   MapStateToProps,
@@ -162,7 +162,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
             className={styles.SubscribeWrapper}
             key="sub"
           >
-            <PodcastSubscriptionLinks />
+            <PodcastSubscriptionWidget />
           </div>
         </div>
 
