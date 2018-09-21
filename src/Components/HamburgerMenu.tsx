@@ -65,7 +65,7 @@ export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & 
     const stateClass = hamburgerOpen === true ? ' open' : '';
 
     return (
-      <div className={styles.HamburgerMenu}>
+      <div className={`${styles.HamburgerMenu}${stateClass}`}>
         <div className={styles.HamburgerMenuLogo}>
           {
             (() => {
@@ -74,7 +74,7 @@ export class HamburgerMenu extends React.PureComponent<THamburgerMenuOwnProps & 
                 const _child = child as React.ReactElement<any>;
                 return React.cloneElement(_child, {
                   onClick: () => this.linkAction(_child),
-                })
+                });
               } else {
                 return child;
               }
