@@ -23,6 +23,9 @@ import {
   ITeamMembers,
 } from '../Interfaces/ITeamMembers';
 import {
+  PodcastSubscriptionWidget,
+} from '../Components/PodcastSubscriptionWidget';
+import {
   connect,
   MapStateToProps,
 } from 'react-redux';
@@ -54,13 +57,9 @@ export const strings = {
 };
 
 export class About extends React.Component<TPageProps & TAboutStoreProps & TAboutDispatchProps, { error: string, }> {
-  constructor(props: any, context?: any) {
-    super(props, context);
-
-    this.state = {
-      error: '',
-    };
-  }
+  state = {
+    error: '',
+  };
 
   doLoad() {
     const {
@@ -177,6 +176,8 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
 
             <div className={styles.Border}></div>
           </div>
+
+          <PodcastSubscriptionWidget />
 
           <div className={styles.Body}>
             <h2 className={styles.Header}>
