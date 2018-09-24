@@ -35,6 +35,9 @@ import {
   pickFeed,
 } from '../Functions/pickFeed';
 import {
+  PodcastSubscriptionWidget,
+} from '../Components/PodcastSubscriptionWidget';
+import {
   connect,
   MapStateToProps,
 } from 'react-redux';
@@ -206,6 +209,8 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
 
           <div className={styles.Border}></div>
         </div>
+
+        <PodcastSubscriptionWidget />
 
         <div className={styles.LanguageButtonContainer}>
           <h2 className={styles.ExplainerHeader}>

@@ -57,13 +57,9 @@ export const strings = {
 };
 
 export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps & TPodcastsDispatchProps, { error: string, }> {
-  constructor(props: any, context?: any) {
-    super(props, context);
-
-    this.state = {
-      error: '',
-    };
-  }
+  state = {
+    error: '',
+  };
 
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
@@ -156,14 +152,14 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
         </h1>
 
         <div className={styles.Wrapper}>
-          {children}
-
           <div
             className={styles.SubscribeWrapper}
             key="sub"
           >
             <PodcastSubscriptionWidget />
           </div>
+
+          {children}
         </div>
 
         <VoiceMemoForm />

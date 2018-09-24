@@ -19,8 +19,8 @@ export class PodcastSubscriptionWidget extends React.Component<{}, TPodcastSubsc
     open: false,
   };
 
-  constructor(props: any) {
-    super(props);
+  constructor(props: any, context?: any) {
+    super(props, context);
     this.toggle = this.toggle.bind(this);
   }
 
