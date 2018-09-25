@@ -11,6 +11,9 @@ import {
   KommuneIcon,
 } from './Icon/Sponsors/KommuneIcon';
 import {
+  KoroIcon,
+} from './Icon/Sponsors/KoroIcon';
+import {
   KulturradIcon,
 } from './Icon/Sponsors/KulturradIcon';
 import {
@@ -43,6 +46,7 @@ export class SponsorIcons extends React.PureComponent {
         <FrittOrdIcon />
         <InnovationNorwayIcon />
         <KommuneIcon />
+        <KoroIcon />
         <KulturradIcon />
         <NnkmIcon />
         <PolariaIcon />

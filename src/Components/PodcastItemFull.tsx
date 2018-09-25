@@ -5,6 +5,9 @@ import {
 	getPreparedHtml,
 } from '../Functions/getPreparedHtml';
 import {
+	PodcastSubscriptionWidget,
+} from './PodcastSubscriptionWidget';
+import {
 	TPodcastItemFullProps,
 } from '../TypeAliases/TPodcastItemFullProps';
 
@@ -34,7 +37,9 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 
 		/* Escape all quote marks in the image URL. If this is not done, the
 		 * browser will refuse to load the image. */
-		const correctedImageUrl = (item.itunesImage || '').replace("'", "\\'").replace('"', '\\"');
+		const correctedImageUrl = (item.itunesImage || '')
+			.replace("'", "\\'")
+			.replace('"', '\\"');
 
 		return (
 			<div className={styles.PodcastItemFull}>
@@ -44,6 +49,8 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 						backgroundImage: `url(${correctedImageUrl})`,
 					}}
 				></div>
+
+				<PodcastSubscriptionWidget />
 
 				<h1 className={styles.Title}>
 					{title || 'No title provided.'}

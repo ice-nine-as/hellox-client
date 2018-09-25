@@ -23,15 +23,15 @@ import {
   PodcastItemFull,
 } from '../Components/PodcastItemFull';
 import {
-  PodcastSubscriptionWidget,
-} from '../Components/PodcastSubscriptionWidget';
-import {
   connect,
   MapStateToProps,
 } from 'react-redux';
 import {
   ConnectedLatestPodcasts,
 } from '../Components/LatestPodcasts';
+import {
+  MailChimpSignup,
+} from '../Components/MailChimpSignup';
 import {
   TPageProps
 } from '../TypeAliases/TPageProps';
@@ -57,19 +57,16 @@ export const strings = {
 };
 
 export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & TPodcastDispatchProps, { error: string, }> {
-  constructor(props: any, context?: any) {
-    super(props, context);
-
-    this.state = {
-      error: '',
-    };
-  }
+  state = {
+    error: '',
+  };
 
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
    * number of attempts? */
   doLoad() {
     const {
       feeds,
+      getPodcasts,
       language,
     } = this.props;
 
@@ -83,7 +80,7 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
     });
 
     if (!feed) {
-      this.props.getPodcasts().then(
+      getPodcasts().then(
         () => {},
         () => this.setState({ error: strings.LOAD_ERROR, }) 
       );
@@ -147,15 +144,15 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
         {
           loaded ?
             [
-              <PodcastSubscriptionWidget key={1} />,
-  
-              <div className={styles.MorePodcastsContainer} key={2}>
+              <div className={styles.MorePodcastsContainer} key={1}>
                 <h2 className={styles.MorePodcastsTitle}>
                   More Podcasts
                 </h2>
 
                 <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
-              </div>
+              </div>,
+              <hr className={styles.HorizontalRule} key={2} />,
+              <MailChimpSignup key={3} />
             ] :
             null
         }

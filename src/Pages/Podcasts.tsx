@@ -17,6 +17,9 @@ import {
   ConnectedLatestPodcasts,
 } from '../Components/LatestPodcasts';
 import {
+  MailChimpSignup,
+} from '../Components/MailChimpSignup';
+import {
   pickFeed,
 } from '../Functions/pickFeed';
 import {
@@ -161,6 +164,12 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
 
           {children}
         </div>
+
+        <hr className={styles.HorizontalRule} />
+
+        <MailChimpSignup />
+
+        <hr className={styles.HorizontalRule} />
 
         <VoiceMemoForm />
       </div>
