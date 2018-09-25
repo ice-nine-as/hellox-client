@@ -25,7 +25,8 @@ const getClientFilepath = resolve.bind(null, __dirname, '..', 'client');
 
 const handlePushError = (err: Error | undefined) => {
   if (err) {
-    console.trace(err);
+    console.log(err);
+    console.trace();
   }
 };
 
