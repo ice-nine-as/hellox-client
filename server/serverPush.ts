@@ -132,7 +132,7 @@ export const serverPush = async ({
   });
 
   /* Load the font files. Load WOFF2 only. If the browser doesn't have
-    * WOFF2, it probably doesn't have HTTP2. */
+   * WOFF2, it probably doesn't have HTTP2. */
   const fontGlob = resolve(projectDirPath, 'fonts') + '/*.woff2';
   const fontFilePaths: Array<string> = await globProm(fontGlob);
   const fontFiles = await (async () => {

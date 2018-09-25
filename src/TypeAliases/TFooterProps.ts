@@ -4,6 +4,7 @@ import {
 
 export type TFooterProps = {
   page: PageIdentifiers;
+  hideMailingListSignup?: boolean;
 };
 
 export default TFooterProps;

@@ -32,6 +32,9 @@ import {
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
 import {
+  pagesWithFooterMailingListHidden,
+} from '../Properties/pagesWithFooterMailingListSignupHidden';
+import {
   PageTitles,
 } from '../Enums/PageTitles';
 import {
@@ -67,8 +70,8 @@ import _styles from '../Styles/Components/App.less';
 const styles = _styles || {};
 
 export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps> {
-  constructor(props: TAppStoreProps & TAppDispatchProps) {
-    super(props);
+  constructor(props: TAppStoreProps & TAppDispatchProps, context?: any) {
+    super(props, context);
 
     this.beforeChange = this.beforeChange.bind(this);
     this.afterChange  = this.afterChange.bind(this);
@@ -77,9 +80,12 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
 
   render() {
     const {
+      hamburgerOpen,
       location: {
         type: page,
       },
+
+      setHamburgerStatus,
     } = this.props;
 
     const realPage = isPageIdentifier(page) ? page : PageIdentifiers.NotFound;
@@ -92,8 +98,8 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
           className={styles.PageContainer}
           onClick={() => {
             /* Close hamburger menu when any location on page is clicked. */
-            if (this.props.hamburgerOpen === true) {
-              this.props.setHamburgerStatus(false);
+            if (hamburgerOpen === true) {
+              setHamburgerStatus(false);
             }
           }}
         >
@@ -105,43 +111,70 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
           />
         </div>
 
-        <Footer page={realPage} />
+        <Footer
+          hideMailingListSignup={(() => (
+            /* Hide mailing list signup if the page identifier exists in the
+             * pagesWithFooterMailingListHidden array. */
+            pagesWithFooterMailingListHidden.indexOf(realPage) !== -1
+          ))()}
+          page={realPage}  
+        />
       </div>
     );
   }
 
   beforeChange({ isSync }: { isSync: boolean }) {
+    const {
+      hamburgerOpen,
+      setError,
+      setHamburgerStatus,
+      setLoading,
+    } = this.props;
+
     if (!isSync) {
-      this.props.setError(false);
-      this.props.setLoading(true);
+      setError(false);
+      setLoading(true);
     }
 
     /* Close the hamburger menu before we navigate to a new page. */
-    if (this.props.hamburgerOpen === true) {
-      this.props.setHamburgerStatus(false);
+    if (hamburgerOpen === true) {
+      setHamburgerStatus(false);
     }
   }
 
   afterChange({ isSync, isServer, isMount, }: TAfterChangeDestructure) {
+    const {
+      setDone,
+      setError,
+      setLoading,
+      location,
+    } = this.props;
+
     if (!isSync) {
-      this.props.setError(false);
-      this.props.setLoading(false);
+      setError(false);
+      setLoading(false);
     } else if (!isServer && !isMount) {
-      this.props.setError(false);
-      this.props.setDone(true);
+      setError(false);
+      setDone(true);
     }
 
     if (!isNode()) {
       /* Change the browser tab's title. */
-      document.title = `Hello X - ${PageTitles[this.props.location.type as PageIdentifiers] || '?'}`;
+      document.title = 'Hello X - ' +
+        PageTitles[location.type as PageIdentifiers] || '?';
     }
   }
 
   handleError(error: Error) {
+    const {
+      setError,
+      setLoading,
+    } = this.props;
+
     console.error(error);
 
-    this.props.setError(true);
-    this.props.setLoading(false);
+    setError(true);
+    setLoading(false);
 
     if (!isNode()) {
       /* Change the browser tab's title. */
@@ -150,9 +183,13 @@ export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps>
   }
 
   componentDidCatch(error: Error, info: any) {
+    const {
+      setErrorPage,
+    } = this.props;
+
     console.error(info);
     this.handleError(error);
-    this.props.setErrorPage();
+    setErrorPage();
   }
 }
 

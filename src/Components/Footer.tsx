@@ -28,6 +28,10 @@ const styles = _styles || {};
 
 export class Footer extends React.PureComponent<TFooterProps> {
   render() {
+    const {
+      hideMailingListSignup,
+    } = this.props;
+
     return (
       <div className={`${styles.Footer} Footer Page-${this.props.page}`}>
         <div className={`${styles.VerticalHalf} ${styles.First}`}>
@@ -63,7 +67,12 @@ export class Footer extends React.PureComponent<TFooterProps> {
         </div>
 
         <div className={`${styles.VerticalHalf} ${styles.Second}`}>
-          <MailChimpSignup />
+          {/* Show the mailing list component by default, but allow the parent
+            * component to hide it if desired. */
+            hideMailingListSignup ?
+              null :
+              <MailChimpSignup />
+          }
 
           <div className={styles.SponsorIconsWrapper}>
             <SponsorIcons />

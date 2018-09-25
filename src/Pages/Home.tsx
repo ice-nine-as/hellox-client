@@ -35,6 +35,9 @@ import {
   LogoStates,
 } from '../Enums/LogoStates';
 import {
+  MailChimpSignup,
+} from '../Components/MailChimpSignup';
+import {
   pickFeed,
 } from '../Functions/pickFeed';
 import {
@@ -97,6 +100,9 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
       language,
     });
 
+    /* Load the podcast if there is no podcast feed, if the feed is missing the
+     * items property, or if the items property is not an array with
+     * contents. */
     if (!feed || !feed.items || !feed.items.length) {
       loadPodcasts();
     }
@@ -281,6 +287,12 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
         </section>
 
         <section className={`${styles.Section} ${styles.Third}`}>
+          <div className={styles.MailingListSignupContainer}>
+            <MailChimpSignup />
+          </div>
+
+          <hr className={styles.HorizontalRule} />
+
           <h2 className={styles.ForumTopicsTitle}>
             Latest forum topics
           </h2>

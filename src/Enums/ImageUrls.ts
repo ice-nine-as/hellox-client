@@ -30,6 +30,7 @@ export enum ImageUrls {
   SponsorFramIcon             = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/FRAM.jpg',
   SponsorFrittOrdIcon         = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/Fritt_ord.jpg',
   SponsorInnovationNorwayIcon = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/IN.jpg',
+  SponsorKoroIcon             = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/WHITE+on+transparent-KOROlogo-english.png',
   SponsorKulturradIcon        = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/KLTR.jpg',
   SponsorKommuneIcon          = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/Kommune.jpg',
   SponsorNnkmIcon             = 'https://s3.eu-central-1.amazonaws.com/hellox/images/icons/NNKM.jpg',
