@@ -157,7 +157,7 @@ Monit
 ## Do not alert when Monit starts, stops or performs a user initiated action.
 ## This filter is recommended to avoid getting alerts for trivial cases.
 #
-set alert furkle@furkleindustries.com not on { instance, action }
+  set alert furkle@furkleindustries.com not on { instance, action }
 
 
 ## Monit has an embedded HTTP interface which can be used to view status of
@@ -183,17 +183,17 @@ set alert furkle@furkleindustries.com not on { instance, action }
 ## Check that the docker container, hellox-client, is running, using the
 ## checkIfUp script.
 #
-check program helloxServerContainer with path "/etc/hellox-client/scripts/checkIfUp.sh"
-  if status != 0 then alert
+  check program helloxServerContainer with path "/etc/hellox-client/scripts/checkIfUp.sh"
+    if status != 0 then alert
 
 ## Check a remote host availability by issuing a ping test and check the
 ## content of a response from a web server. Up to three pings are sent and
 ## connection to a port and an application level network check is performed.
 #
-check host myserver with address 192.168.1.1
-  if failed ping then alert
-  if failed port 443 protocol https then alert
-  if failed port 80 protocol http then alert
+  check host helloxClient with address localhost
+    if failed ping then alert
+    if failed port 443 protocol https then alert
+    if failed port 80 protocol http then alert
 
 ## Check general system resources such as load average, cpu and memory
 ## usage. Each test specifies a resource, conditions and the action to be
@@ -205,7 +205,6 @@ check host myserver with address 192.168.1.1
     if cpu usage > 95% for 10 cycles then alert
     if memory usage > 75% then alert
     if swap usage > 25% then alert
-
 
 ## Check if a file exists, checksum, permissions, uid and gid. In addition
 ## to alert recipients in the global section, customized alert can be sent to
