@@ -20,14 +20,12 @@
 #   with start delay 240    # optional: delay the first check by 4-minutes (by
 #                           # default Monit check immediately after Monit start)
 #
-#
 ## Set syslog logging. If you want to log to a standalone log file instead,
 ## specify the full path to the log file
 #
   set log /var/log/monit.log
 
-#
-#
+
 ## Set the location of the Monit lock file which stores the process id of the
 ## running Monit instance. By default this file is stored in $HOME/.monit.pid
 #
@@ -37,9 +35,9 @@
 ## Monit instance. The id is generated and stored on first Monit start. By
 ## default the file is placed in $HOME/.monit.id.
 #
-# set idfile /var/.monit.id
   set idfile /var/lib/monit/id
-#
+
+
 ## Set the location of the Monit state file which saves monitoring states
 ## on each cycle. By default the file is placed in $HOME/.monit.state. If
 ## the state file is stored on a persistent filesystem, Monit will recover
@@ -47,7 +45,6 @@
 ## state will be lost on reboot which may be convenient in some situations.
 #
   set statefile /var/lib/monit/state
-
 
 
 ## Set limits for various tests. The following example shows the default values:
@@ -78,13 +75,14 @@
 # will use the second mail server in the list and so on. By default Monit uses
 # port 25 - it is possible to override this with the PORT option.
 #
-set mailserver email-smtp.eu-west-1.amazonaws.com # primary mailserver
-	port 587
-	username # MUST BE PROVIDED
-	password # MUST BE PROVIDED
-	using TLS,
+  set mailserver email-smtp.eu-west-1.amazonaws.com # primary mailserver
+    port 587
+    username # MUST BE PROVIDED
+    password # MUST BE PROVIDED
+    using TLS,
 
-	using hostname "hellox.me"
+    using hostname "hellox.me"
+
 
 ## By default Monit will drop alert events if no mail servers are available.
 ## If you want to keep the alerts for later delivery retry, you can use the
@@ -94,10 +92,10 @@ set mailserver email-smtp.eu-west-1.amazonaws.com # primary mailserver
 ## available in the back end filesystem).
 #
   set eventqueue
-      basedir /var/lib/monit/events # set the base directory where events will be stored
-      slots 100                     # optionally limit the queue size
-#
-#
+    basedir /var/lib/monit/events # set the base directory where events will be stored
+    slots 100                     # optionally limit the queue size
+
+
 ## Send status and events to M/Monit (for more informations about M/Monit
 ## see https://mmonit.com/). By default Monit registers credentials with
 ## M/Monit so M/Monit can smoothly communicate back to Monit and you don't
@@ -147,23 +145,21 @@ Service $SERVICE
 Love,
 Monit
 }
-#
-#
+
+
 ## You can set alert recipients whom will receive alerts if/when a
 ## service defined in this file has errors. Alerts may be restricted on
 ## events by using a filter as in the second example below.
 #
 
-set alert furkle@furkleindustries.com                       # receive all alerts
+# set alert furkle@furkleindustries.com                       # receive all alerts
 
-#
 ## Do not alert when Monit starts, stops or performs a user initiated action.
 ## This filter is recommended to avoid getting alerts for trivial cases.
 #
-#set alert furkle@furkleindustries.com not on { instance, action }
+set alert furkle@furkleindustries.com not on { instance, action }
 
-#
-#
+
 ## Monit has an embedded HTTP interface which can be used to view status of
 ## services monitored and manage services from a web interface. The HTTP
 ## interface is also required if you want to issue Monit commands from the
@@ -172,10 +168,10 @@ set alert furkle@furkleindustries.com                       # receive all alerts
 ## commands to a running Monit daemon. See the Monit Wiki if you want to
 ## enable SSL for the HTTP interface.
 #
-set httpd port 2812 and
-     use address localhost  # only accept connection from localhost
-     allow localhost        # allow localhost to connect to the server and
-     allow admin:testpassword
+  set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+    allow admin:testpassword
 #     #with ssl {            # enable SSL/TLS and set path to server certificate
 #     #    pemfile: /etc/ssl/certs/monit.pem
 #     #}
@@ -183,19 +179,34 @@ set httpd port 2812 and
 ###############################################################################
 ## Services
 ###############################################################################
-##
+#
+## Check that the docker container, hellox-client, is running, using the
+## checkIfUp script.
+#
+check program helloxServerContainer with path "/etc/hellox-client/scripts/checkIfUp.sh"
+  if status != 0 then alert
+
+## Check a remote host availability by issuing a ping test and check the
+## content of a response from a web server. Up to three pings are sent and
+## connection to a port and an application level network check is performed.
+#
+check host myserver with address 192.168.1.1
+  if failed ping then alert
+  if failed port 443 protocol https then alert
+  if failed port 80 protocol http then alert
+
 ## Check general system resources such as load average, cpu and memory
 ## usage. Each test specifies a resource, conditions and the action to be
 ## performed should a test fail.
 #
-#  check system $HOST
-#    if loadavg (1min) > 4 then alert
-#    if loadavg (5min) > 2 then alert
-#    if cpu usage > 95% for 10 cycles then alert
-#    if memory usage > 75% then alert
-#    if swap usage > 25% then alert
-#
-#
+  check system $HOST
+    if loadavg (1min) > 4 then alert
+    if loadavg (5min) > 2 then alert
+    if cpu usage > 95% for 10 cycles then alert
+    if memory usage > 75% then alert
+    if swap usage > 25% then alert
+
+
 ## Check if a file exists, checksum, permissions, uid and gid. In addition
 ## to alert recipients in the global section, customized alert can be sent to
 ## additional recipients by specifying a local alert handler. The service may
@@ -284,18 +295,6 @@ set httpd port 2812 and
 #    if failed gid 0 then unmonitor
 #
 #
-## Check a remote host availability by issuing a ping test and check the
-## content of a response from a web server. Up to three pings are sent and
-## connection to a port and an application level network check is performed.
-#
-#  check host myserver with address 192.168.1.1
-#    if failed ping then alert
-#    if failed port 3306 protocol mysql with timeout 15 seconds then alert
-#    if failed port 80 protocol http
-#       and request /some/path with content = "a string"
-#    then alert
-#
-#
 ## Check a network link status (up/down), link capacity changes, saturation
 ## and bandwidth usage.
 #
@@ -314,9 +313,6 @@ set httpd port 2812 and
 #
 #
 
-check program helloxServerContainer with path "/etc/hellox-client/checkIfUp.sh"
-    if status != 0 then alert
-
 ###############################################################################
 ## Includes
 ###############################################################################
@@ -324,6 +320,5 @@ check program helloxServerContainer with path "/etc/hellox-client/checkIfUp.sh"
 ## It is possible to include additional configuration parts from other files or
 ## directories.
 #
-   include /etc/monit/conf.d/*
-   include /etc/monit/conf-enabled/*
-#
+  include /etc/monit/conf.d/*
+  include /etc/monit/conf-enabled/*
