@@ -3,23 +3,25 @@
 const google = require('googleapis').google;
 const sheets = google.sheets('v4');
 
-function publishToGoogleSheet(name, email, story) {
+function publishToGoogleSheet(name, email, story, responses) {
   /* Should be copied locally for dev, or volumed in with Docker for prod. */
   const credentials = require('./credentials/google-sheets-credentials.json');
-  const jwtClient = new google.auth.JWT(
-    /* Client email. */
-    credentials.client_email,
-    /* Keyfile. Not used. */
-    null,
-    /* Private key. */
-    credentials.private_key,
-    /* Scopes. */
-    [
-      'https://www.googleapis.com/auth/spreadsheets',
-      'https://www.googleapis.com/auth/drive',
-      'https://www.googleapis.com/auth/drive.file',
-    ]);
-  
+  const jwtClient =
+    new google.auth.JWT(
+      /* Client email. */
+      credentials.client_email,
+      /* Keyfile. Not used. */
+      null,
+      /* Private key. */
+      credentials.private_key,
+      /* Scopes. */
+      [
+        'https://www.googleapis.com/auth/spreadsheets',
+        'https://www.googleapis.com/auth/drive',
+        'https://www.googleapis.com/auth/drive.file',
+      ],
+    );
+
   return new Promise((resolve, reject) => {
     // authenticate request
     jwtClient.authorize((err, tokens) => {
@@ -42,9 +44,19 @@ function publishToGoogleSheet(name, email, story) {
       
           resource: {
             values: [
-              /* [2] is Rating, which should be filled in, after reading, by
-               * editors. */
-              [ name, email, ' ', story, ],
+              [
+                name,
+                email,
+                /* [2] is Rating, which should be filled in, after reading, by
+                 * editors. */
+                ' ',
+                story,
+                /* [4] is Keywords, which should be filled in, after reading,
+                 * by editors. */
+                ' ',
+                new Date(),
+                responses,
+              ],
             ],
           },
       

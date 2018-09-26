@@ -19,7 +19,8 @@ exports = module.exports = {
       const sheetProm = publishToGoogleSheet(
         req.body.name,
         req.body.email,
-        req.body.story);
+        req.body.story,
+        req.body.responses);
 
       sheetProm.then(
         () => {},
