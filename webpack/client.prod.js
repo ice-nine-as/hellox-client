@@ -43,7 +43,7 @@ const fontFiles = (() => {
     });
   } catch (e) {
     console.log('Problem with font file glob search:');
-    console.log(e);
+    console.error(e);
     return [];
   }
 })();
