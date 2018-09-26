@@ -10,6 +10,11 @@ const styles = _styles || {};
 
 export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFormProps> {
   render() {
+    const {
+      completedStory,
+      storyTemplate,
+    } = this.props;
+
     return (
       <form
         action="/story-generator-mailer"
@@ -75,26 +80,18 @@ export class StorySubmissionForm extends React.PureComponent<TStorySubmissionFor
 
         <input
           hidden={true}
-          name="answers"
+          name="responses"
           type="hidden"
-          value={JSON.stringify(this.props.storyTemplate.questions.map<{ id: string, text: string, }>((question) => {
-            const {
-              id,
-              text,
-            } = question.answer;
-
-            return {
-              id,
-              text,
-            };
-          }))}
+          value={storyTemplate.questions.map((question) => (
+            `[${question.answer.id}] ${question.text}: ${question.answer.text}`
+          )).join('\n')}
         />
 
         <input
           hidden={true}
           name="story"
           type="hidden"
-          value={this.props.completedStory}
+          value={completedStory}
         />
       </form>
     );
