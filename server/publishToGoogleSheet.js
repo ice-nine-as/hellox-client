@@ -31,17 +31,17 @@ function publishToGoogleSheet(name, email, story, responses) {
         const request = {
           // The ID of the spreadsheet to update.
           spreadsheetId: '1tAtgMmJYC_HnNTknFxnHzzjrU8yhD33tWcueIoKDA-g',
-      
+
           // The A1 notation of a range to search for a logical table of data.
           // Values will be appended after the last row of the table.
           range: 'A1:A1',
-      
+
           // How the input data should be interpreted.
           valueInputOption: 'RAW',
-      
+
           // How the input data should be inserted.
           insertDataOption: 'INSERT_ROWS',
-      
+
           resource: {
             values: [
               [
@@ -54,20 +54,23 @@ function publishToGoogleSheet(name, email, story, responses) {
                 /* [4] is Keywords, which should be filled in, after reading,
                  * by editors. */
                 ' ',
+                /* [5] is Comments, which should be filled in, after reading,
+                 * by editors. */
+                ' ',
                 new Date(),
                 responses,
               ],
             ],
           },
-      
+
           auth: jwtClient,
         };
-      
+
         sheets.spreadsheets.values.append(request, (err, response) => {
           if (err) {
             reject(err);
           }
-      
+
           resolve();
         });
       }
