@@ -1,7 +1,7 @@
-const serveFavicon = require('serve-favicon');
 const {
   join,
 } = require('path');
+const serveFavicon = require('serve-favicon');
 
 const projectPath = join(__dirname, '..', '..');
 const imagesPath  = join(projectPath, 'images');
