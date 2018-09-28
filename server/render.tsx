@@ -137,7 +137,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             resolve();
           }
         }));
-        
+
         promMetas.push('serverPush');
       }
 
@@ -158,7 +158,6 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       }));
 
       promMetas.push('configureStore');
-
 
       const ambientStyleElement =
         `<style id="ambientStyle">${AmbientStyle}</style>`;
@@ -214,17 +213,15 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         return;
       }
 
-      const state       = (store as Store<TStoreProps>).getState();
+      const state = (store as Store<TStoreProps>).getState();
       const {
         language,
         location,
       } = state;
-      const stateStr    = JSON.stringify(state);
-      const openTag     = '<script id="reduxState">';
-      const varDef      =   `window.REDUX_STATE = ${stateStr};`;
-      const closeTag    = '</script>';
-      const reduxScript = openTag + varDef + closeTag;
-      
+      const stateStr = JSON.stringify(state);
+      const varDef  = `window.REDUX_STATE = ${stateStr};`;
+      const reduxScript = `<script id="reduxState">${varDef}</script>`;
+
       const providerContainer = (
         <ProviderContainer store={store}>
           <ConnectedApp />
@@ -232,7 +229,6 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       );
       
       const appStr = ReactDOMServer.renderToString(providerContainer);
-
       
       const responseStr =
         `<!DOCTYPE html>
@@ -242,21 +238,21 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="theme-color" content="#ea5050">
             <meta name="msapplication-TileColor" content="#ea5050">
-            <meta name="msapplication-TileImage" contÄ8ent="/ms-icon-144x144.png">
+            <meta name="msapplication-TileImage" content="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/ms-icon-144x144_v2.png">
             ${getMetaDescription(location)}
-            <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
-            <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
-            <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
-            <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
-            <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
-            <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
-            <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
-            <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
-            <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
-            <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-            <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
-            <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+            <link rel="apple-touch-icon" sizes="57x57" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-57x57_v2.png">
+            <link rel="apple-touch-icon" sizes="60x60" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-60x60_v2.png">
+            <link rel="apple-touch-icon" sizes="72x72" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-72x72_v2.png">
+            <link rel="apple-touch-icon" sizes="76x76" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-76x76_v2.png">
+            <link rel="apple-touch-icon" sizes="114x114" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-114x114_v2.png">
+            <link rel="apple-touch-icon" sizes="120x120" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-120x120_v2.png">
+            <link rel="apple-touch-icon" sizes="144x144" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-144x144_v2.png">
+            <link rel="apple-touch-icon" sizes="152x152" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-152x152_v2.png">
+            <link rel="apple-touch-icon" sizes="180x180" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-180x180_v2.png">
+            <link rel="icon" type="image/png" sizes="192x192" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/android-icon-192x192_v2.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-32x32_v2.png">
+            <link rel="icon" type="image/png" sizes="96x96" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-96x96_v2.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-16x16_v2.png">
             <link rel="manifest" href="/static/manifest.json">
             ${getPreloadAndPreconnectLinks(location, rssFetchFailed)}
             <title>${getPageTitle(location)}</title>
@@ -264,7 +260,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             ${ambientStyleElement}
             ${css}
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121190776-1"></script>
-            <script>
+            <script id="gtag">
               window.dataLayer=window.dataLayer||[];
               function gtag(){dataLayer.push(arguments);}
               gtag('js',new Date());
