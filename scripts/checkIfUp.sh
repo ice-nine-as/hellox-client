@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $(/usr/bin/docker inspect -f {{.State.Running}} hellox-client) = "true" ]; then
+if [ "$(/usr/bin/docker inspect -f {{.State.Running}} hellox-client)" = "true" ]; then
     echo "Docker container hellox-client is functioning properly."
     exit 0
 else
