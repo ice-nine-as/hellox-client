@@ -61,6 +61,18 @@
 #     restartTimeout:    30 seconds  # timeout for service restart
 # }
 
+  set limits {
+    programOutput:     5 K,        # check program's output truncate limit
+    sendExpectBuffer:  256 B,      # limit for send/expect protocol test
+    fileContentBuffer: 512 B,      # limit for file content test
+    httpContentBuffer: 1 MB,       # limit for HTTP content test
+    networkTimeout:    5 seconds   # timeout for network I/O
+    programTimeout:    300 seconds # timeout for check program
+    stopTimeout:       30 seconds  # timeout for service stop
+    startTimeout:      30 seconds  # timeout for service start
+    restartTimeout:    30 seconds  # timeout for service restart
+  }
+
 ## Set global SSL options (just most common options showed, see manual for
 ## full list).
 #
