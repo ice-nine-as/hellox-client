@@ -109,18 +109,20 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         chunkNames,
         outputPath: join(projectDirPath, 'dist', 'client'),
       });
-      
+
+      /* Useful for specific (probably webpack-oriented) debugging but too
+       * noisy for daily use. 
       console.log(
         ` PATH                        : ${req.path}\n`,
         `DYNAMIC CHUNK NAMES RENDERED: ${chunkNames.join(', ')}\n`,
         `SCRIPTS SERVED              : ${scripts.join(', ')}\n`,
-        `STYLESHEETS SERVED          : ${stylesheets.join(', ')}`);
-        
+        `STYLESHEETS SERVED          : ${stylesheets.join(', ')}`);*/
+
       const promises: Array<Promise<any>> = [];
       const promMetas: Array<'configureStore' | 'serverPush' | 'webpSniffer' | 'fontLoader'> = [];
-      
+
       /* Double cast is because TS complains with the normal cast. The res
-        * variable is definitely a SPDY response if isHttp2 returns true. */
+       * variable is definitely a SPDY response if isHttp2 returns true. */
       const _res = res as any as ServerResponse;
       if (isHttp2() && typeof _res.push === 'function') {
         promises.push(new Promise<any>((resolve) => {
@@ -161,7 +163,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
 
       const ambientStyleElement =
         `<style id="ambientStyle">${AmbientStyle}</style>`;
-      
+
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
       
