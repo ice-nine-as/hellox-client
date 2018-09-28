@@ -62,7 +62,7 @@
 # }
 
   set limits {
-    programOutput:     5 K,        # check program's output truncate limit
+    programOutput:     5 KB,       # check program's output truncate limit
     sendExpectBuffer:  256 B,      # limit for send/expect protocol test
     fileContentBuffer: 512 B,      # limit for file content test
     httpContentBuffer: 1 MB,       # limit for HTTP content test
