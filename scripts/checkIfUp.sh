@@ -9,6 +9,6 @@ else
     echo "$(/usr/bin/docker inspect --format='{{json .State}}' hellox-client)"
     # Print the last 50 lines of the log.
     echo "Docker container logs (last 50 lines):"
-    echo "$(/usr/bin/docker logs | tail -50)"
+    echo "$(/usr/bin/docker logs hellox-client | tail -50)"
     exit 1
 fi
