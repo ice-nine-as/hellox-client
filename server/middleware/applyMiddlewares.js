@@ -8,14 +8,26 @@ const {
   getFormParserMiddleware,
 } = require('./getFormParserMiddleware');
 const {
+  getGoogleAnalyticsMiddleware,
+} = require('./getGoogleAnalyticsMiddleware');
+const {
   getHeaderMiddleware,
 } = require('./getHeaderMiddleware');
 const {
   getStoryGeneratorMailerMiddleware,
 } = require('./getStoryGeneratorMailerMiddleware');
+const morgan = require('morgan');
 
 exports = module.exports = {
   applyMiddlewares(app) {
+    /* Logging middleware. */
+    app.use(morgan('combined', {
+      /* Logs on request rather than response, which allows logs to be written
+       * even if the request crashes the server. Comment this out if you want
+       * response logging as well.
+      immediate: true,*/
+    })),
+
     /* Header middleware. */
     app.use(getHeaderMiddleware());
 
@@ -32,9 +44,6 @@ exports = module.exports = {
     app.post('/story-generator-mailer', getStoryGeneratorMailerMiddleware());
 
     /* Google Analytics ownership endpoint */
-    app.get('/google2121db82d9189338.html', (req, res) => {
-      res.write('google-site-verification: google2121db82d9189338.html');
-      res.end();
-    });
+    app.get('/google2121db82d9189338.html', getGoogleAnalyticsMiddleware());
   },
 };
