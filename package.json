@@ -4,7 +4,11 @@
   "description": "The backend and frontend for the Hello X multimedia project.",
   "main": "dist/es6.node/index.js",
   "types": "src/index.d.ts",
-  "browserslist": "since 2008",
+  "browserslist": [
+    "last 3 versions",
+    "> 1%",
+    "not dead"
+  ],
   "scripts": {
     "clean": "gulp clean",
     "start-dev": "gulp clean && gulp copyManifest && cross-env NODE_ENV=development node server/index.js",
@@ -20,6 +24,7 @@
   "private": true,
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
+    "@types/clean-css": "^3.4.30",
     "@types/express": "^4.11.1",
     "@types/feedparser": "^2.2.1",
     "@types/glob": "^5.0.35",
@@ -62,7 +67,7 @@
     "compression": "^1.7.2",
     "compression-webpack-plugin": "^1.1.11",
     "cross-env": "^5.1.4",
-    "css-loader": "^0.28.10",
+    "css-loader": "^1.0.0",
     "express": "^4.16.2",
     "extract-css-chunks-webpack-plugin": "^2.0.18",
     "gulp": "^3.9.1",
@@ -94,6 +99,7 @@
   "dependencies": {
     "abortcontroller-polyfill": "^1.1.9",
     "body-parser": "^1.18.2",
+    "clean-css": "^4.2.1",
     "es6-promise": "^4.2.4",
     "express-sslify": "^1.2.0",
     "express-static-gzip": "^0.3.2",
