@@ -5,9 +5,9 @@ const glob              = require('glob');
 const {
   PageIdentifiers,
 } = require('../src/Enums/PageIdentifiers');
-const { resolve, }      = require('path');
-const OfflinePlugin     = require('offline-plugin');
-const webpack           = require('webpack');
+const { resolve, } = require('path');
+const OfflinePlugin = require('offline-plugin');
+const webpack = require('webpack');
 
 const uglifyOptions = {
   compress: {
@@ -27,7 +27,7 @@ const uglifyOptions = {
   sourceMap: true,
 };
 
-/* All all pages except Home (already included at /) and Article+Podcast, which
+/* All pages except Home (already included at /) and Article+Podcast, which
  * require id url components. */
 const pages = Object.keys(PageIdentifiers)
   .filter((page) => !/^Article|Home|Podcast$/.test(page))
@@ -87,6 +87,7 @@ module.exports = {
             {
               loader: 'css-loader',
               options: {
+                minimize: true,
                 modules: true,
                 localIdentName: '[name]__[local]--[hash:base64:5]',
               },
@@ -102,7 +103,12 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: 'css-loader',
+        use: {
+          loader: 'css-loader',
+          options: {
+            minimize: true,
+          },
+        },
       },
     ],
   },

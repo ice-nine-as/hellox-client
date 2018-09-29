@@ -1,3 +1,4 @@
+const CleanCSS = require('clean-css');
 import {
   ConnectedApp,
 } from '../src/Components/App';
@@ -80,6 +81,11 @@ let webpSnifferElement: string | null = null;
 const fontLoaderPath = join(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
+const ambientStyleElement: string =
+  `<style id="ambientStyle">${AmbientStyle}</style>`;
+
+let chunkedStyleElement: string | null = null;
+
 export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
   const helloXResponse = async (
     req: Request,
@@ -119,7 +125,13 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         `STYLESHEETS SERVED          : ${stylesheets.join(', ')}`);*/
 
       const promises: Array<Promise<any>> = [];
-      const promMetas: Array<'configureStore' | 'serverPush' | 'webpSniffer' | 'fontLoader'> = [];
+      const promMetas: Array<
+        'configureStore' |
+        'serverPush' |
+        'webpSniffer' |
+        'fontLoader' |
+        'chunkedCssMinification'
+      > = [];
 
       /* Double cast is because TS complains with the normal cast. The res
        * variable is definitely a SPDY response if isHttp2 returns true. */
@@ -161,27 +173,46 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
 
       promMetas.push('configureStore');
 
-      const ambientStyleElement =
-        `<style id="ambientStyle">${AmbientStyle}</style>`;
-
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
-      
+
       if (!webpSnifferElement) {
         promises.push(readFileProm(webpSnifferPath));
         promMetas.push('webpSniffer');
       }
-      
+
       if (!fontLoaderElement) {
         promises.push(readFileProm(fontLoaderPath));
         promMetas.push('fontLoader');
+      }
+
+      if (!chunkedStyleElement) {
+        if (process.env.NODE_ENV === 'development') {
+          /* Do not minify anything in development mode. */
+          chunkedStyleElement = css.toString();
+        } else {
+          const cleanCss = new CleanCSS();
+          const withoutTags = css.toString().slice(7, -8);
+          promises.push(new Promise((resolve) => {
+            try {
+              const minified = cleanCss.minify(withoutTags);
+              resolve(minified.styles);
+            } catch (e) {
+              resolve('');
+            }
+          }));
+
+          promMetas.push('chunkedCssMinification');
+        }
       }
 
       let abort = false;
       const allPromise = Promise.all<any>(promises);
       allPromise.then(() => {}, (err) => {
         console.error(err);
-        console.error('One or more critical promises failed in the render function.');
+        console.error('One or more critical promises failed in the render ' +
+                      'function.');
+        /* Unsure what this does -- seems pointless. */
         abort = false;
       });
 
@@ -207,7 +238,9 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             `<script async defer id="fontLoader">
               ${result}
             </script>`;
-        }
+          } else if (promMetas[index] === 'chunkedCssMinification') {
+            chunkedStyleElement = `<style id="chunkedStyle">${result}</style>`;
+          }
       });
 
       /* No store means redirect was already served. */
@@ -236,12 +269,14 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         `<!DOCTYPE html>
         <html lang="${language || 'en'}">
           <head>
+            <title>${getPageTitle(location)}</title>
             <meta charset="utf-8">
+            ${getMetaDescription(location)}
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="theme-color" content="#ea5050">
             <meta name="msapplication-TileColor" content="#ea5050">
             <meta name="msapplication-TileImage" content="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/ms-icon-144x144_v2.png">
-            ${getMetaDescription(location)}
+            ${getPreloadAndPreconnectLinks(location, rssFetchFailed)}
             <link rel="apple-touch-icon" sizes="57x57" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-57x57_v2.png">
             <link rel="apple-touch-icon" sizes="60x60" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-60x60_v2.png">
             <link rel="apple-touch-icon" sizes="72x72" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-72x72_v2.png">
@@ -256,11 +291,9 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             <link rel="icon" type="image/png" sizes="96x96" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-96x96_v2.png">
             <link rel="icon" type="image/png" sizes="16x16" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-16x16_v2.png">
             <link rel="manifest" href="/static/manifest.json">
-            ${getPreloadAndPreconnectLinks(location, rssFetchFailed)}
-            <title>${getPageTitle(location)}</title>
             ${webpSnifferElement}
             ${ambientStyleElement}
-            ${css}
+            ${chunkedStyleElement}
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121190776-1"></script>
             <script id="gtag">
               window.dataLayer=window.dataLayer||[];

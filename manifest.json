@@ -1,6 +1,7 @@
 {
   "short_name": "Hello X",
-  "name": "Hello X","icons": [
+  "name": "Hello X",
+  "icons": [
     {
      "src": "https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/android-icon-36x36_v2.png",
      "sizes": "36x36",
