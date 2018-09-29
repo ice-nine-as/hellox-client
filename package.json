@@ -64,6 +64,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-watch": "^2.0.7",
+    "clean-css": "^4.2.1",
     "compression": "^1.7.2",
     "compression-webpack-plugin": "^1.1.11",
     "cross-env": "^5.1.4",
@@ -99,7 +100,6 @@
   "dependencies": {
     "abortcontroller-polyfill": "^1.1.9",
     "body-parser": "^1.18.2",
-    "clean-css": "^4.2.1",
     "es6-promise": "^4.2.4",
     "express-sslify": "^1.2.0",
     "express-static-gzip": "^0.3.2",

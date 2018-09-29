@@ -187,10 +187,10 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       }
 
       if (!chunkedStyleElement) {
-        if (process.env.NODE_ENV === 'development') {
+        /*if (process.env.NODE_ENV === 'development') {*/
           /* Do not minify anything in development mode. */
           chunkedStyleElement = css.toString();
-        } else {
+        /*} else {
           const cleanCss = new CleanCSS();
           const withoutTags = css.toString().slice(7, -8);
           promises.push(new Promise((resolve) => {
@@ -203,7 +203,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
           }));
 
           promMetas.push('chunkedCssMinification');
-        }
+        }*/
       }
 
       let abort = false;
