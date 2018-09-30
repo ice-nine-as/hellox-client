@@ -1,4 +1,3 @@
-const CleanCSS = require('clean-css');
 import {
   ConnectedApp,
 } from '../src/Components/App';
@@ -81,11 +80,6 @@ let webpSnifferElement: string | null = null;
 const fontLoaderPath = join(serverDirPath, 'fontLoader.js');
 let fontLoaderElement: string | null = null;
 
-const ambientStyleElement: string =
-  `<style id="ambientStyle">${AmbientStyle}</style>`;
-
-let chunkedStyleElement: string | null = null;
-
 export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
   const helloXResponse = async (
     req: Request,
@@ -116,6 +110,9 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         outputPath: join(projectDirPath, 'dist', 'client'),
       });
 
+      console.log(css, stylesheets);
+      console.log(require('util').inspect(css));
+
       /* Useful for specific (probably webpack-oriented) debugging but too
        * noisy for daily use. 
       console.log(
@@ -125,12 +122,13 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         `STYLESHEETS SERVED          : ${stylesheets.join(', ')}`);*/
 
       const promises: Array<Promise<any>> = [];
+      /* Of equal length to the promises array. Provides information as to
+       * which value any given promise has produced. */
       const promMetas: Array<
         'configureStore' |
         'serverPush' |
         'webpSniffer' |
-        'fontLoader' |
-        'chunkedCssMinification'
+        'fontLoader'
       > = [];
 
       /* Double cast is because TS complains with the normal cast. The res
@@ -184,27 +182,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       if (!fontLoaderElement) {
         promises.push(readFileProm(fontLoaderPath));
         promMetas.push('fontLoader');
-      }
-
-      if (!chunkedStyleElement) {
-        /*if (process.env.NODE_ENV === 'development') {*/
-          /* Do not minify anything in development mode. */
-          chunkedStyleElement = css.toString();
-        /*} else {
-          const cleanCss = new CleanCSS();
-          const withoutTags = css.toString().slice(7, -8);
-          promises.push(new Promise((resolve) => {
-            try {
-              const minified = cleanCss.minify(withoutTags);
-              resolve(minified.styles);
-            } catch (e) {
-              resolve('');
-            }
-          }));
-
-          promMetas.push('chunkedCssMinification');
-        }*/
-      }
+      } 
 
       let abort = false;
       const allPromise = Promise.all<any>(promises);
@@ -238,8 +216,6 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             `<script async defer id="fontLoader">
               ${result}
             </script>`;
-          } else if (promMetas[index] === 'chunkedCssMinification') {
-            chunkedStyleElement = `<style id="chunkedStyle">${result}</style>`;
           }
       });
 
@@ -254,7 +230,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         location,
       } = state;
       const stateStr = JSON.stringify(state);
-      const varDef  = `window.REDUX_STATE = ${stateStr};`;
+      const varDef = `window.REDUX_STATE = ${stateStr};`;
       const reduxScript = `<script id="reduxState">${varDef}</script>`;
 
       const providerContainer = (
@@ -262,9 +238,9 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
           <ConnectedApp />
         </ProviderContainer>
       );
-      
+
       const appStr = ReactDOMServer.renderToString(providerContainer);
-      
+
       const responseStr =
         `<!DOCTYPE html>
         <html lang="${language || 'en'}">
@@ -292,8 +268,10 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             <link rel="icon" type="image/png" sizes="16x16" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-16x16_v2.png">
             <link rel="manifest" href="/static/manifest.json">
             ${webpSnifferElement}
-            ${ambientStyleElement}
-            ${chunkedStyleElement}
+            <style id="ambientStyle">${AmbientStyle}</style>
+            ${stylesheets.map((url) => (
+              `<link class="chunkedStyle" rel="stylesheet" href="/static/${url}" />`
+            ))}
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121190776-1"></script>
             <script id="gtag">
               window.dataLayer=window.dataLayer||[];
