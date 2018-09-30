@@ -271,7 +271,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
             <style id="ambientStyle">${AmbientStyle}</style>
             ${stylesheets.map((url) => (
               `<link class="chunkedStyle" rel="stylesheet" href="/static/${url}" />`
-            ))}
+            )).join('\n')}
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121190776-1"></script>
             <script id="gtag">
               window.dataLayer=window.dataLayer||[];
