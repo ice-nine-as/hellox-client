@@ -14,7 +14,7 @@ import {
   connect,
 } from 'react-redux';
 import {
-  Dispatch,
+  Dispatch, AnyAction,
 } from 'redux';
 import {
   TLanguageButtonDispatchProps,
@@ -77,7 +77,7 @@ export const mapStateToProps = ({
   language,
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch<{}>): TLanguageButtonDispatchProps => ({
+export const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): TLanguageButtonDispatchProps => ({
   switchLanguage(lang: Languages): IAppAction {
     return dispatch(createLanguageAction(LanguageAction, lang));
   },

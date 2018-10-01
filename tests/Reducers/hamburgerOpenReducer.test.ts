@@ -15,8 +15,6 @@ import {
 } from '../../src/TypeGuards/isAppAction';
 jest.mock('../../src/TypeGuards/isAppAction');
 
-type Mock = jest.Mock;
-
 describe('hamburgerOpenReducer unit tests.', () => {
   beforeEach(() => {
     // @ts-ignore

@@ -9,24 +9,6 @@ const { resolve, } = require('path');
 const OfflinePlugin = require('offline-plugin');
 const webpack = require('webpack');
 
-const uglifyOptions = {
-  compress: {
-    screw_ie8: true,
-    warnings:  false,
-  },
-
-  mangle: {
-    screw_ie8: true,
-  },
-
-  output: {
-    screw_ie8: true,
-    comments:  false,
-  },
-
-  sourceMap: true,
-};
-
 /* All pages except Home (already included at /) and Article+Podcast, which
  * require id url components. */
 const pages = Object.keys(PageIdentifiers)
@@ -49,6 +31,7 @@ const fontFiles = (() => {
 })();
 
 module.exports = {
+  mode: 'production',
   name: 'client',
   target: 'web',
   entry: [
@@ -61,6 +44,12 @@ module.exports = {
     chunkFilename: '[name].[chunkhash].js',
     path:          resolve(__dirname, '../dist/client/'),
     publicPath:    '/static/',
+  },
+
+  stats: 'verbose',
+
+  optimization: {
+    minimize: true,
   },
 
   module: {
@@ -82,22 +71,21 @@ module.exports = {
       {
         test: /\.less$/,
         exclude: /node_modules/,
-        use: ExtractCssChunks.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-                modules: true,
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-              },
+        use: [
+          ExtractCssChunks.loader,
+
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
             },
+          },
 
-            'postcss-loader',
+          'postcss-loader',
 
-            'less-loader',
-          ],
-        }),
+          'less-loader',
+        ],
       },
 
       {
@@ -106,7 +94,6 @@ module.exports = {
         use: {
           loader: 'css-loader',
           options: {
-            minimize: true,
           },
         },
       },
@@ -123,24 +110,23 @@ module.exports = {
     ],
   },
 
-  plugins: [
+  plugins: [    
+    new ExtractCssChunks({
+      filename:      '[name].[contenthash].css',
+      chunkFilename: '[name].[contenthash].css',
+    }),
+
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
 
-    new ExtractCssChunks(),
-    new webpack.optimize.CommonsChunkPlugin({
-      names:     [ 'bootstrap', ], // needed to put webpack bootstrap code before chunks
-      filename:  '[name].[chunkhash].js',
-      minChunks: Infinity,
-    }),
-
     new webpack.HashedModuleIdsPlugin(), // not needed for strategy to work (just good practice)
-
     new CompressionPlugin(),
-
+    
     new AutoDllPlugin({
       context: resolve(__dirname, '..'),
       filename: '[name].js',
@@ -164,12 +150,9 @@ module.exports = {
           },
         }),
 
-        new webpack.optimize.UglifyJsPlugin(uglifyOptions),
         new CompressionPlugin(),
       ],
     }),
-
-    new webpack.optimize.UglifyJsPlugin(uglifyOptions),
 
     new OfflinePlugin({
       caches: 'all',

@@ -20,7 +20,7 @@ export const getRootReducer = (): Reducer<TStoryGeneratorStoreProps> => {
     currentPart:    currentPartReducer,
     storyTemplates: getStoryTemplateReducers(),
     storyState:     storyStateReducer,
-  });
+  } as any);
 };
 
 export default getRootReducer;

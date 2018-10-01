@@ -41,6 +41,6 @@ export const feedsReducer: TReducer<TFeedsMap, IRssAction> = combineReducers({
   [FeedKeys.StoryTemplateRuPartC]: feedReducer.bind(getKeyObj(FeedKeys.StoryTemplateRuPartC)),
 
   [FeedKeys.TeamMembers]:          feedReducer.bind(getKeyObj(FeedKeys.TeamMembers)),
-});
+} as any);
 
 export default feedsReducer;

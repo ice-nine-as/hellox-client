@@ -9,22 +9,15 @@ import {
 jest.mock('../../src/Functions/getReducers');
 
 import {
-  getRoutesMap,
-} from '../../src/Functions/getRoutesMap';
-jest.mock('../../src/Functions/getRoutesMap');
-
-import {
   applyMiddleware,
   combineReducers,
   compose,
   createStore,
-  StoreEnhancerStoreCreator,
 } from 'redux';
 jest.mock('redux');
 
 import {
   connectRoutes,
-  RoutesMap,
 } from 'redux-first-router';
 jest.mock('redux-first-router');
 

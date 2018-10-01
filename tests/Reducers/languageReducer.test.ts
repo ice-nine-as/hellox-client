@@ -6,9 +6,6 @@ import {
   strings,
 } from '../../src/Reducers/languageReducer';
 import {
-  ILanguageAction,
-} from '../../src/Actions/App/ILanguageAction';
-import {
   Languages,
 } from '../../src/Enums/Languages';
 
@@ -22,8 +19,6 @@ import {
   isLanguageAction,
 } from '../../src/TypeGuards/isLanguageAction';
 jest.mock('../../src/TypeGuards/isLanguageAction');
-
-type Mock = jest.Mock;
 
 describe('languageReducer unit tests.', () => {
   beforeEach(() => {

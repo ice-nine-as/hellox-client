@@ -1,13 +1,7 @@
 import {
-  AppActionTypes,
-} from '../../src/Enums/AppActionTypes';
-import {
   feedReducer,
   strings,
 } from '../../src/Reducers/feedReducer';
-import {
-  IAppAction,
-} from '../../src/Actions/App/IAppAction';
 import {
   IRssAction,
 } from '../../src/Actions/App/IRssAction';
@@ -30,8 +24,6 @@ import {
   isRssFeed,
 } from '../../src/TypeGuards/isRssFeed';
 jest.mock('../../src/TypeGuards/isRssFeed');
-
-type Mock = jest.Mock;
 
 describe('feedReducer unit tests.', () => {
   beforeEach(() => {

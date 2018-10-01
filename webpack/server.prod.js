@@ -6,6 +6,7 @@ const entry  = resolve(__dirname, '../server/render');
 const output = resolve(__dirname, '../dist/server');
 
 module.exports = {
+  mode: 'production',
   name: 'server',
   target: 'node',
   node: {
@@ -47,6 +48,7 @@ module.exports = {
           {
             loader: 'css-loader/locals',
             options: {
+              minimize: true,
               modules: true,
               localIdentName: '[name]__[local]--[hash:base64:5]'
             }
@@ -58,8 +60,13 @@ module.exports = {
 
       {
         test: /\.css$/,
-        exclude: /node_modules/,
-        use: 'css-loader',
+        exclude: /node_modules/, 
+        use: {
+          loader: 'css-loader',
+          options: {
+            minimize: true,
+          },
+        },
       },
     ],
   },
@@ -76,6 +83,8 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
@@ -86,5 +95,7 @@ module.exports = {
         H2: process.env.H2,
       },
     }),
+
+    new webpack.HashedModuleIdsPlugin(),
   ],
 };

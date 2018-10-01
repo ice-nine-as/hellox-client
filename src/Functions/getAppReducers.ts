@@ -14,9 +14,6 @@ import {
   languageReducer,
 } from '../Reducers/languageReducer';
 import {
-  latestForumPostsReducer,
-} from '../Reducers/latestForumPostsReducer';
-import {
   loadingReducer,
 } from '../Reducers/loadingReducer';
 import {
@@ -28,13 +25,12 @@ import {
 
 export const getAppReducers = (): Readonly<TReducersMap<any, IAction>> => {
   return Object.freeze({
-    done:             doneReducer,
-    error:            errorReducer,
-    hamburgerOpen:    hamburgerOpenReducer,
-    language:         languageReducer,
-    latestForumPosts: latestForumPostsReducer,
-    loading:          loadingReducer,
-    feeds:            feedsReducer,
+    done:          doneReducer,
+    error:         errorReducer,
+    hamburgerOpen: hamburgerOpenReducer,
+    language:      languageReducer,
+    loading:       loadingReducer,
+    feeds:         feedsReducer,
   });
 }
 

@@ -5,6 +5,9 @@ import {
   downloadFeed,
 } from '../../Functions/downloadFeed';
 import {
+  IAction,
+} from '../IAction';
+import {
   IRssAction,
 } from '../App/IRssAction';
 import {
@@ -75,7 +78,7 @@ export const createRssThunk: TRssFeedGetter = ({
 
   /* Return a thunk, a function which can be called later, and returns a
    * promise. */
-  return async (dispatch: Dispatch<{}>): Promise<IRssAction> => {
+  return async (dispatch: Dispatch<IAction>): Promise<IRssAction> => {
     const maybeOffsetObj = offsetIsValid && !idValid ? { offset, } : {};
     const maybeSignalObj = signal ? { signal, } : {};
     const argObj = Object.assign({}, maybeOffsetObj, maybeSignalObj, {

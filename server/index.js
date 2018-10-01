@@ -97,13 +97,15 @@ if (dev) {
     },
   };
 
-  app.use(webpackDevMiddleware(compiler, options));
+  const devMiddleware = webpackDevMiddleware(compiler, options);
+
+  app.use(devMiddleware);
   app.use(webpackHotMiddleware(clientCompiler));
   app.use(webpackHotServerMiddleware(compiler, {
     serverRendererOptions: { outputPath, },
   }));
-
-  compiler.plugin('done', done);
+  
+  devMiddleware.waitUntilValid(done);
 } else {
   webpack([ clientConfigProd, serverConfigProd, ]).run((err, stats) => {
     const clientStats = stats.toJson().children[0];

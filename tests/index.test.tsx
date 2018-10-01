@@ -24,7 +24,7 @@ import {
 } from '../src/';
 
 import * as React from 'react';
-import { Store } from 'react-redux';
+import { Store } from 'redux';
 import { TStoreProps } from '../src/TypeAliases/TStoreProps';
 
 type Mock = jest.Mock;

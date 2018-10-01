@@ -43,12 +43,13 @@ import _styles from '../Styles/Components/LatestForumTopics.less';
 const styles = _styles || {};
 
 export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps, TLatestForumPostsState> {
+  state = {
+    offset: 0,
+  };
+
   constructor(props: any, context?: any) {
     super(props, context);
 
-    this.state = {
-      offset: 0,
-    };
 
     this.doLoad = this.doLoad.bind(this);
     this.doMoreTopics = this.doMoreTopics.bind(this);

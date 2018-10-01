@@ -22,6 +22,7 @@ const externals = readdirSync(nodeModules)
 externals['react-dom/server'] = 'commonjs react-dom/server';
 
 module.exports = {
+  mode: 'development',
   name: 'server',
   target: 'node',
   node: {
