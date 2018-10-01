@@ -101,6 +101,11 @@ export async function configureServerStore(
   if (type === PageIdentifiers.Home) {
     try {
       await Promise.all([
+        /* The Redux types get mad about the fact that we're dispatching a
+          * thunk, not a normal action, and I'm not exactly sure right now
+          * what would have to be done to make Redux happy, so I've just
+          * ignored all of the createRssThunk dispatches. All of these calls
+          * work correctly in practice, they just fail typing checks. */ 
         // @ts-ignore
         store.dispatch(createRssThunk({
           feedKey: FeedKeys.NewsTeasers,
@@ -181,11 +186,6 @@ export async function configureServerStore(
     try {
       if (language === Languages.Norwegian) {
         await Promise.all([
-          /* The Redux types get mad about the fact that we're dispatching a
-           * thunk, not a normal action, and I'm not exactly sure right now
-           * what would have to be done to make Redux happy, so I've just
-           * ignored all of the createRssThunk dispatches. All of these calls
-           * work correctly in practice, they just fail typing checks. */ 
           // @ts-ignore
           store.dispatch(createRssThunk({
             feedKey: FeedKeys.StoryTemplateNoPartA,
