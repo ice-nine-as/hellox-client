@@ -22,7 +22,10 @@ describe('PageTitles unit tests.', () => {
   });
 
   it('Has only string values.', () => {
-    const values = Object.keys(PageTitles).map((aa) => PageTitles[aa]);
+    const values = Object.keys(PageTitles).map((aa: any) => (
+      PageTitles[aa]
+    ));
+
     expect(values.filter((aa) => typeof aa === 'string').length)
       .toBe(values.length);
   });

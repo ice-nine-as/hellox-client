@@ -24,22 +24,10 @@ describe('getRoutesMap unit tests.', () => {
       return (routesMap[route] as TRouteProps).path;
     });
 
-    const routeIdentifierValues = Object.keys(RouteIdentifiers).map((route) => {
+    const routeIdentifierValues = Object.keys(RouteIdentifiers).map((route: any) => {
       return RouteIdentifiers[route];
     });
 
     expect(routesMapValues).toEqual(routeIdentifierValues);
   });
-
-  /* Not using thunks currently.
-  it('Includes a thunk in each route object.', () => {
-    const routesMap = getDefaultRoutesMap();
-    const routesMapThunkCount = Object.keys(routesMap).map((route) => {
-      return Number(typeof routesMap[route].thunk === 'function');
-    }).reduce((aa, bb) => {
-      return aa + bb;
-    });
-
-    expect(Object.keys(routesMap).length).toBe(routesMapThunkCount)
-  });*/
 });

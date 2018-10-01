@@ -15,9 +15,6 @@ import {
   isAppAction,
 } from '../../../src/TypeGuards/isAppAction';
 import {
-  PageIdentifiers,
-} from '../../../src/Enums/PageIdentifiers.js';
-import {
   RssAction,
 } from '../../../src/Actions/App/RssAction';
 
@@ -36,8 +33,6 @@ import {
   isRssFeed,
 } from '../../../src/TypeGuards/isRssFeed';
 jest.mock('../../../src/TypeGuards/isRssFeed');
-
-type Mock = jest.Mock;
 
 describe('createRssAction unit tests.', () => {
   beforeEach(() => {

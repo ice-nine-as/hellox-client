@@ -20,13 +20,19 @@ describe('AppActionTypes unit tests.', () => {
   });
 
   it('Has only string values.', () => {
-    const values = Object.keys(AppActionTypes).map((aa) => AppActionTypes[aa]);
+    const values = Object.keys(AppActionTypes).map((aa: any) => (
+      AppActionTypes[aa]
+    ));
+
     expect(values.filter((aa) => typeof aa === 'string').length)
       .toBe(values.length);
   });
 
   it('Has only all-caps values.', () => {
-    const values = Object.keys(AppActionTypes).map((aa) => AppActionTypes[aa]);
+    const values = Object.keys(AppActionTypes).map((aa: any) => (
+      AppActionTypes[aa]
+    ));
+    
     expect(values.filter((aa) => aa.toUpperCase() === aa).length)
       .toBe(values.length);
   });

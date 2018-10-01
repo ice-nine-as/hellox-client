@@ -23,16 +23,16 @@ describe('PageIdentifiers unit tests.', () => {
   });
 
   it('Has only string values.', () => {
-    const values = Object.keys(RouteIdentifiers).map((aa) => {
-      return RouteIdentifiers[aa];
-    });
+    const values = Object.keys(RouteIdentifiers).map((aa: any) => (
+      RouteIdentifiers[aa]
+    ));
 
     expect(values.filter((aa) => typeof aa === 'string').length)
       .toBe(values.length);
   });
 
   it('Has only routes that begin with /.', () => {
-    const values = Object.keys(RouteIdentifiers).map((aa) => {
+    const values = Object.keys(RouteIdentifiers).map((aa: any) => {
       return RouteIdentifiers[aa];
     });
 
@@ -41,7 +41,7 @@ describe('PageIdentifiers unit tests.', () => {
   });
 
   it('Has only routes that end with /.', () => {
-    const values = Object.keys(RouteIdentifiers).map((aa) => {
+    const values = Object.keys(RouteIdentifiers).map((aa: any) => {
       return RouteIdentifiers[aa];
     });
 

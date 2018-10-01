@@ -76,6 +76,7 @@
     "hard-source-webpack-plugin": "^0.12.0",
     "history": "^4.7.2",
     "jest": "^22.4.3",
+    "jest-config": "^23.6.0",
     "jest-css-modules": "^1.1.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",

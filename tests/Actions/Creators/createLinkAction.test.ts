@@ -2,18 +2,12 @@ import {
   AboutLinkAction,
 } from '../../../src/Actions/Link/AboutLinkAction';
 import {
-  AppActionTypes,
-} from '../../../src/Enums/AppActionTypes';
-import {
   strings,
   createLinkAction,
 } from '../../../src/Actions/Creators/createLinkAction';
 import {
   isAction,
 } from '../../../src/TypeGuards/isAction';
-import {
-  isAppAction,
-} from '../../../src/TypeGuards/isAppAction';
 import {
   isLinkAction,
 } from '../../../src/TypeGuards/isLinkAction';

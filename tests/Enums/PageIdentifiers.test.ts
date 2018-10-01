@@ -21,7 +21,10 @@ describe('PageIdentifiers unit tests.', () => {
   });
 
   it('Has only string values.', () => {
-    const values = Object.keys(PageIdentifiers).map((aa) => PageIdentifiers[aa]);
+    const values = Object.keys(PageIdentifiers).map((aa: any) => (
+      PageIdentifiers[aa]
+    ));
+
     expect(values.filter((aa) => typeof aa === 'string').length)
       .toBe(values.length);
   });

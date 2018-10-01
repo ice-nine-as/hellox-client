@@ -4,7 +4,6 @@ import {
 import {
   feedsReducer,
 } from '../../src/Reducers/feedsReducer';
-import { feedReducer } from '../../src/Reducers/feedReducer';
 
 describe('feedsReducer unit tests.', () => {
   it('Has an entry for FeedKeys.ForumTopics.', () => {

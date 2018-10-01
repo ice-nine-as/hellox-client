@@ -11,7 +11,7 @@ import {
 } from '../../Interfaces/ILatestForumTopicsFeed';
 
 export interface ILatestForumTopicsAction extends IAppAction {
-  readonly type:  AppActionTypes.LatestForumPosts;
+  readonly type:  AppActionTypes.LatestForumTopics;
   readonly value: ILatestForumTopicsFeed | null;
 }
 
