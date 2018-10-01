@@ -32,7 +32,7 @@ import {
 } from '../src/Components/ProviderContainer';
 import {
   Store,
-} from 'react-redux';
+} from 'redux';
 import {
   flushChunkNames,
 } from 'react-universal-component/server';
@@ -100,7 +100,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
 
       const chunkNames = flushChunkNames();
       const {
-        css,
+        //css,
         cssHash,
         js,
         scripts,
@@ -109,9 +109,6 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         chunkNames,
         outputPath: join(projectDirPath, 'dist', 'client'),
       });
-
-      console.log(css, stylesheets);
-      console.log(require('util').inspect(css));
 
       /* Useful for specific (probably webpack-oriented) debugging but too
        * noisy for daily use. 

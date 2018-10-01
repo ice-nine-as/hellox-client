@@ -67,6 +67,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Components/App.less';
+import { IAction } from '../Actions/IAction';
 const styles = _styles || {};
 
 export class App extends React.PureComponent<TAppStoreProps & TAppDispatchProps> {
@@ -207,7 +208,7 @@ export const mapStateToProps: MapStateToProps<TAppStoreProps, {}, TStoreProps> =
   location,
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch<TAppDispatchProps>) => {
+export const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
   return {
     setDone(value: boolean) {
       return dispatch(createAppAction(DoneAppAction, value));

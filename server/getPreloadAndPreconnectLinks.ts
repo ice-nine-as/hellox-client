@@ -22,11 +22,11 @@ export function getPreloadAndPreconnectLinks(location: LocationState, rssFetchFa
             baseLinks;
   } else if (type === PageIdentifiers.Archives) {
     return rssFetchFailed ?
-            `<link rel="preload" href="https://cms.hellox.me/feeds/news-feed-teaser.xml" as="fetch" crossorigin>
-             <link rel="preload" href="https://cms.hellox.me/feeds/podcast-feed.xml" as="fetch" crossorigin>\n` :
+            `<link rel="preload" href="https://cms.hellox.me/feeds/news-feed-teaser.xml" as="fetch" crossorigin>\n` :
             '' +
 
-            `<link rel="preconnect" href="https://cms.hellox.me" crossorigin>\n` +
+            `<link rel="preload" href="https://cms.hellox.me/feeds/podcast-feed.xml" as="fetch" crossorigin>
+             <link rel="preconnect" href="https://cms.hellox.me" crossorigin>\n` +
             baseLinks;
   } else if (type === PageIdentifiers.Article) {
     if (rssFetchFailed && location.payload && (location.payload as any).id) {
@@ -39,22 +39,14 @@ export function getPreloadAndPreconnectLinks(location: LocationState, rssFetchFa
               baseLinks;
     }
   } else if (type === PageIdentifiers.Podcast) {
-    return rssFetchFailed ?
-            `<link rel="preload" href="https://cms.hellox.me/feeds/podcast-feed.xml" as="fetch" crossorigin>\n` :
-            '' +
-
-            `<link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com" crossorigin>
-             <link rel="preconnect" href="https://player.blubrry.com" crossorigin>\n` +
+    return `<link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com" crossorigin>
+            <link rel="preconnect" href="https://player.blubrry.com" crossorigin>\n` +
             baseLinks;
   } else if (type === PageIdentifiers.Podcasts) {
-    return rssFetchFailed ?
-            `<link rel="preload" href="https://cms.hellox.me/feeds/podcast-feed.xml" as="fetch" crossorigin>\n` :
-            '' +
-
-            `<link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com" crossorigin>
-             <link rel="preconnect" href="https://www.speakpipe.com" crossorigin>
-             <link rel="preconnect" href="https://fonts.googleapis.com crossorigin>\n` +
-             baseLinks;
+    return `<link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com" crossorigin>
+            <link rel="preconnect" href="https://www.speakpipe.com" crossorigin>
+            <link rel="preconnect" href="https://fonts.googleapis.com crossorigin>\n` +
+            baseLinks;
   } else if (type === PageIdentifiers.Write) {
     return rssFetchFailed ?
             `<link rel="preload" href="https://cms.hellox.me/feeds/story-template-feed.xml" as="fetch" crossorigin>\n` :

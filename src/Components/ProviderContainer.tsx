@@ -1,7 +1,6 @@
 import {
-  default as AppContainer,
-  // @ts-ignore
-} from 'react-hot-loader/lib/AppContainer';
+  hot,
+} from 'react-hot-loader';
 import {
   Provider,
 } from 'react-redux';
@@ -14,13 +13,11 @@ import * as React from 'react';
 export class ProviderContainer extends React.PureComponent<TProviderContainerProps> {
   render() {
     return (
-      <AppContainer>
-        <Provider store={this.props.store}>
-          {this.props.children}
-        </Provider>
-      </AppContainer>
+      <Provider store={this.props.store}>
+        {this.props.children}
+      </Provider>
     );
   }
 }
 
-export default ProviderContainer;
+export default hot(module)(ProviderContainer);

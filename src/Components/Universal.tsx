@@ -8,9 +8,7 @@ import {
   defaultPageIdentifier,
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
-import {
-  default as universal,
-} from 'react-universal-component';
+import universal from 'react-universal-component';
 import {
   ServerError,
 } from '../Pages/ServerError';

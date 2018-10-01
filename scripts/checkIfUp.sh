@@ -8,8 +8,9 @@ else
     echo "Docker container state object:"
     echo "$(/usr/bin/docker inspect --format='{{json .State}}' hellox-client)"
     # Copy the log.
-    /usr/bin/docker logs hellox-client > ~/docker_error_logs.log
+    /usr/bin/docker logs hellox-client > /etc/hellox-client/docker_error_logs.log
     # Restart the container
-    /usr/bin/docker start hello-client
+    cd /etc/hellox-client/
+    gulp dockerUp
     exit 1
 fi

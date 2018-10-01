@@ -5,6 +5,7 @@ const webpack          = require('webpack');
 const WriteFilePlugin  = require('write-file-webpack-plugin'); // here so you can see what chunks are built
 
 module.exports = {
+  mode: 'development',
   name: 'client',
   target: 'web',
   entry: [
@@ -20,6 +21,8 @@ module.exports = {
     path:           resolve(__dirname, '../dist/client'),
     publicPath:     '/static/',
   },
+  
+  optimization: {},
 
   module: {
     rules: [
@@ -40,21 +43,21 @@ module.exports = {
       {
         test: /\.less$/,
         exclude: /node_modules/,
-        use: ExtractCssChunks.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-              },
+        use: [
+          ExtractCssChunks.loader,
+
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
             },
+          },
 
-            'postcss-loader',
+          'postcss-loader',
 
-            'less-loader',
-          ],
-        }),
+          'less-loader',
+        ],
       },
 
       {
@@ -77,25 +80,16 @@ module.exports = {
   },
 
   plugins: [
+    new WriteFilePlugin(),
+    new ExtractCssChunks(),
+
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
-
-    new WriteFilePlugin(), /* Only needed for debug info. */
-    new ExtractCssChunks(),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: [ 'bootstrap', ], // needed to put webpack bootstrap code before chunks
-      filename: '[name].js',
-      minChunks: Infinity,
-    }),
-    
-
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-
-    new webpack.HashedModuleIdsPlugin(),
 
     new AutoDllPlugin({
       context: resolve(__dirname, '..'),

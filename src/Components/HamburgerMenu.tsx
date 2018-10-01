@@ -11,7 +11,7 @@ import {
   connect,
 } from 'react-redux';
 import {
-  Dispatch,
+  Dispatch, AnyAction,
 } from 'redux';
 import {
   THamburgerMenuDispatchProps,
@@ -121,7 +121,7 @@ const mapStateToProps = ({
   hamburgerOpen,
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch<{}>) => ({
+export const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
   setHamburgerMenuOpenStatus(isOpen: boolean) {
     return dispatch(createAppAction(HamburgerOpenAction, isOpen));
   },

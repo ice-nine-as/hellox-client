@@ -1,4 +1,7 @@
 import {
+  IAction,
+} from '../IAction';
+import {
   IRssAction,
 } from '../App/IRssAction';
 import {
@@ -11,7 +14,7 @@ import {
 /* Used with redux-thunk. */
 export type TRssFeedGetter =
   (argObj: TRssFeedGetterArg) =>
-    (dispatch: Dispatch<{}>) =>
+    (dispatch: Dispatch<IAction>) =>
       Promise<IRssAction>;
 
 export default TRssFeedGetter;
