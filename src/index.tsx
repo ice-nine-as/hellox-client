@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
 
     onUpdateFailed() {
       console.log('SW Event:', 'onUpdateFailed');
-    }
+    },
   });
 }
 
@@ -67,12 +67,12 @@ export const init = () => {
   // @ts-ignore
   if (process.env.NODE_ENV === 'development' && module.hot) {
     // @ts-ignore
-    module.hot.accept('./Components/ProviderContainer', () => {
-      const ProviderContainer = require('./Components/ProviderContainer')
-        .ProviderContainer;
+    module.hot.accept('./Components/App', () => {
+      const UpdatedApp = require('./Components/App')
+        .ConnectedApp;
 
       render(<ProviderContainer store={store}>
-              <ConnectedApp />
+              <UpdatedApp />
             </ProviderContainer>);
     });
   }
