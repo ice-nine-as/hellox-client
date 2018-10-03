@@ -66,6 +66,8 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
       feeds: {
         TeamMembers: teamMembersFeed,
       },
+
+      getTeamMembersFeed,
     } = this.props;
 
     const rejector = (reason: Error) => {
@@ -76,7 +78,7 @@ export class About extends React.Component<TPageProps & TAboutStoreProps & TAbou
     };
 
     if (!teamMembersFeed) {
-      this.props.getTeamMembersFeed()
+      getTeamMembersFeed()
         .then(
           /* Resolve */
           () => {},

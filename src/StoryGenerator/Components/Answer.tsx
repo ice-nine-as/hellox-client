@@ -16,36 +16,44 @@ const styles = _styles || {};
 
 export class Answer extends React.PureComponent<IAnswerProps> {
   render() {
+    const {
+      id,
+      selectOptions,
+      setAnswerText,
+      storyState,
+      templateKey,
+      text,
+      type,
+    } = this.props;
+
     const element = (() => {
       const props: { [key: string]: any } = {
         className:    styles.AnswerInput,
-        defaultValue: this.props.text,
+        defaultValue: text,
         placeholder:  'Click to type',
         required:     true,
       };
 
-      if (this.props.storyState === StoryStates.Complete) {
+      if (storyState === StoryStates.Complete) {
         /* Do not allow the answers to be changed after the story is marked
         * Complete. */
         props.readOnly = true;
       }
 
-      /* Typescript compiler uses `_this` internally, so __this it is. */
-      const __this = this;
       const changerFunc = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        __this.props.setAnswerText(
+        setAnswerText(
           e.currentTarget.value,
-          __this.props.templateKey,
-          __this.props.id);
+          templateKey,
+          id);
       };
 
-      if (this.props.type === AnswerTypes.Select) {
+      if (type === AnswerTypes.Select) {
         props.onChange = changerFunc;
 
         let key = -1;
         return (
           <select {...props}>
-            {this.props.selectOptions.map((selection) => (
+            {selectOptions.map((selection) => (
               <option key={key += 1}>{selection}</option>
             ))}
           </select>
@@ -54,7 +62,7 @@ export class Answer extends React.PureComponent<IAnswerProps> {
 
       props.onKeyUp = changerFunc;
 
-      if (this.props.type === AnswerTypes.Big) {
+      if (type === AnswerTypes.Big) {
         return (
           <textarea {...props} />
         );

@@ -12,9 +12,14 @@ import * as React from 'react';
 
 export class ProviderContainer extends React.PureComponent<TProviderContainerProps> {
   render() {
+    const {
+      children,
+      store,
+    } = this.props;
+
     return (
-      <Provider store={this.props.store}>
-        {this.props.children}
+      <Provider store={store}>
+        {children}
       </Provider>
     );
   }

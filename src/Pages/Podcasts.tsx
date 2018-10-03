@@ -69,6 +69,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
   doLoad() {
     const {
       feeds,
+      getPodcastFeed,
       language,
     } = this.props;
 
@@ -83,7 +84,7 @@ export class Podcasts extends React.Component<TPageProps & TPodcastsStoreProps &
     });
 
     if (!feed) {
-      this.props.getPodcastFeed(key).then(
+      getPodcastFeed(key).then(
         () => {},
         () => this.setState({ error: strings.LOAD_ERROR, }) 
       );

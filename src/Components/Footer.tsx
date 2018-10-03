@@ -30,10 +30,11 @@ export class Footer extends React.PureComponent<TFooterProps> {
   render() {
     const {
       hideMailingListSignup,
+      page,
     } = this.props;
 
     return (
-      <div className={`${styles.Footer} Footer Page-${this.props.page}`}>
+      <div className={`${styles.Footer} Footer Page-${page}`}>
         <div className={`${styles.VerticalHalf} ${styles.First}`}>
           <div className={`${styles.HorizontalHalf} ${styles.Contact} light`}>
             <div>

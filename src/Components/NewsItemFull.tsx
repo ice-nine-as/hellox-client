@@ -13,10 +13,14 @@ const styles = _styles || {};
 
 export class NewsItemFull extends React.PureComponent<TNewsItemFullProps> {
   render() {
+    const {
+      item,
+    } = this.props;
+
     return (
       <div
         className={styles.NewsItemFull}
-        dangerouslySetInnerHTML={getPreparedHtml(this.props.item.description)}
+        dangerouslySetInnerHTML={getPreparedHtml(item.description)}
       ></div>
     );
   }

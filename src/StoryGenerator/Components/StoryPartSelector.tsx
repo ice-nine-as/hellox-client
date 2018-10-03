@@ -16,15 +16,21 @@ const styles = _styles || {};
 
 export class StoryPartSelector extends React.PureComponent<TStoryPartSelectorProps> {
   render() {
-    const isAActive = this.props.currentPart === StoryGeneratorParts.A ?
+    const {
+      currentPart,
+      setCurrentPart,
+      titleMap,
+    } = this.props;
+
+    const isAActive = currentPart === StoryGeneratorParts.A ?
       'active' :
       '';
 
-    const isBActive = this.props.currentPart === StoryGeneratorParts.B ?
+    const isBActive = currentPart === StoryGeneratorParts.B ?
       'active' :
       '';
 
-    const isCActive = this.props.currentPart === StoryGeneratorParts.C ?
+    const isCActive = currentPart === StoryGeneratorParts.C ?
       'active' :
       '';
 
@@ -33,14 +39,14 @@ export class StoryPartSelector extends React.PureComponent<TStoryPartSelectorPro
         <div className={styles.SelectorContainer}>
           <button
             className={`${styles.PartSelector} ${styles.A}`}
-            onClick={() => this.props.setCurrentPart(StoryGeneratorParts.A)}
+            onClick={() => setCurrentPart(StoryGeneratorParts.A)}
           >
             <Hexagon className={isAActive}>
-                A
+              A
             </Hexagon>
 
             <span className={styles.Title}>
-              {this.props.titleMap.A}
+              {titleMap.A}
             </span>
           </button>
         </div>
@@ -48,14 +54,14 @@ export class StoryPartSelector extends React.PureComponent<TStoryPartSelectorPro
           <div className={styles.SelectorContainer}>
             <button
               className={`${styles.PartSelector} ${styles.B}`}
-              onClick={() => this.props.setCurrentPart(StoryGeneratorParts.B)}
+              onClick={() => setCurrentPart(StoryGeneratorParts.B)}
             >
               <Hexagon className={isBActive}>
-                  B
+                B
               </Hexagon>
 
               <span className={styles.Title}>
-                {this.props.titleMap.B}
+                {titleMap.B}
               </span>
             </button>
           </div>
@@ -63,14 +69,14 @@ export class StoryPartSelector extends React.PureComponent<TStoryPartSelectorPro
         <div className={styles.SelectorContainer}>
           <button
             className={`${styles.PartSelector} ${styles.C}`}
-            onClick={() => this.props.setCurrentPart(StoryGeneratorParts.C)}
+            onClick={() => setCurrentPart(StoryGeneratorParts.C)}
           >
             <Hexagon className={isCActive}>
               C
             </Hexagon>
 
             <span className={styles.Title}>
-              {this.props.titleMap.C}
+              {titleMap.C}
             </span>
           </button>
         </div>

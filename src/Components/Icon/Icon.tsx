@@ -11,18 +11,25 @@ const styles = _styles || {};
 
 export class Icon extends React.PureComponent<IIconProps> {
   render() {
-    const content = this.props.url ?
-      <a href={this.props.url}>
-        {this.props.children}
+    const {
+      children,
+      dontLazyLoad,
+      offset,
+      url,
+    } = this.props;
+
+    const content = url ?
+      <a href={url}>
+        {children}
       </a> :
-      this.props.children;
+      children;
 
     return (
       <div className={`${styles.Icon} Icon`}>
         {
-          this.props.dontLazyLoad ?
+          dontLazyLoad ?
             content :
-            <LazyLoad offset={this.props.offset || 600}>
+            <LazyLoad offset={offset || 600}>
               {content}
             </LazyLoad>
         }
