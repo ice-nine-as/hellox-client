@@ -1,0 +1,24 @@
+@import '../Vars.less';
+
+.HiderButton {
+  .Button {
+    border: none;
+    width: 100%;
+    background: none;
+    cursor: pointer;
+  }
+
+  .Content {
+    &:global(.hidden) {
+      display: none;
+    }
+  }
+
+  .HiderArrow {
+    position: relative;
+    top: -2px;
+    margin-left: 10px;
+    padding-bottom: 5px;
+    font-size: @larger;
+  }
+}

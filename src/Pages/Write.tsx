@@ -73,6 +73,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Write.less';
+import { HiderButton } from '../Components/HiderButton';
 const styles = _styles || {};
 
 export const strings = {
@@ -225,7 +226,8 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
 
           {(Object as any).values(Languages)
             .filter((lang: Languages) => lang !== Languages.Russian)
-            .map((lang: Languages, index: number) => {
+            .map((lang: Languages, index: number) =>
+            {
               return (
                 <ConnectedLanguageButton
                   buttonLanguage={lang}
@@ -237,104 +239,110 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
         </div>
 
         <div className={styles.Explainer}>
-          <h2 className={styles.ExplainerHeader}>
-            <strong>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Sett inn visjon nedenfor';
-                } else {
-                  return 'How do I add my vision to a story?';
-                }
-              })()}
-            </strong>
-          </h2>
+          <HiderButton
+            buttonDisplay={
+              <h3 className={styles.ExplainerHeader}>
+                <strong>
+                  {(() => {  
+                    if (language === Languages.Norwegian) {
+                      return 'Sett inn visjon nedenfor';
+                    } else {
+                      return 'How do I add my vision to a story?';
+                    }
+                  })()}
+                </strong>
+              </h3>
+            }
+          >
+            <ol className={styles.ExplainerList}>
+              <li>
+                {(() => {
+                  if (language === Languages.Norwegian) {
+                    return 'Svar på spørsmålene nedenfor.';
+                  } else {
+                    return 'Answer the questions below.';
+                  }
+                })()}
+              </li>
+              
+              <li>
+                {(() => {
+                  if (language === Languages.Norwegian) {
+                    return 'Vår supersmarte historiegenerator kombinerer en ' +
+                           'forhåndsskrevet scene med svarene dine.';
+                  } else {
+                    return 'Our super-clever story generator creates a ' +
+                           'pre-written scene from your answers.';
+                  }
+                })()}
+              </li>
 
-          <ol className={styles.ExplainerList}>
-            <li>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Svar på spørsmålene nedenfor.';
-                } else {
-                  return 'Answer the questions below.';
-                }
-              })()}
-            </li>
-            
-            <li>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Vår supersmarte historiegenerator kombinerer en ' +
-                         'forhåndsskrevet scene med svarene dine.';
-                } else {
-                  return 'Our super-clever story generator creates a ' +
-                         'pre-written scene from your answers.';
-                }
-              })()}
-            </li>
+              <li>
+                {(() => {
+                  if (language === Languages.Norwegian) {
+                    return 'Du vil få muligheten til å redigere, legge til ' +
+                           'eller omskrive hele scenen. Ingen regler!';
+                  } else {
+                    return 'You get a chance to edit, add, scrap or entirely ' +
+                           're-write the resulting story scene. No rules!';
+                  }
+                })()}
+              </li>
 
-            <li>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Du vil få muligheten til å redigere, legge til ' +
-                         'eller omskrive hele scenen. Ingen regler!';
-                } else {
-                  return 'You get a chance to edit, add, scrap or entirely ' +
-                         're-write the resulting story scene. No rules!';
-                }
-              })()}
-            </li>
+              <li>
+                {(() => {
+                  if (language === Languages.Norwegian) {
+                    return 'Skriv inn din epostadresse (som vi aldri kommer ' +
+                           'til å dele) og vi sender deg den ferdig redigerte ' +
+                           'teksten.';
+                  } else {
+                    return 'Enter your email address (which we’ll never ' +
+                           'share), and we’ll send you the final edited text.';
+                  }
+                })()}
+              </li>
 
-            <li>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Skriv inn din epostadresse (som vi aldri kommer ' +
-                         'til å dele) og vi sender deg den ferdig redigerte ' +
-                         'teksten.';
-                } else {
-                  return 'Enter your email address (which we’ll never ' +
-                         'share), and we’ll send you the final edited text.';
-                }
-              })()}
-            </li>
+              <li>
+                {(() => {
+                  if (language === Languages.Norwegian) {
+                    return 'Vi ser over teksten din for å forsikre oss om at ' +
+                           'den ikke er krenkende.';
+                  } else {
+                    return 'We quickly check over what you’ve written to make ' +
+                           'sure it isn’t offensive';
+                  }
+                })()}
+              </li>
 
-            <li>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Vi ser over teksten din for å forsikre oss om at ' +
-                         'den ikke er krenkende.';
-                } else {
-                  return 'We quickly check over what you’ve written to make ' +
-                         'sure it isn’t offensive';
-                }
-              })()}
-            </li>
-
-            <li>
-              {(() => {
-                if (language === Languages.Norwegian) {
-                  return 'Ditt bidrag blir lagt til historieuniverset!';
-                } else {
-                  return 'Your written addition goes live to the storyverse!';
-                }
-              })()}
-            </li>
-          </ol>
+              <li>
+                {(() => {
+                  if (language === Languages.Norwegian) {
+                    return 'Ditt bidrag blir lagt til historieuniverset!';
+                  } else {
+                    return 'Your written addition goes live to the storyverse!';
+                  }
+                })()}
+              </li>
+            </ol>
+          </HiderButton>
         </div>
 
         <div className={styles.Participate}>
           <div className={styles.Content}>
-            <div className={styles.InnerContent}>
-              <h3>
-                {(() => {
-                  if (language === Languages.Norwegian) {
-                    return 'Hvorfor delta?';
-                  } else {
-                    return 'Why participate?';
-                  }
-                })()}
-              </h3>
-
-              <ol className={styles.ParticipateList}>
+            <HiderButton
+              buttonDisplay={
+                <h3 className={styles.ExplainerHeader}>
+                  {(() => {
+                    if (language === Languages.Norwegian) {
+                      return 'Hvorfor delta?';
+                    } else {
+                      return 'Why participate?';
+                    }
+                  })()}
+                </h3>
+              }
+            >
+              <ol className={styles.ExplainerList}>
                 <li>
                   {(() => {
                     if (language === Languages.Norwegian) {
@@ -402,7 +410,8 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
                   })()}
                 </li>
               </ol>
-            </div>
+            </HiderButton>
+
           </div>
         </div>
 
