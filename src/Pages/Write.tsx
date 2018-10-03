@@ -91,8 +91,10 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
 
   doLoad() {
     const {
+      getStoryTemplate,
       feeds,
       language,
+      setStoryTemplate,
     } = this.props;
 
     const parts = [ 'A', /*'B', 'C',*/ ] as ReadonlyArray<StoryGeneratorParts>;
@@ -109,7 +111,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
       })();
 
       if (template && feedKey) {
-        this.props.setStoryTemplate(feedKeyToTemplateKey(feedKey), template);
+        setStoryTemplate(feedKeyToTemplateKey(feedKey), template);
       } else {
         this.setState({ error: strings.LOAD_ERROR, });
       }
@@ -160,7 +162,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
 
     /* Load the ones that don't already exist. */
     const partPromises = missingKeys.map((key: keyof TFeedsMap) => {
-      return this.props.getStoryTemplate(key)
+      return getStoryTemplate(key)
         .catch((reason) => console.error(reason));
     });
 
@@ -203,10 +205,12 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
     return (
       <div className={`${styles.Write} ${styles.Page}`}>
         <div className={styles.HeroImageContainer}>
-          <img
-            className={styles.Image}
-            src={ImageUrls.WriteHeroAnimation}
-          />
+          <div className={styles.HeroImageSubcontainer}>
+            <img
+              className={styles.Image}
+              src={ImageUrls.WriteHeroAnimation}
+            />
+          </div>
 
           <div className={styles.Border}></div>
         </div>
@@ -309,7 +313,7 @@ export class Write extends React.Component<TPageProps & TWriteStoreProps & TWrit
                            'den ikke er krenkende.';
                   } else {
                     return 'We quickly check over what you’ve written to make ' +
-                           'sure it isn’t offensive';
+                           'sure it isn’t offensive.';
                   }
                 })()}
               </li>
