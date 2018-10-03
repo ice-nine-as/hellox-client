@@ -19,16 +19,21 @@ export class CompletedStory extends React.PureComponent<TCompletedStoryProps, { 
 
   render() {
     const {
+      language,
+      storyTemplate,
+    } = this.props;
+
+    const {
       editedText,
     } = this.state;
 
     const storyText = (() => {
       if (typeof editedText === 'string') {
         return editedText;
-      } else if (this.props.storyTemplate === null) {
+      } else if (storyTemplate === null) {
         return 'Sorry, there\'s been an error.';
       } else {
-        return new StoryTemplate(this.props.storyTemplate).getCompleteStory();
+        return new StoryTemplate(storyTemplate).getCompleteStory();
       }
     })();
 
@@ -70,8 +75,8 @@ export class CompletedStory extends React.PureComponent<TCompletedStoryProps, { 
 
           <StorySubmissionForm
             completedStory={storyText}
-            language={this.props.language}
-            storyTemplate={this.props.storyTemplate}
+            language={language}
+            storyTemplate={storyTemplate}
           />
         </div>
       </div>

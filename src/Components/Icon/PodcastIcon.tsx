@@ -16,17 +16,23 @@ const styles = _styles || {};
 
 export class PodcastIcon extends React.PureComponent<IIconProps> {
   render() {
+    const {
+      dontLazyLoad,
+      offset,
+      url,
+    } = this.props;
+
     const addIns: { [key: string]: any } = {};
-    if (this.props.dontLazyLoad) {
-      addIns.dontLazyLoad = this.props.dontLazyLoad;
+    if (dontLazyLoad) {
+      addIns.dontLazyLoad = dontLazyLoad;
     }
 
-    if (this.props.offset) {
-      addIns.offset = this.props.offset;
+    if (offset) {
+      addIns.offset = offset;
     }
 
-    if (this.props.url) {
-      addIns.url = this.props.url;
+    if (url) {
+      addIns.url = url;
     }
 
     return (
@@ -34,7 +40,8 @@ export class PodcastIcon extends React.PureComponent<IIconProps> {
         <img
           alt="A drawing of a play button triangle."
           className={styles.PodcastIcon}
-          src={ImageUrls.PodcastIcon} />
+          src={ImageUrls.PodcastIcon}
+        />
       </Icon>
     );
   }

@@ -63,6 +63,10 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
     const {
       currentPart,
       language,
+      setAnswerText,
+      setCurrentPart,
+      setStoryState,
+      storyState,
       storyTemplates,
     } = this.props;
 
@@ -132,26 +136,26 @@ export class StoryGenerator extends React.PureComponent<TStoryGeneratorStoreProp
           <div className={styles.Content}>
             <div className={styles.InnerContent}>
               <StoryPartSelector
-                currentPart={this.props.currentPart}
-                setCurrentPart={this.props.setCurrentPart}
+                currentPart={currentPart}
+                setCurrentPart={setCurrentPart}
                 titleMap={titleMap}
               />
 
               <InProgressStory
-                currentPart={this.props.currentPart}
-                language={this.props.language}
-                setAnswerText={this.props.setAnswerText}
-                setStoryState={this.props.setStoryState}
-                storyState={this.props.storyState}
+                currentPart={currentPart}
+                language={language}
+                setAnswerText={setAnswerText}
+                setStoryState={setStoryState}
+                storyState={storyState}
                 storyTemplate={template}
                 templateKey={key}
               />
 
-              {this.props.storyState === StoryStates.Complete ?
+              {storyState === StoryStates.Complete ?
                 <CompletedStory
-                  language={this.props.language}
-                  setCurrentPart={this.props.setCurrentPart}
-                  setStoryState={this.props.setStoryState}
+                  language={language}
+                  setCurrentPart={setCurrentPart}
+                  setStoryState={setStoryState}
                   storyTemplate={template}
                 /> :
                 null}
@@ -170,19 +174,19 @@ export const mapStateToProps: MapStateToProps<
     language: Languages,
     storyGenerator: TStoryGeneratorStoreProps,
   }
-  > = ({
-    language,
-    storyGenerator: {
-      currentPart,
-      storyState,
-      storyTemplates,
-    },
-  }) => ({
+> = ({
+  language,
+  storyGenerator: {
     currentPart,
-    language,
     storyState,
     storyTemplates,
-  });
+  },
+}) => ({
+  currentPart,
+  language,
+  storyState,
+  storyTemplates,
+});
 
 export const mapDispatchToProps: MapDispatchToProps<TStoryGeneratorDispatchProps, TStoryGeneratorStoreProps> = (dispatch: Dispatch<IStoryGeneratorAction>) => ({
   setAnswerText(value: string, templateKey: StoryGeneratorTemplateKeys, id: string) {

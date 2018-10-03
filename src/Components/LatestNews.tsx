@@ -81,12 +81,14 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     const {
       detailLevel,
       feeds,
+      getNewsFeed,
+      getPodcasts,
       language,
     } = this.props;
 
     if (!feeds[FeedKeys.Podcast]) {
       try {
-        await this.props.getPodcasts();
+        await getPodcasts();
       } catch (e) {
         console.error(e);
       }
@@ -117,7 +119,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     * a single article has been fetched beforehand. This is avoided through
     * forceUpdate below. */
     if (!feed) {
-      this.props.getNewsFeed(key)
+      getNewsFeed(key)
         .then(
           /* Resolve */
           () => this.forceUpdate(),
@@ -129,7 +131,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       const origFeedLength = feed.items.length;
 
       /* We've already loaded a set of articles, so we need to use the offset. */
-      this.props.getNewsFeed(key, feed.currentOffset, feed)
+      getNewsFeed(key, feed.currentOffset, feed)
         .then(
           /* Resolve */
           (action) => {
@@ -152,7 +154,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
           }
         )
     } else {
-      this.props.getNewsFeed(key).then(
+      getNewsFeed(key).then(
         /* Resolve */
         () => this.forceUpdate(),
       
@@ -197,6 +199,11 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     } = this.props;
 
     const {
+      error,
+      loadMoreVisible,
+    } = this.state;
+
+    const {
       feed,
     } = pickFeed({
       type: 'newsItem',
@@ -223,7 +230,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
         /* Compose podcasts into news items. */
         const finalFeed: IRssFeed = composeFeeds(feed, feeds.Podcast).feed!;
         return finalFeed.items.map((item) => {
-          if (this.props.detailLevel === FeedDetailLevels.Full) {
+          if (detailLevel === FeedDetailLevels.Full) {
             if ('itunesEpisode' in item) {
               return (
                 <PodcastItemFull
@@ -268,14 +275,14 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
 
     return (
       <div
-        className={`${styles.LatestNews} ${styles[this.props.detailLevel]}`}
+        className={`${styles.LatestNews} ${styles[detailLevel]}`}
         key={reactKey += 1}
       >
         <div className={styles.NewsContainer}>
           {
-            this.state.error ?
+            error ?
               /* Display the error if loading fails. */
-              <div style={{ textAlign: 'center', margin: '0 auto', }}>{this.state.error}</div> :
+              <div style={{ textAlign: 'center', margin: '0 auto', }}>{error}</div> :
               newsItems
           }
         </div>
@@ -285,7 +292,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
             /* Don't show the Load More button if the feed hasn't been
               * fetched. */
             return null;
-          } else if (this.state.loadMoreVisible) {
+          } else if (loadMoreVisible) {
             return (
               <LoadMoreButton
                 func={this.doLoad}

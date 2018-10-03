@@ -10,10 +10,14 @@ const styles = _styles || {};
 
 export class TeamMembers extends React.PureComponent<{ members: ReadonlyArray<ITeamMember> }> {
   render() {
+    const {
+      members,
+    } = this.props;
+
     let reactKey = 0;
     return (
       <div className={styles.TeamMembers}>
-        {this.props.members.map((member) => {
+        {members.map((member) => {
           return (
             <div
               className={styles.TeamMember}

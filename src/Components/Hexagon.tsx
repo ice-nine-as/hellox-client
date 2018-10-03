@@ -13,11 +13,16 @@ const deepPurple = '#343358';
 
 export class Hexagon extends React.PureComponent<THexagonProps> {
   render() {
-    const className = this.props.className ? ` ${this.props.className}` : '';
+    const {
+      children,
+      className,
+    } = this.props;
+
+    const classNameStr = className ? ` ${className}` : '';
     const imageColor = className === ' active' ? gold : deepPurple;
 
     return (
-      <div className={`${styles.Hexagon} ${className}`}>
+      <div className={`${styles.Hexagon}${classNameStr}`}>
         <svg
           version="1.1"
           className={styles.HexagonVector}
@@ -37,7 +42,7 @@ export class Hexagon extends React.PureComponent<THexagonProps> {
         </svg>
 
         <h3 className={styles.Content}>
-          {this.props.children}
+          {children}
         </h3>
       </div>
     );

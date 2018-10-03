@@ -16,11 +16,15 @@ const styles = _styles || {};
 
 export class Logo extends React.PureComponent<TLogoProps> {
   render() {
+    const {
+      state,
+    } = this.props;
+
     return (
       <img
         alt={`The main site logo. It reads "hello X."`}
-        className={`${styles.Logo} ${this.props.state}`}
-        src={this.props.state === LogoStates.Normal ?
+        className={`${styles.Logo} ${state}`}
+        src={state === LogoStates.Normal ?
               ImageUrls.MainLogo :
               ImageUrls.SmallLogo}
       />

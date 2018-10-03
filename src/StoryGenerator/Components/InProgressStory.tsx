@@ -21,19 +21,23 @@ export const strings = {
 };
 
 export class InProgressStory extends React.PureComponent<TInProgressStoryProps> {
-  constructor(props: any, context?: any) {
-    super(props, context);
-
-    this.complete = this.complete.bind(this);
-  }
-
   render() {
+    const {
+      currentPart,
+      language,
+      setAnswerText,
+      setStoryState,
+      storyState,
+      storyTemplate,
+      templateKey,
+    } = this.props;
+
     let key = -1;
 
     return (
       <div className={`InProgressStory ${styles.InProgressStory}`}>
-        {this.props.storyTemplate ?
-          this.props.storyTemplate.questions.map((question, index) => {
+        {storyTemplate ?
+          storyTemplate.questions.map((question, index) => {
             return (
               <div
                 className={styles.QuestionContainer}
@@ -41,13 +45,13 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
               >
                 <Question
                   {...question}
-                  currentPart={this.props.currentPart}
-                  language={this.props.language}
-                  setAnswerText={this.props.setAnswerText}
-                  storyState={this.props.storyState}
-                  templateKey={this.props.templateKey}
+                  currentPart={currentPart}
+                  language={language}
+                  setAnswerText={setAnswerText}
+                  storyState={storyState}
+                  templateKey={templateKey}
                   current={index + 1}
-                  max={this.props.storyTemplate!.questions.length}
+                  max={storyTemplate!.questions.length}
                 />
               </div>
             )
@@ -57,15 +61,11 @@ export class InProgressStory extends React.PureComponent<TInProgressStoryProps> 
 
         <button
           className={`${styles.Complete} condensed`}
-          onClick={this.complete}
+          onClick={() => setStoryState(StoryStates.Complete)}
         >
           GENERATE STORY
         </button>
       </div>
     )
-  }
-
-  complete() {
-    this.props.setStoryState(StoryStates.Complete);
   }
 }

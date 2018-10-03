@@ -58,6 +58,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
   doLoad() {
     const {
       feeds,
+      getPodcastFeed,
       language,
     } = this.props;
 
@@ -77,11 +78,11 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
     * forceUpdate below. */
 
     if (!feed) {
-      this.props.getPodcastFeed(key);
+      getPodcastFeed(key);
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
       * bother to guess where it is in the feed. */
-      this.props.getPodcastFeed(key, 0, feed)
+      getPodcastFeed(key, 0, feed)
     }
   }
 
@@ -112,7 +113,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
     /* TODO: Add internationalization to no podcasts items message. */
     const podcastItems = feed && feed.items && feed.items.length > 0 ?
       feed.items.map((item) => {
-        if (this.props.detailLevel === FeedDetailLevels.Full) {
+        if (detailLevel === FeedDetailLevels.Full) {
           return (
             <PodcastItemFull
               item={item as IPodcastPost}
@@ -132,7 +133,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
 
     return (
       <div
-        className={`${styles.LatestPodcasts} ${styles[this.props.detailLevel]}`}
+        className={`${styles.LatestPodcasts} ${styles[detailLevel]}`}
         key={key += 1}
       >
         {podcastItems}

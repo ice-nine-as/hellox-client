@@ -10,7 +10,12 @@ const styles = _styles || {};
 
 export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
   render() {
-    const ratio = this.props.current / this.props.max;
+    const {
+      current,
+      max,
+    } = this.props;
+
+    const ratio = current / max;
     const goldStyles: { [key: string]: string } = {};
     if (ratio <= 0.125) {
       const subRatio = 50 + Math.round(ratio / 0.125 * 100) / 2;
@@ -39,7 +44,7 @@ export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
         </div>
 
         <span className={styles.Text}>
-          {this.props.current}/{this.props.max}
+          {current}/{max}
         </span>
       </div>
     )

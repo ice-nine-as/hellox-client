@@ -16,17 +16,23 @@ const styles = _styles || {};
 
 export class WriteIcon extends React.PureComponent<IIconProps> {
   render() {
+    const {
+      dontLazyLoad,
+      offset,
+      url,
+    } = this.props;
+
     const addIns: { [key: string]: any } = {};
-    if (this.props.dontLazyLoad) {
-      addIns.dontLazyLoad = this.props.dontLazyLoad;
+    if (dontLazyLoad) {
+      addIns.dontLazyLoad = dontLazyLoad;
     }
 
-    if (this.props.offset) {
-      addIns.offset = this.props.offset;
+    if (offset) {
+      addIns.offset = offset;
     }
 
-    if (this.props.url) {
-      addIns.url = this.props.url;
+    if (url) {
+      addIns.url = url;
     }
 
     return (
