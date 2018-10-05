@@ -9,7 +9,7 @@ else
     echo "$(/usr/bin/docker inspect --format='{{json .State}}' hellox-client)"
     # Copy the log.
     echo "\nThe hellox-client container failed at $(date '+%Y-%m-%d %H:%M:%S'). Here are the last 100 lines."
-    /usr/bin/docker logs hellox-client --tail 100 &>> ~/docker_error_logs.log
+    /usr/bin/docker logs hellox-client --tail 100 &>> /etc/hellox-logs/docker_error_logs.log
     # Restart the container
     cd /etc/hellox-client/
     gulp dockerUp
