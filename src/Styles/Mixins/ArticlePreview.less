@@ -87,6 +87,8 @@
       flex-grow: 1;
       box-sizing: border-box;
       overflow-y: hidden;
+      /* Do not allow links or otherwise to work in the previews. */
+      pointer-events: none;
 
       @media screen and (min-width: 600px) {
         border: 1px solid @teal;
@@ -107,13 +109,12 @@
       }
 
       :global(.Summary) {
-        font-size: 18px;
-        font-family: 'Lato Light', 'Lato Subset', sans-serif;
-        font-weight: 300;
-        //height: 100px;
-
-        p {
+        &, * {
           margin: 0;
+          font-size: 18px;
+          font-family: 'Lato Light', 'Lato Subset', sans-serif;
+          font-style: normal;
+          font-weight: 300;
         }
       }
 
