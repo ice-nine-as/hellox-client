@@ -37,6 +37,9 @@ import {
   flushChunkNames,
 } from 'react-universal-component/server';
 import {
+  renderDocument,
+} from './renderDocument';
+import {
   serverPush,
 } from './serverPush';
 import {
@@ -75,10 +78,10 @@ const projectDirPath = join(__dirname, '..', '..');
 const serverDirPath  = join(projectDirPath, 'server');
 
 const webpSnifferPath = join(serverDirPath, 'webpSniffer.js');
-let webpSnifferElement: string | null = null;
+let webpSnifferString: string;
 
 const fontLoaderPath = join(serverDirPath, 'fontLoader.js');
-let fontLoaderElement: string | null = null;
+let fontLoaderString: string;
 
 export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
   const helloXResponse = async (
@@ -100,9 +103,7 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
 
       const chunkNames = flushChunkNames();
       const {
-        //css,
         cssHash,
-        js,
         scripts,
         stylesheets,
       } = flushChunks(clientStats, {
@@ -171,12 +172,12 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
 
-      if (!webpSnifferElement) {
+      if (!webpSnifferString) {
         promises.push(readFileProm(webpSnifferPath));
         promMetas.push('webpSniffer');
       }
 
-      if (!fontLoaderElement) {
+      if (!fontLoaderString) {
         promises.push(readFileProm(fontLoaderPath));
         promMetas.push('fontLoader');
       } 
@@ -197,23 +198,17 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
       }
 
       let store: Store<TStoreProps> | null = null;
-      let rssFetchFailed = false;
+      //let rssFetchFailed = false;
       results.forEach((result, index) => {
         /* Unroll promises and perform necessary logic on each. */
         if (promMetas[index] === 'configureStore') {
           store = (result as any).store;
-          rssFetchFailed = (result as any).rssFetchFailed;
+          //rssFetchFailed = (result as any).rssFetchFailed;
         } else if (promMetas[index] === 'webpSniffer') {
-          webpSnifferElement =
-            `<script id="webpSniffer">
-              ${result}
-            </script>`;
+          webpSnifferString = result;
         } else if (promMetas[index] === 'fontLoader') {
-          fontLoaderElement =
-            `<script async defer id="fontLoader">
-              ${result}
-            </script>`;
-          }
+          fontLoaderString = result;
+        }
       });
 
       /* No store means redirect was already served. */
@@ -226,69 +221,61 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         language,
         location,
       } = state;
-      const stateStr = JSON.stringify(state);
-      const varDef = `window.REDUX_STATE = ${stateStr};`;
-      const reduxScript = `<script id="reduxState">${varDef}</script>`;
-
+      
       const providerContainer = (
         <ProviderContainer store={store}>
           <ConnectedApp />
         </ProviderContainer>
       );
+      
+      const appString = ReactDOMServer.renderToString(providerContainer);
+      const description = getMetaDescription(location);
+      const preloadAndPreconnectLinks = getPreloadAndPreconnectLinks(
+        location,
+      );
 
-      const appStr = ReactDOMServer.renderToString(providerContainer);
+      const reduxStateString = JSON.stringify(state);
+      const _scripts = scripts.map((url) => (
+        '<script ' +
+          'class="chunkedScript" ' +
+          `src="/static/${url}" ` +
+        '></script>'
+      ));
 
-      const responseStr =
-        `<!DOCTYPE html>
-        <html lang="${language || 'en'}">
-          <head>
-            <title>${getPageTitle(location)}</title>
-            <meta charset="utf-8">
-            ${getMetaDescription(location)}
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="theme-color" content="#ea5050">
-            <meta name="msapplication-TileColor" content="#ea5050">
-            <meta name="msapplication-TileImage" content="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/ms-icon-144x144_v2.png">
-            ${getPreloadAndPreconnectLinks(location, rssFetchFailed)}
-            <link rel="apple-touch-icon" sizes="57x57" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-57x57_v2.png">
-            <link rel="apple-touch-icon" sizes="60x60" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-60x60_v2.png">
-            <link rel="apple-touch-icon" sizes="72x72" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-72x72_v2.png">
-            <link rel="apple-touch-icon" sizes="76x76" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-76x76_v2.png">
-            <link rel="apple-touch-icon" sizes="114x114" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-114x114_v2.png">
-            <link rel="apple-touch-icon" sizes="120x120" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-120x120_v2.png">
-            <link rel="apple-touch-icon" sizes="144x144" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-144x144_v2.png">
-            <link rel="apple-touch-icon" sizes="152x152" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-152x152_v2.png">
-            <link rel="apple-touch-icon" sizes="180x180" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/apple-icon-180x180_v2.png">
-            <link rel="icon" type="image/png" sizes="192x192" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/android-icon-192x192_v2.png">
-            <link rel="icon" type="image/png" sizes="32x32" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-32x32_v2.png">
-            <link rel="icon" type="image/png" sizes="96x96" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-96x96_v2.png">
-            <link rel="icon" type="image/png" sizes="16x16" href="https://s3.eu-central-1.amazonaws.com/hellox/images/app-icons/favicon-16x16_v2.png">
-            <link rel="manifest" href="/static/manifest.json">
-            ${webpSnifferElement}
-            <style id="ambientStyle">${AmbientStyle}</style>
-            ${stylesheets.map((url) => (
-              `<link class="chunkedStyle" rel="stylesheet" href="/static/${url}" />`
-            )).join('\n')}
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121190776-1"></script>
-            <script id="gtag">
-              window.dataLayer=window.dataLayer||[];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js',new Date());
-              gtag('config','UA-121190776-1');
-            </script>
-          </head>
-          <body>
-            ${fontLoaderElement}
-            <script defer type="text/javascript" src="/static/vendor.js"></script>
-            <div id="root">${appStr}</div>
-            ${cssHash}
-            ${reduxScript}
-            ${js}
-          </body>
-        </html>`;
+      const _stylesheets = [ `<style id="ambientStyle">${AmbientStyle}</style>` ].concat(
+        stylesheets.map((url) => (
+          '<link ' +
+            'preload ' +
+            'class="chunkedStyle" ' +
+            'rel="stylesheet" ' +
+            `href="/static/${url}" ` +
+          '/>'
+        ))
+      );
 
+      const title = getPageTitle(location);
+
+      const documentStr = renderDocument({
+        appString,
+        cssHash: cssHash.toString(),
+        description,
+        fontLoaderString,
+        language,
+        preloadAndPreconnectLinks,
+        reduxStateString,
+        scripts: _scripts,
+        stylesheets: _stylesheets,
+        title,
+        webpSnifferString,
+      });
+
+      /* Compress the document string and send it to the browser. May want to
+       * swap this out for a streaming approach (with
+       * ReactDOMServer.renderToNodeStream). This will require splitting
+       * renderDocument into a before-app render function and after-app render
+       * function, though. */
       // @ts-ignore
-      const zipped = await promisify(gzip)(responseStr);
+      const zipped = await promisify(gzip)(documentStr);
       res.send(zipped);
 
       /* We don't currently (03.18) have any middleware after this, but it's
