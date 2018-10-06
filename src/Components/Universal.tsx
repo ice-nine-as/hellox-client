@@ -8,12 +8,12 @@ import {
   defaultPageIdentifier,
   PageIdentifiers,
 } from '../Enums/PageIdentifiers';
-import universal from 'react-universal-component';
 import {
   ServerError,
 } from '../Pages/ServerError';
 
 import * as React from 'react';
+import universal from 'react-universal-component';
 
 export const strings = {
   PAGE_INVALID:
@@ -44,13 +44,13 @@ export const importer = ({ page, }: { page: PageIdentifiers, }): Promise<any> =>
 }
 
 export const errorFactory   = () => <ServerError page="serverError" />;
-export const loadingFactory = () => <Loading     page="loading"     />;
+export const loadingFactory = () => <Loading page="loading"     />;
 
 export const Universal = universal(importer, {
-  error:    errorFactory,
-  loading:  loadingFactory,
-  minDelay: 500,
-  timeout:  5000,
+  error: errorFactory,
+  //loading: loadingFactory,
+  //minDelay: 500,
+  timeout: 5000,
 });
 
 export default Universal;
