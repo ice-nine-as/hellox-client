@@ -34,6 +34,6 @@ describe('isLanguageAction unit tests.', () => {
   it('Passes if the argument is an object with a type string and a value property.', () => {
     (isAppAction as any).mockImplementationOnce(() => true);
     (isLanguage as any).mockImplementationOnce(() => true);
-    expect(isLanguageAction({ type: AppActionTypes.Language ,})).toBe(true);
+    expect(isLanguageAction({ type: AppActionTypes.Language, })).toBe(true);
   });
 });

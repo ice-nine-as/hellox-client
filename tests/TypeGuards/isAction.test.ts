@@ -19,7 +19,11 @@ describe('isAction unit tests.', () => {
   });
 
   it('Rejects if the type property of the argument is not of type string.', () => {
-    expect(isAction({ type: 2, })).toBe(false);
+    expect(isAction({ type: 2, value: null, })).toBe(false);
+  });
+
+  it('Rejects if the type property of the argument is an empty string.', () => {
+    expect(isAction({ type: '', value: null, })).toBe(false);
   });
 
   it('Rejects if the argument has no value property.', () => {
