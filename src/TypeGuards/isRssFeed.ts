@@ -14,6 +14,10 @@ export const isRssFeed = (maybe: any): maybe is IRssFeed => {
   if (typeof maybe.title !== 'string') {
     return false;
   }
+
+  if (!maybe.title) {
+    return false;
+  }
     
   if (!Array.isArray(maybe.items)) {
     return false;

@@ -7,6 +7,7 @@ export function isAction(maybe: any): maybe is IAction {
     typeof maybe === 'object' &&
     maybe &&
     typeof maybe.type === 'string' &&
+    maybe.type &&
     'value' in maybe
   );
 }
