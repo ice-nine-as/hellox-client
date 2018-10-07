@@ -6,14 +6,17 @@ import {
 } from 'util';
 
 export const isRssPost = (maybe: any): maybe is IRssPost => {
-  return typeof maybe === 'object' &&
-    maybe !== null &&
+  return Boolean(
+    typeof maybe === 'object' &&
+    maybe &&
     typeof maybe.description === 'string' &&
-    maybe.description.length > 0 &&
+    maybe.description &&
     typeof maybe.guid === 'string' &&
+    maybe.guid &&
     typeof maybe.link === 'string' &&
-    maybe.link.length > 0 &&
-    isDate(maybe.pubDate);
+    maybe.link &&
+    isDate(maybe.pubDate)
+  );
 };
 
 export default isRssPost;

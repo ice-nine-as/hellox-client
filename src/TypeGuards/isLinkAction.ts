@@ -6,11 +6,13 @@ import {
 } from './isPageIdentifier';
 
 export function isLinkAction(maybe: any): maybe is ILinkAction {
-  return typeof maybe === 'object' &&
+  return Boolean(
+    typeof maybe === 'object' &&
     maybe &&
     isPageIdentifier(maybe.type) &&
     typeof maybe.payload === 'object' &&
-    Boolean(maybe.payload);
+    maybe.payload
+  );
 }
 
 export default isLinkAction;
