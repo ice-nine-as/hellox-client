@@ -3,7 +3,7 @@ import {
 } from '../Interfaces/IRssFeed';
 
 export const isRssFeed = (maybe: any): maybe is IRssFeed => {
-  if (typeof maybe !== 'object' || maybe === null) {
+  if (typeof maybe !== 'object' || !maybe) {
     return false;
   }
   

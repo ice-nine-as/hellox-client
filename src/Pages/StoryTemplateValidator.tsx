@@ -1,6 +1,6 @@
 import {
   IFeedTemplate,
-} from '../StoryGenerator/Interfaces/IFeedTemplate';
+} from '../Interfaces/IFeedTemplate';
 import {
 	TPageProps,
 } from '../TypeAliases/TPageProps';

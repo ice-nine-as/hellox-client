@@ -15,7 +15,7 @@ import {
 } from '../Enums/Languages';
 import {
   StoryGeneratorParts,
-} from '../StoryGenerator/Enums/StoryGeneratorParts';
+} from '../Enums/StoryGeneratorParts';
 import {
   TFeedsMap,
 } from '../TypeAliases/TFeedsMap';
