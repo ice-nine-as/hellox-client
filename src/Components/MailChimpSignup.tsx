@@ -24,8 +24,8 @@ export class MailChimpSignup extends React.PureComponent {
             <input
               type="email"
               name="EMAIL"
-              className="email"
               id="mce-EMAIL"
+              className="email"
               placeholder="email address"
               required
             />
@@ -52,7 +52,7 @@ export class MailChimpSignup extends React.PureComponent {
                 type="text"
                 name="b_df70196a51c2b6c343aa52c4e_74777a8f7e"
                 tabIndex={-1}
-                value=""
+                defaultValue=""
               />
             </div>
 
