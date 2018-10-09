@@ -82,7 +82,7 @@ describe('createRssThunk unit tests.', () => {
 
   it('Throws if the result of downloadFeed is falsy.', async () => {
     expect.assertions(1);
-    
+
     // @ts-ignore
     downloadFeed.mockImplementationOnce(() => false);
 
@@ -388,7 +388,7 @@ describe('createRssThunk unit tests.', () => {
       feedKey: FeedKeys.NewsTeasers,
     });
 
-    expect(func(jest.fn())).rejects.toEqual(new Error(strings.EMPTY_FEED_ERROR));
+    expect(func(jest.fn())).rejects.toEqual(strings.EMPTY_FEED_ERROR);
   });
 });
 
