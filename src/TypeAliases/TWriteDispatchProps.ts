@@ -1,12 +1,12 @@
 import {
   IFeedTemplate,
-} from '../StoryGenerator/Interfaces/IFeedTemplate';
+} from '../Interfaces/IFeedTemplate';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
 import {
   StoryGeneratorTemplateKeys,
-} from '../StoryGenerator/Enums/StoryGeneratorTemplateKeys';
+} from '../Enums/StoryGeneratorTemplateKeys';
 import {
   TFeedsMap,
 } from './TFeedsMap';

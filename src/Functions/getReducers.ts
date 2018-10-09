@@ -1,9 +1,9 @@
 import {
   getAppReducers,
-} from '../Functions/getAppReducers';
+} from './getAppReducers';
 import {
   getRootReducer as getStoryGeneratorRootReducer,
-} from '../StoryGenerator/Modules/getRootReducer';
+} from './getRootReducer';
 import {
   IAction,
 } from '../Actions/IAction';

@@ -1,0 +1,108 @@
+@import '../Vars.less';
+
+.StorySubmissionForm {
+  position: relative;
+  max-width: 300px;
+  padding: @space;
+  margin-top:@space-lg;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid @teal;
+  background: @white;
+  color:@deep-purple;
+
+  .Label,
+  .Input
+  {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  .Label {
+    text-align: left;
+    margin-bottom: 4px;
+  }
+
+  .Input {
+    width: 100%;
+    padding: @space-sm;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: @space;
+    border: 1px solid @teal;
+    font-size: @p;
+  }
+
+  .Textarea {
+    height: 100px;
+    @media screen and (min-width:600px){
+      height: 200px;
+    } 
+  }
+
+  .MessageInput {
+    display: block;
+  }
+
+  .Checkbox {
+    display:none;
+  }
+
+  .LabelBoxWrapper{
+    display:inline-block;
+    vertical-align: middle;
+    .LabelBox{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width:14px;
+      height: 14px;
+      font-size:@small;
+      border:solid 1px black;
+      margin-right: @space-sm;
+      padding:2px;
+      & p{
+        user-select: none;
+        padding-bottom: 2px;
+        visibility:hidden;
+        margin:0;
+      }
+    }
+  }
+
+  .CarbonCopyLabel{
+    user-select: none;
+  }
+
+  .Checkbox:checked + .CarbonCopyLabel{
+
+    & .LabelBoxWrapper .LabelBox p{
+      visibility:visible;
+    }
+  }
+
+  .CarbonCopy {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .Submit {
+    display: block;
+    padding:@space-sm+5 @space-lg;
+    margin:@space auto;
+    border: none;
+    background: @gold;
+    color:@deep-purple;
+    font-size: @tiny;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    @media screen and (min-width:600px){
+      width:auto;
+      padding:@space @space-xlg;
+
+    }
+  }
+}

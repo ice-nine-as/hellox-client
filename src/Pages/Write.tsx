@@ -3,19 +3,22 @@ import {
 } from '../Actions/Creators/createRssThunk';
 import {
   feedKeyToTemplateKey,
-} from '../StoryGenerator/Modules/feedKeyToTemplateKey';
+} from '../Functions/feedKeyToTemplateKey';
 import {
   getAttrFromFeedTemplate,
-} from '../StoryGenerator/Modules/getAttrFromFeedTemplate';
+} from '../Functions/getAttrFromFeedTemplate';
+import {
+  HiderButton,
+} from '../Components/HiderButton';
 import {
   IFeedTemplate,
-} from '../StoryGenerator/Interfaces/IFeedTemplate';
+} from '../Interfaces/IFeedTemplate';
 import {
   ImageUrls,
 } from '../Enums/ImageUrls';
 import {
   IQuestionModel,
-} from '../StoryGenerator/Interfaces/IQuestionModel';
+} from '../Interfaces/IQuestionModel';
 import {
   IRssAction,
 } from '../Actions/App/IRssAction';
@@ -30,7 +33,7 @@ import {
 } from '../Enums/Languages';
 import {
   makeStoryGeneratorAction,
-} from '../StoryGenerator/Modules/makeStoryGeneratorAction';
+} from '../Functions/makeStoryGeneratorAction';
 import {
   pickFeed,
 } from '../Functions/pickFeed';
@@ -43,16 +46,16 @@ import {
 } from 'react-redux';
 import {
   ConnectedStoryGenerator,
-} from '../StoryGenerator/Components/StoryGenerator';
+} from '../Components/StoryGenerator';
 import {
   StoryGeneratorParts,
-} from '../StoryGenerator/Enums/StoryGeneratorParts';
+} from '../Enums/StoryGeneratorParts';
 import {
   StoryGeneratorTemplateKeys,
-} from '../StoryGenerator/Enums/StoryGeneratorTemplateKeys';
+} from '../Enums/StoryGeneratorTemplateKeys';
 import {
   StoryTemplateAction,
-} from '../StoryGenerator/Actions/StoryTemplateAction';
+} from '../Actions/App/StoryTemplateAction';
 import {
   TFeedsMap,
 } from '../TypeAliases/TFeedsMap';
@@ -73,7 +76,6 @@ import * as React from 'react';
 
 // @ts-ignore
 import _styles from '../Styles/Pages/Write.less';
-import { HiderButton } from '../Components/HiderButton';
 const styles = _styles || {};
 
 export const strings = {

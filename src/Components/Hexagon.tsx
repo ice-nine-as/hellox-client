@@ -19,8 +19,7 @@ export class Hexagon extends React.PureComponent<THexagonProps> {
     } = this.props;
 
     const classNameStr = className ? ` ${className}` : '';
-    const imageColor = className === ' active' ? gold : deepPurple;
-
+    const imageColor = className === 'active' ? gold : deepPurple;
     return (
       <div className={`${styles.Hexagon}${classNameStr}`}>
         <svg
