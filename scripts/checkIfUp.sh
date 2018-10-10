@@ -15,6 +15,6 @@ else
     echo "END OF FAILURE AT $date." >> /etc/hellox-logs/docker_error_logs.log
     # Restart the container
     cd /etc/hellox-client/
-    gulp dockerUp >& /dev/null
+    gulp dockerUp &> /dev/null
     exit 1
 fi
