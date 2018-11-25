@@ -17,24 +17,12 @@ const enforce           = require('express-sslify');
 const expressStaticGzip = require('express-static-gzip');
 
 const {
-  readFile,
-  readFileSync,
-} = require('fs');
-const {
   getSpdyOptions,
 } = require('./getSpdyOptions');
-
-const gulp = require('gulp');
-
-const {
-  dirname,
-  join,
-} = require('path');
 
 const spdy                       = require('spdy');
 const serverConfigDev            = require('../webpack/server.dev');
 const serverConfigProd           = require('../webpack/server.prod');
-const uglify                     = require('gulp-uglify');
 const webpack                    = require('webpack');
 const webpackDevMiddleware       = require('webpack-dev-middleware');
 const webpackHotMiddleware       = require('webpack-hot-middleware');

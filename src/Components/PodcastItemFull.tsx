@@ -23,7 +23,9 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 			item: {
 				description,
 				enclosures: [
-					url,
+					{
+						url,
+					},
 				],
 
 				pubDate,

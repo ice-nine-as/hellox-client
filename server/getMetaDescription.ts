@@ -5,8 +5,8 @@ import {
   PageIdentifiers,
 } from '../src/Enums/PageIdentifiers';
 
-export function getMetaDescription(location: LocationState): string {
-  const elem = '<meta name="description" content="%s">'
+export const getMetaDescription = (location: LocationState): string => {
+  const elem = '<meta name="description" content="%s">';
   let description = '';
 
   const type = location.type as PageIdentifiers;
@@ -53,6 +53,6 @@ export function getMetaDescription(location: LocationState): string {
 
   /* Don't bother to send meta descriptions with no content. */
   return description ? elem.replace('%s', description) : '';
-}
+};
 
 export default getMetaDescription;
