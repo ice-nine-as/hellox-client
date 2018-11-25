@@ -1,4 +1,4 @@
-exports = module.exports = {
+module.exports = {
   getHeaderMiddleware() {
     return (req, res, next) => {
       /* Give the service worker root scope. */

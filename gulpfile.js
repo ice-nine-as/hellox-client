@@ -4,8 +4,6 @@ const {
 const {
   copyFile,
   mkdir,
-  readFile,
-  writeFile,
 } = require('fs');
 const gulp = require('gulp');
 const {
@@ -18,7 +16,6 @@ const {
 
 const imageName       = 'icenineas/hellox-client';
 const containerName   = 'hellox-client';
-const containerMemory = '700m';
 
 const clean = async () => {
   console.log('Cleaning build directories.');
@@ -106,7 +103,7 @@ const dockerStart = async () => {
   await promisify(exec)(`docker start ${containerName}`);
   console.log(`Started ${containerName} container.`);
   console.log('dockerStart task complete.');
-}
+};
 
 module.exports.dockerStart = dockerStart;
 

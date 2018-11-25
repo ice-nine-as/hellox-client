@@ -11,7 +11,7 @@ const {
   publishToGoogleSheet,
 } = require('../publishToGoogleSheet');
 
-exports = module.exports = {
+module.exports = {
   getStoryGeneratorMailerMiddleware() {
     return (req, res) => {
       /* Cross-reference with StorySubmissionForm component. */
