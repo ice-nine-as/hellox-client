@@ -18,7 +18,7 @@ const {
 } = require('./getStoryGeneratorMailerMiddleware');
 const morgan = require('morgan');
 
-exports = module.exports = {
+module.exports = {
   applyMiddlewares(app) {
     /* Logging middleware. */
     app.use(morgan('combined', {

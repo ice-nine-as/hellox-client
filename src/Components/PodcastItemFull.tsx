@@ -22,11 +22,9 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 		const {
 			item: {
 				description,
-				enclosures: {
-					[0]: {
-						url,
-					},
-				},
+				enclosures: [
+					url,
+				],
 
 				pubDate,
 				title,
@@ -38,8 +36,8 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 		/* Escape all quote marks in the image URL. If this is not done, the
 		 * browser will refuse to load the image. */
 		const correctedImageUrl = (item.itunesImage || '')
-			.replace("'", "\\'")
-			.replace('"', '\\"');
+			.replace(/'/g, "\\'")
+			.replace(/"/g, '\\"');
 
 		return (
 			<div className={styles.PodcastItemFull}>

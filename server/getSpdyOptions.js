@@ -10,7 +10,7 @@ const projectPath = join(__dirname, '..');
  * filesystem. */
 const letsEncryptDir = join(projectPath, 'private', 'live', 'hellox.me');
 
-exports = module.exports = {
+module.exports = {
   getSpdyOptions() {
     return {
       cert: readFileSync(join(letsEncryptDir, 'fullchain.pem')),

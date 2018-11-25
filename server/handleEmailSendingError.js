@@ -1,4 +1,4 @@
-exports = module.exports = {
+module.exports = {
   handleEmailSendingError(e, req, res) {
     console.error('Problem e-mailing generated story.');
     console.error(e);

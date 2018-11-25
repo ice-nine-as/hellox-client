@@ -6,7 +6,7 @@ const {
 const projectPath = join(__dirname, '..', '..');
 const fontsPath   = join(projectPath, 'fonts');
 
-exports = module.exports = {
+module.exports = {
   getFontsStaticMiddleware() {
     return express.static(join(fontsPath));
   },
