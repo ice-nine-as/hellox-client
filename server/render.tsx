@@ -182,20 +182,14 @@ export const helloXRender = ({ clientStats }: { clientStats: Stats }) => {
         promMetas.push('fontLoader');
       } 
 
-      let abort = false;
       const allPromise = Promise.all<any>(promises);
       allPromise.then(() => {}, (err) => {
         console.error(err);
         console.error('One or more critical promises failed in the render ' +
                       'function.');
-        /* Unsure what this does -- seems pointless. */
-        abort = false;
       });
 
       const results = await allPromise;
-      if (abort) {
-        return;
-      }
 
       let store: Store<TStoreProps> | null = null;
       //let rssFetchFailed = false;
