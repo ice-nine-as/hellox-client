@@ -5,7 +5,6 @@ const {
   copyFile,
   mkdir,
 } = require('fs');
-const gulp = require('gulp');
 const {
   resolve,
 } = require('path');
@@ -14,8 +13,8 @@ const {
   promisify,
 } = require('util');
 
-const imageName       = 'icenineas/hellox-client';
-const containerName   = 'hellox-client';
+const imageName = 'icenineas/hellox-client';
+const containerName = 'hellox-client';
 
 const clean = async () => {
   console.log('Cleaning build directories.');

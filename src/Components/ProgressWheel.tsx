@@ -47,7 +47,7 @@ export class ProgressWheel extends React.PureComponent<TProgressWheelProps> {
           {current}/{max}
         </span>
       </div>
-    )
+    );
   }
 }
 

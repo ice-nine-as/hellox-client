@@ -38,6 +38,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 		/* Escape all quote marks in the image URL. If this is not done, the
 		 * browser will refuse to load the image. */
 		const correctedImageUrl = (item.itunesImage || '')
+			.replace(/\\/g, '\\\\')
 			.replace(/'/g, "\\'")
 			.replace(/"/g, '\\"');
 

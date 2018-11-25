@@ -1,4 +1,3 @@
-const HardSourcePlugin = require('hard-source-webpack-plugin');
 const { resolve, }     = require('path');
 const webpack          = require('webpack');
 

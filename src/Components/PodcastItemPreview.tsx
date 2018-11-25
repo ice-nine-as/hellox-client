@@ -26,9 +26,6 @@ import * as React from 'react';
 import _styles from '../Styles/Components/PodcastItemPreview.less';
 const styles = _styles || {};
 
-// @ts-ignore
-import _newsItemStyles from '../Styles/Components/NewsItemPreview.less';
-
 export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewProps> {
 	render() {
 		const {
