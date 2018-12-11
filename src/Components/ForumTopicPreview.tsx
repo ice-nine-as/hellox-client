@@ -2,6 +2,9 @@ import {
   getFormattedDate,
 } from '../Functions/getFormattedDate';
 import {
+  getSanitizedHtml,
+} from '../Functions/getSanitizedHtml';
+import {
   isNode,
 } from '../Functions/isNode';
 import {
@@ -129,7 +132,7 @@ export class ForumTopicPreview extends React.PureComponent<TForumTopicPreviewPro
 
               <div
                 className="Summary"
-                dangerouslySetInnerHTML={{ __html: item.description, }}
+                dangerouslySetInnerHTML={getSanitizedHtml(item.description)}
               ></div>
 
               <div className="SpacerBar"></div>

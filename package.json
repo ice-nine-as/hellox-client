@@ -124,7 +124,7 @@
     "redux-first-router": "0.0.16-next",
     "redux-first-router-link": "^1.4.2",
     "redux-thunk": "^2.3.0",
-    "sanitize-html": "^1.18.2",
+    "sanitize-html": "^1.19.3",
     "spdy": "^3.4.7"
   },
   "jest": {

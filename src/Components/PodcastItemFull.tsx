@@ -2,8 +2,8 @@ import {
 	getFormattedDate,
 } from '../Functions/getFormattedDate';
 import {
-	getPreparedHtml,
-} from '../Functions/getPreparedHtml';
+	getSanitizedHtml,
+} from '../Functions/getSanitizedHtml';
 import {
 	PodcastSubscriptionWidget,
 } from './PodcastSubscriptionWidget';
@@ -76,7 +76,7 @@ export class PodcastItemFull extends React.PureComponent<TPodcastItemFullProps> 
 
 				<p
 					className={styles.Summary}
-					dangerouslySetInnerHTML={getPreparedHtml(description)}
+					dangerouslySetInnerHTML={getSanitizedHtml(description)}
 				></p>
 			</div>
 		);

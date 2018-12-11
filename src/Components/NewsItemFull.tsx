@@ -1,6 +1,6 @@
 import {
-  getPreparedHtml,
-} from '../Functions/getPreparedHtml';
+  getSanitizedHtml,
+} from '../Functions/getSanitizedHtml';
 import {
   TNewsItemFullProps,
 } from '../TypeAliases/TNewsItemFullProps';
@@ -20,7 +20,7 @@ export class NewsItemFull extends React.PureComponent<TNewsItemFullProps> {
     return (
       <div
         className={styles.NewsItemFull}
-        dangerouslySetInnerHTML={getPreparedHtml(item.description)}
+        dangerouslySetInnerHTML={getSanitizedHtml(item.description)}
       ></div>
     );
   }
