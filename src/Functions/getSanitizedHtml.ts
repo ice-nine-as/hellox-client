@@ -1,8 +1,25 @@
-import * as sanitizeHtml from 'sanitize-html';
+import {
+  // @ts-ignore
+  default as sanitizeHtml,
+} from 'sanitize-html';
 
-export const getSanitizedHtml = (html: string): {  __html: string, } => {
+export const defaultSanitizationOptions = Object.assign({}, sanitizeHtml.defaults, {
+  allowedAttributes: Object.assign({}, sanitizeHtml.defaults.allowedAttributes, {
+    '*': [
+      'class',
+    ],
+  }),
+
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+    'img',
+  ]),
+});
+
+console.log(defaultSanitizationOptions);
+
+export const getSanitizedHtml = (html: string, options?: sanitizeHtml.IOptions): {  __html: string, } => {
   return {
-    __html: sanitizeHtml(html),
+    __html: sanitizeHtml(html, options || defaultSanitizationOptions),
   };
 };
 

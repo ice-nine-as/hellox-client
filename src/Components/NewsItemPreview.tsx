@@ -1,6 +1,6 @@
 import {
-	getPreparedHtml,
-} from '../Functions/getPreparedHtml';
+	getSanitizedHtml,
+} from '../Functions/getSanitizedHtml';
 import {
 	TNewsItemPreviewProps,
 } from '../TypeAliases/TNewsItemPreviewProps';
@@ -19,12 +19,10 @@ export class NewsItemPreview extends React.PureComponent<TNewsItemPreviewProps> 
 			},
 		} = this.props;
 
-		const html = getPreparedHtml(description);
-
 		return (
 			<div
 				className={styles.NewsItemPreview}
-				dangerouslySetInnerHTML={html}
+				dangerouslySetInnerHTML={getSanitizedHtml(description)}
 			></div>
 		);
 	}

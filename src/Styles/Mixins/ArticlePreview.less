@@ -87,7 +87,7 @@
       flex: 1;
       flex-grow: 1;
       box-sizing: border-box;
-      overflow-y: hidden;
+      overflow: hidden;
       /* Do not allow links or otherwise to work in the previews. */
       pointer-events: none;
 
@@ -111,11 +111,13 @@
 
       :global(.Summary) {
         &, * {
+          all: initial;
           margin: 0;
           font-size: 18px;
           font-family: 'Lato Light', 'Lato Subset', sans-serif;
           font-style: normal;
           font-weight: 300;
+          cursor: pointer;
         }
       }
 

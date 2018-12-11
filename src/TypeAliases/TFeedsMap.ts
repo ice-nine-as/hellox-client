@@ -6,7 +6,7 @@ import {
 } from '../Interfaces/IRssFeed';
 
 export type TFeedsMap = {
-  [FeedKeys.ForumTopics]:                IRssFeed | null,
+  [FeedKeys.ForumTopics]:          IRssFeed | null,
 
   [FeedKeys.NewsFull]:             IRssFeed | null,
   [FeedKeys.NewsTeasers]:          IRssFeed | null,

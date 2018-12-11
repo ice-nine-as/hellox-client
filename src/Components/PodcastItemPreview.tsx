@@ -5,8 +5,8 @@ import {
 	getFormattedDate,
 } from '../Functions/getFormattedDate';
 import {
-	getPreparedHtml,
-} from '../Functions/getPreparedHtml';
+	getSanitizedHtml,
+} from '../Functions/getSanitizedHtml';
 import {
 	ImageUrls,
 } from '../Enums/ImageUrls';
@@ -72,7 +72,7 @@ export class PodcastItemPreview extends React.PureComponent<TPodcastItemPreviewP
 
 							<div
 								className="Summary"
-								dangerouslySetInnerHTML={getPreparedHtml(description || 'No title provided.')}
+								dangerouslySetInnerHTML={getSanitizedHtml(description || 'No title provided.')}
 							>
 							</div>
 						</div>
