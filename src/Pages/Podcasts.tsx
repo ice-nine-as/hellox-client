@@ -38,20 +38,14 @@ export class Podcasts extends React.Component<TPageProps> {
         </h1>
 
         <div className={styles.Wrapper}>
-          <div
-            className={styles.SubscribeWrapper}
-            key="sub"
-          >
+          <div className={styles.SubscribeWrapper}>
             <PodcastSubscriptionWidget />
           </div>
 
-          <div
-            className={styles.Content}
-            key="keyThree"
-          >
+          <div className={styles.Content}>
             <ConnectedLatestPodcasts
               detailLevel={FeedDetailLevels.Teaser}
-              key="keyTwo"
+              pagination={false}
             />
           </div>
         </div>

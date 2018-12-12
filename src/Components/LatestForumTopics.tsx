@@ -83,6 +83,7 @@ export class LatestForumTopics extends React.PureComponent<TLatestForumPostsOwnP
     const {
       feeds,
       language,
+      pagination,
     } = this.props;
 
     const {
@@ -103,7 +104,7 @@ export class LatestForumTopics extends React.PureComponent<TLatestForumPostsOwnP
             childComponentConstructor={ForumTopicPreview}
             feed={feed}
             noMorePostsUrl="https://forum.hellox.me"
-            pagination={true}
+            pagination={pagination}
           />
         </div>
       </div>

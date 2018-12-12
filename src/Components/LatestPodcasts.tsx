@@ -104,6 +104,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
       detailLevel,
       feeds,
       language,
+      pagination,
     } = this.props;
 
     const {
@@ -123,7 +124,7 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
         <PreviewFeed
           childComponentConstructor={({ item, }) => podcastChildConstructor({ item, detailLevel, })}
           feed={feed}
-          pagination={detailLevel === FeedDetailLevels.Full ? false : true}
+          pagination={pagination}
         />
       </div>
     );

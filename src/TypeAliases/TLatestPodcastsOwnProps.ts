@@ -3,7 +3,8 @@ import {
 } from '../Enums/FeedDetailLevels';
 
 export type TLatestPodcastsOwnProps = {
-  detailLevel: FeedDetailLevels,
+  detailLevel: FeedDetailLevels;
+  pagination: boolean;
 };
 
 export default TLatestPodcastsOwnProps;

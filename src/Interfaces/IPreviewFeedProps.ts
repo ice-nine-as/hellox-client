@@ -14,7 +14,7 @@ export interface IPreviewFeedProps {
                              SFC<IPreviewComponentProps>;
   feed: IRssFeed | null | undefined;
   noMorePostsUrl?: string;
-  pagination?: boolean;
+  pagination: boolean;
 }
 
 export default IPreviewFeedProps;
