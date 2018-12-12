@@ -17,6 +17,9 @@ import {
   IRssFeed,
 } from '../Interfaces/IRssFeed';
 import {
+  IRssPost,
+} from '../Interfaces/IRssPost';
+import {
   isNode,
 } from '../Functions/isNode';
 import {
@@ -25,6 +28,9 @@ import {
 import {
   PodcastItemPreview,
 } from './PodcastItemPreview';
+import {
+  PreviewFeed,
+} from './PreviewFeed';
 import {
   connect,
   MapStateToProps,
@@ -50,7 +56,6 @@ import * as React from 'react';
 // @ts-ignore
 import _styles from '../Styles/Components/LatestPodcasts.less';
 const styles = _styles || {};
-
 
 export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps & TLatestPodcastsStoreProps & TLatestPodcastsDispatchProps> {
   /* TODO: Prevent multiple attempts to load the same resource? Set a maximum
@@ -81,8 +86,8 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
       getPodcastFeed(key);
     } else if (feed.items && feed.items.length < 3) {
       /* A single article has been loaded through an Article page. We won't
-      * bother to guess where it is in the feed. */
-      getPodcastFeed(key, 0, feed)
+       * bother to guess where it is in the feed. */
+      getPodcastFeed(key, feed);
     }
   }
 
@@ -110,33 +115,16 @@ export class LatestPodcasts extends React.PureComponent<TLatestPodcastsOwnProps 
       type: 'podcast',
     });
 
-    /* TODO: Add internationalization to no podcasts items message. */
-    const podcastItems = feed && feed.items && feed.items.length > 0 ?
-      feed.items.map((item) => {
-        if (detailLevel === FeedDetailLevels.Full) {
-          return (
-            <PodcastItemFull
-              item={item as IPodcastPost}
-              key={key += 1}
-            />
-          );
-        } else {
-          return (
-            <PodcastItemPreview
-              item={item as IPodcastPost}
-              key={key += 1}
-            />
-          );
-        }
-      }) :
-      'Sorry, no podcasts yet!';
-
     return (
       <div
         className={`${styles.LatestPodcasts} ${styles[detailLevel]}`}
         key={key += 1}
       >
-        {podcastItems}
+        <PreviewFeed
+          childComponentConstructor={({ item, }) => podcastChildConstructor({ item, detailLevel, })}
+          feed={feed}
+          pagination={detailLevel === FeedDetailLevels.Full ? false : true}
+        />
       </div>
     );
   }
@@ -152,11 +140,10 @@ export const mapStateToProps: MapStateToProps<TLatestPodcastsOwnProps & TLatestP
 });
 
 export const mapDispatchToProps = (dispatch: Function) => ({
-  getPodcastFeed(feedKey: keyof TFeedsMap, offset: number = 0, composeWith: IRssFeed | null = null): Promise<IRssAction> {
+  getPodcastFeed(feedKey: keyof TFeedsMap, composeWith: IRssFeed | null = null): Promise<IRssAction> {
     const thunk = createRssThunk({
       composeWith,
       feedKey: feedKey,
-      offset: offset || 0,
     });
 
     return dispatch(thunk);
@@ -164,5 +151,27 @@ export const mapDispatchToProps = (dispatch: Function) => ({
 });
 
 export const ConnectedLatestPodcasts = connect(mapStateToProps, mapDispatchToProps)(LatestPodcasts);
+
+export const podcastChildConstructor = ({
+  detailLevel,
+  item,
+}: {
+  detailLevel: FeedDetailLevels,
+  item: IRssPost,
+}) => {
+  if (detailLevel === FeedDetailLevels.Full) {
+    return (
+      <PodcastItemFull
+        item={item as IPodcastPost}
+      />
+    );
+  } else {
+    return (
+      <PodcastItemPreview
+        item={item as IPodcastPost}
+      />
+    );
+  }
+};
 
 export default LatestPodcasts;

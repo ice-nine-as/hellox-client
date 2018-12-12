@@ -15,8 +15,6 @@ export const defaultSanitizationOptions = Object.assign({}, sanitizeHtml.default
   ]),
 });
 
-console.log(defaultSanitizationOptions);
-
 export const getSanitizedHtml = (html: string, options?: sanitizeHtml.IOptions): {  __html: string, } => {
   return {
     __html: sanitizeHtml(html, options || defaultSanitizationOptions),

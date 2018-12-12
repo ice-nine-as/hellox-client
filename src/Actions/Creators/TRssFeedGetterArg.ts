@@ -9,7 +9,6 @@ export type TRssFeedGetterArg = {
   composeWith?: IRssFeed | null,
   feedKey:      keyof TFeedsMap,
   id?:          string | null,
-  offset?:      number | null,
   signal?:      AbortSignal,
   urlArg?:      string | null,
 };

@@ -1,12 +1,17 @@
+import {
+  IButtonProps,
+} from '../Interfaces/IButtonProps';
+
 import * as React from 'react';
 
 // @ts-ignore
-import _styles from '../Styles/Components/LoadMoreButton.less';
+import _styles from '../Styles/Components/Button.less';
 const styles = _styles || {};
 
-export class LoadMoreButton extends React.PureComponent<{ func: (event: React.MouseEvent<HTMLButtonElement>) => void, }> {
+export class Button extends React.PureComponent<IButtonProps> {
   render() {
     const {
+      children,
       func,
     } = this.props;
 
@@ -16,11 +21,11 @@ export class LoadMoreButton extends React.PureComponent<{ func: (event: React.Mo
           className={`${styles.Button} light`}
           onClick={func}
         >
-          LOAD MORE
+          {children}
         </button>
       </div>
     );
   }  
 }
 
-export default LoadMoreButton;
+export default Button;

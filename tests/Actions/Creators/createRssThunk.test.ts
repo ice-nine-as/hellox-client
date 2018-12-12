@@ -131,7 +131,6 @@ describe('createRssThunk unit tests.', () => {
           feedKey: FeedKeys.NewsFull,
           type: AppActionTypes.Rss,
           value: {
-            currentOffset: 1,
             items,
           },
         },
@@ -207,78 +206,14 @@ describe('createRssThunk unit tests.', () => {
     console.error = error;
   });
 
-  it('Adds an offset of 0 to the resultant feed when the id argument prop is set.', async () => {
-    const items = [ Symbol('test'), ];
   
-    // @ts-ignore
-    downloadFeed.mockImplementationOnce(() => ({
-      items,
-    }));
-  
-    // @ts-ignore
-    const func = createRssThunk({
-      feedKey: FeedKeys.NewsFull,
-      id: '1',
-    });
-
-    const mockFn = jest.fn();
-
-    await func(mockFn);
-
-    expect(mockFn.mock.calls).toEqual([
-      [
-        {
-          feedKey: FeedKeys.NewsFull,
-          type: AppActionTypes.Rss,
-          value: {
-            currentOffset: 0,
-            items,
-          },
-        }
-      ],
-    ]);
-  });
-
-  it('Adds computed offsets to a provided, valid offset argument prop.', async () => {
-    const items = [ Symbol('test'), ];
-
-    // @ts-ignore
-    downloadFeed.mockImplementationOnce(() => ({
-      items,
-    }));
-
-    // @ts-ignore
-    const func = createRssThunk({
-      feedKey: FeedKeys.NewsTeasers,
-      offset: 2,
-    });
-
-    const mockFn = jest.fn();
-
-    await func(mockFn);
-
-    expect(mockFn.mock.calls).toEqual([
-      [
-        {
-          type: AppActionTypes.Rss,
-          feedKey: FeedKeys.NewsTeasers,
-          value: {
-            currentOffset: 3,
-            items,
-          },
-        }
-      ],
-    ]);
-  });
-  
-  it('Composes feeds when a valid composeWith argument prop is provided, and combines offsets.', async () => {
+  it('Composes feeds when a valid composeWith argument prop is provided.', async () => {
     const itemsOne = [ Symbol('test'), ];
     const itemsTwo = [ Symbol('testTwo'), ];
   
     const composeWith = {
       feedKey: FeedKeys.NewsTeasers,
       items: itemsOne,
-      currentOffset: 1,
     };
   
     // @ts-ignore
@@ -301,62 +236,6 @@ describe('createRssThunk unit tests.', () => {
   
     // @ts-ignore
     composeFeeds.mockImplementationOnce((aa, bb) => ({
-      duplicates: 0,
-      feed: {
-        items: itemsOne.concat(itemsTwo),
-      },
-    }));
-  
-    const mockFn = jest.fn();
-  
-    await func(mockFn);
-  
-    expect(mockFn.mock.calls).toEqual([
-      [
-        {
-          type: AppActionTypes.Rss,
-          feedKey: FeedKeys.NewsTeasers,
-          value: {
-            currentOffset: 2,
-            items: itemsOne.concat(itemsTwo),
-          },
-        }
-      ],
-    ]);
-  });
-
-  it('Does not adjust the offset when composing if the id argument is not valid.', async () => {
-    const itemsOne = [ Symbol('test'), ];
-    const itemsTwo = [ Symbol('testTwo'), ];
-  
-    const composeWith = {
-      feedKey: FeedKeys.NewsTeasers,
-      items: itemsOne,
-      currentOffset: 1,
-    };
-  
-    // @ts-ignore
-    downloadFeed.mockImplementationOnce(() => ({
-      items: itemsTwo,
-    }));
-  
-    // Bug? Not sure why these are necessary.
-    // @ts-ignore
-    isFeedKey.mockImplementation(() => true);
-    // @ts-ignore
-    isRssFeed.mockImplementation(() => true);
-    
-    // @ts-ignore
-    const func = createRssThunk({
-      // @ts-ignore
-      composeWith,
-      id: 'foo',
-      feedKey: FeedKeys.NewsTeasers,
-    });
-  
-    // @ts-ignore
-    composeFeeds.mockImplementationOnce((aa, bb) => ({
-      duplicates: 0,
       feed: {
         items: itemsOne.concat(itemsTwo),
       },

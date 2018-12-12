@@ -49,25 +49,20 @@ export const strings = {
 export const downloadFeed = async ({
   feedKey,
   id,
-  offset,
   signal,
   urlArg,
 }: {
   feedKey: keyof TFeedsMap,
   id?:     string | null | undefined,
-  offset?: number | null | undefined,
   signal?: AbortSignal,
   urlArg?: string | null | undefined,
 }): Promise<IRssFeed> =>
 {
-  let ignoreOffset = false;
   const url = ((feedKey, id, urlArg) => {
     if (urlArg && typeof urlArg === 'string') {
       /* A custom URL has been provided. */
       return urlArg;
     } else if (id && typeof id === 'string') {
-      ignoreOffset = true;
-
       /* Only a single article is being requested. Single article feed URLs
        * require a run-time parameter, so they must be run through
        * String.prototype.replace before actually being used. */
@@ -86,28 +81,18 @@ export const downloadFeed = async ({
   if (!url) {
     throw new Error(strings.URL_INVALID);
   }
-
-  const offsetIsValid =
-    !ignoreOffset &&
-    typeof offset === 'number' &&
-    offset > 0 &&
-    offset % 1 === 0;
-
-  const fullUrl = offsetIsValid ?
-    `${url}/?offset=${offset}` :
-    url;
     
   return new Promise<IRssFeed>(async (resolve, reject) => {
     let res;
     try {
       const maybeSignalObj = signal ? { signal, } : {};
-      res = await fetch(fullUrl, Object.assign({}, maybeSignalObj /* allows aborting */, {
+      res = await fetch(url, Object.assign({}, maybeSignalObj /* allows aborting */, {
         cache:       'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'omit',
         method:      'GET', // *GET, PUT, DELETE, etc.
       }));
     } catch (e) {
-      console.error(`Fetch failed for ${fullUrl} request. Signal was ` +
+      console.error(`Fetch failed for ${url} request. Signal was ` +
                     `${signal && signal.aborted ? 'aborted' : 'not aborted'}.`);
       reject(e);
     }

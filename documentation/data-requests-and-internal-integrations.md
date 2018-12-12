@@ -33,7 +33,7 @@ The CMS site is intended to be entirely team-focused, and nothing hosted on that
     * Hosted at https://cms.hellox.me/feeds/%/story-template-validator.xml. where `%` denotes the node ID of the story template to be validated.
     * Syndicated at https://hellox.me/storyTemplateValidator
 
-Note that the news feed items have a custom paging module which allows an offset URL argument to be provided, e.g. https://cms.hellox.me/feeds/news-feed-teaser.xml?offset=3.
+Note that the news feed items have a custom paging module which allows an offset URL argument to be provided, e.g. https://cms.hellox.me/feeds/news-feed-teaser.xml?offset=3. However, this is not used anymore given that the podcast RSS feed does not support paging.
 
 There is a single additional endpoint, https://cms.hellox.me/feeds/podcast-feed.xml, which relies on a very simple custom module which merely downloads an RSS feed from the Blubrry podcast host's endpoint and forwards it to the requester. This was done because, when these systems were originally developed and configured, Blubrry had not configured their CORS rules such that external requests could be performed, and server-side requests are not bound by CORS.
 

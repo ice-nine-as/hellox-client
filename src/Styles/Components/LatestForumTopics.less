@@ -1,12 +1,9 @@
 @import '../Vars.less';
 
-@import './LoadMoreButton.less';
-
 .LatestForumTopics {
 	display: block;
 	width: 100%;
 	max-width: 800px;
-	min-height: @preloadedNewsHeight - 100;
 	margin: 0 auto;
 
 	@media screen and (min-width: 600px) {
@@ -19,20 +16,5 @@
 
 	.Title {
 		display: block;
-	}
-
-	.NoMoreTopics {
-		padding: 0 50px;
-		margin: 0 auto;
-	}
-
-	.Message {
-		margin: 0 auto;
-		font-size: @h3;
-		text-align: center;
-	}
-
-	.LoadMoreContainer {
-		margin: 0 auto;
 	}
 }

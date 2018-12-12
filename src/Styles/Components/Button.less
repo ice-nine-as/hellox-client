@@ -1,0 +1,20 @@
+@import '../Vars.less';
+
+.Button {
+  position: relative;
+  padding: 15px 100px;
+  background: transparent;
+  color: @light-blue;
+  border: 1px solid @light-blue;
+  cursor: pointer;
+  transition: color @button-transition-duration, background-color @button-transition-duration;
+
+  &:hover, &:active {
+    background-color: @light-blue;
+    color: @white;
+  }
+
+  &:active {
+    top: 1px;
+  }
+}
