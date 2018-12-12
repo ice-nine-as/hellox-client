@@ -3,10 +3,9 @@ import {
 } from './IRssPost';
 
 export interface IRssFeed {
-  type:           'rss';
-  currentOffset?: number;
-  items:          Array<IRssPost>;
-  title:          string;
+  type:  'rss';
+  items: Array<IRssPost>;
+  title: string;
 }
 
 export default IRssFeed;

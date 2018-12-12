@@ -111,7 +111,6 @@
 
       :global(.Summary) {
         &, * {
-          all: initial;
           margin: 0;
           font-size: 18px;
           font-family: 'Lato Light', 'Lato Subset', sans-serif;
@@ -119,12 +118,12 @@
           font-weight: 300;
           cursor: pointer;
         }
-      }
 
-      /* Images can screw up the layout somehow, and we don't want them there
-      * anyway. */
-      img {
-        display: none;
+        /* Images can screw up the layout somehow, and we don't want them there
+        * anyway. */
+        img {
+          display: none;
+        }
       }
     }
   }

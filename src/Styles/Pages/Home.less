@@ -280,14 +280,11 @@
 		}
 
 		.ForumTopicsWrapper, .NewsWrapper {
-			margin: 0 auto;
-			max-width: 800px;
 			width: 100%;
+			max-width: 800px;
+			margin: 0 auto;
+			padding-bottom: @space-lg;
 			overflow: hidden;
-		}
-
-		.ForumTopicsWrapper {
-			margin-bottom: @space-lg;
 		}
 	}
 }
@@ -301,5 +298,6 @@
 }
 
 :global(.LazyLoad) {
+	width: 100%;
 	height: 100%;
 }

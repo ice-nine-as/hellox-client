@@ -17,6 +17,9 @@ import {
   pickFeed,
 } from '../Functions/pickFeed';
 import {
+  PreviewFeed,
+} from './PreviewFeed';
+import {
   connect,
   MapStateToProps,
 } from 'react-redux';
@@ -26,9 +29,6 @@ import {
 import {
   TLatestForumPostsOwnProps,
 } from '../TypeAliases/TLatestForumPostsOwnProps';
-import {
-  TLatestForumPostsState,
-} from '../TypeAliases/TLatestForumPostsState';
 import {
   TLatestForumPostsStoreProps,
 } from '../TypeAliases/TLatestForumPostsStoreProps';
@@ -42,17 +42,11 @@ import * as React from 'react';
 import _styles from '../Styles/Components/LatestForumTopics.less';
 const styles = _styles || {};
 
-export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps, TLatestForumPostsState> {
-  state = {
-    offset: 0,
-  };
-
+export class LatestForumTopics extends React.PureComponent<TLatestForumPostsOwnProps & TLatestForumPostsStoreProps & TLatestForumPostsDispatchProps> {
   constructor(props: any, context?: any) {
     super(props, context);
 
-
     this.doLoad = this.doLoad.bind(this);
-    this.doMoreTopics = this.doMoreTopics.bind(this);
   }
 
   async doLoad() {
@@ -92,10 +86,6 @@ export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps
     } = this.props;
 
     const {
-      offset,
-    } = this.state;
-
-    const {
       feed,
     } = pickFeed({
       type: 'forumTopics',
@@ -103,78 +93,21 @@ export class LatestForumTopics extends React.Component<TLatestForumPostsOwnProps
       language,
     });
 
-    const latestTopics = (() => {
-      if (!feed) {
-        return (
-          <p
-            className={styles.Message}
-            key="___key"
-          >
-            Latest forum topics are loading...
-          </p>
-        );
-      } else if (feed.items.length) {
-        const items = feed.items.slice(0, offset + 3).map((item, index) => (
-            <ForumTopicPreview
-              item={item}
-              key={index}
-            />
-          ));
-          
-        if (offset >= feed.items.length) {
-          return items.concat([
-            <p
-              className={styles.NoMoreTopics}
-              key={'key1'}
-            >
-              No more recent forum topics. Check out
-              the <a href="//forum.hellox.me">forum</a> to see older topics.
-            </p>
-          ]);
-        } else {
-          return items.concat([
-            <div
-              className={styles.LoadMoreContainer}
-              key={'key2'}
-            >
-              <button
-                className={`${styles.Button} light`}
-                onClick={this.doMoreTopics}
-              >
-                MORE TOPICS
-              </button>
-            </div>,
-          ]);
-        }
-      } else {
-        return (
-          <p key="____key" style={{ textAlign: 'center', margin: '0 auto', }}>
-            Sorry, no forum topics yet!
-          </p>
-        );
-      }
-    })();
-
     return (
       <div
         className={styles.LatestForumTopics}
         key={reactKey += 1}
       >
         <div className={styles.ForumTopicsContainer}>
-          {latestTopics}
+          <PreviewFeed
+            childComponentConstructor={ForumTopicPreview}
+            feed={feed}
+            noMorePostsUrl="https://forum.hellox.me"
+            pagination={true}
+          />
         </div>
       </div>
     );
-  }
-
-  doMoreTopics() {
-    const {
-      offset,
-    } = this.state;
-
-    this.setState({
-      offset: offset + 3,
-    });
   }
 }
 

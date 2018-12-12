@@ -139,23 +139,25 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
 
     return (
       <div className={`${styles.Podcast} ${styles.Page}`}>
-        {child}
+        <div className={styles.Content}>
+          {child}
 
-        {
-          loaded ?
-            [
-              <div className={styles.MorePodcastsContainer} key={1}>
-                <h2 className={styles.MorePodcastsTitle}>
-                  More Podcasts
-                </h2>
+          {
+            loaded ?
+              [
+                <div className={styles.MorePodcastsContainer} key={1}>
+                  <h2 className={styles.MorePodcastsTitle}>
+                    More Podcasts
+                  </h2>
 
-                <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
-              </div>,
-              <hr className={styles.HorizontalRule} key={2} />,
-              <MailChimpSignup key={3} />
-            ] :
-            null
-        }
+                  <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
+                </div>,
+                <hr className={styles.HorizontalRule} key={2} />,
+                <MailChimpSignup key={3} />
+              ] :
+              null
+          }
+        </div>
       </div>
     );
   }

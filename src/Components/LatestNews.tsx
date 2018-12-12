@@ -8,6 +8,9 @@ import {
   FeedKeys,
 } from '../Enums/FeedKeys';
 import {
+  IRssPost,
+} from '../Interfaces/IRssPost';
+import {
   pickFeed,
 } from '../Functions/pickFeed';
 import {
@@ -23,9 +26,6 @@ import {
   isNode,
 } from '../Functions/isNode';
 import {
-  LoadMoreButton,
-} from './LoadMoreButton';
-import {
   NewsItemFull,
 } from './NewsItemFull';
 import {
@@ -37,6 +37,9 @@ import {
 import {
   PodcastItemPreview,
 } from './PodcastItemPreview';
+import {
+  PreviewFeed,
+} from './PreviewFeed';
 import {
   connect,
   MapStateToProps,
@@ -63,10 +66,9 @@ import * as React from 'react';
 import _styles from '../Styles/Components/LatestNews.less';
 const styles = _styles || {};
 
-export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { error: string, loadMoreVisible: boolean, }> {
+export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNewsStoreProps & TLatestNewsDispatchProps, { error: string, }> {
   state = {
     error: '',
-    loadMoreVisible: true,
   };
 
   constructor(props: any, context?: any) {
@@ -115,10 +117,18 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
     };
 
     /* For some reason, possibly that we're only mutating a portion of a feed,
-    * the getNewsFeed method occasionally refuses to render new articles when
-    * a single article has been fetched beforehand. This is avoided through
-    * forceUpdate below. */
-    if (!feed) {
+     * the getNewsFeed method occasionally refuses to render new articles when
+     * a single article has been fetched beforehand. This is avoided through
+     * forceUpdate below. */
+    if (feed) {
+      getNewsFeed(key).then(
+        /* Resolve */
+        () => this.forceUpdate(),
+      
+        /* Reject */
+        (reason) => rejector(reason)
+      );
+    } else {
       getNewsFeed(key)
         .then(
           /* Resolve */
@@ -127,40 +137,6 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
           /* Reject */
           (reason) => rejector(reason)
         );
-    } else if (feed.currentOffset) {
-      const origFeedLength = feed.items.length;
-
-      /* We've already loaded a set of articles, so we need to use the offset. */
-      getNewsFeed(key, feed.currentOffset, feed)
-        .then(
-          /* Resolve */
-          (action) => {
-            if (action.value &&
-                /* If less than three items were fetched, the tail has been reached. */
-                action.value.items.length < origFeedLength + 3)
-            {
-              /* Feed is now at tail and the Load More button should be disabled. */
-              this.setState({
-                loadMoreVisible: false,
-              });
-            } else {
-              this.forceUpdate();
-            }
-          },
-
-          /* Reject */
-          (reason) => {
-            rejector(reason);
-          }
-        )
-    } else {
-      getNewsFeed(key).then(
-        /* Resolve */
-        () => this.forceUpdate(),
-      
-        /* Reject */
-        (reason) => rejector(reason)
-      );
     }
   }
 
@@ -200,7 +176,6 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
 
     const {
       error,
-      loadMoreVisible,
     } = this.state;
 
     const {
@@ -211,67 +186,8 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       feeds,
       detailLevel,
     });
-
-    /* TODO: Add internationalization to no news items message. */
-    const newsItems = (() => {
-      if (!feed) {
-        return (
-          <p
-            className={styles.Message}
-            key="___key"
-          >
-            News is loading...
-          </p>
-        );
-      } else if ((feed.items && feed.items.length) ||
-                 (feeds.Podcast && feeds.Podcast.items &&
-                   feeds.Podcast.items.length))
-      {
-        /* Compose podcasts into news items. */
-        const finalFeed: IRssFeed = composeFeeds(feed, feeds.Podcast).feed!;
-        return finalFeed.items.map((item) => {
-          if (detailLevel === FeedDetailLevels.Full) {
-            if ('itunesEpisode' in item) {
-              return (
-                <PodcastItemFull
-                  item={item}
-                  key={reactKey += 1}
-                />
-              );
-            } else {
-              return (
-                <NewsItemFull
-                  item={item}
-                  key={reactKey += 1}
-                />
-              );
-            }
-          } else {
-            if ('itunesEpisode' in item) {
-              return (
-                <PodcastItemPreview
-                  item={item}
-                  key={reactKey += 1}
-                />
-              );
-            } else {
-              return (
-                <NewsItemPreview
-                  item={item}
-                  key={reactKey += 1}
-                />
-              );
-            }
-          }
-        });
-      } else {
-        return (
-          <p key="____key" style={{ textAlign: 'center', margin: '0 auto', }}>
-            Sorry, no news yet!
-          </p>
-        );
-      }
-    })();
+   
+    const composedFeed: IRssFeed = composeFeeds(feed, feeds.Podcast).feed!;
 
     return (
       <div
@@ -283,33 +199,14 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
             error ?
               /* Display the error if loading fails. */
               <div style={{ textAlign: 'center', margin: '0 auto', }}>{error}</div> :
-              newsItems
+              <PreviewFeed
+                childComponentConstructor={({ item, }) => newsChildConstructor({ detailLevel, item, })}
+                feed={composedFeed}
+                pagination={true}
+              />
           }
         </div>
 
-        {(() => {
-          if (!feed) {
-            /* Don't show the Load More button if the feed hasn't been
-              * fetched. */
-            return null;
-          } else if (loadMoreVisible) {
-            return (
-              <LoadMoreButton
-                func={this.doLoad}
-                key="_key1"
-              />
-            );
-          } else {
-            return (
-              <p
-                className={styles.NoMoreNews}
-                key="_key2"
-              >
-                No more news!
-              </p>
-            );
-          }
-        })()}
       </div>
     );
   }
@@ -327,14 +224,12 @@ export const mapStateToProps: MapStateToProps<TLatestNewsOwnProps & TLatestNewsS
 export const mapDispatchToProps = (dispatch: Function) => ({
   getNewsFeed(
     feedKey: keyof TFeedsMap,
-    offset: number = 0,
     composeWith: IRssFeed | null = null
   ): Promise<IRssAction>
   {
     const thunk = createRssThunk({
       composeWith,
       feedKey: feedKey,
-      offset: offset || 0,
     });
 
     return dispatch(thunk);
@@ -347,5 +242,35 @@ export const mapDispatchToProps = (dispatch: Function) => ({
 });
 
 export const ConnectedLatestNews = connect(mapStateToProps, mapDispatchToProps)(LatestNews);
+
+export const newsChildConstructor = ({
+  detailLevel,
+  item,
+}: {
+  detailLevel: FeedDetailLevels,
+  item: IRssPost,
+}) => {
+  if (detailLevel === FeedDetailLevels.Full) {
+    if ('itunesEpisode' in item) {
+      return (
+        <PodcastItemFull item={item} />
+      );
+    } else {
+      return (
+        <NewsItemFull item={item} />
+      );
+    }
+  } else {
+    if ('itunesEpisode' in item) {
+      return (
+        <PodcastItemPreview item={item} />
+      );
+    } else {
+      return (
+        <NewsItemPreview item={item} />
+      );
+    }
+  }
+};
 
 export default LatestNews;
