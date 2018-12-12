@@ -303,7 +303,9 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               placeholder={forumPlaceholder}
               throttle={50}
             >
-              <ConnectedLatestForumTopics />
+              <ConnectedLatestForumTopics
+                pagination={true}
+              />
             </LazyLoad>
           </div>
 
@@ -319,7 +321,10 @@ export class Home extends React.PureComponent<TPageProps & THomePageProps> {
               placeholder={newsPlaceholder}
               throttle={50}
             >
-              <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+              <ConnectedLatestNews
+                detailLevel={FeedDetailLevels.Teaser}
+                pagination={true}
+              />
             </LazyLoad>
           </div>
         </section>

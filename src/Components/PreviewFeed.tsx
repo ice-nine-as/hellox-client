@@ -47,7 +47,7 @@ export class PreviewFeed extends React.PureComponent<IPreviewFeedProps, IPreview
       let trueOffset = offset;
       /* Allow the parent component to determine whether the results are 
        * paginated in groups of 3 with a "Show more" (or etc.) button. */
-      if (pagination) {
+      if (!pagination) {
         trueOffset = feed.items.length - 3;
       }
 
@@ -60,7 +60,7 @@ export class PreviewFeed extends React.PureComponent<IPreviewFeedProps, IPreview
         ))
       );
 
-      if (!pagination) {
+      if (pagination) {
         if (offset >= feed.items.length) {
           items = items.concat([
             <p

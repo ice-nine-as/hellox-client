@@ -150,7 +150,10 @@ export class Podcast extends React.Component<TPageProps & TPodcastStoreProps & T
                     More Podcasts
                   </h2>
 
-                  <ConnectedLatestPodcasts detailLevel={FeedDetailLevels.Teaser} />
+                  <ConnectedLatestPodcasts
+                    detailLevel={FeedDetailLevels.Teaser}
+                    pagination={false}
+                  />
                 </div>,
                 <hr className={styles.HorizontalRule} key={2} />,
                 <MailChimpSignup key={3} />

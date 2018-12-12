@@ -172,6 +172,7 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
       detailLevel,
       feeds,
       language,
+      pagination,
     } = this.props;
 
     const {
@@ -202,11 +203,10 @@ export class LatestNews extends React.Component<TLatestNewsOwnProps & TLatestNew
               <PreviewFeed
                 childComponentConstructor={({ item, }) => newsChildConstructor({ detailLevel, item, })}
                 feed={composedFeed}
-                pagination={true}
+                pagination={pagination}
               />
           }
         </div>
-
       </div>
     );
   }

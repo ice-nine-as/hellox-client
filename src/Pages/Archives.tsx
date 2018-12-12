@@ -22,7 +22,10 @@ export class Archives extends React.PureComponent<TPageProps> {
 					ARCHIVES
 				</h1>
 
-				<ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+				<ConnectedLatestNews
+					detailLevel={FeedDetailLevels.Teaser}
+					pagination={false}
+				/>
 			</div>
 		);
 	}

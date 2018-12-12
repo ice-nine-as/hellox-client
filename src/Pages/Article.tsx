@@ -137,7 +137,10 @@ export class Article extends React.Component<TArticleStoreProps & TArticleDispat
 	            What's up?
 	          </h2>
 	        
-            <ConnectedLatestNews detailLevel={FeedDetailLevels.Teaser} />
+            <ConnectedLatestNews
+              detailLevel={FeedDetailLevels.Teaser}
+              pagination={false}
+            />
 	        </div>
 		    </div>
       </div>

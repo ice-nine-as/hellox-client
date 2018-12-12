@@ -4,6 +4,7 @@ import {
 
 export type TLatestNewsOwnProps = {
   detailLevel: FeedDetailLevels;
+  pagination: boolean;
 };
 
 export default TLatestNewsOwnProps;
